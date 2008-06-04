@@ -1,0 +1,18 @@
+/*
+ *  $MODULE$.cpp
+ *
+ *  [description]
+ *
+ *  Copyright (C) 2002-$YEAR$, Davorin Učakar <davorin.ucakar@gmail.com>
+ *
+ *  $Id$
+ */
+
+#include "$MODULE$.h"
+
+namespace Dark
+{
+
+
+
+}
