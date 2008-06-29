@@ -8,6 +8,8 @@
  *  $Id$
  */
 
+#include "base.h"
+
 #include "M_Walker.h"
 
 namespace Dark

@@ -8,6 +8,8 @@
  *  $Id: Game.cpp 11 2007-08-31 12:03:10Z davorin $
  */
 
+#include "base.h"
+
 #include "Client.h"
 
 #include "Timer.h"
@@ -63,8 +65,8 @@ namespace Dark
 
     camera.player = (Bot*) world.objects[0];
 
-    camera.player->h += input.mouse.x * settings.mouseXSens;
-    camera.player->v += input.mouse.y * settings.mouseYSens;
+    camera.player->h -= input.mouse.x * settings.mouseXSens;
+    camera.player->v -= input.mouse.y * settings.mouseYSens;
 
     if( input.keys[SDLK_UP] ) {
       camera.player->v += settings.keyXSens * time;

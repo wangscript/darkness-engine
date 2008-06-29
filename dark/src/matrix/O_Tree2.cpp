@@ -8,6 +8,8 @@
  *  $Id: O_Tree2.cpp 11 2007-08-31 12:03:10Z davorin $
  */
 
+#include "base.h"
+
 #include "O_Tree2.h"
 
 #include "World.h"

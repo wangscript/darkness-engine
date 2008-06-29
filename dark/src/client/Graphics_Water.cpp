@@ -8,6 +8,8 @@
  *  $Id: Graphics_Water.cpp 11 2007-08-31 12:03:10Z davorin $
  */
 
+#include "base.h"
+
 #include "Graphics_Water.h"
 
 #include "Translator.h"
