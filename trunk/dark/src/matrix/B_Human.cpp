@@ -8,6 +8,8 @@
  *  $Id: B_Human.cpp 11 2007-08-31 12:03:10Z davorin $
  */
 
+#include "base.h"
+
 #include "B_Human.h"
 
 #include "Translator.h"

@@ -8,6 +8,8 @@
  *  $Id: Graphics_Shape.cpp 11 2007-08-31 12:03:10Z davorin $
  */
 
+#include "base.h"
+
 #include "Graphics_Shape.h"
 
 namespace Dark

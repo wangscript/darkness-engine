@@ -8,6 +8,8 @@
  *  $Id: main.cpp 11 2007-08-31 12:03:10Z davorin $
  */
 
+#include "base.h"
+
 #include "Main.h"
 
 #include "Client.h"
@@ -221,19 +223,11 @@ namespace Dark
     // THE MAGNIFICANT MAIN LOOP
     do {
       // read input & events
-      input.mouse.x = 0;
-      input.mouse.y = 0;
-      input.mouse.b = 0;
       aCopy( input.keys, input.currKeys, SDLK_LAST );
+      input.mouse.b = SDL_GetRelativeMouseState( &input.mouse.x, &input.mouse.y );
 
       while( SDL_PollEvent( &event ) ) {
         switch( event.type ) {
-          case SDL_MOUSEMOTION: {
-            input.mouse.x = event.motion.xrel;
-            input.mouse.y = event.motion.yrel;
-            SDL_WarpMouse( screenCenterX, screenCenterY );
-            break;
-          }
           case SDL_KEYDOWN: {
             input.keys[event.key.keysym.sym] |= SDL_PRESSED;
             break;

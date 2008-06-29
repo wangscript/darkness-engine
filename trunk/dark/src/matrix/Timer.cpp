@@ -8,6 +8,8 @@
  *  $Id: Timer.cpp 11 2007-08-31 12:03:10Z davorin $
  */
 
+#include "base.h"
+
 #include "Timer.h"
 
 namespace Dark
