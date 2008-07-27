@@ -114,7 +114,7 @@ namespace Dark
     if( input.keys[SDLK_h] ) {
       camera.player->keys |= Bot::KEY_GESTURE1;
     }
-    if( input.keys[SDLK_p] ) {
+    if( input.keys[SDLK_LSHIFT] ) {
       camera.player->keys |= Bot::KEY_STEP;
     }
 

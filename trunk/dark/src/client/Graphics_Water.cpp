@@ -28,10 +28,10 @@ namespace Graphics
   const float Water::TEX_STRETCH = 8.0;
   const float Water::TEX_BIAS = 0.5;
 
-  const float Water::ALPHA = 0.85;
+  const float Water::ALPHA = 0.75;
 
   const float Water::COLOR[] = { 0.0, 0.05, 0.25, 1.0 };
-  const float Water::VISIBILITY = 10.0;
+  const float Water::VISIBILITY = 8.0;
 
   void Water::init()
   {
@@ -70,7 +70,7 @@ namespace Graphics
     glBindTexture( GL_TEXTURE_2D, texture );
 
     if( isInside ) {
-      glColor4f( 1.0, 1.0, 1.0, 1.0 );
+      glColor4f( 1.0, 1.0, 1.0, alpha1 );
 
       glBegin( GL_QUADS );
         glNormal3f( 0.0, 0.0, -1.0 );
@@ -84,7 +84,7 @@ namespace Graphics
         glVertex3f( x1, y1, z1 );
       glEnd();
 
-      glColor4f( 1.0, 1.0, 1.0, 1.0 - ratio );
+      glColor4f( 1.0, 1.0, 1.0, alpha2 );
 
       glBegin( GL_QUADS );
       glNormal3f( 0.0, 0.0, -1.0 );

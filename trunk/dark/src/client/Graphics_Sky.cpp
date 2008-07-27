@@ -46,7 +46,7 @@ namespace Graphics
     float angle = 2.0 * Math::PI * ( world.sky.time / world.sky.period );
     Vec3  dir = Quat::rotAxis( axis, angle ).rotate( originalLightDir );
 
-    float ratio = bound( dir.z + 0.5, 0.0, 1.0 );
+    float ratio = bound( dir.z, 0.0, 1.0 );
     float ratio1 = 1.0 - ratio;
     float ratioDiff = ( 1.0 - abs( ratio - ratio1 ) );
 

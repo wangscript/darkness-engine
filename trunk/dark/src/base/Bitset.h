@@ -119,8 +119,8 @@ namespace Dark
       }
 
       /*
-      * Set bits from inclusevly "start" to non-inclusevly "end" to 1
-      */
+       * Set bits from inclusively "start" to non-inclusively "end" to 1
+       */
       void set( int start, int end )
       {
         assert( 0 <= start && start <= end && end <= ( size * ULONG_BITSIZE ) );
@@ -148,8 +148,8 @@ namespace Dark
       }
 
       /*
-      * Set bits from inclusevly "start" to non-inclusevly "end" to 0
-      */
+       * Set bits from inclusevly "start" to non-inclusevly "end" to 0
+       */
       void clear( int start, int end )
       {
         assert( 0 <= start && start <= end && end <= ( size * ULONG_BITSIZE ) );

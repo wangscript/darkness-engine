@@ -37,6 +37,9 @@ namespace Graphics
 
       static const float GLOBAL_AMBIENT[];
 
+      static const float NIGHT_FOG_COEFF;
+      static const float NIGHT_FOG_DIST;
+
       Font          font;
 
       Terrain       terra;

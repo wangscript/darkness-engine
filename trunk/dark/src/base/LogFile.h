@@ -25,7 +25,7 @@ namespace Dark
 
     public:
       /*
-       * first parameter is file name ( if "stdout", it writes to stdout ), the other tells us
+       * first parameter is file name (if NULL, it writes to stdout), the other tells us
        * if we want to clear its content if the file already exists
        */
       bool init( const char *fileName, bool clearFile = true, const char *indentStr = "  " );
