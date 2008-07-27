@@ -16,7 +16,7 @@
 #define DARK_APP_NAME            "Darkness"
 #define DARK_WM_TITLE            DARK_APP_NAME
 #define DARK_RC_DIR              ".dark/"
-#define DARK_LOG_FILE            "log"
+//#define DARK_LOG_FILE            "log"
 #define DARK_CONFIG_FILE         "config.xml"
 
 namespace Dark
@@ -26,13 +26,13 @@ namespace Dark
   {
     private:
 
-      static const int INIT_SDL = 0x1;
-      static const int INIT_SDLVIDEO = 0x2;
-      static const int INIT_GL = 0x4;
-      static const int INIT_SOUND = 0x8;
-      static const int INIT_MATRIX = 0x10;
-      static const int INIT_NIRVANA = 0x20;
-      static const int INIT_RENDER = 0x40;
+      static const int INIT_SDL = 0x01;
+      static const int INIT_SDL_VIDEO = 0x02;
+      static const int INIT_RENDER_INIT = 0x04;
+      static const int INIT_SOUND = 0x08;
+      static const int INIT_CLIENT_INIT = 0x10;
+      static const int INIT_RENDER_LOAD = 0x20;
+      static const int INIT_CLIENT_START = 0x40;
 
       int initFlags;
 
@@ -41,7 +41,7 @@ namespace Dark
 
     public:
 
-      int main( int argc, char *argv[] );
+      void main();
   };
 
   extern Main main;

@@ -40,7 +40,7 @@ namespace Dark
     config.add( "screen.full",                        "0" );
 
     config.add( "sound.volume.effects",               "1.0" );
-    config.add( "sound.volume.music",                 "0.5" );
+    config.add( "sound.volume.music",                 "1.0" );
 
     // SDL_mixer
 #ifdef __WIN32__
@@ -72,13 +72,45 @@ namespace Dark
 
   void Main::shutdown()
   {
-
+    if( initFlags & INIT_CLIENT_START ) {
+      logFile.println( "Stopping Game {" );
+      logFile.indent();
+      client.stop();
+      logFile.unindent();
+      logFile.println( "}" );
+    }
+    if( initFlags & INIT_RENDER_INIT ) {
+      logFile.println( "Shutting down Graphics {" );
+      logFile.indent();
+      Graphics::render.free();
+      logFile.unindent();
+      logFile.println( "}" );
+    }
+    if( initFlags & INIT_SOUND ) {
+      logFile.println( "Shutting down Sound {" );
+      logFile.indent();
+      soundManager.free();
+      logFile.unindent();
+      logFile.println( "}" );
+    }
+    if( initFlags & INIT_CLIENT_INIT ) {
+      logFile.println( "Shutting down Game {" );
+      logFile.indent();
+      client.free();
+      logFile.unindent();
+      logFile.println( "}" );
+    }
+    if( initFlags & INIT_SDL ) {
+      logFile.print( "Shutting down SDL ..." );
+      SDL_Quit();
+      logFile.printRaw( " OK" );
+    }
+    logFile.printlnETD( "%s finished on", DARK_APP_NAME );
+    exit( 0 );
   }
 
-  int Main::main( int argc, char *argv[] )
+  void Main::main()
   {
-    // shut up, compiler!
-    argc = (long) argv[0];
     Math::init();
 
     const char *homeVar = getenv( "HOME" );
@@ -90,7 +122,7 @@ namespace Dark
 
       if( mkdir( home.cstr(), S_IRUSR | S_IWUSR | S_IXUSR ) ) {
         printf( " Failed\n" );
-        exit( 1 );
+        shutdown();
       }
       printf( " OK\n" );
     }
@@ -100,7 +132,7 @@ namespace Dark
 
     if( !logFile.init( logPath, true, "  " ) ) {
       printf( "Can't create/open log file '%s' for writing\n", logPath.cstr() );
-      exit( 1 );
+      shutdown();
     }
     logFile.println( "Log file '%s'", logPath.cstr() );
     printf( "Log file '%s'\n", logPath.cstr() );
@@ -112,10 +144,14 @@ namespace Dark
     logFile.printlnETD( "%s started on", DARK_APP_NAME );
 
     logFile.print( "Initializing SDL ..." );
-    SDL_Init( SDL_INIT_VIDEO );
-    atexit(SDL_Quit);
+    if( SDL_Init( SDL_INIT_VIDEO ) ) {
+      logFile.printRaw( " Failed\n" );
+      shutdown();
+    }
     input.currKeys = SDL_GetKeyState( null );
     logFile.printRaw( " OK\n" );
+
+    initFlags |= INIT_SDL;
 
     logFile.print( "Loading default config ..." );
     defaultConfig();
@@ -131,7 +167,7 @@ namespace Dark
 
       if( !config.save( configPath ) ) {
         printf( " Failed\n" );
-        exit( 1 );
+        shutdown();
       }
       printf( " OK\n" );
 
@@ -145,6 +181,7 @@ namespace Dark
 
     if( chdir( data ) != 0 ) {
       logFile.printRaw(" Failed\n");
+      shutdown();
     }
     else {
       logFile.printRaw(" OK\n");
@@ -155,9 +192,6 @@ namespace Dark
     int screenBpp  = atoi( config["screen.bpp"] );
     int screenFull = config["screen.full"] == "1" ? SDL_FULLSCREEN : 0;
 
-    int screenCenterX = screenX / 2;
-    int screenCenterY = screenY / 2;
-
     logFile.print( "Setting OpenGL surface %dx%d %dbpp %s ...",
                    screenX, screenY, screenBpp, screenFull ? "fullscreen" : "windowed" );
 
@@ -166,9 +200,13 @@ namespace Dark
     }
     SDL_WM_SetCaption( DARK_WM_TITLE, null );
     SDL_ShowCursor( false );
-    SDL_SetVideoMode( screenX, screenY, screenBpp, SDL_OPENGL | screenFull );
 
+    if( SDL_SetVideoMode( screenX, screenY, screenBpp, SDL_OPENGL | screenFull ) == null ) {
+      logFile.printRaw( " Failed\n" );
+      shutdown();
+    }
     logFile.printRaw( " OK\n" );
+    initFlags |= INIT_SDL_VIDEO;
 
     logFile.println( "Initializing Graphics {" );
     logFile.indent();
@@ -176,36 +214,40 @@ namespace Dark
     logFile.unindent();
     logFile.println( "}" );
 
+    initFlags |= INIT_RENDER_INIT;
+
     logFile.println( "Initializing Sound {" );
     logFile.indent();
 
     if( !soundManager.init() ) {
-      client.free();
-      SDL_ShowCursor( true );
-      SDL_Quit();
+      shutdown();
     }
-    soundManager.loadMusic( "music/voyager.ogg" );
+//     soundManager.loadMusic( "music/music.ogg" );
 
     logFile.unindent();
     logFile.println( "}" );
+    initFlags |= INIT_SOUND;
 
     logFile.println( "Initializing Game {" );
     logFile.indent();
     client.init();
     logFile.unindent();
     logFile.println( "}" );
+    initFlags |= INIT_CLIENT_INIT;
 
     logFile.println( "Loading Graphics {" );
     logFile.indent();
     Graphics::render.load();
     logFile.unindent();
     logFile.println( "}" );
+    initFlags |= INIT_RENDER_LOAD;
 
     logFile.println( "Starting Game {" );
     logFile.indent();
     client.start();
     logFile.unindent();
     logFile.println( "}" );
+    initFlags |= INIT_CLIENT_START;
 
     logFile.println( "MAIN LOOP {" );
     logFile.indent();
@@ -272,41 +314,18 @@ namespace Dark
     logFile.unindent();
     logFile.println( "}" );
 
-    logFile.println( "Stopping Game {" );
-    logFile.indent();
-    client.stop();
-    logFile.unindent();
-    logFile.println( "}" );
-
     logFile.println( "Average framerate: %g",
-        (float) nFrames / (float) ( timeLast - timeZero ) * 1000.0 );
-
-    logFile.println( "Shutting down Graphics {" );
-    logFile.indent();
-    Graphics::render.free();
-    logFile.unindent();
-    logFile.println( "}" );
-
-    logFile.println( "Shutting down Sound {" );
-    logFile.indent();
-    soundManager.free();
-    logFile.unindent();
-    logFile.println( "}" );
-
-    logFile.println( "Shutting down Game {" );
-    logFile.indent();
-    client.free();
-    logFile.unindent();
-    logFile.println( "}" );
-
-    logFile.printlnETD( "%s finished on", DARK_APP_NAME );
-
-    return 0;
+                     (float) nFrames / (float) ( timeLast - timeZero ) * 1000.0 );
+    shutdown();
   }
 
 }
 
 int main( int argc, char *argv[] )
 {
-  return Dark::main.main( argc, argv );
+  // shut up. compiler!
+  argc = (int) argv;
+
+  Dark::main.main();
+  return 0;
 }

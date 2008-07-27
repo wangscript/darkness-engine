@@ -36,7 +36,9 @@ namespace Graphics
 
     public:
 
+      // sky color
       float color[4];
+
       float lightDir[4];
       float diffuseColor[4];
       float ambientColor[4];

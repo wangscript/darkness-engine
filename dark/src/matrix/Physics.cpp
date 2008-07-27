@@ -377,9 +377,8 @@ namespace Dark
         bool isOnFloor = obj->flags & Object::ON_FLOOR_BIT;
         bool isOnStillObject = obj->lower > 0 &&
             ( (DynObject*) world.objects[obj->lower] )->newVelocity.isZero();
-        bool isInWaterBalanced = ( obj->flags & Object::UNDER_WATER_BIT ) && obj->lift == 0.0;
 
-        if( isStill && ( isOnFloor || isOnStillObject || isInWaterBalanced ) ) {
+        if( isStill && ( isOnFloor || isOnStillObject ) ) {
           obj->flags |= Object::DISABLED_BIT;
           obj->frictEnd();
         }

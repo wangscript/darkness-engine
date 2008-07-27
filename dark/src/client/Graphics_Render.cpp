@@ -41,7 +41,10 @@ namespace Graphics
   const float Render::BLACK[] = { 0.0, 0.0, 0.0, 1.0 };
   const float Render::WHITE[] = { 1.0, 1.0, 1.0, 1.0 };
 
-  const float Render::GLOBAL_AMBIENT[] = { 0.3, 0.3, 0.3, 1.0 };
+  const float Render::GLOBAL_AMBIENT[] = { 0.2, 0.2, 0.2, 1.0 };
+
+  const float Render::NIGHT_FOG_COEFF = 2.0;
+  const float Render::NIGHT_FOG_DIST = 0.3;
 
   void Render::init()
   {
@@ -295,19 +298,15 @@ namespace Graphics
       if( !wasUnderWater ) {
         glClearColor( water.COLOR[0], water.COLOR[1], water.COLOR[2], water.COLOR[3] );
         glFogfv( GL_FOG_COLOR, water.COLOR );
-
-        glFogf( GL_FOG_START, 0.0 );
         glFogf( GL_FOG_END, Water::VISIBILITY );
       }
     }
     else {
+      // we have to set this every time, since sky color changes all the time
       glClearColor( sky.color[0], sky.color[1], sky.color[2], sky.color[3] );
       glFogfv( GL_FOG_COLOR, sky.color );
-
-      if( wasUnderWater ) {
-        glFogf( GL_FOG_START, 50.0 );
-        glFogf( GL_FOG_END, perspectiveMax );
-      }
+      glFogf( GL_FOG_END,
+              bound( NIGHT_FOG_COEFF * sky.lightDir[2], NIGHT_FOG_DIST, 1.0 ) * perspectiveMax );
     }
     // clear buffer
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );

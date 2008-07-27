@@ -43,7 +43,7 @@ namespace Dark
 
     physics.init( G_ACCEL );
 
-    world.sky.init( 70.0, 60.0 );
+    world.sky.init( 70.0, 600.0 );
     world.terrain.loadIMG( "terra/heightmap.png" );
 
     world.add( new BSP() );
