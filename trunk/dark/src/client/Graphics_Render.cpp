@@ -8,7 +8,7 @@
  *  $Id: Graphics_Render.cpp 11 2007-08-31 12:03:10Z davorin $
  */
 
-#include "base.h"
+#include "precompiled.h"
 
 #include "Graphics_Render.h"
 
@@ -24,9 +24,6 @@
 #include "Graphics_BSP.h"
 
 #include "B_Goblin.h"
-
-#include <SDL/SDL.h>
-#include <SDL/SDL_opengl.h>
 
 namespace Dark
 {
@@ -91,7 +88,7 @@ namespace Graphics
 
     // fog
     glFogi( GL_FOG_MODE, GL_LINEAR );
-    glFogf( GL_FOG_START, 50.0 );
+    glFogf( GL_FOG_START, 0.0 );
     glFogf( GL_FOG_END, perspectiveMax );
 
     // lighting

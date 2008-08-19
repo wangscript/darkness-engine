@@ -44,7 +44,7 @@ namespace Dark
         }
       }
 
-      Elem *copyChain( Elem *chain ) const
+      Elem *copyChain( const Elem *chain ) const
       {
         if( chain != null ) {
           return new Elem( chain->key, chain->value, copyChain( chain->next ) );
@@ -54,7 +54,7 @@ namespace Dark
         }
       }
 
-      void freeChain( Elem *chain )
+      void freeChain( const Elem *chain ) const
       {
         if( chain->next != null ) {
           freeChain( chain->next );

@@ -11,7 +11,6 @@
 #ifndef _Sky_h_
 #define _Sky_h_
 
-#include "base.h"
 #include "Timer.h"
 
 namespace Dark

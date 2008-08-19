@@ -11,8 +11,6 @@
 #ifndef _Translator_h_
 #define _Translator_h_
 
-#include "base.h"
-
 namespace Dark
 {
 
@@ -62,6 +60,7 @@ namespace Dark
   enum ObjectEnum
   {
     WATER,
+    LADDER,
 
     O_TREE1,
     O_TREE2,

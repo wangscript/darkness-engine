@@ -8,13 +8,11 @@
  *  $Id: BSP.cpp 11 2007-08-31 12:03:10Z davorin $
  */
 
-#include "base.h"
+#include "precompiled.h"
 
 #include "BSP.h"
 
 #include "Translator.h"
-
-#include <stdio.h>
 
 #define fourC( a, b, c, d ) \
   ( ( a ) | ( ( b ) << 8 ) | ( ( c ) <<16 ) | ( ( d ) << 24 ) )

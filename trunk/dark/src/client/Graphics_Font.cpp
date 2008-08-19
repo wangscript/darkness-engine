@@ -8,13 +8,11 @@
  *  $Id: Graphics_Font.cpp 11 2007-08-31 12:03:10Z davorin $
  */
 
-#include "base.h"
+#include "precompiled.h"
 
 #include "Graphics_Font.h"
 
 #include <string.h>
-#include <SDL/SDL_opengl.h>
-#include <SDL/SDL_image.h>
 
 namespace Dark
 {

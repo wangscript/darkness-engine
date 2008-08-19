@@ -11,8 +11,6 @@
 #ifndef _Sector_h_
 #define _Sector_h_
 
-#include "base.h"
-
 namespace Dark
 {
 

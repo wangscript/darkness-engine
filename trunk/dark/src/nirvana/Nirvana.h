@@ -11,16 +11,12 @@
 #ifndef _Nirvana_h_
 #define _Nirvana_h_
 
-#include "base.h"
-
 #include "Soul.h"
 #include "Mind.h"
 
 #include "Matrix.h"
 
 #include "M_Walker.h"
-
-#include <SDL/SDL.h>
 
 namespace Dark
 {

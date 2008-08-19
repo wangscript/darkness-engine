@@ -1,17 +1,75 @@
 /*
  *  base.h
  *
- *  Common include file. Wrapper for "precompiled.h".
- *  Warning: DOES NOT WORK with "-g3" gcc flag. Use -g instead.
+ *  Common include file.
+ *  It is included in "precompiled.h", so include the latter instead of this file for faster
+ *  compiling.
  *
  *  Copyright (C) 2002-2007, Davorin Učakar <davorin.ucakar@gmail.com>
  *
- *  $Id: base.h 11 2007-08-31 12:03:10Z davorin $
+ *  $Id: precompiled.h 11 2007-08-31 12:03:10Z davorin $
  */
 
 #ifndef _Dark_base_h_
 #define _Dark_base_h_
 
-#include "precompiled.h"
+// defining NDEBUG disables assert macro
+// #define NDEBUG
+
+#define DARK_FLOAT_SCALAR 1
+
+#include <assert.h>
+#include <math.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+/*
+ *  Basic definitons and template functions
+ */
+#include "common.h"
+
+/*
+ *  Reuser base class for improved memory management (reusing freed blocks)
+ */
+#include "Reuser.h"
+
+/*
+ *  Containers
+ */
+#include "Vector.h"
+#include "SVector.h"
+
+#include "List.h"
+#include "DList.h"
+
+/*
+ *  String
+ */
+#include "String.h"
+
+/*
+ *  Containers 2
+ */
+#include "Bitset.h"
+#include "HashIndex.h"
+#include "HashString.h"
+
+/*
+ *  Math
+ */
+#include "Math.h"
+
+#include "Vec3.h"
+#include "Quat.h"
+#include "Mat33.h"
+#include "Mat44.h"
+
+/*
+ *  Utilities
+ */
+#include "LogFile.h"
+#include "Config.h"
 
 #endif // _Dark_base_h_

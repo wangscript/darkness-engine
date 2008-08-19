@@ -11,8 +11,6 @@
 #ifndef _Graphics_Context_h_
 #define _Graphics_Context_h_
 
-#include "base.h"
-
 namespace Dark
 {
 namespace Graphics

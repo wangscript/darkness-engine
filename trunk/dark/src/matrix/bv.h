@@ -11,8 +11,6 @@
 #ifndef _bv_h_
 #define _bv_h_
 
-#include "base.h"
-
 // 0.1 mm
 #define EPSILON ( 0.0001 )
 
