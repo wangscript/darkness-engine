@@ -8,15 +8,11 @@
  *  $Id: Graphics_Terrain.cpp 11 2007-08-31 12:03:10Z davorin $
  */
 
-#include "base.h"
+#include "precompiled.h"
 
 #include "Graphics_Terrain.h"
 
 #include "World.h"
-
-#include <assert.h>
-#include <SDL/SDL_opengl.h>
-#include <SDL/SDL_image.h>
 
 #ifdef __WIN32__
 

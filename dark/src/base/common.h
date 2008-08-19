@@ -20,13 +20,13 @@
 
 #define null 0
 
-typedef unsigned char  uchar;
-typedef unsigned short ushort;
-typedef unsigned int   uint;
-typedef unsigned long  ulong;
-
 namespace Dark
 {
+
+  typedef unsigned char  uchar;
+  typedef unsigned short ushort;
+  typedef unsigned int   uint;
+  typedef unsigned long  ulong;
 
 #ifdef DARK_FLOAT_SCALAR
   typedef float scalar;

@@ -11,8 +11,6 @@
 #ifndef _Main_h_
 #define _Main_h_
 
-#include "base.h"
-
 #define DARK_APP_NAME            "Darkness"
 #define DARK_WM_TITLE            DARK_APP_NAME
 #define DARK_RC_DIR              ".dark/"

@@ -11,8 +11,6 @@
 #ifndef _Terrain_h_
 #define _Terrain_h_
 
-#include "base.h"
-
 namespace Dark
 {
 

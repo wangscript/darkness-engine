@@ -11,7 +11,7 @@
 #ifndef _Graphics_Sky_h_
 #define _Graphics_Sky_h_
 
-#include "base.h"
+#include "precompiled.h"
 
 namespace Dark
 {

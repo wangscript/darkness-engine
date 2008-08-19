@@ -8,14 +8,12 @@
  *  $Id: Graphics_BSP.cpp 11 2007-08-31 12:03:10Z davorin $
  */
 
-#include "base.h"
+#include "precompiled.h"
 
 #include "Graphics_BSP.h"
 
 #include "BSP.h"
 #include "Graphics_Frustum.h"
-
-#include <SDL/SDL_opengl.h>
 
 #ifdef __WIN32__
 

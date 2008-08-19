@@ -8,13 +8,9 @@
  *  $Id: Graphics_MD2.cpp 11 2007-08-31 12:03:10Z davorin $
  */
 
-#include "base.h"
+#include "precompiled.h"
 
 #include "Graphics_MD2.h"
-
-#include <assert.h>
-#include <stdio.h>
-#include <SDL/SDL_opengl.h>
 
 #define MD2_ID                  ( ( '2' << 24 ) | ( 'P' << 16 ) | ( 'D' << 8 ) | 'I' )
 #define MD2_VERSION             8

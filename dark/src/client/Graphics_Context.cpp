@@ -8,14 +8,11 @@
  *  $Id: Graphics_Context.cpp 11 2007-08-31 12:03:10Z davorin $
  */
 
-#include "base.h"
+#include "precompiled.h"
 
 #include "Graphics_Context.h"
 
 #include "Translator.h"
-
-#include <SDL/SDL_opengl.h>
-#include <SDL/SDL_image.h>
 
 namespace Dark
 {

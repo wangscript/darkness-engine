@@ -11,8 +11,6 @@
 #ifndef _Sound_h_
 #define _Sound_h_
 
-#include "base.h"
-
 namespace Dark
 {
 

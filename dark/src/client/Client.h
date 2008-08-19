@@ -11,10 +11,6 @@
 #ifndef _Client_h_
 #define _Client_h_
 
-#include "base.h"
-
-#include <SDL/SDL.h>
-
 namespace Dark
 {
 

@@ -11,8 +11,6 @@
 #ifndef _Graphics_Font_h_
 #define _Graphics_Font_h_
 
-#include "base.h"
-
 #define FONT_BIAS_X     0.01f
 #define FONT_BIAS_Y     0
 #define FONT_WIDTH      0.65f

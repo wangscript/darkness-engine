@@ -11,8 +11,6 @@
 #ifndef _Hit_h_
 #define _Hit_h_
 
-#include "base.h"
-
 namespace Dark
 {
 
