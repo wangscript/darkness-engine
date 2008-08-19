@@ -5,7 +5,7 @@
  *
  *  Copyright (C) 2002-2007, Davorin Učakar <davorin.ucakar@gmail.com>
  *
- *  $Id: main.cpp 11 2007-08-31 12:03:10Z davorin $
+ *  $Id$
  */
 
 #include "precompiled.h"
@@ -78,18 +78,18 @@ namespace Dark
       logFile.println( "}" );
     }
     if( initFlags & INIT_RENDER_INIT ) {
-      logFile.println( "Shutting down Graphics {" );
+      logFile.print( "Shutting down Graphics ..." );
       logFile.indent();
       Graphics::render.free();
       logFile.unindent();
-      logFile.println( "}" );
+      logFile.printRaw( " OK\n" );
     }
     if( initFlags & INIT_SOUND ) {
-      logFile.println( "Shutting down Sound {" );
+      logFile.print( "Shutting down Sound ..." );
       logFile.indent();
       soundManager.free();
       logFile.unindent();
-      logFile.println( "}" );
+      logFile.printRaw( " OK\n" );
     }
     if( initFlags & INIT_CLIENT_INIT ) {
       logFile.println( "Shutting down Game {" );
@@ -101,7 +101,7 @@ namespace Dark
     if( initFlags & INIT_SDL ) {
       logFile.print( "Shutting down SDL ..." );
       SDL_Quit();
-      logFile.printRaw( " OK" );
+      logFile.printRaw( " OK\n" );
     }
     logFile.printlnETD( "%s finished on", DARK_APP_NAME );
     exit( 0 );

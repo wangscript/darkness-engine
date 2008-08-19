@@ -5,7 +5,7 @@
  *
  *  Copyright (C) 2002-2007, Davorin Učakar <davorin.ucakar@gmail.com>
  *
- *  $Id: Graphics_Render.h 11 2007-08-31 12:03:10Z davorin $
+ *  $Id$
  */
 
 #ifndef _Graphics_Render_h_
@@ -14,6 +14,7 @@
 #include "World.h"
 
 #include "Graphics_Font.h"
+#include "Graphics_BSP.h"
 #include "Graphics_Terrain.h"
 #include "Graphics_MD2.h"
 #include "Graphics_Model.h"
@@ -44,7 +45,7 @@ namespace Graphics
 
       Terrain       terra;
 
-      Vector<uint>  bsps;
+      Vector<BSP*>  bsps;
       Bitset        drawnStructures;
 
       Vector<uint>  lists;
