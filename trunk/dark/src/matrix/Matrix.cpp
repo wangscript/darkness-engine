@@ -5,7 +5,7 @@
  *
  *  Copyright (C) 2002-2007, Davorin Učakar <davorin.ucakar@gmail.com>
  *
- *  $Id: Matrix.cpp 11 2007-08-31 12:03:10Z davorin $
+ *  $Id$
  */
 
 #include "precompiled.h"
@@ -42,6 +42,7 @@ namespace Dark
     physics.init( G_ACCEL );
 
     world.sky.init( 70.0, 600.0 );
+    world.sky.time = 200.0;
     world.terrain.loadIMG( "terra/heightmap.png" );
 
     world.add( new BSP() );

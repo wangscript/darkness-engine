@@ -5,7 +5,7 @@
  *
  *  Copyright (C) 2002-2007, Davorin Učakar <davorin.ucakar@gmail.com>
  *
- *  $Id: Graphics_Render.cpp 11 2007-08-31 12:03:10Z davorin $
+ *  $Id$
  */
 
 #include "precompiled.h"
@@ -66,7 +66,8 @@ namespace Graphics
     glViewport( 0, 0, screenX, screenY );
     glMatrixMode( GL_PROJECTION );
       glLoadIdentity();
-      gluPerspective( perspectiveAngle, perspectiveAspect, perspectiveMin, perspectiveMax );
+      //gluPerspective( perspectiveAngle, perspectiveAspect, perspectiveMin, perspectiveMax );
+      gluPerspective( 150, perspectiveAspect, perspectiveMin, perspectiveMax );
     glMatrixMode( GL_MODELVIEW );
 
     glLoadIdentity();
@@ -114,10 +115,7 @@ namespace Graphics
                 context.loadTexture( "terra/detail.jpg", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR, true ) );
 
     for( int i = 0; i < world.bsps.length(); i++ ) {
-      BSP *bsp = new BSP( world.bsps[i] );
-
-      bsps << bsp->genList();
-      delete bsp;
+      bsps << new BSP( world.bsps[i] );
     }
 
     lists << shape.genBox( AABB( Vec3::zero(), Vec3( 0.01, 0.01, 0.01 ) ), 0 );
@@ -325,10 +323,7 @@ namespace Graphics
     for( int i = 0; i < structures.length(); i++ ) {
       Structure *str = structures[i];
 
-      glPushMatrix();
-        glTranslatef( str->p.x, str->p.y, str->p.z );
-        glCallList( bsps[str->bsp] );
-      glPopMatrix();
+      bsps[str->bsp]->draw( str->p );
     }
     structures.clear();
 
@@ -448,6 +443,7 @@ namespace Graphics
   void Render::free()
   {
     md2s.free();
+    bsps.free();
     context.free();
   }
 
