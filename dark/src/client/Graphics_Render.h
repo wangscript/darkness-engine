@@ -3,7 +3,7 @@
  *
  *  Graphics render engine
  *
- *  Copyright (C) 2002-2007, Davorin Učakar <davorin.ucakar@gmail.com>
+ *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
  *  $Id$
  */
@@ -18,6 +18,7 @@
 #include "Graphics_Terrain.h"
 #include "Graphics_MD2.h"
 #include "Graphics_Model.h"
+#include "Graphics_SparkGen.h"
 
 namespace Dark
 {
@@ -29,6 +30,7 @@ namespace Graphics
     protected:
 
       static const int MODEL_HT_SIZE = 4096;
+      static const int SPARKGEN_HT_SIZE = 4096;
 
       static const float RELEASED_CULL_FACTOR;
       static const float INCH;
@@ -51,7 +53,9 @@ namespace Graphics
       Vector<uint>  lists;
 
       Vector<MD2*>  md2s;
+      Vector<SparkGen*>  sparkGens;
       HashIndex<Model, MODEL_HT_SIZE> models;
+      HashIndex<SparkGen, SPARKGEN_HT_SIZE> sparkGens;
 
       Vector<Structure*> structures;
       Vector<Object*>    objects;

@@ -8,6 +8,8 @@
  *  $Id$
  */
 
+#include "precompiled.h"
+
 #include "$MODULE$.h"
 
 namespace Dark

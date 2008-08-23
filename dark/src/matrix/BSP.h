@@ -3,7 +3,7 @@
  *
  *  Data structure and loaders for Internal BSP, Quake3 BSP and OpenBSP formats
  *
- *  Copyright (C) 2002-2007, Davorin Učakar <davorin.ucakar@gmail.com>
+ *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
  *  $Id$
  */

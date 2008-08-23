@@ -3,7 +3,7 @@
  *
  *  BSP level rendering class
  *
- *  Copyright (C) 2002-2007, Davorin Učakar <davorin.ucakar@gmail.com>
+ *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
  *  $Id$
  */
@@ -16,10 +16,8 @@
 #include "Graphics_Frustum.h"
 
 #ifdef __WIN32__
-
 static PFNGLACTIVETEXTUREPROC glActiveTexture = null;
 static PFNGLCLIENTACTIVETEXTUREPROC glClientActiveTexture = null;
-
 #endif
 
 namespace Dark
@@ -90,7 +88,8 @@ namespace Graphics
 #ifdef __WIN32__
     if( glActiveTexture == null ) {
       glActiveTexture = (PFNGLACTIVETEXTUREPROC) SDL_GL_GetProcAddress( "glActiveTexture" );
-      glClientActiveTexture = (PFNGLCLIENTACTIVETEXTUREPROC) SDL_GL_GetProcAddress( "glClientActiveTexture" );
+      glClientActiveTexture = (PFNGLCLIENTACTIVETEXTUREPROC)
+          SDL_GL_GetProcAddress( "glClientActiveTexture" );
     }
 #endif
 
@@ -154,6 +153,7 @@ namespace Graphics
     drawnFaces = hiddenFaces;
 
     int    cluster = bsp->leafs[ getLeafIndex( camera.p ) ].cluster;
+//     printf( "%d\n", getLeafIndex( camera.p ) );
     Bitset &bitset = bsp->visual.bitsets[cluster];
 
     for( int i = 0; i < bsp->nLeafs; i++ ) {

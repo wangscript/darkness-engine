@@ -3,7 +3,7 @@
  *
  *  Game initialization and main loop
  *
- *  Copyright (C) 2002-2007, Davorin Učakar <davorin.ucakar@gmail.com>
+ *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
  *  $Id$
  */
@@ -34,7 +34,7 @@ namespace Dark
     config.add( "screen.width",                       String( screen->current_w ).cstr() );
     config.add( "screen.height",                      String( screen->current_h ).cstr() );
     config.add( "screen.bpp",                         String( screen->vfmt->BitsPerPixel ).cstr() );
-    config.add( "screen.vsync",                       "1" );
+    config.add( "screen.nvVSync",                     "1" );
     config.add( "screen.full",                        "0" );
 
     config.add( "sound.volume.effects",               "1.0" );
@@ -193,7 +193,7 @@ namespace Dark
     logFile.print( "Setting OpenGL surface %dx%d %dbpp %s ...",
                    screenX, screenY, screenBpp, screenFull ? "fullscreen" : "windowed" );
 
-    if( config["screen.vsync"] == "1" ) {
+    if( config["screen.nvVSync"] == "1" ) {
       putenv( (char*) "__GL_SYNC_TO_VBLANK=1" );
     }
     SDL_WM_SetCaption( DARK_WM_TITLE, null );

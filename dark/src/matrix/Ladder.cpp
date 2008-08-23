@@ -1,5 +1,5 @@
 /*
- *  Water.cpp
+ *  Ladder.cpp
  *
  *  [description]
  *
@@ -10,7 +10,7 @@
 
 #include "precompiled.h"
 
-#include "Water.h"
+#include "Ladder.h"
 
 #include "Collider.h"
 #include "DynObject.h"
@@ -18,9 +18,9 @@
 namespace Dark
 {
 
-  const char *Water::NAME = "Water";
+  const char *Ladder::NAME = "Ladder";
 
-  Water::Water( const Vec3 &p_, const Vec3 &dim_ )
+  Ladder::Ladder( const Vec3 &p_, const Vec3 &dim_ )
   {
     p = p_;
     dim = dim_;
@@ -30,10 +30,10 @@ namespace Dark
 
     damage = Math::INF;
 
-    model = LIST_WATER;
+    model = -1;
   }
 
-  void Water::onUpdate()
+  void Ladder::onUpdate()
   {
     Vector<Object*> objects;
     collider.getOverlaps( *this, &objects, null );
@@ -43,7 +43,6 @@ namespace Dark
       DynObject *obj = (DynObject*) objects[i];
 
       if( obj->flags & Object::DYNAMIC_BIT ) {
-        obj->setInWater( *this );
       }
     }
   }

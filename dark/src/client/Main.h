@@ -3,7 +3,7 @@
  *
  *  Game initialization and main loop
  *
- *  Copyright (C) 2002-2007, Davorin Učakar <davorin.ucakar@gmail.com>
+ *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
  *  $Id$
  */
@@ -14,7 +14,7 @@
 #define DARK_APP_NAME            "Darkness"
 #define DARK_WM_TITLE            DARK_APP_NAME
 #define DARK_RC_DIR              ".dark/"
-//#define DARK_LOG_FILE            "log"
+#define DARK_LOG_FILE            "log"
 #define DARK_CONFIG_FILE         "config.xml"
 
 namespace Dark

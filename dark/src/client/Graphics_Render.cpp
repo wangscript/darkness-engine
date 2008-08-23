@@ -3,7 +3,7 @@
  *
  *  Graphics render engine
  *
- *  Copyright (C) 2002-2007, Davorin Učakar <davorin.ucakar@gmail.com>
+ *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
  *  $Id$
  */
@@ -66,8 +66,8 @@ namespace Graphics
     glViewport( 0, 0, screenX, screenY );
     glMatrixMode( GL_PROJECTION );
       glLoadIdentity();
-      //gluPerspective( perspectiveAngle, perspectiveAspect, perspectiveMin, perspectiveMax );
-      gluPerspective( 150, perspectiveAspect, perspectiveMin, perspectiveMax );
+      gluPerspective( perspectiveAngle, perspectiveAspect, perspectiveMin, perspectiveMax );
+//       gluPerspective( 150, perspectiveAspect, perspectiveMin, perspectiveMax );
     glMatrixMode( GL_MODELVIEW );
 
     glLoadIdentity();
@@ -212,6 +212,27 @@ namespace Graphics
     glPopMatrix();
   }
 
+  void Render::drawSparkGen( SparkGen *sparkGen )
+  {
+    if( sparkGens.contains( (uint) obj ) ) {
+      Model &model = models.cachedValue();
+
+      // draw model
+      md2s[model.model]->draw( &model.anim );
+    }
+    else {
+      Model model( ~obj->model );
+
+      model.state = Model::UPDATED;
+
+        // generate & draw model
+      model.setAnim( obj->anim );
+      md2s[model.model]->draw( &model.anim );
+
+      models.add( (uint) obj, model );
+    }
+  }
+
   void Render::scheduleSector( int sectorX, int sectorY )
   {
     Sector &sector = world.sectors[sectorX][sectorY];
@@ -253,6 +274,13 @@ namespace Graphics
       if( frustum.isVisible( part->p, particleRadius ) ) {
         particles << part;
       }
+    }
+
+    for( SparkGen *sparkGen = sector.sparkGens.first();
+         sparkGen != null;
+         sparkGen = sparkGen->next[0] )
+    {
+      sparkGens << sparkGen;
     }
   }
 
@@ -363,6 +391,11 @@ namespace Graphics
       drawObject( blendedObjects[i] );
     }
     blendedObjects.clear();
+
+    for( int i = 0; i < sparkGens.length(); i++ ) {
+      sparkGens[i]->draw();
+    }
+    sparkGens.clear();
 
     // draw water
     for( int i = 0; i < waterObjects.length(); i++ ) {

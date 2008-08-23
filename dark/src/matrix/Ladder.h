@@ -1,5 +1,5 @@
 /*
- *  Water.h
+ *  Ladder.h
  *
  *  [description]
  *
@@ -8,8 +8,8 @@
  *  $Id$
  */
 
-#ifndef _Water_h_
-#define _Water_h_
+#ifndef _Ladder_h_
+#define _Ladder_h_
 
 #include "Object.h"
 #include "Translator.h"
@@ -17,7 +17,7 @@
 namespace Dark
 {
 
-  class Water : public Object
+  class Ladder : public Object
   {
     protected:
 
@@ -26,11 +26,11 @@ namespace Dark
     public:
 
       static const char *NAME;
-      static const int TYPE = WATER;
+      static const int TYPE = LADDER;
 
-      Water( const Vec3 &p, const Vec3 &dim );
+      Ladder( const Vec3 &p, const Vec3 &dim );
   };
 
 }
 
-#endif // _Water_h_
+#endif // _Ladder_h_

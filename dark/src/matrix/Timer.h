@@ -3,7 +3,7 @@
  *
  *  Timer utility
  *
- *  Copyright (C) 2002-2007, Davorin Učakar <davorin.ucakar@gmail.com>
+ *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
  *  $Id$
  */
@@ -22,13 +22,13 @@ namespace Dark
 
     public:
 
-      int   frameMilis;
-      int   milis;
+      int   frameMillis;
+      int   millis;
 
       float frameTime;
       float time;
 
-      void update( int frameMilis );
+      void update( int frameMillis );
   };
 
   extern Timer timer;
