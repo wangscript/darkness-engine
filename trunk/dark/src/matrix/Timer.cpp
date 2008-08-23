@@ -3,7 +3,7 @@
  *
  *  Timer utility
  *
- *  Copyright (C) 2002-2007, Davorin Učakar <davorin.ucakar@gmail.com>
+ *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
  *  $Id$
  */
@@ -17,13 +17,13 @@ namespace Dark
 
   Timer timer;
 
-  void Timer::update( int frameMilis_ )
+  void Timer::update( int frameMillis_ )
   {
-    frameMilis = frameMilis_;
-    frameTime  = frameMilis / 1000.0;
+    frameMillis = frameMillis_;
+    frameTime   = frameMillis / 1000.0;
 
-    milis      += frameMilis;
-    time       = milis / 1000.0;
+    millis      += frameMillis;
+    time        = millis / 1000.0;
   }
 
 }

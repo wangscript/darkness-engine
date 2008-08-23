@@ -1,15 +1,15 @@
 /*
- *  Graphics_SparkGen.h
+ *  Graphics_SparkGenRenderer.h
  *
  *  Visual particle generator
  *
- *  Copyright (C) 2002-2007, Davorin Učakar <davorin.ucakar@gmail.com>
+ *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
  *  $Id$
  */
 
-#ifndef _Graphics_SparkGen_h_
-#define _Graphics_SparkGen_h_
+#ifndef _Graphics_SparkGenRenderer_h_
+#define _Graphics_SparkGenRenderer_h_
 
 #include "World.h"
 
@@ -26,22 +26,28 @@ namespace Graphics
     float lifeTime;
   };
 
-  class SparkGen
+  class SparkGenRenderer
   {
     protected:
 
       Dark::SparkGen *sparkGen;
       Spark          *sparks;
+      float          startMillis;
+      float          sparksPerTick;
+      int            nSparks;
+
+      void createSpark( int i );
 
     public:
 
-      SparkGen( Dark::SparkGen *sparkGen );
-      ~SparkGen();
+      SparkGenRenderer( Dark::SparkGen *sparkGen );
+      ~SparkGenRenderer();
 
       void update();
+      void draw();
   };
 
 }
 }
 
-#endif // _Graphics_SparkGen_h_
+#endif // _Graphics_SparkGenRenderer_h_

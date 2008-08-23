@@ -5,7 +5,7 @@
  *  It is included in "precompiled.h", so include the latter instead of this file for faster
  *  compiling.
  *
- *  Copyright (C) 2002-2007, Davorin Učakar <davorin.ucakar@gmail.com>
+ *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
  *  $Id$
  */

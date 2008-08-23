@@ -3,7 +3,7 @@
  *
  *  [description]
  *
- *  Copyright (C) 2002-2007, Davorin Učakar <davorin.ucakar@gmail.com>
+ *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
  *  $Id$
  */
@@ -259,7 +259,7 @@ namespace Dark
       }
       clearCount -= CLEAR_INTERVAL;
     }
-    clearCount += timer.frameMilis;
+    clearCount += timer.frameMillis;
 
     updateMusic();
   }
