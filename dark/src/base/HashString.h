@@ -282,7 +282,10 @@ namespace Dark
 
         int i = hash( key ) % SIZE;
 
-        data[i] = new Elem( key, value, data[i] );
+        Elem *elem = new Elem( key, value, data[i] );
+
+        data[i] = elem;
+        cached = elem;
       }
 
       void remove( const String &key )

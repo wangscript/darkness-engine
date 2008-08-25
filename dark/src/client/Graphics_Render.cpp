@@ -183,15 +183,15 @@ namespace Graphics
         md2s[model.model]->draw( &model.anim );
       }
       else {
-        Model model( ~obj->model );
+        models.add( (uint) obj, Model( ~obj->model ) );
+
+        Model &model = models.cachedValue();
 
         model.state = Model::UPDATED;
 
         // generate & draw model
         model.setAnim( obj->anim );
         md2s[model.model]->draw( &model.anim );
-
-        models.add( (uint) obj, model );
       }
     }
     if( drawAABBs ) {
@@ -214,22 +214,23 @@ namespace Graphics
 
   void Render::drawSparkGen( SparkGen *sparkGen )
   {
-    if( sparkGens.contains( (uint) obj ) ) {
-      Model &model = models.cachedValue();
+    if( sparkGenRenders.contains( (uint) sparkGen ) ) {
+      // spark generator is registered
+      SparkGenRender &sparkGenRender = sparkGenRenders.cachedValue();
 
-      // draw model
-      md2s[model.model]->draw( &model.anim );
+      sparkGenRender.state = SparkGenRender::UPDATED;
+      // draw spars
+      sparkGenRender.draw();
     }
     else {
-      Model model( ~obj->model );
+      // spark generator is not registered, we need to create a new renderer for it
+      sparkGenRenders.add( (uint) sparkGen, SparkGenRender( sparkGen ) );
 
-      model.state = Model::UPDATED;
+      SparkGenRender &sparkGenRender = sparkGenRenders.cachedValue();
 
-        // generate & draw model
-      model.setAnim( obj->anim );
-      md2s[model.model]->draw( &model.anim );
-
-      models.add( (uint) obj, model );
+      sparkGenRender.state = SparkGenRender::UPDATED;
+      // draw spars
+      sparkGenRender.draw();
     }
   }
 
@@ -393,7 +394,7 @@ namespace Graphics
     blendedObjects.clear();
 
     for( int i = 0; i < sparkGens.length(); i++ ) {
-      sparkGens[i]->draw();
+      drawSparkGen( sparkGens[i] );
     }
     sparkGens.clear();
 
@@ -471,10 +472,30 @@ namespace Graphics
         model.state = Model::NOT_UPDATED;
       }
     }
+
+    // remove droped spark renderers
+    for( HashIndex<SparkGenRender, SPARKGENRENDER_HT_SIZE>::Iterator i( sparkGenRenders );
+         !i.isPassed(); )
+    {
+      SparkGenRender &sparkGenRender = *i;
+      uint key = i.key();
+
+      // we should advance now, so that we don't remove the element the iterator is pointing at
+      i.next();
+
+      if( sparkGenRender.state == SparkGenRender::NOT_UPDATED ) {
+        sparkGenRenders.remove( key );
+      }
+      else {
+        sparkGenRender.state = SparkGenRender::NOT_UPDATED;
+      }
+    }
   }
 
   void Render::free()
   {
+    sparkGenRenders.free();
+    models.free();
     md2s.free();
     bsps.free();
     context.free();

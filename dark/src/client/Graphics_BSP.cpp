@@ -30,7 +30,15 @@ namespace Graphics
 
   BSP::BSP( Dark::BSP *bsp )
   {
+    textures = null;
+    lightMaps = null;
+
     init( bsp );
+  }
+
+  BSP::~BSP()
+  {
+    free();
   }
 
   int BSP::getLeafIndex( const Vec3 &p ) const
@@ -210,6 +218,16 @@ namespace Graphics
     glDisable( GL_TEXTURE_2D );
     glActiveTexture( GL_TEXTURE0 );
     glFrontFace( GL_CCW );
+  }
+
+  void BSP::free()
+  {
+    if( textures != null ) {
+      delete[] textures;
+    }
+    if( lightMaps != null ) {
+      delete[] lightMaps;
+    }
   }
 
 }

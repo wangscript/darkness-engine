@@ -1,5 +1,5 @@
 /*
- *  Graphics_SparkGenRenderer.cpp
+ *  Graphics_SparkGenRender.cpp
  *
  *  Visual particle generator
  *
@@ -10,14 +10,16 @@
 
 #include "precompiled.h"
 
-#include "Graphics_SparkGenRenderer.h"
+#include "Graphics_SparkGenRender.h"
+
+#include "Graphics_Frustum.h"
 
 namespace Dark
 {
 namespace Graphics
 {
 
-  void SparkGenRenderer::createSpark( int i )
+  void SparkGenRender::createSpark( int i )
   {
     float velocitySpread2 = sparkGen->velocitySpread * 0.5;
     Vec3 velDisturb = Vec3( sparkGen->velocitySpread * Math::frand() - velocitySpread2,
@@ -34,30 +36,63 @@ namespace Graphics
     sparks[i].lifeTime = sparkGen->lifeTime;
   }
 
-  SparkGenRenderer::SparkGenRenderer( Dark::SparkGen *sparkGen_ ) : sparkGen( sparkGen_ )
+  SparkGenRender::SparkGenRender( Dark::SparkGen *sparkGen_ ) : sparkGen( sparkGen_ )
   {
     sparks = new Spark[sparkGen->number];
     startMillis = timer.millis;
+    nSparks = 0;
 
     for( int i = 0; i < sparkGen->number; i++ ) {
       sparks[i].lifeTime = 0.0;
     }
   }
 
-  SparkGenRenderer::~SparkGenRenderer()
+  SparkGenRender::SparkGenRender( const SparkGenRender &sparkGenRender ) :
+      sparkGen( sparkGenRender.sparkGen ),
+      startMillis( sparkGenRender.startMillis ),
+      sparksPerTick( sparkGenRender.sparksPerTick ),
+      nSparks( sparkGenRender.nSparks )
+  {
+    sparks = new Spark[nSparks];
+    aCopy( sparks, sparkGenRender.sparks, nSparks );
+  }
+
+  SparkGenRender::~SparkGenRender()
   {
     delete[] sparks;
   }
 
-  // TODO: spark rendering
-  void SparkGenRenderer::draw()
+  void SparkGenRender::draw()
   {
-    for( int i = 0; i < nSparks; i++ ) {
+    float sparkDim = sparkGen->sparkDim;
 
+    glPushMatrix();
+
+    glMultMatrixf( camera.rotMat );
+
+    for( int i = 0; i < nSparks; i++ ) {
+      Vec3 &p = sparks[i].p;
+
+      glTranslatef( p.x, p.y, p.z );
+
+      glBegin( GL_QUADS );
+        glTexCoord2f( 0.0, 0.0 );
+        glVertex3f( -sparkDim, -sparkDim, 0.0 );
+        glTexCoord2f( 0.0, 1.0 );
+        glVertex3f( +sparkDim, -sparkDim, 0.0 );
+        glTexCoord2f( 1.0, 1.0 );
+        glVertex3f( +sparkDim, +sparkDim, 0.0 );
+        glTexCoord2f( 1.0, 0.0 );
+        glVertex3f( -sparkDim, +sparkDim, 0.0 );
+      glEnd();
+
+      glTranslatef( -p.x, -p.y, -p.z );
     }
+
+    glPopMatrix();
   }
 
-  void SparkGenRenderer::update() {
+  void SparkGenRender::update() {
     if( nSparks != sparkGen->number ) {
       int desiredNSparks = ( timer.millis - startMillis ) * sparksPerTick;
 
