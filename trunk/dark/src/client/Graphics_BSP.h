@@ -43,6 +43,8 @@ namespace Graphics
     public:
 
       BSP();
+      ~BSP();
+
       explicit BSP( Dark::BSP *bsp );
 
       void init( Dark::BSP *bsp );
@@ -51,6 +53,8 @@ namespace Graphics
 
       static void beginRender();
       static void endRender();
+
+      void free();
   };
 
 }

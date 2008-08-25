@@ -1,5 +1,5 @@
 /*
- *  Graphics_SparkGenRenderer.h
+ *  Graphics_SparkGenRender.h
  *
  *  Visual particle generator
  *
@@ -8,8 +8,8 @@
  *  $Id$
  */
 
-#ifndef _Graphics_SparkGenRenderer_h_
-#define _Graphics_SparkGenRenderer_h_
+#ifndef _Graphics_SparkGenRender_h_
+#define _Graphics_SparkGenRender_h_
 
 #include "World.h"
 
@@ -26,8 +26,16 @@ namespace Graphics
     float lifeTime;
   };
 
-  class SparkGenRenderer
+  class SparkGenRender
   {
+    public:
+
+      enum State
+      {
+        NOT_UPDATED,
+        UPDATED
+      };
+
     protected:
 
       Dark::SparkGen *sparkGen;
@@ -40,8 +48,11 @@ namespace Graphics
 
     public:
 
-      SparkGenRenderer( Dark::SparkGen *sparkGen );
-      ~SparkGenRenderer();
+      State          state;
+
+      explicit SparkGenRender( Dark::SparkGen *sparkGen );
+      SparkGenRender( const SparkGenRender &sparkGenRender );
+      ~SparkGenRender();
 
       void update();
       void draw();
@@ -50,4 +61,4 @@ namespace Graphics
 }
 }
 
-#endif // _Graphics_SparkGenRenderer_h_
+#endif // _Graphics_SparkGenRender_h_

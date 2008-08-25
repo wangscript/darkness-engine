@@ -19,7 +19,7 @@ namespace Dark
   {
     protected:
 
-      struct Elem : public Reuser<HashIndex>
+      struct Elem
       {
         uint  key;
         Type  value;
@@ -270,8 +270,10 @@ namespace Dark
         assert( !contains( key ) );
 
         int i = key % SIZE;
+        Elem *elem = new Elem( key, value, data[i] );
 
-        data[i] = new Elem( key, value, data[i] );
+        data[i] = elem;
+        cached = elem;
       }
 
       void remove( uint key )

@@ -18,7 +18,7 @@
 #include "Graphics_Terrain.h"
 #include "Graphics_MD2.h"
 #include "Graphics_Model.h"
-#include "Graphics_SparkGen.h"
+#include "Graphics_SparkGenRender.h"
 
 namespace Dark
 {
@@ -30,7 +30,7 @@ namespace Graphics
     protected:
 
       static const int MODEL_HT_SIZE = 4096;
-      static const int SPARKGEN_HT_SIZE = 4096;
+      static const int SPARKGENRENDER_HT_SIZE = 4096;
 
       static const float RELEASED_CULL_FACTOR;
       static const float INCH;
@@ -53,15 +53,16 @@ namespace Graphics
       Vector<uint>  lists;
 
       Vector<MD2*>  md2s;
-      Vector<SparkGen*>  sparkGens;
+
       HashIndex<Model, MODEL_HT_SIZE> models;
-      HashIndex<SparkGen, SPARKGEN_HT_SIZE> sparkGens;
+      HashIndex<SparkGenRender, SPARKGENRENDER_HT_SIZE> sparkGenRenders;
 
       Vector<Structure*> structures;
       Vector<Object*>    objects;
       Vector<Object*>    blendedObjects;
       Vector<Object*>    waterObjects;
       Vector<Particle*>  particles;
+      Vector<SparkGen*>  sparkGens;
 
       float perspectiveAngle;
       float perspectiveAspect;
@@ -78,6 +79,7 @@ namespace Graphics
       bool isUnderWater;
 
       void drawObject( Object *obj );
+      void drawSparkGen( SparkGen *sparkGen );
       void scheduleSector( int sectorX, int sectorY );
 
     public:
