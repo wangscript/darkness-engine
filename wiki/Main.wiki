@@ -56,7 +56,6 @@ The front-end. It renders world to the screen, plays sounds, read player input .
 
 = How to make it work =
 
-== Compiling ==
 Required tools:
   * cmake
   * KDevelop (optional)
