@@ -17,7 +17,7 @@ The engine is meant to be cross-platform, running at least on GNU/Linux, FreeBSD
   * exchanging day and night (lighting, sky and visual distance adjust to time of day)
   * use of Quake2 MD2 models for objects
   * use of Quake3 BSP levels for buildings
-  * playing of FLAC, OGG Vorbis, WAVE and AU sounds
+  * playing of OGG Vorbis, WAVE and AU sounds
 
 = Design =
 
@@ -61,15 +61,16 @@ Required tools:
   * KDevelop (optional)
 
 Required libraries:
-  * MesaGL
-  * MesaGLU
-  * OpenAL
-  * freealut
   * libxml2
   * SDL
   * SDL_image
   * SDL_net
   * SDL_mixer
+  * MesaGL
+  * MesaGLU
+  * OpenAL
+  * freealut
+  * vorbisfile
 
 Data files:
 
