@@ -24,10 +24,10 @@ The engine is meant to be cross-platform, running at least on GNU/Linux, FreeBSD
 *Base library*
 
   * utility functions (min, max, array manipulation functions, quicksort ...)
-  * Containers (List, DList, Vector, SVector, HashIndex, HashString)
+  * Containers (List, DList, Vector, SVector, !HashIndex, !HashString)
   * some advanced data types (String, Bitset)
   * basic math and linear algebra math classes (Math, Vec3, Quat, Mat33, Mat44)
-  * utilities (LogFile, Config)
+  * utilities (!LogFile, Config)
   * memory management (Reuser)
 
 *Matrix layer*
