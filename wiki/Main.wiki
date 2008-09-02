@@ -11,7 +11,7 @@ It is meant to support huge levels (at most 20x20 km). Terrain is specified as h
 The engine is meant to be cross-platform, running at least on GNU/Linux, FreeBSD and Windows. However, the development occurs on GNU/Linux, so the development version may not compile on other platforms.
 
 *Features*
-  * quite advanced AABB collision detection/physics. It's still AABB (the physical representation of object cannot rotate) like in old 5+ years old games, but it's still better (you can push more than 1 box at once!)
+  * quite advanced AABB collision detection/physics. It's still AABB (the physical representation of object cannot rotate) like in old 5+ years old games, but it's still better (you can push a whole pile of boxes at once!)
   * water
   * particles
   * exchanging day and night (lighting, sky and visual distance adjust to time of day)
