@@ -10,7 +10,7 @@ It is meant to support huge levels (at most 20x20 km). Terrain is specified as h
 
 The engine is meant to be cross-platform, running at least on GNU/Linux, FreeBSD and Windows. However, the development occurs on GNU/Linux, so the development version may not compile on other platforms.
 
-Features:
+*Features*
   * quite advanced AABB collision detection/physics. It's still AABB (physical representation of objects cannot rotate) like in old 5+ years old games, but it's still better (you can push more than 1 box at once!)
   * water
   * particles
@@ -21,7 +21,8 @@ Features:
 
 = Design =
 
-=== base library ===
+*Base library*
+
   * utility functions (min, max, array manipulation functions, quicksort ...)
   * Containers (List, DList, Vector, SVector, HashIndex, HashString)
   * some advanced data types (String, Bitset)
@@ -29,7 +30,8 @@ Features:
   * utilities (LogFile, Config)
   * memory management (Reuser)
 
-=== Matrix layer ===
+*Matrix layer*
+
 It holds and handles logical representation of the world. It strictly avoids any code or data that would handle, contain or reference anything in higher layers. Roughly it contains following things:
   * data structures for world representation
   * loaders for BSP levels, terrain ...
@@ -39,10 +41,12 @@ It holds and handles logical representation of the world. It strictly avoids any
   * scheduling sounds
   * character logic and movement
 
-=== Nirvana layer ===
+*Nirvana layer*
+
 It's an AI layer. It launches in separate thread. It provides _brain_ for computer-controlled characters in Matrix layer.
 
-=== Client layer ===
+*Client layer*
+
 The front-end. It renders world to the screen, plays sounds, read player input ... It provides:
   * graphics rendering
   * playing sounds
