@@ -1,4 +1,4 @@
-Simple 3D engine based on open-source cross-platform libraries suitable for FPS shooters and RPGs.
+Simple 3D engine written in C++ and based on open-source cross-platform libraries suitable for FPS shooters and RPGs.
 
 = Introduction =
 
@@ -61,7 +61,6 @@ Required tools:
   * KDevelop (optional)
 
 Required libraries:
-  * libxml2
   * SDL
   * SDL_image
   * SDL_net
@@ -70,7 +69,8 @@ Required libraries:
   * MesaGLU
   * OpenAL
   * freealut
-  * vorbisfile
+  * libvorbis
+  * libxml2
 
 Data files:
 
@@ -87,3 +87,21 @@ First time it will  crash, since it won't find data files, but it will create de
 
 Windows:
 Use Dev-C++ and your imagination.
+
+= TODO =
+
+Short-term:
+  * ladder
+  * MD3 models
+  * vehicles
+  * incremental tree growth
+  * XML files to describe world
+  * loading/saving world state
+
+Medium-term:
+  * networking
+  * scripting
+
+Long-term:
+  * shadows, shaders and other advanced graphics effects
+  * integration of Bullet physics engine
