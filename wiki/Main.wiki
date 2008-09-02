@@ -47,7 +47,7 @@ It's an AI layer. It launches in separate thread. It provides _brain_ for comput
 
 *Client layer*
 
-The front-end. It renders world to the screen, plays sounds, read player input ... It provides:
+The front-end. It renders world to the screen, plays sounds, read player input ...
   * graphics rendering
   * playing sounds
   * initialization of game
