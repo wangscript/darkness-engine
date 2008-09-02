@@ -76,16 +76,17 @@ Data files:
 
   Since data files may violate some copyrights they cannot be publicly distributed.
 
-Unix:
+*Unix instructions*:
+
 Go to project root and run
 {{{
 cmake .
 make
 }}}
-to compile project. Then run the engine with `src/client/dark`.
-First time it will  crash, since it won't find data files, but it will create default settings in `~/.dark/config.xml`. Edit that file to your preference and don't forget to set `data` to where you have data files installed. Run it again and that time it should work.
+to compile project. Then run the engine with `src/client/dark`. First time it will  crash, since it won't find data files, but it will create default settings in `~/.dark/config.xml`. Edit that file to your preference and don't forget to set `data` to where you have data files installed. Run it again and that time it should work.
 
-Windows:
+*Windows instructions*:
+
 Use Dev-C++ and your imagination.
 
 = TODO =
