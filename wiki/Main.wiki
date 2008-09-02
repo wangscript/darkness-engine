@@ -17,7 +17,7 @@ The engine is meant to be cross-platform, running at least on GNU/Linux, FreeBSD
   * exchanging day and night (lighting, sky and visual distance adjust to time of day)
   * use of Quake2 MD2 models for objects
   * use of Quake3 BSP levels for buildings
-  * playing of OGG Vorbis, WAVE and AU sounds
+  * playing of Ogg Vorbis, WAVE and AU sounds
 
 = Design =
 
@@ -92,7 +92,7 @@ Use Dev-C++ and your imagination.
 
 Short-term:
   * ladder
-  * MD3 models
+  * Quake3 MD3 models
   * vehicles
   * incremental tree growth
   * XML files to describe world
