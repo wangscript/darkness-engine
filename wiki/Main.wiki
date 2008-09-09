@@ -74,7 +74,7 @@ Required libraries:
 
 Data files:
 
-  Since data files may violate some copyrights they cannot be publicly distributed.
+  Since data files might violate some copyrights they cannot be publicly distributed.
 
 *Unix instructions*:
 
