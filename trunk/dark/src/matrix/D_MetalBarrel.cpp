@@ -50,7 +50,7 @@ namespace Dark
 
   void D_MetalBarrel::onFrictEnd()
   {
-    excludeContSound( SND_FRICTION_HARD );
+    removeContSound( SND_FRICTION_HARD );
   }
 
 }

@@ -41,8 +41,6 @@ namespace Dark
       static const scalar NaN;
       static const scalar INF;
 
-      static void init();
-
       /*
        * Standard math functions
        */
@@ -230,18 +228,18 @@ namespace Dark
 
       static scalar sgn( scalar x )
       {
-        return x < 0 ? -1.0 : x > 0 ? 1.0 : 0.0;
+        return x < (scalar) 0 ? (scalar) -1 : x > (scalar) 0 ? (scalar) 1 : (scalar) 0;
       }
 
       // deg-to-rad and rad-to-deg conversion
       static scalar rad( scalar x )
       {
-        return x * ( PI / 180.0 );
+        return x * ( PI / (scalar) 180 );
       }
 
       static scalar deg( scalar x )
       {
-        return x * ( _1_PI * 180.0 );
+        return x * ( _1_PI * (scalar) 180 );
       }
 
       // random integer from 0 to RAND_MAX

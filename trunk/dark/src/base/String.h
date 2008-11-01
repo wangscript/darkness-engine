@@ -1,7 +1,7 @@
 /*
  *  String.h
  *
- *  Advanced string data type
+ *  Immutable string object (similar to Java String)
  *
  *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
@@ -18,82 +18,111 @@ namespace Dark
   {
     protected:
 
+      static const int BUFFER_SIZE = 32;
+
       char *buffer;
       int  count;
+      char baseBuffer[32];
 
-      String( char *buffer_, int count_ ) : buffer( buffer_ ), count( count_ )
-      {}
+      String( int count_, int ) : count( count_ )
+      {
+        ensureCapacity();
+      }
+
+      // if existing buffer is to small, allocate a new one
+      void ensureCapacity()
+      {
+        buffer = count < BUFFER_SIZE ? baseBuffer : new char[count + 1];
+      }
 
     public:
 
-      String() : count( 0 )
+      String() : buffer( baseBuffer ), count( 0 )
       {
-        buffer = new char[1];
         buffer[0] = '\0';
       }
 
-      String( const String &s ) : count( s.count )
+      String( const String &s ) : buffer( null ), count( s.count )
       {
-        buffer = new char[count + 1];
+        assert( buffer == null );
+
+        ensureCapacity();
         aCopy( buffer, s.buffer, count + 1 );
       }
 
       String( const char *s )
       {
-        if( s == null ) {
-          count = 0;
-          buffer = new char[1];
-          buffer[0] = '\0';
+        assert( s != null );
+
+        count = length( s );
+        ensureCapacity();
+        aCopy( buffer, s, count + 1 );
+      }
+
+      String( bool b ) : buffer( baseBuffer )
+      {
+        // against supidly small buffers
+        assert( BUFFER_SIZE > 5 );
+
+        if( b ) {
+          count = 4;
+
+          buffer[0] = 't';
+          buffer[1] = 'r';
+          buffer[2] = 'u';
+          buffer[3] = 'e';
+          buffer[4] = '\0';
         }
         else {
-          count = length( s );
-          buffer = new char[count + 1];
-          aCopy( buffer, s, count + 1 );
+          count = 5;
+
+          buffer[0] = 'f';
+          buffer[1] = 'a';
+          buffer[2] = 'l';
+          buffer[3] = 's';
+          buffer[4] = 'e';
+          buffer[5] = '\0';
         }
       }
 
-      explicit String( int n )
+      String( int n )
       {
-        if( n == 0 ) {
-          count = 1;
-          buffer = new char[2];
-          buffer[0] = '0';
-          buffer[1] = '\0';
+        // we have [sign +] first digit + remaining digits
+        // since we always count first digit, we assure that we never get 0 digits (if n == 0)
+
+        // first, we count first digit + remaining digits
+        int nn = n / 10;
+        for( count = 1; nn != 0; count++ ) {
+          nn /= 10;
+          count++;
+        }
+
+        // check if we have a negative sign
+        if( n < 0 ) {
+          n = -n;
+          count++;
+          ensureCapacity();
+          buffer[0] = '-';
         }
         else {
-          // determine number of digits
-          int nn = n;
-          for( count = 0; nn != 0; count++ ) {
-            nn /= 10;
-          }
+          ensureCapacity();
+        }
 
-          int i;
-          if( n < 0 ) {
-            buffer = new char[count + 2];
-            buffer[0] = '-';
-            buffer[count + 1] = '\0';
+        // we always write first digit
+        buffer[count] = '0' + ( n % 10 );
+        n /= 10;
 
-            n = -n;
-            i = count;
-          }
-          else {
-            buffer = new char[count + 1];
-            buffer[count] = '\0';
-
-            i = count - 1;
-          }
-
-          while( n != 0 ) {
-            buffer[i] = '0' + ( n % 10 );
-            n /= 10;
-            i--;
-          }
+        for( int i = count - 1; n != 0; i-- ) {
+          buffer[i] = '0' + ( n % 10 );
+          n /= 10;
         }
       }
 
       ~String()
       {
-        delete[] buffer;
+        if( buffer != baseBuffer ) {
+          delete[] buffer;
+        }
       }
 
       operator const char* () const
@@ -110,11 +139,11 @@ namespace Dark
       {
         count = length( s );
 
-        char *rBuffer = new char[count + 1];
-        aCopy( rBuffer, s, count + 1 );
-
-        delete[] buffer;
-        buffer = rBuffer;
+        if( buffer != baseBuffer ) {
+          delete[] buffer;
+        }
+        ensureCapacity();
+        aCopy( buffer, s, count + 1 );
 
         return *this;
       }
@@ -123,11 +152,11 @@ namespace Dark
       {
         count = s.count;
 
-        char *rBuffer = new char[count + 1];
-        aCopy( rBuffer, s.buffer, count + 1 );
-
-        delete[] buffer;
-        buffer = rBuffer;
+        if( buffer != baseBuffer ) {
+          delete[] buffer;
+        }
+        ensureCapacity();
+        aCopy( buffer, s.buffer, count + 1 );
 
         return *this;
       }
@@ -228,13 +257,10 @@ namespace Dark
       {
         assert( a != null && b != null );
 
-        int diff;
-
-        for( int i = 0; ( diff = a[i] - b[i] ) == 0; i++ ) {
-          if( a[i] == '\0' ) {
-            return 0;
-          }
+        int diff = 0;
+        for( int i = 0; ( diff = a[i] - b[i] ) == 0 && a[i] != 0; i++ ) {
         }
+
         return diff;
       }
 
@@ -282,100 +308,64 @@ namespace Dark
       {
         assert( s != null );
 
-        int sLength = length( s );
+        int    sLength = length( s );
+        int    rCount  = count + sLength;
+        String r       = String( rCount, 0 );
 
-        int  rCount   = count + sLength;
-        char *rBuffer = new char[rCount + 1];
+        aCopy( r.buffer, buffer, count );
+        aCopy( r.buffer + count, s, sLength + 1 );
 
-        aCopy( rBuffer, buffer, count );
-        aCopy( rBuffer + count, s, sLength + 1 );
-
-        return String( rBuffer, rCount );
+        return r;
       }
 
       String operator + ( const String &s ) const
       {
-        int  rCount   = count + s.count;
-        char *rBuffer = new char[rCount + 1];
+        int    rCount = count + s.count;
+        String r      = String( rCount, 0 );
 
-        aCopy( rBuffer, buffer, count );
-        aCopy( rBuffer + count, s.buffer, s.count + 1 );
+        aCopy( r.buffer, buffer, count );
+        aCopy( r.buffer + count, s.buffer, s.count + 1 );
 
-        return String( rBuffer, rCount );
+        return r;
       }
 
       friend String operator + ( const char *s, const String &t )
       {
         assert( s != null );
 
-        int sLength = String::length( s );
+        int    sLength = String::length( s );
+        int    rCount  = t.count + sLength;
+        String r       = String( rCount, 0 );
 
-        int  rCount   = t.count + sLength;
-        char *rBuffer = new char[rCount + 1];
+        aCopy( r.buffer, s, sLength );
+        aCopy( r.buffer + sLength, t.buffer, t.count + 1 );
 
-        aCopy( rBuffer, s, sLength );
-        aCopy( rBuffer + sLength, t.buffer, t.count + 1 );
-
-        return String( rBuffer, rCount );
-      }
-
-      String &operator += ( const char *s )
-      {
-        assert( s != null );
-
-        int sLength = length( s );
-
-        int  rCount   = count + sLength;
-        char *rBuffer = new char[rCount + 1];
-
-        aCopy( rBuffer, buffer, count );
-        aCopy( rBuffer + count, s, sLength + 1 );
-
-        delete[] buffer;
-        buffer = rBuffer;
-        count  = rCount;
-
-        return *this;
-      }
-
-      String &operator += ( const String &s )
-      {
-        int  rCount   = count + s.count;
-        char *rBuffer = new char[rCount + 1];
-
-        aCopy( rBuffer, buffer, count );
-        aCopy( rBuffer + count, s.buffer, s.count + 1 );
-
-        delete[] buffer;
-        buffer = rBuffer;
-        count  = rCount;
-
-        return *this;
+        return r;
       }
 
       String substring( int start ) const
       {
         assert( 0 <= start && start <= count );
 
-        int  rCount   = count - start;
-        char *rBuffer = new char[rCount + 1];
+        int    rCount = count - start;
+        String r      = String( rCount, 0 );
 
-        aCopy( rBuffer, buffer + start, rCount + 1 );
+        aCopy( r.buffer, buffer + start, rCount + 1 );
 
-        return String( rBuffer, rCount );
+        return r;
       }
 
       String substring( int start, int end ) const
       {
         assert( 0 <= start && start <= count && start <= end && end <= count );
 
-        int  rCount   = end - start;
-        char *rBuffer = new char[rCount + 1];
+        int    rCount = end - start;
+        String r      = String( rCount, 0 );
 
-        aCopy( rBuffer, buffer + start, rCount );
-        rBuffer[rCount] = '\0';
+        aCopy( r.buffer, buffer + start, rCount );
+        r.buffer[rCount] = '\0';
 
-        return String( rBuffer, rCount );
+        return r;
       }
 
       Vector<String> split( char ch ) const

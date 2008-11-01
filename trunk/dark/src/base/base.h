@@ -13,17 +13,9 @@
 #ifndef _Dark_base_h_
 #define _Dark_base_h_
 
-// defining NDEBUG disables assert macro
-// #define NDEBUG
-
-#define DARK_FLOAT_SCALAR 1
-
 #include <assert.h>
 #include <math.h>
-#include <stdarg.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 
 /*
  *  Basic definitons and template functions

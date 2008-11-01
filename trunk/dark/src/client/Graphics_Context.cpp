@@ -203,6 +203,11 @@ namespace Graphics
       glDeleteTextures( textures.length(), textures.data );
     }
     textures.clear();
+
+    if( loadedTextures != null ) {
+      delete[] loadedTextures;
+      loadedTextures = null;
+    }
   }
 
   uint Context::genList()

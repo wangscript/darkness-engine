@@ -12,8 +12,6 @@
 
 #include "Graphics_Font.h"
 
-#include <string.h>
-
 namespace Dark
 {
 namespace Graphics

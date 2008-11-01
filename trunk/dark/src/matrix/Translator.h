@@ -112,6 +112,7 @@ namespace Dark
       int getTexture( const char *name );
 
       Translator();
+      ~Translator();
   };
 
   extern Translator translator;

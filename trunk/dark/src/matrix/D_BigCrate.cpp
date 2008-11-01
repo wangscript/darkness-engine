@@ -33,6 +33,7 @@ namespace Dark
 
     velocity = Vec3::zero();
     mass = 150.0;
+
     content = content_;
   }
 
@@ -63,7 +64,7 @@ namespace Dark
 
   void D_BigCrate::onFrictEnd()
   {
-    excludeContSound( SND_FRICTION_SOFT );
+    removeContSound( SND_FRICTION_SOFT );
   }
 
 }

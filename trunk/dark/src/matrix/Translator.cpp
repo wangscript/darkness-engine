@@ -61,4 +61,10 @@ namespace Dark
     }
   }
 
+  Translator::~Translator()
+  {
+    textureIndices.free();
+    textureIndices.deallocate();
+  }
+
 }

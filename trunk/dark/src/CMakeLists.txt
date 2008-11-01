@@ -1,1 +1,1 @@
-SUBDIRS( base matrix nirvana client )
+SUBDIRS( base matrix nirvana client test )

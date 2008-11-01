@@ -151,7 +151,7 @@ namespace Dark
           damage( Math::INF ), model( 0 ), anim( 0 ), rotZ( 0.0 ), alpha( 1.0 )
       {}
 
-      ~Object()
+      virtual ~Object()
       {
         assert( dim.x <= AABB::REAL_MAX_DIMXY );
         assert( dim.y <= AABB::REAL_MAX_DIMXY );
@@ -181,9 +181,6 @@ namespace Dark
         if( flags & HIT_FUNC_BIT ) {
           onHit( hit );
         }
-        if( flags & DYNAMIC_BIT ) {
-          flags &= ~DISABLED_BIT;
-        }
       }
 
       void destroy()
@@ -206,7 +203,7 @@ namespace Dark
         contSounds << new Sound( sound );
       }
 
-      void excludeContSound( SoundEnum sound )
+      void removeContSound( SoundEnum sound )
       {
         Sound *prev = null;
         Sound *p = contSounds.first();
@@ -216,6 +213,8 @@ namespace Dark
             Sound *next = p->next[0];
 
             contSounds.remove( p, prev );
+            delete p;
+
             p = next;
           }
           else {

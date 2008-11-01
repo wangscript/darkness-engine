@@ -44,7 +44,7 @@ namespace Dark
        * OpenAL implementation
        */
 
-      struct Source /*: Reuser<Source>*/
+      struct Source : Reuser<Source>
       {
         Source *prev[1];
         Source *next[1];
@@ -52,7 +52,7 @@ namespace Dark
         ALuint source;
       };
 
-      struct ContSource /*: Reuser<ContSource>*/
+      struct ContSource : Reuser<ContSource>
       {
         enum State
         {

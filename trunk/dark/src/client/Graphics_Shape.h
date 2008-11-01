@@ -14,8 +14,6 @@
 #include "bv.h"
 #include "Graphics_Context.h"
 
-#include <SDL/SDL_opengl.h>
-
 namespace Dark
 {
 namespace Graphics

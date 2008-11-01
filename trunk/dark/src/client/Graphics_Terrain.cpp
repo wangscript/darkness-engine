@@ -140,28 +140,28 @@ namespace Graphics
     if( depth <= TERRA_DEPTH ) {
       float minChildZ, maxChildZ;
 
-      qTree->next[0] = new Quadtree;
+      qTree->next[0] = new Quadtree();
       buildQuadtree( qTree->next[0], minX, minY, ( minX + maxX ) / 2, ( minY + maxY ) / 2,
                      &minChildZ, &maxChildZ );
 
       *minHeight = min( *minHeight, minChildZ );
       *maxHeight = max( *maxHeight, maxChildZ );
 
-      qTree->next[1] = new Quadtree;
+      qTree->next[1] = new Quadtree();
       buildQuadtree( qTree->next[1], ( minX + maxX ) / 2, minY, maxX, ( minY + maxY ) / 2,
                      &minChildZ, &maxChildZ );
 
       *minHeight = min( *minHeight, minChildZ );
       *maxHeight = max( *maxHeight, maxChildZ );
 
-      qTree->next[2] = new Quadtree;
+      qTree->next[2] = new Quadtree();
       buildQuadtree( qTree->next[2], minX, ( minY + maxY ) / 2, ( minX + maxX ) / 2, maxY,
                      &minChildZ, &maxChildZ );
 
       *minHeight = min( *minHeight, minChildZ );
       *maxHeight = max( *maxHeight, maxChildZ );
 
-      qTree->next[3] = new Quadtree;
+      qTree->next[3] = new Quadtree();
       buildQuadtree( qTree->next[3], ( minX + maxX ) / 2, ( minY + maxY ) / 2, maxX, maxY,
                      &minChildZ, &maxChildZ );
 
@@ -211,7 +211,7 @@ namespace Graphics
 
     float dummy0, dummy1;
 
-    qTerra = new Quadtree;
+    qTerra = new Quadtree();
     buildQuadtree( qTerra, 0, 0, Dark::Terrain::MAX, Dark::Terrain::MAX, &dummy0, &dummy1 );
   }
 

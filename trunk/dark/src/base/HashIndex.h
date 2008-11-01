@@ -19,7 +19,7 @@ namespace Dark
   {
     protected:
 
-      struct Elem
+      struct Elem : Reuser<HashIndex>
       {
         uint  key;
         Type  value;
@@ -314,6 +314,7 @@ namespace Dark
       {
         Elem::deallocate();
       }
+
   };
 
 }
