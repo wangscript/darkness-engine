@@ -1,5 +1,5 @@
 /*
- *  Graphics_Skybox.h
+ *  Skybox.h
  *
  *  [description]
  *
@@ -8,16 +8,16 @@
  *  $Id$
  */
 
-#ifndef _Graphics_Skybox_h_
-#define _Graphics_Skybox_h_
+#ifndef _Client_Skybox_h_
+#define _Client_Skybox_h_
 
-#include "Graphics_Context.h"
+#include "Context.h"
 
 #define SKY_DIST   1.0f
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   class Skybox {
@@ -36,4 +36,4 @@ namespace Graphics
 }
 }
 
-#endif // _Graphics_Skybox_h_
+#endif // _Client_Skybox_h_

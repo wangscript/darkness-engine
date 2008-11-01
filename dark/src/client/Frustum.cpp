@@ -1,5 +1,5 @@
 /*
- *  Graphics_Frustum.cpp
+ *  Frustum.cpp
  *
  *  [description]
  *
@@ -10,11 +10,11 @@
 
 #include "precompiled.h"
 
-#include "Graphics_Frustum.h"
+#include "Frustum.h"
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   Frustum frustum;

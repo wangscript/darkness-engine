@@ -8,21 +8,23 @@
  *  $Id$
  */
 
-#ifndef _Main_h_
-#define _Main_h_
+#ifndef _Client_Main_h_
+#define _Client_Main_h_
 
 #define DARK_APP_NAME            "Darkness"
 #define DARK_WM_TITLE            DARK_APP_NAME
 #define DARK_RC_DIR              ".dark/"
-#define DARK_LOG_FILE            "log"
-#define DARK_CONFIG_FILE         "config.xml"
+#define DARK_LOG_FILE            "client.log"
+#define DARK_CONFIG_FILE         "client.xml"
 
 namespace Dark
+{
+namespace Client
 {
 
   class Main
   {
-    private:
+    protected:
 
       static const int INIT_SDL = 0x01;
       static const int INIT_SDL_VIDEO = 0x02;
@@ -40,12 +42,14 @@ namespace Dark
     public:
 
       void main();
+
   };
 
   extern Main main;
 
 }
+}
 
 int main( int argc, char *argv[] );
 
-#endif // _Main_h_
+#endif // _Client_Main_h_

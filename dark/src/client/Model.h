@@ -1,5 +1,5 @@
 /*
- *  Graphics_Model.h
+ *  Model.h
  *
  *  [description]
  *
@@ -8,14 +8,14 @@
  *  $Id$
  */
 
-#ifndef _Graphics_Model_h_
-#define _Graphics_Model_h_
+#ifndef _Client_Model_h_
+#define _Client_Model_h_
 
-#include "Graphics_MD2.h"
+#include "MD2.h"
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   struct Model
@@ -38,4 +38,4 @@ namespace Graphics
 }
 }
 
-#endif // _Graphics_Model_h_
+#endif // _Client_Model_h_

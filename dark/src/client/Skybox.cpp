@@ -1,5 +1,5 @@
 /*
- *  Graphics_Skybox.cpp
+ *  Skybox.cpp
  *
  *  [description]
  *
@@ -10,11 +10,11 @@
 
 #include "precompiled.h"
 
-#include "Graphics_Skybox.h"
+#include "Skybox.h"
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   void Skybox::drawUpper( uint top, uint front, uint left, uint back, uint right ) {

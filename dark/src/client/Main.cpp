@@ -14,12 +14,14 @@
 
 #include "Client.h"
 #include "SoundManager.h"
-#include "Graphics_Render.h"
+#include "Render.h"
 
 #include <unistd.h>
 #include <sys/stat.h>
 
 namespace Dark
+{
+namespace Client
 {
 
   Main main;
@@ -80,7 +82,7 @@ namespace Dark
     if( initFlags & INIT_RENDER_INIT ) {
       logFile.print( "Shutting down Graphics ..." );
       logFile.indent();
-      Graphics::render.free();
+      render.free();
       logFile.unindent();
       logFile.printRaw( " OK\n" );
     }
@@ -211,7 +213,7 @@ namespace Dark
 
     logFile.println( "Initializing Graphics {" );
     logFile.indent();
-    Graphics::render.init();
+    render.init();
     logFile.unindent();
     logFile.println( "}" );
 
@@ -239,7 +241,7 @@ namespace Dark
 
     logFile.println( "Loading Graphics {" );
     logFile.indent();
-    Graphics::render.load();
+    render.load();
     logFile.unindent();
     logFile.println( "}" );
     initFlags |= INIT_RENDER_LOAD;
@@ -296,7 +298,7 @@ namespace Dark
 
       if( time < tick ) {
         // render
-        Graphics::render.draw();
+        render.draw();
         nFrames++;
 
         // if there's still some time left, waste it
@@ -322,9 +324,10 @@ namespace Dark
   }
 
 }
+}
 
 int main( int, char *[] )
 {
-  Dark::main.main();
+  Dark::Client::main.main();
   return 0;
 }

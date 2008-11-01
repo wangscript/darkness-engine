@@ -8,12 +8,14 @@
  *  $Id$
  */
 
-#ifndef _Camera_h_
-#define _Camera_h_
+#ifndef _Client_Camera_h_
+#define _Client_Camera_h_
 
 #include "matrix/Matrix.h"
 
 namespace Dark
+{
+namespace Client
 {
 
   class Camera
@@ -49,5 +51,6 @@ namespace Dark
   extern Camera camera;
 
 }
+}
 
-#endif // _Graphics_Camera_h_
+#endif // _Client_Camera_h_

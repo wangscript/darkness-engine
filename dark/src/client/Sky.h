@@ -1,5 +1,5 @@
 /*
- *  Graphics_Sky.h
+ *  Sky.h
  *
  *  [description]
  *
@@ -8,12 +8,12 @@
  *  $Id$
  */
 
-#ifndef _Graphics_Sky_h_
-#define _Graphics_Sky_h_
+#ifndef _Client_Sky_h_
+#define _Client_Sky_h_
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   class Sky
@@ -53,4 +53,4 @@ namespace Graphics
 }
 }
 
-#endif // _Graphics_Sky_h_
+#endif // _Client_Sky_h_

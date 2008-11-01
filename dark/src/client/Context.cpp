@@ -1,5 +1,5 @@
 /*
- *  Graphics_Context.cpp
+ *  Context.cpp
  *
  *  Evidenca nalaganja tekstur in listov ter nalagalnik tekstur
  *
@@ -10,13 +10,13 @@
 
 #include "precompiled.h"
 
-#include "Graphics_Context.h"
+#include "Context.h"
 
 #include "matrix/Translator.h"
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   Context context;

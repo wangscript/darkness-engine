@@ -8,10 +8,12 @@
  *  $Id$
  */
 
-#ifndef _Client_h_
-#define _Client_h_
+#ifndef _Client_Client_h_
+#define _Client_Client_h_
 
 namespace Dark
+{
+namespace Client
 {
 
   struct Settings
@@ -61,5 +63,6 @@ namespace Dark
   extern Client client;
 
 }
+}
 
-#endif // _Client_h_
+#endif // _Client_Client_h_

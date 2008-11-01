@@ -13,9 +13,10 @@
 #include "SoundManager.h"
 
 #include "Camera.h"
-// #include "Graphics_Frustum.h"
 
 namespace Dark
+{
+namespace Client
 {
 
   SoundManager soundManager;
@@ -574,4 +575,5 @@ namespace Dark
 
 #endif
 
+}
 }

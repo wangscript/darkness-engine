@@ -1,5 +1,5 @@
 /*
- *  Graphics_Terrain.h
+ *  Terrain.h
  *
  *  [description]
  *
@@ -8,12 +8,12 @@
  *  $Id$
  */
 
-#ifndef _Graphics_Terrain_h_
-#define _Graphics_Terrain_h_
+#ifndef _Client_Terrain_h_
+#define _Client_Terrain_h_
 
 #include "matrix/Terrain.h"
-#include "Graphics_Context.h"
-#include "Graphics_Frustum.h"
+#include "Context.h"
+#include "Frustum.h"
 
 #define TERRA_DEPTH            2
 #define TERRA_DETAILTEX_SCALE  4
@@ -21,7 +21,7 @@
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   struct Quadtree : Sphere
@@ -62,4 +62,4 @@ namespace Graphics
 }
 }
 
-#endif // _Graphics_Terrain_h_
+#endif // _Client_Terrain_h_

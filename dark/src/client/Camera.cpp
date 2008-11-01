@@ -14,6 +14,8 @@
 
 namespace Dark
 {
+namespace Client
+{
 
   Camera camera;
 
@@ -58,4 +60,5 @@ namespace Dark
     rotMat = ~rotTMat;
   }
 
+}
 }

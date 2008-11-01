@@ -1,5 +1,5 @@
 /*
- *  Graphics_BSP.h
+ *  BSP.h
  *
  *  BSP level rendering class
  *
@@ -8,17 +8,17 @@
  *  $Id$
  */
 
-#ifndef _Graphics_BSP_h_
-#define _Graphics_BSP_h_
+#ifndef _Client_BSP_h_
+#define _Client_BSP_h_
 
 #include "matrix/BSP.h"
-#include "Graphics_Context.h"
+#include "Context.h"
 
 #define BSP_GAMMA_CORR        0.5
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   class BSP
@@ -60,4 +60,4 @@ namespace Graphics
 }
 }
 
-#endif // _Graphics_BSP_h_
+#endif // _Client_BSP_h_

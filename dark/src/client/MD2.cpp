@@ -1,5 +1,5 @@
 /*
- *  Graphics_MD2.cpp
+ *  MD2.cpp
  *
  *  MD2 model class
  *
@@ -10,7 +10,7 @@
 
 #include "precompiled.h"
 
-#include "Graphics_MD2.h"
+#include "MD2.h"
 
 #define MD2_ID                  ( ( '2' << 24 ) | ( 'P' << 16 ) | ( 'D' << 8 ) | 'I' )
 #define MD2_VERSION             8
@@ -20,7 +20,7 @@
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   struct MD2Header

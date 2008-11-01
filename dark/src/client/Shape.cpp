@@ -1,5 +1,5 @@
 /*
- *  Graphics_Shape.cpp
+ *  Shape.cpp
  *
  *  [description]
  *
@@ -10,11 +10,11 @@
 
 #include "precompiled.h"
 
-#include "Graphics_Shape.h"
+#include "Shape.h"
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   Shape shape;

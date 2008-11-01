@@ -1,5 +1,5 @@
 /*
- *  Graphics_MD2.h
+ *  MD2.h
  *
  *  MD2 model class
  *
@@ -8,15 +8,15 @@
  *  $Id$
  */
 
-#ifndef _Graphics_MD2_h_
-#define _Graphics_MD2_h_
+#ifndef _Client_MD2_h_
+#define _Client_MD2_h_
 
 #include "matrix/Timer.h"
-#include "Graphics_Context.h"
+#include "Context.h"
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   struct MD2Anim
@@ -88,4 +88,4 @@ namespace Graphics
 }
 }
 
-#endif // _Graphics_MD2_h_
+#endif // _Client_MD2_h_

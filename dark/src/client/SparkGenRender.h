@@ -1,5 +1,5 @@
 /*
- *  Graphics_SparkGenRender.h
+ *  SparkGenRender.h
  *
  *  Visual particle generator
  *
@@ -8,14 +8,14 @@
  *  $Id$
  */
 
-#ifndef _Graphics_SparkGenRender_h_
-#define _Graphics_SparkGenRender_h_
+#ifndef _Client_SparkGenRender_h_
+#define _Client_SparkGenRender_h_
 
 #include "matrix/World.h"
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   struct Spark
@@ -61,4 +61,4 @@ namespace Graphics
 }
 }
 
-#endif // _Graphics_SparkGenRender_h_
+#endif // _Client_SparkGenRender_h_

@@ -1,5 +1,5 @@
 /*
- *  Graphics_Water.h
+ *  Water.h
  *
  *  [description]
  *
@@ -8,14 +8,14 @@
  *  $Id$
  */
 
-#ifndef _Graphics_Water_h_
-#define _Graphics_Water_h_
+#ifndef _Client_Water_h_
+#define _Client_Water_h_
 
 #include "matrix/Object.h"
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   class Water
@@ -50,4 +50,4 @@ namespace Graphics
 }
 }
 
-#endif // _Graphics_Water_h_
+#endif // _Client_Water_h_

@@ -1,5 +1,5 @@
 /*
- *  Graphics_SparkGenRender.cpp
+ *  SparkGenRender.cpp
  *
  *  Visual particle generator
  *
@@ -10,13 +10,13 @@
 
 #include "precompiled.h"
 
-#include "Graphics_SparkGenRender.h"
+#include "SparkGenRender.h"
 
-#include "Graphics_Frustum.h"
+#include "Frustum.h"
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   void SparkGenRender::createSpark( int i )
