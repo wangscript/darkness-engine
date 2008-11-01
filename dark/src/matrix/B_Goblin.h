@@ -49,7 +49,7 @@ namespace Dark
 
       static const float GRAB_DIST;
 
-      explicit B_Goblin( const Vec3 &p, float h = 0.0, float v = 0.0, Mind *mind = null );
+      explicit B_Goblin( const Vec3 &p, float h = 0.0f, float v = 0.0f, Mind *mind = null );
   };
 
 }

@@ -19,17 +19,17 @@ namespace Dark
 
   const char *B_Spirit::NAME = "B_Spirit";
 
-  const Vec3  B_Spirit::CAM_POS       = Vec3( 0.00, 0.00, 0.13 );
-  const float B_Spirit::BOB_INC       = 0.04;
-  const float B_Spirit::BOB_AMPLITUDE = 0.03;
-  const float B_Spirit::WALK_VELOCITY = 0.15;
-  const float B_Spirit::RUN_VELOCITY  = 0.5;
-  const float B_Spirit::GRAB_DIST     = 1.0;
+  const Vec3  B_Spirit::CAM_POS       = Vec3( 0.00f, 0.00f, 0.13f );
+  const float B_Spirit::BOB_INC       = 0.04f;
+  const float B_Spirit::BOB_AMPLITUDE = 0.03f;
+  const float B_Spirit::WALK_VELOCITY = 0.15f;
+  const float B_Spirit::RUN_VELOCITY  = 0.50f;
+  const float B_Spirit::GRAB_DIST     = 1.00f;
 
   B_Spirit::B_Spirit( const Vec3 &p_, float h_, float v_, Mind *mind_ )
   {
     p       = p_;
-    dim     = Vec3( 0.29, 0.29, 0.29 );
+    dim     = Vec3( 0.29f, 0.29f, 0.29f );
 
     flags   = Object::UPDATE_FUNC_BIT | Object::DYNAMIC_BIT | Object::HOVER_BIT |
         Object::SPIRIT_BIT | Object::BOT_BIT;
@@ -41,13 +41,13 @@ namespace Dark
 
     newVelocity.setZero();
     lower   = -1;
-    mass    = 5.0;
+    mass    = 5.0f;
 
     h       = h_;
     v       = v_;
 
-    camPos  = Vec3( 0.00, 0.00, 0.13 );
-    bob     = 0.0;
+    camPos  = CAM_POS;
+    bob     = 0.0f;
 
     state   = 0;
     keys    = 0;
@@ -60,8 +60,8 @@ namespace Dark
 
   void B_Spirit::onUpdate()
   {
-    h = Math::mod( h + 360.0, 360.0 );
-    v = bound( v, -89.0, 89.0 );
+    h = Math::mod( h + 360.0f, 360.0f );
+    v = bound( v, -89.0f, 89.0f );
 
     rotZ = h;
 
@@ -150,12 +150,12 @@ namespace Dark
     if( keys & KEY_JUMP ) {
       flags &= ~DISABLED_BIT;
 
-      move.z += 1.0;
+      move.z += 1.0f;
     }
     if( keys & KEY_CROUCH ) {
       flags &= ~DISABLED_BIT;
 
-      move.z -= 1.0;
+      move.z -= 1.0f;
     }
     newVelocity += velocity * ( move.isZero() ? move : move.norm() );
 

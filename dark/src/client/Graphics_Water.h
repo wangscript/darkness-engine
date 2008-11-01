@@ -11,7 +11,7 @@
 #ifndef _Graphics_Water_h_
 #define _Graphics_Water_h_
 
-#include "Object.h"
+#include "matrix/Object.h"
 
 namespace Dark
 {

@@ -21,7 +21,7 @@ namespace Graphics
 
   void SparkGenRender::createSpark( int i )
   {
-    float velocitySpread2 = sparkGen->velocitySpread * 0.5;
+    float velocitySpread2 = sparkGen->velocitySpread * 0.5f;
     Vec3 velDisturb = Vec3( sparkGen->velocitySpread * Math::frand() - velocitySpread2,
                             sparkGen->velocitySpread * Math::frand() - velocitySpread2,
                             sparkGen->velocitySpread * Math::frand() - velocitySpread2 );
@@ -43,7 +43,7 @@ namespace Graphics
     nSparks = 0;
 
     for( int i = 0; i < sparkGen->number; i++ ) {
-      sparks[i].lifeTime = 0.0;
+      sparks[i].lifeTime = 0.0f;
     }
   }
 
@@ -76,14 +76,14 @@ namespace Graphics
       glTranslatef( p.x, p.y, p.z );
 
       glBegin( GL_QUADS );
-        glTexCoord2f( 0.0, 0.0 );
-        glVertex3f( -sparkDim, -sparkDim, 0.0 );
-        glTexCoord2f( 0.0, 1.0 );
-        glVertex3f( +sparkDim, -sparkDim, 0.0 );
-        glTexCoord2f( 1.0, 1.0 );
-        glVertex3f( +sparkDim, +sparkDim, 0.0 );
-        glTexCoord2f( 1.0, 0.0 );
-        glVertex3f( -sparkDim, +sparkDim, 0.0 );
+        glTexCoord2f( 0.0f, 0.0f );
+        glVertex3f( -sparkDim, -sparkDim, 0.0f );
+        glTexCoord2f( 0.0f, 1.0f );
+        glVertex3f( +sparkDim, -sparkDim, 0.0f );
+        glTexCoord2f( 1.0f, 1.0f );
+        glVertex3f( +sparkDim, +sparkDim, 0.0f );
+        glTexCoord2f( 1.0f, 0.0f );
+        glVertex3f( -sparkDim, +sparkDim, 0.0f );
       glEnd();
 
       glTranslatef( -p.x, -p.y, -p.z );
@@ -101,7 +101,7 @@ namespace Graphics
     for( int i = 0; i < nSparks; i++ ) {
       sparks[i].lifeTime -= timer.frameTime;
 
-      if( sparks[i].lifeTime <= 0.0 ) {
+      if( sparks[i].lifeTime <= 0.0f ) {
         createSpark( i );
       }
     }

@@ -29,31 +29,31 @@ namespace Dark
     {
     }
 
-    Bounds &fromPointMove( const Vec3 &p, const Vec3 &move, scalar eps = 0.0 )
+    Bounds &fromPointMove( const Vec3 &p, const Vec3 &move, float eps = 0.0f )
     {
-      if( move.x < 0.0 ) {
-        mins.x = p.x - 2.0 * eps + move.x;
-        maxs.x = p.x + 2.0 * eps;
+      if( move.x < 0.0f ) {
+        mins.x = p.x - 2.0f * eps + move.x;
+        maxs.x = p.x + 2.0f * eps;
       }
       else {
-        mins.x = p.x - 2.0 * eps;
-        maxs.x = p.x + 2.0 * eps + move.x;
+        mins.x = p.x - 2.0f * eps;
+        maxs.x = p.x + 2.0f * eps + move.x;
       }
-      if( move.y < 0.0 ) {
-        mins.y = p.y - 2.0 * eps + move.y;
-        maxs.y = p.y + 2.0 * eps;
-      }
-      else {
-        mins.y = p.y - 2.0 * eps;
-        maxs.y = p.y + 2.0 * eps + move.y;
-      }
-      if( move.z < 0.0 ) {
-        mins.z = p.z - 2.0 * eps + move.z;
-        maxs.z = p.z + 2.0 * eps;
+      if( move.y < 0.0f ) {
+        mins.y = p.y - 2.0f * eps + move.y;
+        maxs.y = p.y + 2.0f * eps;
       }
       else {
-        mins.z = p.z - 2.0 * eps;
-        maxs.z = p.z + 2.0 * eps + move.z;
+        mins.y = p.y - 2.0f * eps;
+        maxs.y = p.y + 2.0f * eps + move.y;
+      }
+      if( move.z < 0.0f ) {
+        mins.z = p.z - 2.0f * eps + move.z;
+        maxs.z = p.z + 2.0f * eps;
+      }
+      else {
+        mins.z = p.z - 2.0f * eps;
+        maxs.z = p.z + 2.0f * eps + move.z;
       }
       return *this;
     }
@@ -82,7 +82,7 @@ namespace Dark
       return *this;
     }
 
-    bool includes( const Vec3 &v, scalar eps = 0.0 ) const
+    bool includes( const Vec3 &v, float eps = 0.0f ) const
     {
       return
           mins.x - eps <= v.x && v.x <= maxs.x + eps &&
@@ -90,7 +90,7 @@ namespace Dark
           mins.z - eps <= v.z && v.z <= maxs.z + eps;
     }
 
-    bool isInside( const Bounds &b, scalar eps = 0.0 ) const
+    bool isInside( const Bounds &b, float eps = 0.0f ) const
     {
       return
           b.mins.x - eps <= mins.x && maxs.x <= b.maxs.x + eps &&
@@ -98,12 +98,12 @@ namespace Dark
           b.mins.z - eps <= mins.z && maxs.z <= b.maxs.z + eps;
     }
 
-    bool includes( const Bounds &b, scalar eps = 0.0 ) const
+    bool includes( const Bounds &b, float eps = 0.0f ) const
     {
       return b.isInside( *this, eps );
     }
 
-    bool overlaps( const Bounds &b, scalar eps = 0.0 ) const
+    bool overlaps( const Bounds &b, float eps = 0.0f ) const
     {
       return
           b.mins.x - eps <= maxs.x && mins.x <= b.maxs.x + eps &&
@@ -112,9 +112,9 @@ namespace Dark
     }
 
     // implemented in AABB.h
-    bool isInside( const AABB &a, scalar eps = 0.0 ) const;
-    bool includes( const AABB &a, scalar eps = 0.0 ) const;
-    bool overlaps( const AABB &a, scalar eps = 0.0 ) const;
+    bool isInside( const AABB &a, float eps = 0.0f ) const;
+    bool includes( const AABB &a, float eps = 0.0f ) const;
+    bool overlaps( const AABB &a, float eps = 0.0f ) const;
 
   };
 

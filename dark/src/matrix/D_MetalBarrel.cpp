@@ -22,7 +22,7 @@ namespace Dark
   D_MetalBarrel::D_MetalBarrel( const Vec3 &p_ )
   {
     p = p_,
-    dim = Vec3( 0.4032, 0.4032, 0.5922 );
+    dim = Vec3( 0.4032f, 0.4032f, 0.5922f );
 
     flags = Object::DYNAMIC_BIT | Object::CLIP_BIT | Object::FRICT_FUNC_BIT;
     type = TYPE;
@@ -32,13 +32,13 @@ namespace Dark
     model = LIST_METAL_BARREL;
 
     velocity = Vec3::zero();
-    mass = 50.0;
+    mass = 50.0f;
   }
 
   void D_MetalBarrel::onDestroy()
   {
-    world.genParticles( 10, p, velocity, 1.2, 1.2, 0.0, 20.0, LIST_SPARK,
-                        Vec3( 0.5, 0.5, 0.5 ), 0.2 );
+    world.genParticles( 10, p, velocity, 1.2f, 1.2f, 0.0f, 20.0f, LIST_SPARK,
+                        Vec3( 0.5f, 0.5f, 0.5f ), 0.2f );
 
     world.remove( this );
   }

@@ -23,17 +23,17 @@ namespace Graphics
   {
     maxDistance = maxDistance_;
 
-    float fovX = Math::atan( Math::tan( Math::rad( fovY_ / 2.0 ) ) * aspect );
-    float fovY = Math::atan( Math::tan( Math::rad( fovY_ / 2.0 ) ) );
+    float fovX = Math::atan( Math::tan( Math::rad( fovY_ / 2.0f ) ) * aspect );
+    float fovY = Math::atan( Math::tan( Math::rad( fovY_ / 2.0f ) ) );
     float sx, cx, sy, cy;
 
     Math::sincos( fovX, &sx, &cx );
     Math::sincos( fovY, &sy, &cy );
 
-    nLeft0  = Vec3(  cx, sx,  0.0 );
-    nRight0 = Vec3( -cx, sx,  0.0 );
-    nUp0    = Vec3( 0.0, sy, -cy );
-    nDown0  = Vec3( 0.0, sy,  cy );
+    nLeft0  = Vec3(   cx, sx,  0.0f );
+    nRight0 = Vec3(  -cx, sx,  0.0f );
+    nUp0    = Vec3( 0.0f, sy,   -cy );
+    nDown0  = Vec3( 0.0f, sy,    cy );
 
     cosX2 = cx;
   }

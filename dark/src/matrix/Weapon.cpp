@@ -20,7 +20,7 @@ namespace Dark
   Weapon::Weapon( const Vec3 &p_ )
   {
     p = p_,
-    dim = Vec3( 0.3, 0.3, 0.3 );
+    dim = Vec3( 0.3f, 0.3f, 0.3f );
 
     flags = 0;
     type = 0;

@@ -22,7 +22,7 @@ namespace Dark
   D_WoodBarrel::D_WoodBarrel( const Vec3 &p_, Object *content_ )
   {
     p = p_,
-    dim = Vec3( 0.35, 0.35, 0.482 );
+    dim = Vec3( 0.35f, 0.35f, 0.482f );
 
     flags = Object::DYNAMIC_BIT | Object::CLIP_BIT | Object::FRICT_FUNC_BIT;
     type = TYPE;
@@ -32,7 +32,7 @@ namespace Dark
     model = LIST_WOOD_BARREL;
 
     velocity = Vec3::zero();
-    mass = 50.0;
+    mass = 50.0f;
 
     content = content_;
   }
@@ -46,8 +46,8 @@ namespace Dark
 
   void D_WoodBarrel::onDestroy()
   {
-    world.genParticles( 10, p, velocity, 1.2, 1.2, 0.0, 20.0, LIST_SPARK,
-                        Vec3( 0.5, 0.5, 0.5 ), 0.2 );
+    world.genParticles( 10, p, velocity, 1.2f, 1.2f, 0.0f, 20.0f, LIST_SPARK,
+                        Vec3( 0.5f, 0.5f, 0.5f ), 0.2f );
 
     if( content != null ) {
       content->p = p;

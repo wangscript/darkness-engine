@@ -22,8 +22,8 @@ namespace Graphics
     model = model_;
 
     anim.type       = -1;
-    anim.currTime   = 0.0;
-    anim.oldTime    = 0.0;
+    anim.currTime   = 0.0f;
+    anim.oldTime    = 0.0f;
     setAnim( 0 );
   }
 
@@ -35,7 +35,7 @@ namespace Graphics
       anim.currFrame  = anim.startFrame;
       anim.nextFrame  = anim.startFrame + 1;
       anim.fps        = MD2::animList[type].fps;
-      anim.frameTime  = 1.0 / anim.fps;
+      anim.frameTime  = 1.0f / anim.fps;
       anim.type       = type;
     }
   }

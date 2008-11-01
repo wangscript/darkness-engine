@@ -317,7 +317,7 @@ namespace Dark
     logFile.println( "}" );
 
     logFile.println( "Average framerate: %g",
-                     (float) nFrames / (float) ( timeLast - timeZero ) * 1000.0 );
+                     (float) nFrames / (float) ( timeLast - timeZero ) * 1000.0f );
     shutdown();
   }
 

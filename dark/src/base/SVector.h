@@ -21,10 +21,9 @@ namespace Dark
 
       static const int CAPACITY = SIZE;
 
+    private:
+
       Type data[SIZE];
-
-    protected:
-
       int count;
 
     public:
@@ -77,6 +76,16 @@ namespace Dark
       bool operator != ( const SVector &v ) const
       {
         return count != v.count || !aEqual( data, v.data, count );
+      }
+
+      Type *dataPtr()
+      {
+        return data;
+      }
+
+      const Type *dataPtr() const
+      {
+        return data;
       }
 
       int length() const
@@ -226,11 +235,12 @@ namespace Dark
         count++;
       }
 
-      void operator -- ( int )
+      SVector operator -- ( int )
       {
         assert( count != 0 );
 
         count--;
+        return *this;
       }
 
       // remove element by index

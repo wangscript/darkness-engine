@@ -15,14 +15,13 @@
 namespace Dark
 {
 
-  const scalar Sector::DIM = 32.0;
-  const scalar Sector::RADIUS = Sector::DIM * Math::SQRT2;
-
   World world;
 
-  // n of sectors on each (x, y) axis
+  const float Sector::DIM = 16.0f;
+  const float Sector::RADIUS = Sector::DIM * Math::SQRT2;
+
+  const float World::DIM = Sector::DIM * World::MAX / 2.0f;
   const int World::MAX;
-  const scalar World::DIM = Sector::DIM * World::MAX / 2.0;
 
   World::World() :
       Bounds( Vec3( -World::DIM, -World::DIM, -World::DIM ),
@@ -183,8 +182,8 @@ namespace Dark
                             float rejection, float mass, float lifeTime,
                             int model, const Vec3 &color, float colorSpread )
   {
-    float velocitySpread2 = velocitySpread / 2.0;
-    float colorSpread2 = colorSpread / 2.0;
+    float velocitySpread2 = velocitySpread / 2.0f;
+    float colorSpread2 = colorSpread / 2.0f;
 
     for( int i = 0; i < number; i++ ) {
       Vec3 velDisturb = Vec3( velocitySpread * Math::frand() - velocitySpread2,
@@ -195,7 +194,7 @@ namespace Dark
                                 colorSpread * Math::frand() - colorSpread2 );
       float timeDisturb = lifeTime * Math::frand();
 
-      add( new Particle( p, velocity + velDisturb, rejection, mass, 0.5 * lifeTime + timeDisturb,
+      add( new Particle( p, velocity + velDisturb, rejection, mass, 0.5f * lifeTime + timeDisturb,
                          model, color + colorDisturb ) );
     }
   }

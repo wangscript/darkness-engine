@@ -12,10 +12,10 @@
 
 #include "Client.h"
 
-#include "Timer.h"
-#include "Bot.h"
-#include "Matrix.h"
-#include "Nirvana.h"
+#include "matrix/Timer.h"
+#include "matrix/Bot.h"
+#include "matrix/Matrix.h"
+#include "nirvana/Nirvana.h"
 
 #include "Camera.h"
 

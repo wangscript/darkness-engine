@@ -1,5 +1,5 @@
-CXXFLAGS="-O0 -g -Wall -Wextra -Winvalid-pch -pipe"
-PREFIX="src/base"
+CXXFLAGS=`grep 'ADD_DEFINITIONS' CMakeLists.txt | sed -e 's/ADD_DEFINITIONS( \([^)].*\) )/\1/'`
+PREFIX="src"
 
 if [ "$1" == "clean" ]; then
   echo rm -f $PREFIX/precompiled.h.gch

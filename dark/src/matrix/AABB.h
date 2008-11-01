@@ -19,9 +19,9 @@ namespace Dark
   struct AABB
   {
     // max allowed dimension for an object plus 1 cm for epsilon
-    static const scalar MAX_DIMXY;
+    static const float MAX_DIMXY;
 
-    static const scalar REAL_MAX_DIMXY;
+    static const float REAL_MAX_DIMXY;
 
     Vec3 p;
     Vec3 dim;
@@ -32,48 +32,48 @@ namespace Dark
     AABB( const Vec3 &p_, const Vec3 &dim_ ) : p( p_ ), dim( dim_ )
     {}
 
-    Bounds toBounds( scalar eps = 0.0 ) const
+    Bounds toBounds( float eps = 0.0f ) const
     {
       Bounds t;
 
-      t.mins.x = p.x - dim.x - 2.0 * eps;
-      t.mins.y = p.y - dim.y - 2.0 * eps;
-      t.mins.z = p.z - dim.z - 2.0 * eps;
+      t.mins.x = p.x - dim.x - 2.0f * eps;
+      t.mins.y = p.y - dim.y - 2.0f * eps;
+      t.mins.z = p.z - dim.z - 2.0f * eps;
 
-      t.maxs.x = p.x + dim.x + 2.0 * eps;
-      t.maxs.y = p.y + dim.y + 2.0 * eps;
-      t.maxs.z = p.z + dim.z + 2.0 * eps;
+      t.maxs.x = p.x + dim.x + 2.0f * eps;
+      t.maxs.y = p.y + dim.y + 2.0f * eps;
+      t.maxs.z = p.z + dim.z + 2.0f * eps;
 
       return t;
     }
 
-    Bounds toBounds( const Vec3 &move, scalar eps = 0.0 ) const
+    Bounds toBounds( const Vec3 &move, float eps = 0.0f ) const
     {
       Bounds t;
 
-      if( move.x < 0.0 ) {
-        t.mins.x = p.x - dim.x - 2.0 * eps + move.x;
-        t.maxs.x = p.x + dim.x + 2.0 * eps;
+      if( move.x < 0.0f ) {
+        t.mins.x = p.x - dim.x - 2.0f * eps + move.x;
+        t.maxs.x = p.x + dim.x + 2.0f * eps;
       }
       else {
-        t.mins.x = p.x - dim.x - 2.0 * eps;
-        t.maxs.x = p.x + dim.x + 2.0 * eps + move.x;
+        t.mins.x = p.x - dim.x - 2.0f * eps;
+        t.maxs.x = p.x + dim.x + 2.0f * eps + move.x;
       }
-      if( move.y < 0.0 ) {
-        t.mins.y = p.y - dim.y - 2.0 * eps + move.y;
-        t.maxs.y = p.y + dim.y + 2.0 * eps;
-      }
-      else {
-        t.mins.y = p.y - dim.y - 2.0 * eps;
-        t.maxs.y = p.y + dim.y + 2.0 * eps + move.y;
-      }
-      if( move.z < 0.0 ) {
-        t.mins.z = p.z - dim.z - 2.0 * eps + move.z;
-        t.maxs.z = p.z + dim.z + 2.0 * eps;
+      if( move.y < 0.0f ) {
+        t.mins.y = p.y - dim.y - 2.0f * eps + move.y;
+        t.maxs.y = p.y + dim.y + 2.0f * eps;
       }
       else {
-        t.mins.z = p.z - dim.z - 2.0 * eps;
-        t.maxs.z = p.z + dim.z + 2.0 * eps + move.z;
+        t.mins.y = p.y - dim.y - 2.0f * eps;
+        t.maxs.y = p.y + dim.y + 2.0f * eps + move.y;
+      }
+      if( move.z < 0.0f ) {
+        t.mins.z = p.z - dim.z - 2.0f * eps + move.z;
+        t.maxs.z = p.z + dim.z + 2.0f * eps;
+      }
+      else {
+        t.mins.z = p.z - dim.z - 2.0f * eps;
+        t.maxs.z = p.z + dim.z + 2.0f * eps + move.z;
       }
       return t;
     }
@@ -100,29 +100,29 @@ namespace Dark
       return *this;
     }
 
-    AABB operator * ( scalar k ) const
+    AABB operator * ( float k ) const
     {
       return AABB( p, dim * k );
     }
 
-    AABB operator / ( scalar k ) const
+    AABB operator / ( float k ) const
     {
       return AABB( p, dim / k );
     }
 
-    AABB &operator *= ( scalar k )
+    AABB &operator *= ( float k )
     {
       dim *= k;
       return *this;
     }
 
-    AABB &operator /= ( scalar k )
+    AABB &operator /= ( float k )
     {
       dim /= k;
       return *this;
     }
 
-    bool includes( const Vec3 &v, scalar eps = 0.0 ) const
+    bool includes( const Vec3 &v, float eps = 0.0f ) const
     {
       Vec3 relPos = v - p;
       Vec3 d( dim.x + eps,
@@ -135,7 +135,7 @@ namespace Dark
           -d.z <= relPos.z && relPos.z <= d.z;
     }
 
-    bool isInside( const AABB &a, scalar eps = 0.0 ) const
+    bool isInside( const AABB &a, float eps = 0.0f ) const
     {
       Vec3 relPos = p - a.p;
       Vec3 d( a.dim.x - dim.x + eps,
@@ -148,12 +148,12 @@ namespace Dark
           -d.z <= relPos.z && relPos.z <= d.z;
     }
 
-    bool includes( const AABB &a, scalar eps = 0.0 ) const
+    bool includes( const AABB &a, float eps = 0.0f ) const
     {
       return a.isInside( *this, eps );
     }
 
-    bool overlaps( const AABB &a, scalar eps = 0.0 ) const
+    bool overlaps( const AABB &a, float eps = 0.0f ) const
     {
       Vec3 relPos = a.p - p;
       Vec3 d( a.dim.x + dim.x + eps,
@@ -166,7 +166,7 @@ namespace Dark
           -d.z < relPos.z && relPos.z < d.z;
     }
 
-    bool isInside( const Bounds &b, scalar eps = 0.0 ) const
+    bool isInside( const Bounds &b, float eps = 0.0f ) const
     {
       return
           b.mins.x - eps <= p.x - dim.x && p.x + dim.x <= b.maxs.x + eps &&
@@ -174,7 +174,7 @@ namespace Dark
           b.mins.z - eps <= p.z - dim.z && p.z + dim.z <= b.maxs.z + eps;
     }
 
-    bool includes( const Bounds &b, scalar eps = 0.0 ) const
+    bool includes( const Bounds &b, float eps = 0.0f ) const
     {
       return
           b.mins.x + eps >= p.x - dim.x && p.x + dim.x >= b.maxs.x - eps &&
@@ -182,7 +182,7 @@ namespace Dark
           b.mins.z + eps >= p.z - dim.z && p.z + dim.z >= b.maxs.z - eps;
     }
 
-    bool overlaps( const Bounds &b, scalar eps = 0.0 ) const
+    bool overlaps( const Bounds &b, float eps = 0.0f ) const
     {
       return
           b.mins.x - eps <= p.x + dim.x && p.x - dim.x <= b.maxs.x + eps &&
@@ -192,17 +192,17 @@ namespace Dark
 
   };
 
-  inline bool Bounds::isInside( const AABB &a, scalar eps ) const
+  inline bool Bounds::isInside( const AABB &a, float eps ) const
   {
     return a.includes( *this, eps );
   }
 
-  inline bool Bounds::includes( const AABB &a, scalar eps ) const
+  inline bool Bounds::includes( const AABB &a, float eps ) const
   {
     return a.isInside( *this, eps );
   }
 
-  inline bool Bounds::overlaps( const AABB &a, scalar eps ) const
+  inline bool Bounds::overlaps( const AABB &a, float eps ) const
   {
     return a.overlaps( *this, eps );
   }

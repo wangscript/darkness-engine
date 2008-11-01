@@ -20,10 +20,10 @@ namespace Dark
   void Timer::update( int frameMillis_ )
   {
     frameMillis = frameMillis_;
-    frameTime   = frameMillis / 1000.0;
+    frameTime   = frameMillis / 1000.0f;
 
     millis      += frameMillis;
-    time        = millis / 1000.0;
+    time        = millis / 1000.0f;
   }
 
 }

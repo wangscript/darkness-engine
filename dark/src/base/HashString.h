@@ -17,7 +17,7 @@ namespace Dark
   template <class Type, int SIZE>
   class HashString
   {
-    protected:
+    private:
 
       struct Elem : Reuser<HashString>
       {
@@ -29,6 +29,9 @@ namespace Dark
             key( key_ ), value( value_ ), next( next_ )
         {}
       };
+
+      Elem *data[SIZE];
+      Elem *cached;
 
       bool areChainsEqual( const Elem *chainA, const Elem *chainB ) const
       {
@@ -72,9 +75,6 @@ namespace Dark
         }
         return abs( hash );
       }
-
-      Elem *data[SIZE];
-      Elem *cached;
 
     public:
 

@@ -17,11 +17,11 @@ namespace Dark
 
   Camera camera;
 
-  Camera::Camera() : h( 0.0 ), v( 0.0 ), r( 0.0 )
+  Camera::Camera() : h( 0.0f ), v( 0.0f ), r( 0.0f )
   {
     p.setZero();
-    at = Vec3( 0.0, 1.0, 0.0 );
-    up = Vec3( 0.0, 0.0, 1.0 );
+    at = Vec3( 0.0f, 1.0f, 0.0f );
+    up = Vec3( 0.0f, 0.0f, 1.0f );
 
     rotMat.setId();
     rotTMat.setId();
@@ -30,7 +30,7 @@ namespace Dark
   void Camera::init()
   {
     sscanf( config["render.camera.smoothCoef"], "%f", &smoothCoef );
-    smoothCoef_1 = 1.0 - smoothCoef;
+    smoothCoef_1 = 1.0f - smoothCoef;
   }
 
   void Camera::update()
@@ -50,10 +50,10 @@ namespace Dark
     at = Vec3( -hSine * vCosine,  hCosine * vCosine, vSine );
     up = Vec3(  hSine * vSine,   -hCosine * vSine,   vCosine );
 
-    rotTMat = Mat44( hCosine, -hSine * vCosine,    hSine * vSine,   0.0,
-                     hSine,    hCosine * vCosine, -hCosine * vSine, 0.0,
-                     0.0,      vSine,              vCosine,         0.0,
-                     0.0,      0.0,                0.0,             1.0 );
+    rotTMat = Mat44( hCosine, -hSine * vCosine,    hSine * vSine,   0.0f,
+                     hSine,    hCosine * vCosine, -hCosine * vSine, 0.0f,
+                     0.0f,     vSine,              vCosine,         0.0f,
+                     0.0f,     0.0f,               0.0f,            1.0f );
 
     rotMat = ~rotTMat;
   }

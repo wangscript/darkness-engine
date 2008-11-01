@@ -28,12 +28,6 @@ namespace Dark
   typedef unsigned int   uint;
   typedef unsigned long  ulong;
 
-#ifdef DARK_FLOAT_SCALAR
-  typedef float scalar;
-#else
-  typedef double scalar;
-#endif
-
   /*
    * GENERIC TEMPLATES
    */

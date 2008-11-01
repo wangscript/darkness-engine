@@ -11,7 +11,7 @@
 #ifndef _Graphics_Shape_h_
 #define _Graphics_Shape_h_
 
-#include "bv.h"
+#include "matrix/bv.h"
 #include "Graphics_Context.h"
 
 namespace Dark

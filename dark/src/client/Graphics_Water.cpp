@@ -12,7 +12,7 @@
 
 #include "Graphics_Water.h"
 
-#include "Translator.h"
+#include "matrix/Translator.h"
 
 #include "Graphics_Context.h"
 
@@ -23,13 +23,13 @@ namespace Graphics
 
   Water water;
 
-  const float Water::TEX_STRETCH = 8.0;
-  const float Water::TEX_BIAS = 0.5;
+  const float Water::TEX_STRETCH = 8.0f;
+  const float Water::TEX_BIAS = 0.5f;
 
-  const float Water::ALPHA = 0.75;
+  const float Water::ALPHA = 0.75f;
 
-  const float Water::COLOR[] = { 0.0, 0.05, 0.25, 1.0 };
-  const float Water::VISIBILITY = 8.0;
+  const float Water::COLOR[] = { 0.0f, 0.05f, 0.25f, 1.0f };
+  const float Water::VISIBILITY = 8.0f;
 
   void Water::init()
   {
@@ -38,8 +38,8 @@ namespace Graphics
 
   void Water::update()
   {
-    phi = Math::mod( phi + 0.04, 2.0 * Math::PI );
-    ratio = ( 1.0 + Math::sin( phi ) ) / 2.0;
+    phi = Math::mod( phi + 0.04f, 2.0f * Math::PI );
+    ratio = ( 1.0f + Math::sin( phi ) ) / 2.0f;
 
     alpha2 = ratio * ALPHA;
     alpha1 = ( alpha2 * ( 1 - ratio ) ) / ( ratio * ( 1 - alpha2 ) );
@@ -68,10 +68,10 @@ namespace Graphics
     glBindTexture( GL_TEXTURE_2D, texture );
 
     if( isInside ) {
-      glColor4f( 1.0, 1.0, 1.0, alpha1 );
+      glColor4f( 1.0f, 1.0f, 1.0f, alpha1 );
 
       glBegin( GL_QUADS );
-        glNormal3f( 0.0, 0.0, -1.0 );
+        glNormal3f( 0.0f, 0.0f, -1.0f );
         glTexCoord2f( s0, t0 );
         glVertex3f( x1, y0, z1 );
         glTexCoord2f( s1, t0 );
@@ -82,10 +82,10 @@ namespace Graphics
         glVertex3f( x1, y1, z1 );
       glEnd();
 
-      glColor4f( 1.0, 1.0, 1.0, alpha2 );
+      glColor4f( 1.0f, 1.0f, 1.0f, alpha2 );
 
       glBegin( GL_QUADS );
-      glNormal3f( 0.0, 0.0, -1.0 );
+      glNormal3f( 0.0f, 0.0f, -1.0f );
       glTexCoord2f( u0, v0 );
       glVertex3f( x1, y0, z1 );
       glTexCoord2f( u1, v0 );
@@ -96,13 +96,13 @@ namespace Graphics
       glVertex3f( x1, y1, z1 );
       glEnd();
 
-      glColor4f( 1.0, 1.0, 1.0, 1.0 );
+      glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
     }
     else {
-      glColor4f( 1.0, 1.0, 1.0, alpha1 );
+      glColor4f( 1.0f, 1.0f, 1.0f, alpha1 );
 
       glBegin( GL_QUADS );
-        glNormal3f( 0.0, 0.0, 1.0 );
+        glNormal3f( 0.0f, 0.0f, 1.0f );
         glTexCoord2f( s0, t0 );
         glVertex3f( x0, y0, z1 );
         glTexCoord2f( s1, t0 );
@@ -113,10 +113,10 @@ namespace Graphics
         glVertex3f( x0, y1, z1 );
       glEnd();
 
-      glColor4f( 1.0, 1.0, 1.0, alpha2 );
+      glColor4f( 1.0f, 1.0f, 1.0f, alpha2 );
 
       glBegin( GL_QUADS );
-        glNormal3f( 0.0, 0.0, 1.0 );
+        glNormal3f( 0.0f, 0.0f, 1.0f );
         glTexCoord2f( u0, v0 );
         glVertex3f( x0, y0, z1 );
         glTexCoord2f( u1, v0 );
@@ -127,7 +127,7 @@ namespace Graphics
         glVertex3f( x0, y1, z1 );
       glEnd();
 
-      glColor4f( 1.0, 1.0, 1.0, 1.0 );
+      glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
     }
   }
 

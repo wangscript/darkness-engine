@@ -135,8 +135,8 @@ namespace Dark
     int  size[2];
   };
 
-  const float BSP::BSP_SCALE = 0.01;
-  const float BSP::QBSP_SCALE = 0.25;
+  const float BSP::BSP_SCALE = 0.01f;
+  const float BSP::QBSP_SCALE = 0.25f;
 
   BSP::VisualData::VisualData()
   {
@@ -365,7 +365,7 @@ namespace Dark
     visual.bitsets = new Bitset[visual.nClusters];
     for( int i = 0; i < visual.nClusters; i++ ) {
       visual.bitsets[i].setSize( visual.clusterLength * 8 );
-      fread( visual.bitsets[i].data, sizeof( char ), visual.clusterLength, f );
+      fread( visual.bitsets[i].dataPtr(), sizeof( char ), visual.clusterLength, f );
     }
 
     fclose( f );

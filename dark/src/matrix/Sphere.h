@@ -17,13 +17,13 @@ namespace Dark
   struct Sphere
   {
     Vec3   p;
-    scalar r;
+    float r;
 
     Sphere()
     {
     }
 
-    Sphere( const Vec3 &p_, scalar r_ ) : p( p_ ), r( r_ )
+    Sphere( const Vec3 &p_, float r_ ) : p( p_ ), r( r_ )
     {
     }
 

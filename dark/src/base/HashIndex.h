@@ -17,7 +17,7 @@ namespace Dark
   template <class Type, int SIZE>
   class HashIndex
   {
-    protected:
+    private:
 
       struct Elem : Reuser<HashIndex>
       {
@@ -29,6 +29,9 @@ namespace Dark
             key( key_ ), value( value_ ), next( next_ )
         {}
       };
+
+      Elem *data[SIZE];
+      Elem *cached;
 
       bool areChainsEqual( const Elem *chainA, const Elem *chainB ) const
       {
@@ -61,9 +64,6 @@ namespace Dark
         }
         delete chain;
       }
-
-      Elem *data[SIZE];
-      Elem *cached;
 
     public:
 

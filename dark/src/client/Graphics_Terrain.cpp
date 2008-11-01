@@ -12,7 +12,7 @@
 
 #include "Graphics_Terrain.h"
 
-#include "World.h"
+#include "matrix/World.h"
 
 #ifdef __WIN32__
 
@@ -90,8 +90,8 @@ namespace Graphics
           n0 += terraQuad[x - 1][y + 1].normal[1];
         }
 
-        n0 = ( n0 / 6.0 ).norm();
-        n1 = ( n1 / 6.0 ).norm();
+        n0 = ( n0 / 6.0f ).norm();
+        n1 = ( n1 / 6.0f ).norm();
 
         glMultiTexCoord2i( GL_TEXTURE0_ARB,
                            x * TERRA_DETAILTEX_SCALE,
@@ -168,12 +168,12 @@ namespace Graphics
       *minHeight = min( *minHeight, minChildZ );
       *maxHeight = max( *maxHeight, maxChildZ );
 
-      qTree->p = Vec3( ( qTree->next[0]->p.x + qTree->next[1]->p.x ) * 0.5,
-                       ( qTree->next[0]->p.y + qTree->next[2]->p.y ) * 0.5,
-                       ( *minHeight + *maxHeight ) * 0.5 );
+      qTree->p = Vec3( ( qTree->next[0]->p.x + qTree->next[1]->p.x ) * 0.5f,
+                       ( qTree->next[0]->p.y + qTree->next[2]->p.y ) * 0.5f,
+                       ( *minHeight + *maxHeight ) * 0.5f );
 
       // pitagora
-      float a  = ( *maxHeight - *minHeight ) * 0.5;
+      float a  = ( *maxHeight - *minHeight ) * 0.5f;
       float b  = ( maxX - minX ) * Dark::TerraQuad::DIM;
       float b2 = b*b;
 
@@ -185,10 +185,10 @@ namespace Graphics
 
       qTree->p = Vec3( ( minX + maxX ) * Dark::TerraQuad::DIM - Dark::Terrain::DIM,
                        ( minY + maxY ) * Dark::TerraQuad::DIM - Dark::Terrain::DIM,
-                       ( *minHeight + *maxHeight ) * 0.5 );
+                       ( *minHeight + *maxHeight ) * 0.5f );
 
       // pitagora
-      float a  = ( *maxHeight - *minHeight ) * 0.5;
+      float a  = ( *maxHeight - *minHeight ) * 0.5f;
       float b  = ( maxX - minX ) * Dark::TerraQuad::DIM;
       float b2 = b*b;
 

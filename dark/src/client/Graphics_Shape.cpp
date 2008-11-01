@@ -21,14 +21,14 @@ namespace Graphics
 
   uint Shape::genRandomTetrahedicParticle( float size )
   {
-    static const float SQRT_3_THIRDS = Math::sqrt( 3.0 ) / 3.0;
+    static const float SQRT_3_THIRDS = Math::sqrt( 3.0f ) / 3.0f;
 
-    float dim = size / 2.0;
+    float dim = size / 2.0f;
 
-    Vec3 v0 = Math::frand() * dim * Vec3( 0.0,             0.0,        1.0 );
-    Vec3 v1 = Math::frand() * dim * Vec3( 0.0,             2.0 / 3.0, 0.0 );
-    Vec3 v2 = Math::frand() * dim * Vec3( -SQRT_3_THIRDS, -1.0 / 3.0,  0.0 );
-    Vec3 v3 = Math::frand() * dim * Vec3(  SQRT_3_THIRDS, -1.0 / 3.0,  0.0 );
+    Vec3 v0 = Math::frand() * dim * Vec3( 0.0f,            0.0f,        1.0f );
+    Vec3 v1 = Math::frand() * dim * Vec3( 0.0f,            2.0f / 3.0f, 0.0f );
+    Vec3 v2 = Math::frand() * dim * Vec3( -SQRT_3_THIRDS, -1.0f / 3.0f, 0.0f );
+    Vec3 v3 = Math::frand() * dim * Vec3(  SQRT_3_THIRDS, -1.0f / 3.0f, 0.0f );
 
     uint list = context.genList();
 
@@ -67,7 +67,7 @@ namespace Graphics
 
   uint Shape::genRandomCubicParticle( float size )
   {
-    float dim = size / 2.0;
+    float dim = size / 2.0f;
 
     Vec3 v0( -dim * Math::frand(), -dim * Math::frand(), -dim );
     Vec3 v1(  dim * Math::frand(), -dim * Math::frand(), -dim );
@@ -85,7 +85,7 @@ namespace Graphics
 
     glBegin( GL_QUADS );
       // top
-      glNormal3f( 0.0, 0.0, 1.0 );
+      glNormal3f( 0.0f, 0.0f, 1.0f );
       glVertex3fv( v4 );
       glVertex3fv( v5 );
       glVertex3fv( v6 );
@@ -120,7 +120,7 @@ namespace Graphics
       glVertex3fv( v5 );
 
       // bottom
-      glNormal3f( 0.0, 0.0, -1.0 );
+      glNormal3f( 0.0f, 0.0f, -1.0f );
       glVertex3fv( v3 );
       glVertex3fv( v2 );
       glVertex3fv( v1 );
@@ -144,7 +144,7 @@ namespace Graphics
     glBindTexture( GL_TEXTURE_2D, texture );
     glBegin( GL_QUADS );
       // top
-      glNormal3f( 0.0, 0.0, 1.0 );
+      glNormal3f( 0.0f, 0.0f, 1.0f );
       glTexCoord2f( 0, 0 );
       glVertex3f( v0.x, v0.y, v1.z );
       glTexCoord2f( 1, 0 );
@@ -155,7 +155,7 @@ namespace Graphics
       glVertex3f( v0.x, v1.y, v1.z );
 
       // fore
-      glNormal3f( 0.0, -1.0, 0.0 );
+      glNormal3f( 0.0f, -1.0f, 0.0f );
       glTexCoord2f( 0, 0 );
       glVertex3f( v0.x, v0.y, v0.z );
       glTexCoord2f( 1, 0 );
@@ -166,7 +166,7 @@ namespace Graphics
       glVertex3f( v0.x, v0.y, v1.z );
 
       // left
-      glNormal3f( -1.0, 0.0, 0.0 );
+      glNormal3f( -1.0f, 0.0f, 0.0f );
       glTexCoord2f( 0, 0 );
       glVertex3f( v0.x, v1.y, v0.z );
       glTexCoord2f( 1, 0 );
@@ -177,7 +177,7 @@ namespace Graphics
       glVertex3f( v0.x, v1.y, v1.z );
 
       // back
-      glNormal3f( 0.0, 1.0, 0.0 );
+      glNormal3f( 0.0f, 1.0f, 0.0f );
       glTexCoord2f( 0, 0 );
       glVertex3f( v1.x, v1.y, v0.z );
       glTexCoord2f( 1, 0 );
@@ -188,7 +188,7 @@ namespace Graphics
       glVertex3f( v1.x, v1.y, v1.z );
 
       // right
-      glNormal3f( 1.0, 0.0, 0.0 );
+      glNormal3f( 1.0f, 0.0f, 0.0f );
       glTexCoord2f( 0, 0 );
       glVertex3f( v1.x, v0.y, v0.z );
       glTexCoord2f( 1, 0 );
@@ -199,7 +199,7 @@ namespace Graphics
       glVertex3f( v1.x, v0.y, v1.z );
 
       // bottom
-      glNormal3f( 0.0, 0.0, -1.0 );
+      glNormal3f( 0.0f, 0.0f, -1.0f );
       glTexCoord2f( 0, 0 );
       glVertex3f( v0.x, v1.y, v0.z );
       glTexCoord2f( 1, 0 );
@@ -222,7 +222,7 @@ namespace Graphics
 
     glBegin( GL_QUADS );
       // top
-      glNormal3f( 0.0, 0.0, 1.0 );
+      glNormal3f( 0.0f, 0.0f, 1.0f );
       glTexCoord2f( 0, 0 );
       glVertex3f( v0.x, v0.y, v1.z );
       glTexCoord2f( 1, 0 );
@@ -233,7 +233,7 @@ namespace Graphics
       glVertex3f( v0.x, v1.y, v1.z );
 
       // fore
-      glNormal3f( 0.0, -1.0, 0.0 );
+      glNormal3f( 0.0f, -1.0f, 0.0f );
       glTexCoord2f( 0, 0 );
       glVertex3f( v0.x, v0.y, v0.z );
       glTexCoord2f( 1, 0 );
@@ -244,7 +244,7 @@ namespace Graphics
       glVertex3f( v0.x, v0.y, v1.z );
 
       // left
-      glNormal3f( -1.0, 0.0, 0.0 );
+      glNormal3f( -1.0f, 0.0f, 0.0f );
       glTexCoord2f( 0, 0 );
       glVertex3f( v0.x, v1.y, v0.z );
       glTexCoord2f( 1, 0 );
@@ -255,7 +255,7 @@ namespace Graphics
       glVertex3f( v0.x, v1.y, v1.z );
 
       // back
-      glNormal3f( 0.0, 1.0, 0.0 );
+      glNormal3f( 0.0f, 1.0f, 0.0f );
       glTexCoord2f( 0, 0 );
       glVertex3f( v1.x, v1.y, v0.z );
       glTexCoord2f( 1, 0 );
@@ -266,7 +266,7 @@ namespace Graphics
       glVertex3f( v1.x, v1.y, v1.z );
 
       // right
-      glNormal3f( 1.0, 0.0, 0.0 );
+      glNormal3f( 1.0f, 0.0f, 0.0f );
       glTexCoord2f( 0, 0 );
       glVertex3f( v1.x, v0.y, v0.z );
       glTexCoord2f( 1, 0 );
@@ -277,7 +277,7 @@ namespace Graphics
       glVertex3f( v1.x, v0.y, v1.z );
 
       // bottom
-      glNormal3f( 0.0, 0.0, -1.0 );
+      glNormal3f( 0.0f, 0.0f, -1.0f );
       glTexCoord2f( 0, 0 );
       glVertex3f( v0.x, v1.y, v0.z );
       glTexCoord2f( 1, 0 );

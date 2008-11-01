@@ -17,115 +17,96 @@ namespace Dark
   struct Mat44
   {
     // WARNING: first index is column, second is line
-    scalar _00;
-    scalar _01;
-    scalar _02;
-    scalar _03;
-    scalar _10;
-    scalar _11;
-    scalar _12;
-    scalar _13;
-    scalar _20;
-    scalar _21;
-    scalar _22;
-    scalar _23;
-    scalar _30;
-    scalar _31;
-    scalar _32;
-    scalar _33;
+    float _00;
+    float _01;
+    float _02;
+    float _03;
+    float _10;
+    float _11;
+    float _12;
+    float _13;
+    float _20;
+    float _21;
+    float _22;
+    float _23;
+    float _30;
+    float _31;
+    float _32;
+    float _33;
 
     Mat44()
     {}
 
-    Mat44( scalar m00, scalar m01, scalar m02, scalar m03,
-           scalar m10, scalar m11, scalar m12, scalar m13,
-           scalar m20, scalar m21, scalar m22, scalar m23,
-           scalar m30, scalar m31, scalar m32, scalar m33 ) :
+    Mat44( float m00, float m01, float m02, float m03,
+           float m10, float m11, float m12, float m13,
+           float m20, float m21, float m22, float m23,
+           float m30, float m31, float m32, float m33 ) :
         _00( m00 ), _01( m01 ), _02( m02 ), _03( m03 ),
         _10( m10 ), _11( m11 ), _12( m12 ), _13( m13 ),
         _20( m20 ), _21( m21 ), _22( m22 ), _23( m23 ),
         _30( m30 ), _31( m31 ), _32( m32 ), _33( m33 )
     {}
 
-    explicit Mat44( const scalar *v )
+    explicit Mat44( const float *v )
     {
       *this = *(Mat44*) v;
     }
 
     explicit Mat44( const Mat33 &m ) :
-        _00( m._00 ), _01( m._01 ), _02( m._02 ), _03( 0.0 ),
-        _10( m._10 ), _11( m._11 ), _12( m._12 ), _13( 0.0 ),
-        _20( m._20 ), _21( m._21 ), _22( m._22 ), _23( 0.0 ),
-        _30( 0.0 ), _31( 0.0 ), _32( 0.0 ), _33( 1.0 )
+        _00( m._00 ), _01( m._01 ), _02( m._02 ), _03( 0.0f ),
+        _10( m._10 ), _11( m._11 ), _12( m._12 ), _13( 0.0f ),
+        _20( m._20 ), _21( m._21 ), _22( m._22 ), _23( 0.0f ),
+        _30(  0.0f ), _31(  0.0f ), _32(  0.0f ), _33( 1.0f )
     {}
 
+    Mat44( const Vec3 &a, const Vec3 &b, const Vec3 &c, const Vec3 &d ) :
+        _00( a.x ), _01( a.y ), _02( a.z ), _03( 0.0f ),
+        _10( b.x ), _11( b.y ), _12( b.z ), _13( 0.0f ),
+        _20( c.x ), _21( c.y ), _22( c.z ), _23( 0.0f ),
+        _30( d.x ), _31( d.y ), _32( d.z ), _33( 1.0f )
+    {}
 
-    Mat44( const Vec3 &a, const Vec3 &b, const Vec3 &c, const Vec3 &d )
-    {
-      *( Vec3* )&_00 = a;
-      *( Vec3* )&_10 = b;
-      *( Vec3* )&_20 = c;
-      *( Vec3* )&_30 = d;
-      _03 = 0.0;
-      _13 = 0.0;
-      _23 = 0.0;
-      _33 = 1.0;
-    }
-
-    Mat44( const Quat &a, const Quat &b, const Quat &c, const Quat &d )
-    {
-      *(Quat*) &_00 = a;
-      *(Quat*) &_10 = b;
-      *(Quat*) &_20 = c;
-      *(Quat*) &_30 = d;
-    }
+    Mat44( const Quat &a, const Quat &b, const Quat &c, const Quat &d ) :
+        _00( a.x ), _01( a.y ), _02( a.z ), _03( a.w ),
+        _10( b.x ), _11( b.y ), _12( b.z ), _13( b.w ),
+        _20( c.x ), _21( c.y ), _22( c.z ), _23( c.w ),
+        _30( d.x ), _31( d.y ), _32( d.z ), _33( d.w )
+    {}
 
     static Mat44 zero()
     {
-      return Mat44( 0.0, 0.0, 0.0, 0.0,
-                    0.0, 0.0, 0.0, 0.0,
-                    0.0, 0.0, 0.0, 0.0,
-                    0.0, 0.0, 0.0, 0.0 );
+      return Mat44( 0.0f, 0.0f, 0.0f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 0.0f );
     }
 
     static Mat44 id()
     {
-      return Mat44( 1.0, 0.0, 0.0, 0.0,
-                    0.0, 1.0, 0.0, 0.0,
-                    0.0, 0.0, 1.0, 0.0,
-                    0.0, 0.0, 0.0, 1.0 );
+      return Mat44( 1.0f, 0.0f, 0.0f, 0.0f,
+                    0.0f, 1.0f, 0.0f, 0.0f,
+                    0.0f, 0.0f, 1.0f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 1.0f );
     }
 
-    operator scalar* () const
+    operator float* () const
     {
-      return (scalar*) this;
+      return (float*) this;
     }
 
-    operator const scalar* () const
+    operator const float* () const
     {
-      return (scalar*) this;
+      return (float*) this;
     }
 
-    scalar &operator [] ( int i )
+    float &operator [] ( int i )
     {
-      return ( (scalar*) this )[i];
+      return ( (float*) this )[i];
     }
 
-    const scalar &operator [] ( int i ) const
+    const float &operator [] ( int i ) const
     {
-      return ( (const scalar*) this )[i];
-    }
-
-    // get i-th column
-    Vec3 &col( int i )
-    {
-      return *(Vec3*) ( (scalar*) this + i * 4 );
-    }
-
-    // get i-th column
-    const Vec3 &col( int i ) const
-    {
-      return *(Vec3*) ( (scalar*) this + i * 4 );
+      return ( (const float*) this )[i];
     }
 
     bool operator == ( const Mat44 &a ) const
@@ -183,14 +164,14 @@ namespace Dark
                     -_30, -_31, -_32, -_33 );
     }
 
-    scalar det() const
+    float det() const
     {
-      scalar klop = _22 * _33 - _32 * _23;
-      scalar jlnp = _12 * _33 - _32 * _13;
-      scalar jkno = _12 * _23 - _22 * _13;
-      scalar ilmp = _02 * _33 - _32 * _03;
-      scalar ikmo = _02 * _23 - _22 * _03;
-      scalar ijmn = _02 * _13 - _12 * _03;
+      float klop = _22 * _33 - _32 * _23;
+      float jlnp = _12 * _33 - _32 * _13;
+      float jkno = _12 * _23 - _22 * _13;
+      float ilmp = _02 * _33 - _32 * _03;
+      float ikmo = _02 * _23 - _22 * _03;
+      float ijmn = _02 * _13 - _12 * _03;
       return
           _00 * _11 * klop -
           _00 * _21 * jlnp +
@@ -249,7 +230,7 @@ namespace Dark
     Mat44 &setZero()
     {
       _33 = _32 = _31 = _30 = _23 = _22 = _21 = _20 = _13 = _12 = _11 = _10 =
-          _03 = _02 = _01 = _00 = 0.0;
+          _03 = _02 = _01 = _00 = 0.0f;
       return *this;
     }
 
@@ -264,8 +245,8 @@ namespace Dark
 
     Mat44 &setId()
     {
-      _32 = _31 = _30 = _23 = _21 = _20 = _13 = _12 = _10 = _03 = _02 = _01 = 0.0;
-      _33 = _22 = _11 = _00 = 1.0;
+      _32 = _31 = _30 = _23 = _21 = _20 = _13 = _12 = _10 = _03 = _02 = _01 = 0.0f;
+      _33 = _22 = _11 = _00 = 1.0f;
       return *this;
     }
 
@@ -311,7 +292,7 @@ namespace Dark
       return *this;
     }
 
-    Mat44 &operator *= ( scalar k )
+    Mat44 &operator *= ( float k )
     {
       _00 *= k;
       _01 *= k;
@@ -332,9 +313,9 @@ namespace Dark
       return *this;
     }
 
-    Mat44 &operator /= ( scalar k )
+    Mat44 &operator /= ( float k )
     {
-      k = 1.0 / k;
+      k = 1.0f / k;
       _00 *= k;
       _01 *= k;
       _02 *= k;
@@ -370,7 +351,7 @@ namespace Dark
                     _30 - a._30, _31 - a._31, _32 - a._32, _33 - a._33 );
     }
 
-    Mat44 operator * ( scalar k ) const
+    Mat44 operator * ( float k ) const
     {
       return Mat44( _00 * k, _01 * k, _02 * k, _03 * k,
                     _10 * k, _11 * k, _12 * k, _13 * k,
@@ -378,9 +359,9 @@ namespace Dark
                     _30 * k, _31 * k, _32 * k, _33 * k );
     }
 
-    Mat44 operator / ( scalar k ) const
+    Mat44 operator / ( float k ) const
     {
-      k = 1.0 / k;
+      k = 1.0f / k;
       return Mat44( _00 * k, _01 * k, _02 * k, _03 * k,
                     _10 * k, _11 * k, _12 * k, _13 * k,
                     _20 * k, _21 * k, _22 * k, _23 * k,
@@ -424,7 +405,7 @@ namespace Dark
                    v.x * _20 + v.y * _21 + v.z * _22 + _23 );
     }
 
-    friend Mat44 operator * ( scalar k, const Mat44 &a )
+    friend Mat44 operator * ( float k, const Mat44 &a )
     {
       return Mat44( a._00 * k, a._01 * k, a._02 * k, a._03 * k,
                     a._10 * k, a._11 * k, a._12 * k, a._13 * k,
@@ -433,56 +414,56 @@ namespace Dark
     }
 
     // transformation matrices
-    static Mat44 transl( scalar dx, scalar dy, scalar dz )
+    static Mat44 transl( float dx, float dy, float dz )
     {
-      return Mat44( 1.0, 0.0, 0.0, 0.0,
-                    0.0, 1.0, 0.0, 0.0,
-                    0.0, 0.0, 1.0, 0.0,
-                    dx,   dy,  dz, 1.0 );
+      return Mat44( 1.0f, 0.0f, 0.0f, 0.0f,
+                    0.0f, 1.0f, 0.0f, 0.0f,
+                    0.0f, 0.0f, 1.0f, 0.0f,
+                      dx,   dy,   dz, 1.0f );
     }
 
     static Mat44 transl( const Vec3 &v )
     {
-      return Mat44( 1.0, 0.0, 0.0, 0.0,
-                    0.0, 1.0, 0.0, 0.0,
-                    0.0, 0.0, 1.0, 0.0,
-                    v.x, v.y, v.z, 1.0 );
+      return Mat44( 1.0f, 0.0f, 0.0f, 0.0f,
+                    0.0f, 1.0f, 0.0f, 0.0f,
+                    0.0f, 0.0f, 1.0f, 0.0f,
+                     v.x,  v.y,  v.z, 1.0f );
     }
 
-    static Mat44 rotX( scalar theta )
+    static Mat44 rotX( float theta )
     {
-      scalar s, c;
+      float s, c;
 
       Math::sincos( theta, &s, &c );
 
-      return Mat44( 1.0, 0.0, 0.0, 0.0,
-                    0.0,   c,   s, 0.0,
-                    0.0,  -s,   c, 0.0,
-                    0.0, 0.0, 0.0, 1.0 );
+      return Mat44( 1.0f, 0.0f, 0.0f, 0.0f,
+                    0.0f,    c,    s, 0.0f,
+                    0.0f,   -s,    c, 0.0f,
+                    0.0f, 0.0f, 0.0f, 1.0f );
     }
 
-    static Mat44 rotY( scalar theta )
+    static Mat44 rotY( float theta )
     {
-      scalar s, c;
+      float s, c;
 
       Math::sincos( theta, &s, &c );
 
-      return Mat44(   c, 0.0,  -s, 0.0,
-                    0.0, 1.0, 0.0, 0.0,
-                      s, 0.0,   c, 0.0,
-                    0.0, 0.0, 0.0, 1.0 );
+      return Mat44(    c, 0.0f,   -s, 0.0f,
+                    0.0f, 1.0f, 0.0f, 0.0f,
+                       s, 0.0f,    c, 0.0f,
+                    0.0f, 0.0f, 0.0f, 1.0f );
     }
 
-    static Mat44 rotZ( scalar theta )
+    static Mat44 rotZ( float theta )
     {
-      scalar s, c;
+      float s, c;
 
       Math::sincos( theta, &s, &c );
 
-      return Mat44( c,     s, 0.0, 0.0,
-                    -s,    c, 0.0, 0.0,
-                    0.0, 0.0, 1.0, 0.0,
-                    0.0, 0.0, 0.0, 1.0 );
+      return Mat44(    c,    s, 0.0f, 0.0f,
+                      -s,    c, 0.0f, 0.0f,
+                    0.0f, 0.0f, 1.0f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 1.0f );
     }
 
   };
@@ -498,23 +479,23 @@ namespace Dark
     // [       0              0              0        1 ]
     //
 
-    scalar x2 = x + x;
-    scalar y2 = y + y;
-    scalar z2 = z + z;
-    scalar xx1 = 1.0 - x2 * x;
-    scalar yy = y2 * y;
-    scalar zz = z2 * z;
-    scalar xy = x2 * y;
-    scalar xz = x2 * z;
-    scalar xw = x2 * w;
-    scalar yz = y2 * z;
-    scalar yw = y2 * w;
-    scalar zw = z2 * w;
+    float x2 = x + x;
+    float y2 = y + y;
+    float z2 = z + z;
+    float xx1 = 1.0f - x2 * x;
+    float yy = y2 * y;
+    float zz = z2 * z;
+    float xy = x2 * y;
+    float xz = x2 * z;
+    float xw = x2 * w;
+    float yz = y2 * z;
+    float yw = y2 * w;
+    float zw = z2 * w;
 
-    return Mat44( 1.0 - yy - zz, xy + zw,  xz - yw,  0.0,
-                  xy - zw,       xx1 - zz, yz + xw,  0.0,
-                  xz + yw,       yz - xw,  xx1 - yy, 0.0,
-                  0.0,           0.0,      0.0,      1.0 );
+    return Mat44( 1.0f - yy - zz, xy + zw,  xz - yw,  0.0f,
+                  xy - zw,        xx1 - zz, yz + xw,  0.0f,
+                  xz + yw,        yz - xw,  xx1 - yy, 0.0f,
+                  0.0f,           0.0f,     0.0f,     1.0f );
   }
 
   // declared in Quat.h
@@ -528,23 +509,23 @@ namespace Dark
     // [       0              0              0        1 ]
     //
 
-    scalar x2 = x + x;
-    scalar y2 = y + y;
-    scalar z2 = z + z;
-    scalar xx1 = 1.0 - x2 * x;
-    scalar yy = y2 * y;
-    scalar zz = z2 * z;
-    scalar xy = x2 * y;
-    scalar xz = x2 * z;
-    scalar xw = x2 * w;
-    scalar yz = y2 * z;
-    scalar yw = y2 * w;
-    scalar zw = z2 * w;
+    float x2 = x + x;
+    float y2 = y + y;
+    float z2 = z + z;
+    float xx1 = 1.0f - x2 * x;
+    float yy = y2 * y;
+    float zz = z2 * z;
+    float xy = x2 * y;
+    float xz = x2 * z;
+    float xw = x2 * w;
+    float yz = y2 * z;
+    float yw = y2 * w;
+    float zw = z2 * w;
 
-    return Mat44( 1.0 - yy - zz, xy - zw,  xz + yw,  0.0,
-                  xy + zw,       xx1 - zz, yz - xw,  0.0,
-                  xz - yw,       yz + xw,  xx1 - yy, 0.0,
-                  0.0,           0.0,      0.0,      1.0 );
+    return Mat44( 1.0f - yy - zz, xy - zw,  xz + yw,  0.0f,
+                  xy + zw,        xx1 - zz, yz - xw,  0.0f,
+                  xz - yw,        yz + xw,  xx1 - yy, 0.0f,
+                  0.0f,           0.0f,     0.0f,     1.0f );
   }
 
   // declared in Quat.h

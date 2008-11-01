@@ -16,7 +16,7 @@ namespace Dark
 
   class LogFile
   {
-    protected:
+    private:
 
       String logFile;                            // name of log file
       String indentStr;                          // indent string

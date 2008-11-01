@@ -33,7 +33,7 @@ namespace Dark
 
   Matrix matrix;
 
-  const float Matrix::G_ACCEL = -9.81;
+  const float Matrix::G_ACCEL = -9.81f;
 
   void Matrix::load()
   {
@@ -41,8 +41,8 @@ namespace Dark
 
     physics.init( G_ACCEL );
 
-    world.sky.init( 70.0, 600.0 );
-    world.sky.time = 200.0;
+    world.sky.init( 70.0f, 600.0f );
+    world.sky.time = 200.0f;
     world.terrain.loadIMG( "terra/heightmap.png" );
 
     world.add( new BSP() );
@@ -50,68 +50,68 @@ namespace Dark
     world.add( new BSP() );
     world.add( new BSP() );
 
-    world.bsps[0]->loadQBSP( "bsp/center.bsp", BSP::BSP_SCALE, 4.0 );
-    world.bsps[1]->loadQBSP( "bsp/house.bsp", BSP::BSP_SCALE, 4.0 );
-    world.bsps[2]->loadQBSP( "bsp/temple.bsp", BSP::BSP_SCALE, 4.0 );
-    world.bsps[3]->loadQBSP( "bsp/pool.bsp", BSP::BSP_SCALE, 4.0 );
+    world.bsps[0]->loadQBSP( "bsp/center.bsp", BSP::BSP_SCALE, 4.0f );
+    world.bsps[1]->loadQBSP( "bsp/house.bsp", BSP::BSP_SCALE, 4.0f );
+    world.bsps[2]->loadQBSP( "bsp/temple.bsp", BSP::BSP_SCALE, 4.0f );
+    world.bsps[3]->loadQBSP( "bsp/pool.bsp", BSP::BSP_SCALE, 4.0f );
 
     world.add( new Structure( Vec3( 47, -33, 75.5 ), 0 ) );
     world.add( new Structure( Vec3( 33, -34, 75.5 ), 1 ) );
     world.add( new Structure( Vec3( 40, -40, 75.8 ), 2 ) );
 
-    world.add( new B_Goblin( Vec3( 40, -70, 90 ), 0.0, 0.0 ) );
+    world.add( new B_Goblin( Vec3( 40, -70, 90 ), 0.0f, 0.0f ) );
 
     world.add( new B_Goblin( Vec3( 40, -35, 85 ) ) );
 
     world.add( new B_Goblin( Vec3( 41, -35, 85 ) ) );
 
-    world.genParticles( 1000, Vec3( 40, -42, 74 ), Vec3( 0, 0, 10 ), 15.0, 1.95, 0.1, 5.0,
-                        LIST_SPARK, Vec3( 0.4, 0.4, 0.4 ), 0.2 );
+    world.genParticles( 1000, Vec3( 40, -42, 74 ), Vec3( 0, 0, 10 ), 15.0f, 1.95f, 0.1f, 5.0f,
+                        LIST_SPARK, Vec3( 0.4f, 0.4f, 0.4f ), 0.2f );
 
-    world.add( new D_MetalBarrel( Vec3( 51.0, -42.0, 80.0 ) ) );
-    world.add( new D_MetalBarrel( Vec3( 51.0, -42.0, 82.0 ) ) );
-    world.add( new D_MetalBarrel( Vec3( 51.0, -42.0, 84.0 ) ) );
+    world.add( new D_MetalBarrel( Vec3( 51.0f, -42.0f, 80.0f ) ) );
+    world.add( new D_MetalBarrel( Vec3( 51.0f, -42.0f, 82.0f ) ) );
+    world.add( new D_MetalBarrel( Vec3( 51.0f, -42.0f, 84.0f ) ) );
 
-    world.add( new D_WoodBarrel( Vec3( 51.0, -38.0, 80.0 ) ) );
-    world.add( new D_WoodBarrel( Vec3( 51.0, -38.0, 82.0 ) ) );
-    world.add( new D_WoodBarrel( Vec3( 51.0, -38.0, 84.0 ) ) );
+    world.add( new D_WoodBarrel( Vec3( 51.0f, -38.0f, 80.0f ) ) );
+    world.add( new D_WoodBarrel( Vec3( 51.0f, -38.0f, 82.0f ) ) );
+    world.add( new D_WoodBarrel( Vec3( 51.0f, -38.0f, 84.0f ) ) );
 
-    world.add( new D_SmallCrate( Vec3( 41.0, -41.0, 80.0 ) ) );
-    world.add( new D_SmallCrate( Vec3( 41.0, -41.0, 81.0 ) ) );
-    world.add( new D_SmallCrate( Vec3( 41.0, -41.0, 82.0 ) ) );
+    world.add( new D_SmallCrate( Vec3( 41.0f, -41.0f, 80.0f ) ) );
+    world.add( new D_SmallCrate( Vec3( 41.0f, -41.0f, 81.0f ) ) );
+    world.add( new D_SmallCrate( Vec3( 41.0f, -41.0f, 82.0f ) ) );
 
-    world.add( new D_SmallCrate( Vec3( 41.0, -42.0, 80.0 ) ) );
-    world.add( new D_SmallCrate( Vec3( 41.0, -42.0, 81.0 ) ) );
-    world.add( new D_SmallCrate( Vec3( 41.0, -42.0, 82.0 ) ) );
+    world.add( new D_SmallCrate( Vec3( 41.0f, -42.0f, 80.0f ) ) );
+    world.add( new D_SmallCrate( Vec3( 41.0f, -42.0f, 81.0f ) ) );
+    world.add( new D_SmallCrate( Vec3( 41.0f, -42.0f, 82.0f ) ) );
 
-    world.add( new D_SmallCrate( Vec3( 42.0, -42.0, 80.0 ) ) );
-    world.add( new D_SmallCrate( Vec3( 42.0, -42.0, 81.0 ) ) );
-    world.add( new D_SmallCrate( Vec3( 42.0, -42.0, 82.0 ) ) );
+    world.add( new D_SmallCrate( Vec3( 42.0f, -42.0f, 80.0f ) ) );
+    world.add( new D_SmallCrate( Vec3( 42.0f, -42.0f, 81.0f ) ) );
+    world.add( new D_SmallCrate( Vec3( 42.0f, -42.0f, 82.0f ) ) );
 
-    world.add( new D_SmallCrate( Vec3( 42.0, -41.0, 80.0 ) ) );
-    world.add( new D_SmallCrate( Vec3( 42.0, -41.0, 81.0 ) ) );
-    world.add( new D_SmallCrate( Vec3( 42.0, -40.0, 82.0 ) ) );
+    world.add( new D_SmallCrate( Vec3( 42.0f, -41.0f, 80.0f ) ) );
+    world.add( new D_SmallCrate( Vec3( 42.0f, -41.0f, 81.0f ) ) );
+    world.add( new D_SmallCrate( Vec3( 42.0f, -40.0f, 82.0f ) ) );
 
-    world.add( new D_BigCrate( Vec3( 40.0, -55.0, 80.0 ), new D_SmallCrate() ) );
-    world.add( new D_BigCrate( Vec3( 40.0, -55.0, 82.0 ), new D_SmallCrate() ) );
-    world.add( new D_BigCrate( Vec3( 40.0, -55.0, 84.0 ), new D_SmallCrate() ) );
+    world.add( new D_BigCrate( Vec3( 40.0f, -55.0f, 80.0f ), new D_SmallCrate() ) );
+    world.add( new D_BigCrate( Vec3( 40.0f, -55.0f, 82.0f ), new D_SmallCrate() ) );
+    world.add( new D_BigCrate( Vec3( 40.0f, -55.0f, 84.0f ), new D_SmallCrate() ) );
 
-    world.add( new O_Tree1( 0.0, -30.0 ) );
-    world.add( new O_Tree2( 0.0, -42.0 ) );
+    world.add( new O_Tree1( 0.0f, -30.0f ) );
+    world.add( new O_Tree2( 0.0f, -42.0f ) );
 
-    world.add( new Water( Vec3( -80.0, 112.0, 33.0 ), Vec3( 3.0, 3.0, 1.0 ) ) );
-    world.add( new Water( Vec3( -86.0, 112.0, 33.0 ), Vec3( 3.0, 3.0, 1.0 ) ) );
-    world.add( new Water( Vec3( -80.0, 118.0, 33.0 ), Vec3( 3.0, 3.0, 1.0 ) ) );
+    world.add( new Water( Vec3( -80.0f, 112.0f, 33.0f ), Vec3( 3.0f, 3.0f, 1.0f ) ) );
+    world.add( new Water( Vec3( -86.0f, 112.0f, 33.0f ), Vec3( 3.0f, 3.0f, 1.0f ) ) );
+    world.add( new Water( Vec3( -80.0f, 118.0f, 33.0f ), Vec3( 3.0f, 3.0f, 1.0f ) ) );
 
-    world.add( new Structure( Vec3( 40.0, -60.0, 75.0 ), 3 ) );
-    world.add( new Water( Vec3( 40.0, -60.0, 75.0 ), Vec3( 3.0, 3.0, 3.0 ) ) );
+    world.add( new Structure( Vec3( 40.0f, -60.0f, 75.0f ), 3 ) );
+    world.add( new Water( Vec3( 40.0f, -60.0f, 75.0f ), Vec3( 3.0f, 3.0f, 3.0f ) ) );
 
-    world.add( new D_SmallCrate( Vec3( 42.0, -61.0, 81.0 ) ) );
-    world.add( new D_SmallCrate( Vec3( 42.0, -61.0, 82.0 ) ) );
-    world.add( new D_SmallCrate( Vec3( 42.0, -61.0, 83.0 ) ) );
+    world.add( new D_SmallCrate( Vec3( 42.0f, -61.0f, 81.0f ) ) );
+    world.add( new D_SmallCrate( Vec3( 42.0f, -61.0f, 82.0f ) ) );
+    world.add( new D_SmallCrate( Vec3( 42.0f, -61.0f, 83.0f ) ) );
 
-    world.add( new SparkGen( Vec3( 40.0, -50.0, 80.0 ), 100, Vec3( 0.0, 0.0, 1.0 ), 0.5,
-               Vec3( 0.5, 0.5, 0.5 ), Vec3( 0.5, 0.5, 0.5 ), Vec3( 0.0, 0.0, -0.5 ), 0.1, 10.0 ) );
+    world.add( new SparkGen( Vec3( 40.0f, -50.0f, 80.0f ), 100, Vec3( 0.0f, 0.0f, 1.0f ), 0.5f,
+               Vec3( 0.5f, 0.5f, 0.5f ), Vec3( 0.5f, 0.5f, 0.5f ), Vec3( 0.0f, 0.0f, -0.5f ), 0.1f, 10.0f ) );
   }
 
   void Matrix::update()
@@ -127,7 +127,7 @@ namespace Dark
         part->update();
         physics.updatePart( part );
 
-        if( part->lifeTime <= 0.0 || part->velocity.sqL() > Physics::MAX_VELOCITY2 ) {
+        if( part->lifeTime <= 0.0f || part->velocity.sqL() > Physics::MAX_VELOCITY2 ) {
           world.remove( part );
         }
       }
@@ -150,7 +150,7 @@ namespace Dark
             continue;
           }
         }
-        if( obj->damage <= 0.0 ) {
+        if( obj->damage <= 0.0f ) {
           obj->destroy();
         }
       }

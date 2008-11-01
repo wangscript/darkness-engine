@@ -17,17 +17,17 @@ namespace Dark
 
   Physics physics;
 
-  const float Physics::CLIP_BACKOFF     = 3.0 * EPSILON;
-  const float Physics::STICK_VELOCITY   = 0.015;
+  const float Physics::CLIP_BACKOFF     = 3.0f * EPSILON;
+  const float Physics::STICK_VELOCITY   = 0.015f;
 
-  const float Physics::AIR_FRICTION     = 0.05;
-  const float Physics::WATER_FRICTION   = 0.05;
-  const float Physics::FLOOR_FRICTION   = 0.20;
-  const float Physics::OBJ_FRICTION     = 0.20;
+  const float Physics::AIR_FRICTION     = 0.05f;
+  const float Physics::WATER_FRICTION   = 0.05f;
+  const float Physics::FLOOR_FRICTION   = 0.20f;
+  const float Physics::OBJ_FRICTION     = 0.20f;
 
-  // default 10000.0: 100 m/s
-  const float Physics::MAX_VELOCITY2    = 10000.0;
-  const float Physics::FLOOR_NORMAL_Z   = 0.70;
+  // default 10000.0f: 100 m/s
+  const float Physics::MAX_VELOCITY2    = 10000.0f;
+  const float Physics::FLOOR_NORMAL_Z   = 0.70f;
 
   //***********************************
   //*   PARTICLE COLLISION HANDLING   *
@@ -54,7 +54,7 @@ namespace Dark
 
   void Physics::handlePartMove()
   {
-    leftRatio = 1.0;
+    leftRatio = 1.0f;
     move = part->velocity * timer.frameTime;
 
     Sector *oldSector = part->sector;
@@ -65,7 +65,7 @@ namespace Dark
       part->p += collider.hit.ratio * move;
       leftRatio -= leftRatio * collider.hit.ratio;
 
-      if( collider.hit.ratio == 1.0 ) {
+      if( collider.hit.ratio == 1.0f ) {
         break;
       }
       // collision response
@@ -76,7 +76,7 @@ namespace Dark
       }
       traceSplits++;
 
-      move *= 1.0 - collider.hit.ratio;
+      move *= 1.0f - collider.hit.ratio;
       move -= ( move * collider.hit.normal - CLIP_BACKOFF ) * collider.hit.normal;
     }
     while( true );
@@ -101,7 +101,7 @@ namespace Dark
         obj->newVelocity.setZero();
       }
       else {
-        obj->newVelocity *= 1.0 - AIR_FRICTION;
+        obj->newVelocity *= 1.0f - AIR_FRICTION;
       }
     }
     else {
@@ -111,7 +111,7 @@ namespace Dark
         if( obj->flags & Object::UNDER_WATER_BIT ) {
           obj->flags &= ~Object::UNDER_WATER_BIT;
 
-          obj->newVelocity *= 1.0 - WATER_FRICTION;
+          obj->newVelocity *= 1.0f - WATER_FRICTION;
           obj->newVelocity.z += obj->lift;
           return true;
         }
@@ -125,8 +125,8 @@ namespace Dark
             obj->newVelocity.y * obj->newVelocity.y;
 
         if( xyDot > STICK_VELOCITY ) {
-          obj->newVelocity.x *= 1.0 - FLOOR_FRICTION;
-          obj->newVelocity.y *= 1.0 - FLOOR_FRICTION;
+          obj->newVelocity.x *= 1.0f - FLOOR_FRICTION;
+          obj->newVelocity.y *= 1.0f - FLOOR_FRICTION;
 
           obj->newVelocity += ( gVelocity * obj->floor.z ) * obj->floor;
           obj->flags &= ~Object::ON_FLOOR_BIT;
@@ -134,13 +134,13 @@ namespace Dark
           obj->frictBegin();
         }
         else {
-          obj->newVelocity.x = 0.0;
-          obj->newVelocity.y = 0.0;
+          obj->newVelocity.x = 0.0f;
+          obj->newVelocity.y = 0.0f;
 
           obj->frictEnd();
 
           if( obj->newVelocity.z <= STICK_VELOCITY ) {
-            obj->newVelocity.z = 0.0;
+            obj->newVelocity.z = 0.0f;
             return false;
           }
           else {
@@ -151,8 +151,8 @@ namespace Dark
       else if( obj->lower >= 0 ) {
         DynObject *sObj = (DynObject*) world.objects[obj->lower];
 
-        if( obj->newVelocity.x != 0.0 || obj->newVelocity.y != 0.0 ||
-            sObj->velocity.x != 0.0 || sObj->velocity.y != 0.0 )
+        if( obj->newVelocity.x != 0.0f || obj->newVelocity.y != 0.0f ||
+            sObj->velocity.x != 0.0f || sObj->velocity.y != 0.0f )
         {
           float dx = sObj->velocity.x - obj->newVelocity.x;
           float dy = sObj->velocity.y - obj->newVelocity.y;
@@ -176,7 +176,7 @@ namespace Dark
         else {
           obj->frictEnd();
 
-          if( obj->newVelocity.z == 0.0 && sObj->velocity.z == 0.0 ) {
+          if( obj->newVelocity.z == 0.0f && sObj->velocity.z == 0.0f ) {
             return false;
           }
           else {
@@ -186,8 +186,8 @@ namespace Dark
         }
       }
       else {
-        obj->newVelocity.x *= 1.0 - AIR_FRICTION;
-        obj->newVelocity.y *= 1.0 - AIR_FRICTION;
+        obj->newVelocity.x *= 1.0f - AIR_FRICTION;
+        obj->newVelocity.y *= 1.0f - AIR_FRICTION;
         obj->newVelocity.z += gVelocity;
       }
     }
@@ -204,7 +204,7 @@ namespace Dark
 
       sDynObj->flags &= ~Object::DISABLED_BIT;
 
-      if( collider.hit.normal.z == 0.0 ) {
+      if( collider.hit.normal.z == 0.0f ) {
         if( obj->flags & Object::PUSHING_BIT ) {
           float pushX = ( obj->newVelocity.x - sDynObj->velocity.x ) / ( obj->mass + sDynObj->mass );
           float pushY = ( obj->newVelocity.y - sDynObj->velocity.y ) / ( obj->mass + sDynObj->mass );
@@ -215,7 +215,7 @@ namespace Dark
           sDynObj->newVelocity.x += pushX * obj->mass;
           sDynObj->newVelocity.y += pushY * obj->mass;
         }
-        else if( collider.hit.normal.y == 0.0 ) {
+        else if( collider.hit.normal.y == 0.0f ) {
           float pushX = ( obj->newVelocity.x - sDynObj->velocity.x ) / ( obj->mass + sDynObj->mass );
 
           obj->newVelocity.x -= pushX * sDynObj->mass;
@@ -228,7 +228,7 @@ namespace Dark
           sDynObj->newVelocity.y += pushY * obj->mass;
         }
       }
-      else if( collider.hit.normal.z == -1.0 ) {
+      else if( collider.hit.normal.z == -1.0f ) {
         float pushZ = ( obj->newVelocity.z - sDynObj->velocity.z ) / ( obj->mass + sDynObj->mass );
 
         obj->newVelocity.z -= pushZ * sDynObj->mass;
@@ -269,7 +269,7 @@ namespace Dark
 
   void Physics::handleObjMove()
   {
-    leftRatio = 1.0;
+    leftRatio = 1.0f;
     move = obj->newVelocity * timer.frameTime;
 
     Sector *oldSector = obj->sector;
@@ -280,7 +280,7 @@ namespace Dark
       obj->p += collider.hit.ratio * move;
       leftRatio -= leftRatio * collider.hit.ratio;
 
-      if( collider.hit.ratio == 1.0 ) {
+      if( collider.hit.ratio == 1.0f ) {
         break;
       }
       // collision response
@@ -291,14 +291,14 @@ namespace Dark
       }
       traceSplits++;
 
-      move *= 1.0 - collider.hit.ratio;
+      move *= 1.0f - collider.hit.ratio;
       move -= ( move * collider.hit.normal - CLIP_BACKOFF ) * collider.hit.normal;
 
       // to prevent to get stuck in corners < 90 deg and to prevent oscillations in corners > 90 deg
       if( traceSplits > 1 ) {
         float dot = lastNormals[0] * collider.hit.normal;
 
-        if( dot != 0.0 ) {
+        if( dot != 0.0f ) {
           Vec3 cross = collider.hit.normal ^ lastNormals[0];
 
           if( !cross.isZero() ) {
@@ -310,7 +310,7 @@ namespace Dark
         if( traceSplits > 2 ) {
           dot = lastNormals[1] * collider.hit.normal;
 
-          if( dot != 0.0 ) {
+          if( dot != 0.0f ) {
             Vec3 cross = collider.hit.normal ^ lastNormals[1];
 
             if( !cross.isZero() ) {
@@ -391,7 +391,7 @@ namespace Dark
           // if objects is still in movement or not on a still surface after friction changed its
           // velocity, handle physics
           handleObjMove();
-          obj->newVelocity *= 1.0 - leftRatio;
+          obj->newVelocity *= 1.0f - leftRatio;
         }
         obj->velocity = obj->newVelocity;
       }
@@ -403,7 +403,7 @@ namespace Dark
           obj->flags |= Object::DISABLED_BIT;
         }
         else {
-          obj->newVelocity *= 1.0 - AIR_FRICTION;
+          obj->newVelocity *= 1.0f - AIR_FRICTION;
         }
 
         obj->p += obj->newVelocity * timer.frameTime;

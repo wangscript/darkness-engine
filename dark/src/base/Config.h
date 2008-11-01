@@ -16,7 +16,7 @@ namespace Dark
 
   class Config
   {
-    protected:
+    private:
 
       static const int SIZE = 1024;
       // size of buffer, used when loading from file (maximum key/value length)

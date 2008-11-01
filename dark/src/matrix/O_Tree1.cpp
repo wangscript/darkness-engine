@@ -23,7 +23,7 @@ namespace Dark
   {
     logFile.println( "%g %g %g", p_.x, p_.y, p_.z );
     p = p_,
-    dim = Vec3( 0.7, 0.7, 3.8 );
+    dim = Vec3( 0.7f, 0.7f, 3.8f );
 
     flags = Object::CLIP_BIT | Object::RELEASED_CULL_BIT;
     type = TYPE;
@@ -35,8 +35,8 @@ namespace Dark
 
   O_Tree1::O_Tree1( float x, float y )
   {
-    p = Vec3( x, y, world.terrain.height( x, y ) + 2.5 ),
-    dim = Vec3( 0.7, 0.7, 3.8 );
+    p = Vec3( x, y, world.terrain.height( x, y ) + 2.5f ),
+    dim = Vec3( 0.7f, 0.7f, 3.8f );
 
     flags = Object::CLIP_BIT | Object::RELEASED_CULL_BIT;
     type = O_TREE1;
@@ -48,8 +48,8 @@ namespace Dark
 
   void O_Tree1::onDestroy()
   {
-    world.genParticles( 10, p, Vec3::zero(), 1.2, 1.2, 0.0, 20.0, LIST_SPARK,
-                        Vec3( 0.5, 0.5, 0.5 ), 0.2 );
+    world.genParticles( 10, p, Vec3::zero(), 1.2f, 1.2f, 0.0f, 20.0f, LIST_SPARK,
+                        Vec3( 0.5f, 0.5f, 0.5f ), 0.2f );
     world.remove( this );
   }
 

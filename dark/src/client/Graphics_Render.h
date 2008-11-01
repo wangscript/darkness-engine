@@ -11,7 +11,7 @@
 #ifndef _Graphics_Render_h_
 #define _Graphics_Render_h_
 
-#include "World.h"
+#include "matrix/World.h"
 
 #include "Graphics_Font.h"
 #include "Graphics_BSP.h"

@@ -24,10 +24,20 @@
 #include "SparkGen.h"
 #include "Particle.h"
 
-#include "Sector.h"
-
 namespace Dark
 {
+
+  struct Sector
+  {
+    static const float DIM;
+    static const float RADIUS;
+
+    Vector<int> structures;
+
+    DList<Object, 0>    objects;
+    DList<SparkGen, 0>  sparkGens;
+    DList<Particle, 0>  particles;
+  };
 
   class World : public Bounds
   {
@@ -47,8 +57,9 @@ namespace Dark
 
     public:
 
-      static const int MAX = 64;
-      static const scalar DIM;
+      // # of sectors on each (x, y) axis
+      static const int MAX = 128;
+      static const float DIM;
 
       Sky     sky;
       Terrain terrain;
@@ -72,14 +83,14 @@ namespace Dark
       Sector* getSector( const Vec3 &p );
 
       // get indices of the sector the point is in
-      void getInters( float x, float y, float epsilon = 0.0 );
-      void getInters( const Vec3 &p, float epsilon = 0.0 );
+      void getInters( float x, float y, float epsilon = 0.0f );
+      void getInters( const Vec3 &p, float epsilon = 0.0f );
 
       // get indices of min and max sectors which the AABB intersects
-      void getInters( const AABB &bb, float epsilon = 0.0 );
+      void getInters( const AABB &bb, float epsilon = 0.0f );
 
       // get indices of min and max sectors which the bounds intersects
-      void getInters( const Bounds &bounds, float epsilon = 0.0 );
+      void getInters( const Bounds &bounds, float epsilon = 0.0f );
 
       void put( Object *obj );
       void cut( Object *obj );
