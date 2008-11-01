@@ -31,9 +31,9 @@ namespace Dark
     config.add( "data",                               "/usr/share/dark/data" );
     config.add( "tick",                               "20" );
 
-    config.add( "screen.width",                       String( screen->current_w ).cstr() );
-    config.add( "screen.height",                      String( screen->current_h ).cstr() );
-    config.add( "screen.bpp",                         String( screen->vfmt->BitsPerPixel ).cstr() );
+    config.add( "screen.width",                       screen->current_w );
+    config.add( "screen.height",                      screen->current_h );
+    config.add( "screen.bpp",                         screen->vfmt->BitsPerPixel );
     config.add( "screen.nvVSync",                     "1" );
     config.add( "screen.full",                        "0" );
 
@@ -104,13 +104,10 @@ namespace Dark
       logFile.printRaw( " OK\n" );
     }
     logFile.printlnETD( "%s finished on", DARK_APP_NAME );
-    exit( 0 );
   }
 
   void Main::main()
   {
-    Math::init();
-
     const char *homeVar = getenv( "HOME" );
     String home( homeVar == null ? "./" DARK_RC_DIR : homeVar + String( "/" DARK_RC_DIR ) );
 
@@ -121,6 +118,7 @@ namespace Dark
       if( mkdir( home.cstr(), S_IRUSR | S_IWUSR | S_IXUSR ) ) {
         printf( " Failed\n" );
         shutdown();
+        return;
       }
       printf( " OK\n" );
     }
@@ -131,6 +129,7 @@ namespace Dark
     if( !logFile.init( logPath, true, "  " ) ) {
       printf( "Can't create/open log file '%s' for writing\n", logPath.cstr() );
       shutdown();
+      return;
     }
     logFile.println( "Log file '%s'", logPath.cstr() );
     printf( "Log file '%s'\n", logPath.cstr() );
@@ -145,6 +144,7 @@ namespace Dark
     if( SDL_Init( SDL_INIT_VIDEO ) ) {
       logFile.printRaw( " Failed\n" );
       shutdown();
+      return;
     }
     input.currKeys = SDL_GetKeyState( null );
     logFile.printRaw( " OK\n" );
@@ -155,17 +155,18 @@ namespace Dark
     defaultConfig();
     logFile.printRaw( " OK\n" );
 
-    String configPath = home + DARK_CONFIG_FILE;
+    const char *configPath = ( home + DARK_CONFIG_FILE ).cstr();
 
     if( !config.load( configPath ) ) {
-      logFile.println( "Config not found, creating default {", configPath.cstr() );
+      logFile.println( "Config not found, creating default {", configPath );
       logFile.indent();
 
-      printf( "Config not found, creating default '%s' ...", configPath.cstr() );
+      printf( "Config not found, creating default '%s' ...", configPath );
 
       if( !config.save( configPath ) ) {
         printf( " Failed\n" );
         shutdown();
+        return;
       }
       printf( " OK\n" );
 
@@ -173,13 +174,14 @@ namespace Dark
       logFile.println( "}" );
     }
 
-    String data = config["data"];
+    const char *data = config["data"].cstr();
 
     logFile.print( "Going to working directory '%s' ...", (const char*) data );
 
     if( chdir( data ) != 0 ) {
       logFile.printRaw(" Failed\n");
       shutdown();
+      return;
     }
     else {
       logFile.printRaw(" OK\n");
@@ -202,6 +204,7 @@ namespace Dark
     if( SDL_SetVideoMode( screenX, screenY, screenBpp, SDL_OPENGL | screenFull ) == null ) {
       logFile.printRaw( " Failed\n" );
       shutdown();
+      return;
     }
     logFile.printRaw( " OK\n" );
     initFlags |= INIT_SDL_VIDEO;
@@ -219,6 +222,7 @@ namespace Dark
 
     if( !soundManager.init() ) {
       shutdown();
+      return;
     }
 //     soundManager.loadMusic( "music/music.ogg" );
 
@@ -319,11 +323,8 @@ namespace Dark
 
 }
 
-int main( int argc, char *argv[] )
+int main( int, char *[] )
 {
-  // shut up. compiler!
-  argc = (int) argv;
-
   Dark::main.main();
   return 0;
 }

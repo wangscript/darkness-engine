@@ -499,6 +499,9 @@ namespace Graphics
     md2s.free();
     bsps.free();
     context.free();
+
+    sparkGenRenders.deallocate();
+    models.deallocate();
   }
 
 }

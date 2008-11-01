@@ -368,6 +368,7 @@ namespace Dark
                    ( a34 + a12 ) * v.x + ( a4433 + a22 - a11 ) * v.y + ( a23 - a14 ) * v.z,
                    ( a13 - a24 ) * v.x + ( a14 + a23 ) * v.y + ( a44 + a33 - a22 - a11 ) * v.z );
     }
+
   };
 
   // declared in Vec3.h

@@ -10,6 +10,9 @@
 
 #include "precompiled.h"
 
+#include <stdio.h>
+#include <time.h>
+
 namespace Dark
 {
 
@@ -71,7 +74,7 @@ namespace Dark
     f = isStdout ? stdout : fopen( logFile, "a" );
 
     for( int i = 0; i < tabs; i++ ) {
-      fprintf( f, "%s", (const char*) indentStr );
+      fprintf( f, "%s", indentStr.cstr() );
     }
     va_start( ap, s );
     vfprintf( f, s, ap );
@@ -90,7 +93,7 @@ namespace Dark
     f = isStdout ? stdout : fopen( logFile, "a" );
 
     for( int i = 0; i < tabs; i++ ) {
-      fprintf( f, "%s", (const char*) indentStr );
+      fprintf( f, "%s", indentStr.cstr() );
     }
     va_start( ap, s );
     vfprintf( f, s, ap );
@@ -116,7 +119,7 @@ namespace Dark
     f = isStdout ? stdout : fopen( logFile, "a" );
 
     for( int i = 0; i < tabs; i++ ) {
-      fprintf( f, "%s", (const char*) indentStr );
+      fprintf( f, "%s", indentStr.cstr() );
     }
     fprintf( f, "%02d:%02d:%02d ", t.tm_hour, t.tm_min, t.tm_sec );
 
@@ -144,7 +147,7 @@ namespace Dark
     f = isStdout ? stdout : fopen( logFile, "a" );
 
     for( int i = 0; i < tabs; i++ ) {
-      fprintf( f, "%s", (const char*) indentStr );
+      fprintf( f, "%s", indentStr.cstr() );
     }
     va_start( ap, s );
     vfprintf( f, s, ap );
@@ -171,7 +174,7 @@ namespace Dark
     f = isStdout ? stdout : fopen( logFile, "a" );
 
     for( int i = 0; i < tabs; i++ ) {
-      fprintf( f, "%s", (const char*) indentStr );
+      fprintf( f, "%s", indentStr.cstr() );
     }
     va_start( ap, s );
     vfprintf( f, s, ap );

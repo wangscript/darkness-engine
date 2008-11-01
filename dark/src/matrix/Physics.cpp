@@ -202,6 +202,8 @@ namespace Dark
     if( collider.hit.sObj != null && ( collider.hit.sObj->flags & Object::DYNAMIC_BIT ) ) {
       DynObject *sDynObj = (DynObject*) sObj;
 
+      sDynObj->flags &= ~Object::DISABLED_BIT;
+
       if( collider.hit.normal.z == 0.0 ) {
         if( obj->flags & Object::PUSHING_BIT ) {
           float pushX = ( obj->newVelocity.x - sDynObj->velocity.x ) / ( obj->mass + sDynObj->mass );

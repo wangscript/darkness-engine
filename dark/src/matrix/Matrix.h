@@ -14,8 +14,6 @@
 #include "World.h"
 #include "Bot.h"
 
-#include <SDL/SDL.h>
-
 namespace Dark
 {
 

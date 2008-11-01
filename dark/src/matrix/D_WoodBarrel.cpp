@@ -19,7 +19,7 @@ namespace Dark
 
   const char *D_WoodBarrel::NAME = "D_WoodBarrel";
 
-  D_WoodBarrel::D_WoodBarrel( const Vec3 &p_ )
+  D_WoodBarrel::D_WoodBarrel( const Vec3 &p_, Object *content_ )
   {
     p = p_,
     dim = Vec3( 0.35, 0.35, 0.482 );
@@ -33,6 +33,8 @@ namespace Dark
 
     velocity = Vec3::zero();
     mass = 50.0;
+
+    content = content_;
   }
 
   D_WoodBarrel::~D_WoodBarrel()
@@ -62,7 +64,7 @@ namespace Dark
 
   void D_WoodBarrel::onFrictEnd()
   {
-    excludeContSound( SND_FRICTION_SOFT );
+    removeContSound( SND_FRICTION_SOFT );
   }
 
 }

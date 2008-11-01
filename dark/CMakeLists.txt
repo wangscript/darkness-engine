@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 2.6)
+
 PROJECT( Dark CXX )
 
 INCLUDE_DIRECTORIES( /usr/include/libxml2 )

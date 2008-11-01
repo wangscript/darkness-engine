@@ -95,8 +95,7 @@ namespace Dark
       alDeleteSources( 1, &src.source );
     }
     contSources.free();
-    Reuser<ContSource>::deallocate();
-    Reuser<Source>::deallocate();
+    contSources.deallocate();
 
     alDeleteBuffers( MAX_BUFFERS, buffers );
     freeMusic();
@@ -158,7 +157,7 @@ namespace Dark
       {
         // non-continous
         for( Sound *snd = obj->sounds.first(); snd != null; snd = snd->next[0] ) {
-          Source *src = new Source;
+          Source *src = new Source();
 
           alGenSources( 1, &src->source );
           alSourcei( src->source, AL_BUFFER, buffers[ snd->sample ] );
@@ -225,25 +224,26 @@ namespace Dark
 
     // remove continous sounds that are not played any more
     for( HashIndex<ContSource, HASHTABLE_SIZE>::Iterator i( contSources ); !i.isPassed(); ) {
-      ContSource &src = *i;
+      ContSource *src = i.value();
       uint key = i.key();
 
       // we should advance now, so that we don't remove the element the iterator is pointing at
       i.next();
 
-      if( src.state == ContSource::NOT_UPDATED ) {
-        alSourceStop( src.source );
-        alDeleteSources( 1, &src.source );
+      if( src->state == ContSource::NOT_UPDATED ) {
+        alSourceStop( src->source );
+        alDeleteSources( 1, &src->source );
         contSources.remove( key );
       }
       else {
-        src.state = ContSource::NOT_UPDATED;
+        src->state = ContSource::NOT_UPDATED;
       }
     }
 
     // remove stopped sources of non-continous sounds
     if( clearCount >= CLEAR_INTERVAL ) {
       Source *src = sources.first();
+
       while( src != null ) {
         Source *next = src->next[0];
         ALint value = AL_STOPPED;
@@ -254,6 +254,7 @@ namespace Dark
           alDeleteSources( 1, &src->source );
 
           sources.remove( src );
+          delete src;
         }
         src = next;
       }

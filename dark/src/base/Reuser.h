@@ -1,7 +1,7 @@
 /*
  *  Reuser.h
  *
- *  Base class for memory reusing. All classes which interihate from Reuser must have "next" member
+ *  Base class for memory reusing. All classes which inherit from Reuser must have "next" member
  *  and will have overloaded new and delete (BUT NOT new[] and delete[]) operators. The new operator
  *  will try to reuse memory from deleted objects form that class. At least the end of the program
  *  you should call Class::deallocate() for all Reuser-derived classes. Performance can increase up
@@ -25,8 +25,6 @@ namespace Dark
 
       static Reuser *freeList;
 
-    public:
-
       Reuser *next;
 
       void free()
@@ -39,6 +37,7 @@ namespace Dark
 
     public:
 
+#ifdef DARK_USE_REUSER
       Reuser() : next( null )
       {}
 
@@ -65,20 +64,24 @@ namespace Dark
         p->next = freeList;
         freeList = p;
       }
+#endif
 
       // It's good idea to call that function from time to time and at the end of the program to
       // free some memory and to prevent memory leaks.
       static void deallocate()
       {
+#ifdef DARK_USE_REUSER
         if( freeList != null ) {
           freeList->free();
           freeList = null;
         }
+#endif
       }
+
   };
 
   template <class Type>
-  Reuser<Type>* Reuser<Type>::freeList = null;
+  Reuser<Type> *Reuser<Type>::freeList = null;
 
 }
 

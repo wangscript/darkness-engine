@@ -21,6 +21,7 @@ namespace Dark
   Config::~Config()
   {
     free();
+    vars.deallocate();
   }
 
   void Config::add( const String &key, const String &value )
@@ -149,7 +150,7 @@ namespace Dark
     String s = "";
 
     for( HashString<String, SIZE>::Iterator i( vars ); i.get() != null; i.next() ) {
-      s += *i.key() + " \"" + *i.get() + "\"\n";
+      s = s + *i.key() + " \"" + *i.get() + "\"\n";
     }
     return s;
   }
