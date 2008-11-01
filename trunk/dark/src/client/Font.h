@@ -1,5 +1,5 @@
 /*
- *  Graphics_Font.h
+ *  Font.h
  *
  *  Bitmap font loader and print function
  *
@@ -8,8 +8,8 @@
  *  $Id$
  */
 
-#ifndef _Graphics_Font_h_
-#define _Graphics_Font_h_
+#ifndef _Client_Font_h_
+#define _Client_Font_h_
 
 #define FONT_BIAS_X     0.01f
 #define FONT_BIAS_Y     0
@@ -19,7 +19,7 @@
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   class Font
@@ -42,4 +42,4 @@ namespace Graphics
 }
 }
 
-#endif // _Graphics_Font_h_
+#endif // _Client_Font_h_

@@ -92,7 +92,7 @@ namespace Dark
 
       // released frustum culling: object is represented some times larger to frustum culling
       // system than it really is;
-      // how larger it is, is specified by Graphics::Render::RELEASED_CULL_FACTOR
+      // how larger it is, is specified by Client::Render::RELEASED_CULL_FACTOR
       static const int RELEASED_CULL_BIT = 0x00000001;
 
       // determines visibility of the object for rendering

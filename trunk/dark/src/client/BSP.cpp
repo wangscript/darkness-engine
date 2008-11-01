@@ -1,5 +1,5 @@
 /*
- *  Graphics_BSP.cpp
+ *  BSP.cpp
  *
  *  BSP level rendering class
  *
@@ -10,10 +10,10 @@
 
 #include "precompiled.h"
 
-#include "Graphics_BSP.h"
+#include "BSP.h"
 
 #include "matrix/BSP.h"
-#include "Graphics_Frustum.h"
+#include "Frustum.h"
 
 #ifdef __WIN32__
 static PFNGLACTIVETEXTUREPROC glActiveTexture = null;
@@ -22,7 +22,7 @@ static PFNGLCLIENTACTIVETEXTUREPROC glClientActiveTexture = null;
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   BSP::BSP()

@@ -1,5 +1,5 @@
 /*
- *  Graphics_Frustum.h
+ *  Frustum.h
  *
  *  [description]
  *
@@ -8,15 +8,15 @@
  *  $Id$
  */
 
-#ifndef _Graphics_Frustum_h_
-#define _Graphics_Frustum_h_
+#ifndef _Client_Frustum_h_
+#define _Client_Frustum_h_
 
 #include "matrix/bv.h"
 #include "Camera.h"
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   class Frustum
@@ -109,4 +109,4 @@ namespace Graphics
 }
 }
 
-#endif // _Graphics_Frustum_h_
+#endif // _Client_Frustum_h_

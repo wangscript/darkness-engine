@@ -1,5 +1,5 @@
 /*
- *  Graphics_Model.cpp
+ *  Model.cpp
  *
  *  [description]
  *
@@ -10,11 +10,11 @@
 
 #include "precompiled.h"
 
-#include "Graphics_Model.h"
+#include "Model.h"
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   Model::Model( int model_ )

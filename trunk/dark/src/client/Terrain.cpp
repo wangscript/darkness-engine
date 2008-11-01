@@ -1,5 +1,5 @@
 /*
- *  Graphics_Terrain.cpp
+ *  Terrain.cpp
  *
  *  [description]
  *
@@ -10,7 +10,7 @@
 
 #include "precompiled.h"
 
-#include "Graphics_Terrain.h"
+#include "Terrain.h"
 
 #include "matrix/World.h"
 
@@ -24,7 +24,7 @@ static PFNGLACTIVETEXTUREPROC glActiveTexture = null;
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   Quadtree::~Quadtree()

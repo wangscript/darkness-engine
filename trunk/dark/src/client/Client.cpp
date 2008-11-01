@@ -21,6 +21,8 @@
 
 namespace Dark
 {
+namespace Client
+{
 
   Input input;
   Client client;
@@ -161,4 +163,5 @@ namespace Dark
     logFile.printRaw( " OK\n" );
   }
 
+}
 }

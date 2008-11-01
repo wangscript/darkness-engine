@@ -1,5 +1,5 @@
 /*
- *  Graphics_Font.cpp
+ *  Font.cpp
  *
  *  Bitmap font loader and print function
  *
@@ -10,11 +10,11 @@
 
 #include "precompiled.h"
 
-#include "Graphics_Font.h"
+#include "Font.h"
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   Font::Font() : texture( null ), baseList( null )

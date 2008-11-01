@@ -1,5 +1,5 @@
 /*
- *  Graphics_Render.h
+ *  Render.h
  *
  *  Graphics render engine
  *
@@ -8,21 +8,21 @@
  *  $Id$
  */
 
-#ifndef _Graphics_Render_h_
-#define _Graphics_Render_h_
+#ifndef _Client_Render_h_
+#define _Client_Render_h_
 
 #include "matrix/World.h"
 
-#include "Graphics_Font.h"
-#include "Graphics_BSP.h"
-#include "Graphics_Terrain.h"
-#include "Graphics_MD2.h"
-#include "Graphics_Model.h"
-#include "Graphics_SparkGenRender.h"
+#include "Font.h"
+#include "BSP.h"
+#include "Terrain.h"
+#include "MD2.h"
+#include "Model.h"
+#include "SparkGenRender.h"
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   class Render

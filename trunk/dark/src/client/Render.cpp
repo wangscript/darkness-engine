@@ -1,5 +1,5 @@
 /*
- *  Graphics_Render.cpp
+ *  Render.cpp
  *
  *  Graphics render engine
  *
@@ -10,23 +10,23 @@
 
 #include "precompiled.h"
 
-#include "Graphics_Render.h"
+#include "Render.h"
 
 #include "matrix/Matrix.h"
 #include "matrix/Physics.h"
 #include "matrix/B_Goblin.h"
 
-#include "Graphics_Frustum.h"
-#include "Graphics_Shape.h"
+#include "Frustum.h"
+#include "Shape.h"
 
-#include "Graphics_Sky.h"
-#include "Graphics_Water.h"
-#include "Graphics_Terrain.h"
-#include "Graphics_BSP.h"
+#include "Sky.h"
+#include "Water.h"
+#include "Terrain.h"
+#include "BSP.h"
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   Render render;

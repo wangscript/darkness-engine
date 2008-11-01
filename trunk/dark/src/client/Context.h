@@ -1,5 +1,5 @@
 /*
- *  Graphics_Context.h
+ *  Context.h
  *
  *  Evidenca nalaganja tekstur in listov ter nalagalnik tekstur
  *
@@ -8,12 +8,12 @@
  *  $Id$
  */
 
-#ifndef _Graphics_Context_h_
-#define _Graphics_Context_h_
+#ifndef _Client_Context_h_
+#define _Client_Context_h_
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   struct ContextList
@@ -63,4 +63,4 @@ namespace Graphics
 }
 }
 
-#endif // _Graphics_Context_h_
+#endif // _Client_Context_h_

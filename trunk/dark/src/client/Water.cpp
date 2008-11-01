@@ -1,5 +1,5 @@
 /*
- *  Graphics_Water.cpp
+ *  Water.cpp
  *
  *  [description]
  *
@@ -10,15 +10,15 @@
 
 #include "precompiled.h"
 
-#include "Graphics_Water.h"
+#include "Water.h"
 
 #include "matrix/Translator.h"
 
-#include "Graphics_Context.h"
+#include "Context.h"
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   Water water;

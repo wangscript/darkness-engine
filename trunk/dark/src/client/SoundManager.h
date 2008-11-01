@@ -8,8 +8,8 @@
  *  $Id$
  */
 
-#ifndef _SoundManager_h_
-#define _SoundManager_h_
+#ifndef _Client_SoundManager_h_
+#define _Client_SoundManager_h_
 
 #include "matrix/World.h"
 #include "matrix/Sound.h"
@@ -26,6 +26,8 @@
 #endif
 
 namespace Dark
+{
+namespace Client
 {
 
   class SoundManager
@@ -157,5 +159,6 @@ namespace Dark
   extern SoundManager soundManager;
 
 }
+}
 
-#endif // _SoundManager_h_
+#endif // _Client_SoundManager_h_

@@ -1,5 +1,5 @@
 /*
- *  Graphics_Sky.cpp
+ *  Sky.cpp
  *
  *  [description]
  *
@@ -10,14 +10,14 @@
 
 #include "precompiled.h"
 
-#include "Graphics_Sky.h"
+#include "Sky.h"
 
 #include "matrix/Timer.h"
 #include "matrix/World.h"
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   Sky sky;

@@ -1,5 +1,5 @@
 /*
- *  Graphics_Shape.h
+ *  Shape.h
  *
  *  [description]
  *
@@ -8,15 +8,15 @@
  *  $Id$
  */
 
-#ifndef _Graphics_Shape_h_
-#define _Graphics_Shape_h_
+#ifndef _Client_Shape_h_
+#define _Client_Shape_h_
 
 #include "matrix/bv.h"
-#include "Graphics_Context.h"
+#include "Context.h"
 
 namespace Dark
 {
-namespace Graphics
+namespace Client
 {
 
   class Shape
@@ -36,4 +36,4 @@ namespace Graphics
 }
 }
 
-#endif // _Graphics_Shape_h_
+#endif // _Client_Shape_h_
