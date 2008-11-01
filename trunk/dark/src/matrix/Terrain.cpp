@@ -16,11 +16,11 @@ namespace Dark
 {
 
   const float TerraQuad::SIZE = (float) TerraQuad::SIZEI;
-  const float TerraQuad::DIM = TerraQuad::SIZE / 2.0;
-  const float TerraQuad::STEP = 0.5;
+  const float TerraQuad::DIM = TerraQuad::SIZE / 2.0f;
+  const float TerraQuad::STEP = 0.5f;
 
   const float Terrain::DIM = TerraQuad::DIM * Terrain::MAX;
-  const float Terrain::HEIGHT_BIAS = 0.0;
+  const float Terrain::HEIGHT_BIAS = 0.0f;
 
   void Terrain::buildTerraFrame() {
     for( int x = 0; x < MAX; x++ ) {
@@ -104,7 +104,7 @@ namespace Dark
       return;
     }
 
-    load( ( uchar* )image->pixels );
+    load( (uchar*) image->pixels );
 
     SDL_FreeSurface( image );
 

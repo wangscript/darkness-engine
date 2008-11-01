@@ -15,8 +15,8 @@
 namespace Dark
 {
 
-  const float DynObject::DEFAULT_MASS = 10.0;
-  const float DynObject::DEFAULT_LIFT = 0.03;
+  const float DynObject::DEFAULT_MASS = 10.0f;
+  const float DynObject::DEFAULT_LIFT = 0.03f;
 
   void DynObject::load( FILE *stream )
   {

@@ -17,28 +17,28 @@ namespace Dark
   struct Mat33
   {
     // WARNING: first index is column, second is line
-    scalar _00;
-    scalar _01;
-    scalar _02;
-    scalar _10;
-    scalar _11;
-    scalar _12;
-    scalar _20;
-    scalar _21;
-    scalar _22;
+    float _00;
+    float _01;
+    float _02;
+    float _10;
+    float _11;
+    float _12;
+    float _20;
+    float _21;
+    float _22;
 
     Mat33()
     {}
 
-    Mat33( scalar m00, scalar m01, scalar m02,
-           scalar m10, scalar m11, scalar m12,
-           scalar m20, scalar m21, scalar m22 ) :
+    Mat33( float m00, float m01, float m02,
+           float m10, float m11, float m12,
+           float m20, float m21, float m22 ) :
         _00( m00 ), _01( m01 ), _02( m02 ),
         _10( m10 ), _11( m11 ), _12( m12 ),
         _20( m20 ), _21( m21 ), _22( m22 )
     {}
 
-    explicit Mat33( const scalar *v )
+    explicit Mat33( const float *v )
     {
       *this = *(Mat33*) v;
     }
@@ -46,45 +46,44 @@ namespace Dark
     // implemented in Mat44.h
     explicit Mat33( const Mat44 &m );
 
-    Mat33( const Vec3 &a, const Vec3 &b, const Vec3 &c )
-    {
-      *(Vec3*) &_00 = a;
-      *(Vec3*) &_10 = b;
-      *(Vec3*) &_20 = c;
-    }
+    Mat33( const Vec3 &a, const Vec3 &b, const Vec3 &c ) :
+        _00( a.x ), _01( a.y ), _02( a.z ),
+        _10( b.x ), _11( b.y ), _12( b.z ),
+        _20( c.x ), _21( c.y ), _22( c.z )
+    {}
 
     static Mat33 zero()
     {
-      return Mat33( 0.0, 0.0, 0.0,
-                    0.0, 0.0, 0.0,
-                    0.0, 0.0, 0.0 );
+      return Mat33( 0.0f, 0.0f, 0.0f,
+                    0.0f, 0.0f, 0.0f,
+                    0.0f, 0.0f, 0.0f );
     }
 
     static Mat33 id()
     {
-      return Mat33( 1.0, 0.0, 0.0,
-                    0.0, 1.0, 0.0,
-                    0.0, 0.0, 1.0 );
+      return Mat33( 1.0f, 0.0f, 0.0f,
+                    0.0f, 1.0f, 0.0f,
+                    0.0f, 0.0f, 1.0f );
     }
 
-    operator scalar* () const
+    operator float* () const
     {
-      return (scalar*) this;
+      return (float*) this;
     }
 
-    operator const scalar* () const
+    operator const float* () const
     {
-      return (scalar*) this;
+      return (float*) this;
     }
 
-    scalar &operator [] ( int i )
+    float &operator [] ( int i )
     {
-      return ( (scalar* ) this )[i];
+      return ( (float* ) this )[i];
     }
 
-    const scalar &operator [] ( int i ) const
+    const float &operator [] ( int i ) const
     {
-      return ( (const scalar*) this )[i];
+      return ( (const float*) this )[i];
     }
 
     // i-th column
@@ -140,7 +139,7 @@ namespace Dark
     }
 
     // determinant
-    scalar det() const
+    float det() const
     {
       return
           _00 * ( _11*_22 - _12*_21 ) -
@@ -181,7 +180,7 @@ namespace Dark
 
     Mat33 &setZero()
     {
-      _22 = _21 = _20 = _12 = _11 = _10 = _02 = _01 = _00 = 0.0;
+      _22 = _21 = _20 = _12 = _11 = _10 = _02 = _01 = _00 = 0.0f;
       return *this;
     }
 
@@ -195,8 +194,8 @@ namespace Dark
 
     Mat33 &setId()
     {
-      _21 = _20 = _12 = _10 = _02 = _01 = 0.0;
-      _22 = _11 = _00 = 1.0;
+      _21 = _20 = _12 = _10 = _02 = _01 = 0.0f;
+      _22 = _11 = _00 = 1.0f;
       return *this;
     }
 
@@ -229,7 +228,7 @@ namespace Dark
       return *this;
     }
 
-    Mat33 &operator *= ( scalar k )
+    Mat33 &operator *= ( float k )
     {
       _00 *= k;
       _01 *= k;
@@ -243,9 +242,9 @@ namespace Dark
       return *this;
     }
 
-    Mat33 &operator /= ( scalar k )
+    Mat33 &operator /= ( float k )
     {
-      k = 1.0 / k;
+      k = 1.0f / k;
       _00 *= k;
       _01 *= k;
       _02 *= k;
@@ -273,16 +272,16 @@ namespace Dark
                     _20 - a._20, _21 - a._21, _22 - a._22 );
     }
 
-    Mat33 operator * ( scalar k ) const
+    Mat33 operator * ( float k ) const
     {
       return Mat33( _00 * k, _01 * k, _02 * k,
                     _10 * k, _11 * k, _12 * k,
                     _20 * k, _21 * k, _22 * k );
     }
 
-    Mat33 operator / ( scalar k ) const
+    Mat33 operator / ( float k ) const
     {
-      k = 1.0 / k;
+      k = 1.0f / k;
       return Mat33( _00 * k, _01 * k, _02 * k,
                     _10 * k, _11 * k, _12 * k,
                     _20 * k, _21 * k, _22 * k );
@@ -317,7 +316,7 @@ namespace Dark
                    v.x * _20 + v.y * _21 + v.z * _22 );
     }
 
-    friend Mat33 operator * ( scalar k, const Mat33 &a )
+    friend Mat33 operator * ( float k, const Mat33 &a )
     {
       return Mat33( a._00 * k, a._01 * k, a._02 * k,
                     a._10 * k, a._11 * k, a._12 * k,
@@ -325,39 +324,39 @@ namespace Dark
     }
 
     // make matrix for rotation around x-axis
-    static Mat33 rotX( scalar theta )
+    static Mat33 rotX( float theta )
     {
-      scalar s, c;
+      float s, c;
 
       Math::sincos( theta, &s, &c );
 
-      return Mat33( 1.0, 0.0, 0.0,
-                    0.0,   c,   s,
-                    0.0,  -s,   c );
+      return Mat33( 1.0f, 0.0f, 0.0f,
+                    0.0f,   c,   s,
+                    0.0f,  -s,   c );
     }
 
     // make matrix for rotation around y-axis
-    static Mat33 rotY( scalar theta )
+    static Mat33 rotY( float theta )
     {
-      scalar s, c;
+      float s, c;
 
       Math::sincos( theta, &s, &c );
 
-      return Mat33(   c, 0.0,  -s,
-                    0.0, 1.0, 0.0,
-                      s, 0.0,   c );
+      return Mat33(    c, 0.0f,   -s,
+                    0.0f, 1.0f, 0.0f,
+                       s, 0.0f,    c );
     }
 
     // make matrix for rotation around z-axis
-    static Mat33 rotZ( scalar theta )
+    static Mat33 rotZ( float theta )
     {
-      scalar s, c;
+      float s, c;
 
       Math::sincos( theta, &s, &c );
 
-      return Mat33(   c,   s, 0.0,
-                     -s,   c, 0.0,
-                    0.0, 0.0, 1.0 );
+      return Mat33(    c,    s, 0.0f,
+                      -s,    c, 0.0f,
+                    0.0f, 0.0f, 1.0f );
     }
 
   };
@@ -372,22 +371,22 @@ namespace Dark
     // [   2xz - 2wy      2yz + 2wx    1 - 2xx - 2yy ]
     //
 
-    scalar x2 = x + x;
-    scalar y2 = y + y;
-    scalar z2 = z + z;
-    scalar xx1 = 1.0 - x2 * x;
-    scalar yy = y2 * y;
-    scalar zz = z2 * z;
-    scalar xy = x2 * y;
-    scalar xz = x2 * z;
-    scalar xw = x2 * w;
-    scalar yz = y2 * z;
-    scalar yw = y2 * w;
-    scalar zw = z2 * w;
+    float x2 = x + x;
+    float y2 = y + y;
+    float z2 = z + z;
+    float xx1 = 1.0f - x2 * x;
+    float yy = y2 * y;
+    float zz = z2 * z;
+    float xy = x2 * y;
+    float xz = x2 * z;
+    float xw = x2 * w;
+    float yz = y2 * z;
+    float yw = y2 * w;
+    float zw = z2 * w;
 
-    return Mat33( 1.0 - yy - zz, xy + zw,  xz - yw,
-                  xy - zw,       xx1 - zz, yz + xw,
-                  xz + yw,       yz - xw,  xx1 - yy );
+    return Mat33( 1.0f - yy - zz, xy + zw,  xz - yw,
+                  xy - zw,        xx1 - zz, yz + xw,
+                  xz + yw,        yz - xw,  xx1 - yy );
   }
 
   // declared in Quat.h
@@ -400,22 +399,22 @@ namespace Dark
     // [   2xz + 2wy      2yz - 2wx    1 - 2xx - 2yy ]
     //
 
-    scalar x2 = x + x;
-    scalar y2 = y + y;
-    scalar z2 = z + z;
-    scalar xx1 = 1.0 - x2 * x;
-    scalar yy = y2 * y;
-    scalar zz = z2 * z;
-    scalar xy = x2 * y;
-    scalar xz = x2 * z;
-    scalar xw = x2 * w;
-    scalar yz = y2 * z;
-    scalar yw = y2 * w;
-    scalar zw = z2 * w;
+    float x2 = x + x;
+    float y2 = y + y;
+    float z2 = z + z;
+    float xx1 = 1.0f - x2 * x;
+    float yy = y2 * y;
+    float zz = z2 * z;
+    float xy = x2 * y;
+    float xz = x2 * z;
+    float xw = x2 * w;
+    float yz = y2 * z;
+    float yw = y2 * w;
+    float zw = z2 * w;
 
-    return Mat33( 1.0 - yy - zz, xy - zw,  xz + yw,
-                  xy + zw,       xx1 - zz, yz - xw,
-                  xz - yw,       yz + xw,  xx1 - yy );
+    return Mat33( 1.0f - yy - zz, xy - zw,  xz + yw,
+                  xy + zw,        xx1 - zz, yz - xw,
+                  xz - yw,        yz + xw,  xx1 - yy );
   }
 
 }

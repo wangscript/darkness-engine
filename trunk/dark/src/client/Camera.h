@@ -11,7 +11,7 @@
 #ifndef _Camera_h_
 #define _Camera_h_
 
-#include "Matrix.h"
+#include "matrix/Matrix.h"
 
 namespace Dark
 {

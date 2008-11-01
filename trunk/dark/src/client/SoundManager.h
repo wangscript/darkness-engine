@@ -11,8 +11,8 @@
 #ifndef _SoundManager_h_
 #define _SoundManager_h_
 
-#include "World.h"
-#include "Sound.h"
+#include "matrix/World.h"
+#include "matrix/Sound.h"
 
 #define DARK_OPENAL
 

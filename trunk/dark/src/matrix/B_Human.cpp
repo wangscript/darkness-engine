@@ -20,23 +20,23 @@ namespace Dark
 
   const char *B_Human::NAME = "B_Human";
 
-  const Vec3  B_Human::CAM_POS            = Vec3( 0.00, 0.00, 0.73 );
-  const Vec3  B_Human::CAM_POS_CROUCH     = Vec3( 0.00, 0.00, 0.23 );
-  const Vec3  B_Human::DIM                = Vec3( 0.29, 0.29, 0.89 );
-  const Vec3  B_Human::DIM_CROUCH         = Vec3( 0.29, 0.29, 0.39 );
+  const Vec3  B_Human::CAM_POS            = Vec3( 0.00f, 0.00f, 0.73f );
+  const Vec3  B_Human::CAM_POS_CROUCH     = Vec3( 0.00f, 0.00f, 0.23f );
+  const Vec3  B_Human::DIM                = Vec3( 0.29f, 0.29f, 0.89f );
+  const Vec3  B_Human::DIM_CROUCH         = Vec3( 0.29f, 0.29f, 0.39f );
 
-  const float B_Human::BOB_INC            = 0.05;
-  const float B_Human::BOB_AMPLITUDE      = 0.05;
+  const float B_Human::BOB_INC            = 0.05f;
+  const float B_Human::BOB_AMPLITUDE      = 0.05f;
 
-  const float B_Human::WALK_VELOCITY      = 0.7;
-  const float B_Human::RUN_VELOCITY       = 1.5;
-  const float B_Human::JUMP_VELOCITY      = 4.5;
-  const float B_Human::CROUCH_VELOCITY    = 0.5;
-  const float B_Human::AIR_CONTROL        = 0.15;
-  const float B_Human::GRAB_DIST          = 1.0;
+  const float B_Human::WALK_VELOCITY      = 0.7f;
+  const float B_Human::RUN_VELOCITY       = 1.5f;
+  const float B_Human::JUMP_VELOCITY      = 4.5f;
+  const float B_Human::CROUCH_VELOCITY    = 0.5f;
+  const float B_Human::AIR_CONTROL        = 0.15f;
+  const float B_Human::GRAB_DIST          = 1.0f;
 
-  const float B_Human::STEP_INC           = 0.1;
-  const float B_Human::STEP_MAX           = 0.5;
+  const float B_Human::STEP_INC           = 0.1f;
+  const float B_Human::STEP_MAX           = 0.5f;
 
   B_Human::B_Human( const Vec3 &p_, float h_, float v_, Mind *mind_ )
   {
@@ -47,20 +47,20 @@ namespace Dark
         Object::DYNAMIC_BIT | Object::PUSHING_BIT | Object::BOT_BIT;
     type    = B_HUMAN;
 
-    damage  = 2.0;
+    damage  = 2.0f;
 
     model   = ~0;
     anim    = ANIM_STAND;
 
     newVelocity.setZero();
     lower   = -1;
-    mass    = 50.0;
+    mass    = 50.0f;
 
     h       = h_;
     v       = v_;
 
     camPos  = CAM_POS;
-    bob     = 0.0;
+    bob     = 0.0f;
 
     state   = STEPPING_BIT;
     keys    = 0;
@@ -71,8 +71,8 @@ namespace Dark
 
   void B_Human::onUpdate()
   {
-    h = Math::mod( h + 360.0, 360.0 );
-    v = bound( v, -89.0, 89.0 );
+    h = Math::mod( h + 360.0f, 360.0f );
+    v = bound( v, -89.0f, 89.0f );
 
     rotZ = h;
 
@@ -154,7 +154,7 @@ namespace Dark
       if( state & CROUCHING_BIT ) {
         float oldZ = p.z;
 
-        p.z += DIM.z - DIM_CROUCH.z + 0.1;
+        p.z += DIM.z - DIM_CROUCH.z + 0.1f;
         dim = DIM;
 
         if( collider.test( *this, this ) ) {
@@ -213,10 +213,10 @@ namespace Dark
 
     Vec3 addVelocity = velocity * move;
 
-    if( ( flags & Object::ON_FLOOR_BIT ) && floor.z != 1.0 ) {
+    if( ( flags & Object::ON_FLOOR_BIT ) && floor.z != 1.0f ) {
       float dot = addVelocity * floor;
 
-      if( dot > 0.0 ) {
+      if( dot > 0.0f ) {
         addVelocity -= dot * floor;
       }
     }
@@ -230,7 +230,7 @@ namespace Dark
 
       float orgRatio = collider.hit.ratio;
 
-      if( orgRatio != 1.0 && collider.hit.normal.z == 0.0 ) {
+      if( orgRatio != 1.0f && collider.hit.normal.z == 0.0f ) {
         float orgZ = p.z;
 
         for( float raise = STEP_INC; raise < STEP_MAX; raise += STEP_INC ) {
@@ -271,11 +271,11 @@ namespace Dark
   {
     float deltaVel = ( newVelocity - velocity ).sqL();
 
-    if( deltaVel >= 1000.0 ) {
+    if( deltaVel >= 1000.0f ) {
       damage += deltaVel;
     }
 
-    if( !( state & GROUNDED_BIT ) && hit->normal.z >= Physics::FLOOR_NORMAL_Z && deltaVel > 4.0 ) {
+    if( !( state & GROUNDED_BIT ) && hit->normal.z >= Physics::FLOOR_NORMAL_Z && deltaVel > 4.0f ) {
       addSound( SND_LAND );
     }
   }

@@ -73,10 +73,10 @@ namespace Dark
         if( !( flags & Object::IN_WATER_BIT ) ) {
           flags |= Object::IN_WATER_BIT;
 
-          if( newVelocity.z < -4.0 ) {
+          if( newVelocity.z < -4.0f ) {
             addSound( SND_SPLASH_HARD );
           }
-          else if( newVelocity.z < -2.0 ) {
+          else if( newVelocity.z < -2.0f ) {
             addSound( SND_SPLASH_SOFT );
           }
         }

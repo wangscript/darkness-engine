@@ -11,7 +11,7 @@
 #ifndef _Graphics_Frustum_h_
 #define _Graphics_Frustum_h_
 
-#include "bv.h"
+#include "matrix/bv.h"
 #include "Camera.h"
 
 namespace Dark
@@ -76,7 +76,7 @@ namespace Graphics
       bool isVisible( const Bounds &b )
       {
         Vec3 dim = b.maxs - b.mins;
-        return isVisible( ( b.mins + b.maxs ) * 0.5, Math::sqrt( dim * dim ) );
+        return isVisible( ( b.mins + b.maxs ) * 0.5f, Math::sqrt( dim * dim ) );
       }
 
       bool isVisible( float x, float y, float radius )

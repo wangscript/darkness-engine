@@ -19,12 +19,12 @@ namespace Dark
 
   const Vec3 Collider::bbNormals[] =
   {
-    Vec3(  1.0,  0.0,  0.0 ),
-    Vec3( -1.0,  0.0,  0.0 ),
-    Vec3(  0.0,  1.0,  0.0 ),
-    Vec3(  0.0, -1.0,  0.0 ),
-    Vec3(  0.0,  0.0,  1.0 ),
-    Vec3(  0.0,  0.0, -1.0 )
+    Vec3(  1.0f,  0.0f,  0.0f ),
+    Vec3( -1.0f,  0.0f,  0.0f ),
+    Vec3(  0.0f,  1.0f,  0.0f ),
+    Vec3(  0.0f, -1.0f,  0.0f ),
+    Vec3(  0.0f,  0.0f,  1.0f ),
+    Vec3(  0.0f,  0.0f, -1.0f )
   };
 
   //***********************************
@@ -86,7 +86,7 @@ namespace Dark
       return false;
     }
 
-    if( aabb.p.z - aabb.dim.z - world.terrain.height( aabb.p.x, aabb.p.y ) < 0.0 ) {
+    if( aabb.p.z - aabb.dim.z - world.terrain.height( aabb.p.x, aabb.p.y ) < 0.0f ) {
       return false;
     }
 
@@ -200,11 +200,11 @@ namespace Dark
     float startDist = globalStartPos * quad.normal[0] - quad.distance[0];
     float endDist   = globalEndPos   * quad.normal[0] - quad.distance[0];
 
-    if( startDist >= 0.0 && endDist <= EPSILON ) {
+    if( startDist >= 0.0f && endDist <= EPSILON ) {
       float ratio =
           startDist > endDist ?
-          max( startDist - EPSILON, 0.0 ) / ( startDist - endDist ) :
-          0.0;
+          max( startDist - EPSILON, 0.0f ) / ( startDist - endDist ) :
+          0.0f;
 
       float impactX = globalStartPos.x + ratio * move.x;
       float impactY = globalStartPos.y + ratio * move.y;
@@ -225,10 +225,11 @@ namespace Dark
     startDist = globalStartPos * quad.normal[1] - quad.distance[1];
     endDist   = globalEndPos   * quad.normal[1] - quad.distance[1];
 
-    if( startDist >= 0.0 && endDist <= EPSILON ) {
-      float ratio = startDist > endDist ?
-        max( startDist - EPSILON, 0.0 ) / ( startDist - endDist ) :
-          0.0;
+    if( startDist >= 0.0f && endDist <= EPSILON ) {
+      float ratio =
+          startDist > endDist ?
+          max( startDist - EPSILON, 0.0f ) / ( startDist - endDist ) :
+          0.0f;
 
       float impactX = globalStartPos.x + ratio * move.x;
       float impactY = globalStartPos.y + ratio * move.y;
@@ -253,7 +254,7 @@ namespace Dark
   {
 
     for( int i = 0; i < 3; i++ ) {
-      int  iPos    = move[i] >= 0.0;
+      int  iPos    = move[i] >= 0.0f;
       const Vec3 &normal = bbNormals[i * 2 + iPos];
 
       float startDist = world.maxs[i] + globalStartPos[i] * normal[i];
@@ -261,7 +262,7 @@ namespace Dark
 
       if( endDist <= EPSILON ) {
         if( startDist > endDist ) {
-          float ratio = max( startDist - EPSILON, 0.0 ) / ( startDist - endDist );
+          float ratio = max( startDist - EPSILON, 0.0f ) / ( startDist - endDist );
 
           if( ratio < hit.ratio ) {
             hit.ratio  = ratio;
@@ -270,7 +271,7 @@ namespace Dark
           }
         }
         else {
-          hit.ratio  = 0.0;
+          hit.ratio  = 0.0f;
           hit.normal = normal;
           hit.sObj   = null;
         }
@@ -283,8 +284,8 @@ namespace Dark
   // finds out if Ray-AABB collision occurs and the time when it occurs
   void Collider::trimPointObj( Object *sObj )
   {
-    float  minRatio   = -1.0;
-    float  maxRatio   =  1.0;
+    float  minRatio   = -1.0f;
+    float  maxRatio   =  1.0f;
     const Vec3 *tmpNormal = null;
 
     for( int i = 0; i < 6; i++ ) {
@@ -294,12 +295,12 @@ namespace Dark
       float startDist = ( globalStartPos[j] - sObj->p[j] ) * normal[j] - sObj->dim[j];
       float endDist   = ( globalEndPos[j]   - sObj->p[j] ) * normal[j] - sObj->dim[j];
 
-      if( startDist >= 0.0 ) {
+      if( startDist >= 0.0f ) {
         if( endDist > EPSILON ) {
           return;
         }
         else if( startDist > endDist ) {
-          float ratio = max( startDist - EPSILON, 0.0 ) / ( startDist - endDist );
+          float ratio = max( startDist - EPSILON, 0.0f ) / ( startDist - endDist );
           assert( !Math::isNAN( ratio ) );
 
           if( ratio > minRatio ) {
@@ -308,7 +309,7 @@ namespace Dark
           }
         }
         else {
-          minRatio  = 0.0;
+          minRatio  = 0.0f;
           tmpNormal = &normal;
         }
       }
@@ -317,7 +318,7 @@ namespace Dark
       }
     }
 
-    if( minRatio < hit.ratio && minRatio < maxRatio && minRatio != -1.0 ) {
+    if( minRatio < hit.ratio && minRatio < maxRatio && minRatio != -1.0f ) {
       hit.ratio  = minRatio;
       hit.normal = *tmpNormal;
       hit.sObj   = sObj;
@@ -329,8 +330,8 @@ namespace Dark
   // finds out if Ray-Simplex collision occurs and the time when it occurs
   void Collider::trimPointSimplex( const BSP::Simplex *simplex )
   {
-    float minRatio   = -1.0;
-    float maxRatio   =  1.0;
+    float minRatio   = -1.0f;
+    float maxRatio   =  1.0f;
     const Vec3 *tmpNormal = null;
 
     for( int i = 0; i < simplex->nSides; i++ ) {
@@ -339,12 +340,12 @@ namespace Dark
       float startDist = leafStartPos * plane.normal - plane.distance;
       float endDist   = leafEndPos   * plane.normal - plane.distance;
 
-      if( startDist >= 0.0 ) {
+      if( startDist >= 0.0f ) {
         if( endDist > EPSILON ) {
           return;
         }
         else if( startDist > endDist ) {
-          float ratio = max( startDist - EPSILON, 0.0 ) / ( startDist - endDist );
+          float ratio = max( startDist - EPSILON, 0.0f ) / ( startDist - endDist );
 
           if( ratio > minRatio ) {
             minRatio  = ratio;
@@ -352,7 +353,7 @@ namespace Dark
           }
         }
         else {
-          minRatio  = 0.0;
+          minRatio  = 0.0f;
           tmpNormal = &plane.normal;
         }
       }
@@ -360,8 +361,8 @@ namespace Dark
         maxRatio = min( maxRatio, startDist / ( startDist - endDist ) );
       }
     }
-    if( minRatio < maxRatio && minRatio != -1.0 ) {
-      float newRatio = max( leafStartRatio + minRatio * ( leafEndRatio - leafStartRatio ), 0.0 );
+    if( minRatio < maxRatio && minRatio != -1.0f ) {
+      float newRatio = max( leafStartRatio + minRatio * ( leafEndRatio - leafStartRatio ), 0.0f );
 
       if( newRatio < hit.ratio ) {
         hit.ratio  = newRatio;
@@ -401,21 +402,21 @@ namespace Dark
       float startDist = startPos * plane.normal - plane.distance;
       float endDist   = endPos   * plane.normal - plane.distance;
 
-      if( startDist > 0.0 && endDist > 0.0 ) {
+      if( startDist > 0.0f && endDist > 0.0f ) {
         trimPointNode( node.front, startRatio, endRatio, startPos, endPos );
       }
-      else if( startDist < 0.0 && endDist < 0.0 ) {
+      else if( startDist < 0.0f && endDist < 0.0f ) {
         trimPointNode( node.back, startRatio, endRatio, startPos, endPos );
       }
       else {
         if( startDist < endDist ) {
-          float invDist = 1.0 / ( startDist - endDist );
+          float invDist = 1.0f / ( startDist - endDist );
 
-          float ratio1 = min( ( startDist - 2.0 * EPSILON ) * invDist, 1.0 );
-          float ratio2 = max( ( startDist + 2.0 * EPSILON ) * invDist, 0.0 );
+          float ratio1 = min( ( startDist - 2.0f * EPSILON ) * invDist, 1.0f );
+          float ratio2 = max( ( startDist + 2.0f * EPSILON ) * invDist, 0.0f );
 
-          assert( 0.0 <= ratio1 && ratio1 <= 1.0 );
-          assert( 0.0 <= ratio2 && ratio2 <= 1.0 );
+          assert( 0.0f <= ratio1 && ratio1 <= 1.0f );
+          assert( 0.0f <= ratio2 && ratio2 <= 1.0f );
 
           float middleRatio1 = startRatio + ratio1 * ( endRatio - startRatio );
           float middleRatio2 = startRatio + ratio2 * ( endRatio - startRatio );
@@ -427,13 +428,13 @@ namespace Dark
           trimPointNode( node.front, middleRatio2, endRatio, middlePos2, endPos );
         }
         else if( endDist < startDist ) {
-          float invDist = 1.0 / ( startDist - endDist );
+          float invDist = 1.0f / ( startDist - endDist );
 
-          float ratio1 = min( ( startDist + 2.0 * EPSILON ) * invDist, 1.0 );
-          float ratio2 = max( ( startDist - 2.0 * EPSILON ) * invDist, 0.0 );
+          float ratio1 = min( ( startDist + 2.0f * EPSILON ) * invDist, 1.0f );
+          float ratio2 = max( ( startDist - 2.0f * EPSILON ) * invDist, 0.0f );
 
-          assert( 0.0 <= ratio1 && ratio1 <= 1.0 );
-          assert( 0.0 <= ratio2 && ratio2 <= 1.0 );
+          assert( 0.0f <= ratio1 && ratio1 <= 1.0f );
+          assert( 0.0f <= ratio2 && ratio2 <= 1.0f );
 
           float middleRatio1 = startRatio + ratio1 * ( endRatio - startRatio );
           float middleRatio2 = startRatio + ratio2 * ( endRatio - startRatio );
@@ -492,7 +493,7 @@ namespace Dark
 
   void Collider::trimPointWorld()
   {
-    hit.ratio = 1.0;
+    hit.ratio = 1.0f;
     hit.obj   = null;
     hit.sObj  = null;
 
@@ -518,7 +519,7 @@ namespace Dark
             bsp = world.bsps[str->bsp];
 
             if( str->overlaps( trace, EPSILON ) ) {
-              trimPointNode( 0, 0.0, 1.0, globalStartPos - str->p, globalEndPos - str->p );
+              trimPointNode( 0, 0.0f, 1.0f, globalStartPos - str->p, globalEndPos - str->p );
             }
             oldStr = str;
           }
@@ -605,7 +606,7 @@ namespace Dark
       return false;
     }
 
-    if( aabb.p.z - aabb.dim.z - world.terrain.height( aabb.p.x, aabb.p.y ) < 0.0 ) {
+    if( aabb.p.z - aabb.dim.z - world.terrain.height( aabb.p.x, aabb.p.y ) < 0.0f ) {
       return false;
     }
 
@@ -713,7 +714,7 @@ namespace Dark
   void Collider::trimAABBVoid()
   {
     for( int i = 0; i < 3; i++ ) {
-      int  iPos    = move[i] >= 0.0;
+      int  iPos    = move[i] >= 0.0f;
       const Vec3 &normal = bbNormals[i * 2 + iPos];
 
       float startDist = world.maxs[i] + globalStartPos[i] * normal[i] - aabb.dim[i];
@@ -721,7 +722,7 @@ namespace Dark
 
       if( endDist <= EPSILON ) {
         if( startDist > endDist ) {
-          float ratio = max( startDist - EPSILON, 0.0 ) / ( startDist - endDist );
+          float ratio = max( startDist - EPSILON, 0.0f ) / ( startDist - endDist );
 
           if( ratio < hit.ratio ) {
             hit.ratio  = ratio;
@@ -730,7 +731,7 @@ namespace Dark
           }
         }
         else {
-          hit.ratio  = 0.0;
+          hit.ratio  = 0.0f;
           hit.normal = normal;
           hit.sObj   = null;
         }
@@ -741,8 +742,8 @@ namespace Dark
   // finds out if AABB-AABB collision occurs and the time when it occurs
   void Collider::trimAABBObj( Object *sObj )
   {
-    float minRatio   = -1.0;
-    float maxRatio   =  1.0;
+    float minRatio   = -1.0f;
+    float maxRatio   =  1.0f;
     const Vec3 *tmpNormal = null;
 
     for( int i = 0; i < 6; i++ ) {
@@ -752,12 +753,12 @@ namespace Dark
       float startDist = ( globalStartPos[j] - sObj->p[j] ) * normal[j] - aabb.dim[j] - sObj->dim[j];
       float endDist   = ( globalEndPos[j]   - sObj->p[j] ) * normal[j] - aabb.dim[j] - sObj->dim[j];
 
-      if( startDist >= 0.0 ) {
+      if( startDist >= 0.0f ) {
         if( endDist > EPSILON ) {
           return;
         }
         else if( startDist > endDist ) {
-          float ratio = max( startDist - EPSILON, 0.0 ) / ( startDist - endDist );
+          float ratio = max( startDist - EPSILON, 0.0f ) / ( startDist - endDist );
 
           if( ratio > minRatio ) {
             minRatio  = ratio;
@@ -765,7 +766,7 @@ namespace Dark
           }
         }
         else {
-          minRatio  = 0.0;
+          minRatio  = 0.0f;
           tmpNormal = &normal;
         }
       }
@@ -774,7 +775,7 @@ namespace Dark
       }
     }
 
-    if( minRatio < hit.ratio && minRatio < maxRatio && minRatio != -1.0 ) {
+    if( minRatio < hit.ratio && minRatio < maxRatio && minRatio != -1.0f ) {
       hit.ratio  = minRatio;
       hit.normal = *tmpNormal;
       hit.sObj   = sObj;
@@ -784,8 +785,8 @@ namespace Dark
   // finds out if AABB-Simplex collision occurs and the time when it occurs
   void Collider::trimAABBSimplex( const BSP::Simplex *simplex )
   {
-    float minRatio   = -1.0;
-    float maxRatio   =  1.0;
+    float minRatio   = -1.0f;
+    float maxRatio   =  1.0f;
     const Vec3 *tmpNormal = null;
 
     for( int i = 0; i < simplex->nSides; i++ ) {
@@ -799,12 +800,12 @@ namespace Dark
       float startDist = leafStartPos * plane.normal - plane.distance - offset;
       float endDist   = leafEndPos   * plane.normal - plane.distance - offset;
 
-      if( startDist >= 0.0 ) {
+      if( startDist >= 0.0f ) {
         if( endDist > EPSILON ) {
           return;
         }
         else if( startDist > endDist ) {
-          float ratio = max( startDist - EPSILON, 0.0 ) / ( startDist - endDist );
+          float ratio = max( startDist - EPSILON, 0.0f ) / ( startDist - endDist );
 
           if( ratio > minRatio ) {
             minRatio  = ratio;
@@ -812,7 +813,7 @@ namespace Dark
           }
         }
         else {
-          minRatio  = 0.0;
+          minRatio  = 0.0f;
           tmpNormal = &plane.normal;
         }
       }
@@ -820,8 +821,8 @@ namespace Dark
         maxRatio = min( maxRatio, startDist / ( startDist - endDist ) );
       }
     }
-    if( minRatio < maxRatio && minRatio != -1.0 ) {
-      float newRatio = max( leafStartRatio + minRatio * ( leafEndRatio - leafStartRatio ), 0.0 );
+    if( minRatio < maxRatio && minRatio != -1.0f ) {
+      float newRatio = max( leafStartRatio + minRatio * ( leafEndRatio - leafStartRatio ), 0.0f );
 
       if( newRatio < hit.ratio ) {
         hit.ratio  = newRatio;
@@ -860,7 +861,7 @@ namespace Dark
           Math::abs( plane.normal.x * aabb.dim.x ) +
           Math::abs( plane.normal.y * aabb.dim.y ) +
           Math::abs( plane.normal.z * aabb.dim.z ) +
-          2.0 * EPSILON;
+          2.0f * EPSILON;
 
       float startDist = startPos * plane.normal - plane.distance;
       float endDist   = endPos   * plane.normal - plane.distance;
@@ -873,10 +874,10 @@ namespace Dark
       }
       else {
         if( startDist < endDist ) {
-          float invDist = 1.0 / ( startDist - endDist );
+          float invDist = 1.0f / ( startDist - endDist );
 
-          float ratio1 = bound( ( startDist - offset ) * invDist, 0.0, 1.0 );
-          float ratio2 = bound( ( startDist + offset ) * invDist, 0.0, 1.0 );
+          float ratio1 = bound( ( startDist - offset ) * invDist, 0.0f, 1.0f );
+          float ratio2 = bound( ( startDist + offset ) * invDist, 0.0f, 1.0f );
 
           float middleRatio1 = startRatio + ratio1 * ( endRatio - startRatio );
           float middleRatio2 = startRatio + ratio2 * ( endRatio - startRatio );
@@ -888,10 +889,10 @@ namespace Dark
           trimAABBNode( node.front, middleRatio2, endRatio, middlePos2, endPos );
         }
         else if( endDist < startDist ) {
-          float invDist = 1.0 / ( startDist - endDist );
+          float invDist = 1.0f / ( startDist - endDist );
 
-          float ratio1 = bound( ( startDist + offset ) * invDist, 0.0, 1.0 );
-          float ratio2 = bound( ( startDist - offset ) * invDist, 0.0, 1.0 );
+          float ratio1 = bound( ( startDist + offset ) * invDist, 0.0f, 1.0f );
+          float ratio2 = bound( ( startDist - offset ) * invDist, 0.0f, 1.0f );
 
           float middleRatio1 = startRatio + ratio1 * ( endRatio - startRatio );
           float middleRatio2 = startRatio + ratio2 * ( endRatio - startRatio );
@@ -913,7 +914,7 @@ namespace Dark
   // move AABB unil first collisons occurs
   void Collider::trimAABBWorld()
   {
-    hit.ratio = 1.0;
+    hit.ratio = 1.0f;
     hit.obj   = obj;
     hit.sObj  = null;
 
@@ -940,7 +941,7 @@ namespace Dark
             bsp = world.bsps[str->bsp];
 
             if( str->overlaps( trace, EPSILON ) ) {
-              trimAABBNode( 0, 0.0, 1.0, globalStartPos - str->p, globalEndPos - str->p );
+              trimAABBNode( 0, 0.0f, 1.0f, globalStartPos - str->p, globalEndPos - str->p );
             }
             oldStr = str;
           }

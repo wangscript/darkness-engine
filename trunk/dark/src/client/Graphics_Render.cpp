@@ -12,8 +12,9 @@
 
 #include "Graphics_Render.h"
 
-#include "Matrix.h"
-#include "Physics.h"
+#include "matrix/Matrix.h"
+#include "matrix/Physics.h"
+#include "matrix/B_Goblin.h"
 
 #include "Graphics_Frustum.h"
 #include "Graphics_Shape.h"
@@ -23,8 +24,6 @@
 #include "Graphics_Terrain.h"
 #include "Graphics_BSP.h"
 
-#include "B_Goblin.h"
-
 namespace Dark
 {
 namespace Graphics
@@ -32,16 +31,16 @@ namespace Graphics
 
   Render render;
 
-  const float Render::RELEASED_CULL_FACTOR = 5.0;
-  const float Render::INCH = 0.0252;
+  const float Render::RELEASED_CULL_FACTOR = 5.0f;
+  const float Render::INCH = 0.0252f;
 
-  const float Render::BLACK[] = { 0.0, 0.0, 0.0, 1.0 };
-  const float Render::WHITE[] = { 1.0, 1.0, 1.0, 1.0 };
+  const float Render::BLACK[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+  const float Render::WHITE[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-  const float Render::GLOBAL_AMBIENT[] = { 0.2, 0.2, 0.2, 1.0 };
+  const float Render::GLOBAL_AMBIENT[] = { 0.2f, 0.2f, 0.2f, 1.0f };
 
-  const float Render::NIGHT_FOG_COEFF = 2.0;
-  const float Render::NIGHT_FOG_DIST = 0.3;
+  const float Render::NIGHT_FOG_COEFF = 2.0f;
+  const float Render::NIGHT_FOG_DIST = 0.3f;
 
   void Render::init()
   {
@@ -49,7 +48,7 @@ namespace Graphics
     logFile.println( "OpenGL version: %s", glGetString( GL_VERSION ) );
     logFile.println( "OpenGL extensions: %s", glGetString( GL_EXTENSIONS ) );
 
-    font.init( "base/font.png", 2.0 );
+    font.init( "base/font.png", 2.0f );
 
     int screenX = atoi( config["screen.width"] );
     int screenY = atoi( config["screen.height"] );
@@ -59,7 +58,7 @@ namespace Graphics
     sscanf( config["render.perspective.min"], "%f", &perspectiveMin );
     sscanf( config["render.perspective.max"], "%f", &perspectiveMax );
 
-    if( perspectiveAspect == 0.0 ) {
+    if( perspectiveAspect == 0.0f ) {
       perspectiveAspect = (double) screenX / (double) screenY;
     }
 
@@ -71,7 +70,7 @@ namespace Graphics
     glMatrixMode( GL_MODELVIEW );
 
     glLoadIdentity();
-    glRotatef( -90.0, 1.0, 0.0, 0.0 );
+    glRotatef( -90.0f, 1.0f, 0.0f, 0.0f );
 
     glEnable( GL_TEXTURE_2D );
 
@@ -89,7 +88,7 @@ namespace Graphics
 
     // fog
     glFogi( GL_FOG_MODE, GL_LINEAR );
-    glFogf( GL_FOG_START, 0.0 );
+    glFogf( GL_FOG_START, 0.0f );
     glFogf( GL_FOG_END, perspectiveMax );
 
     // lighting
@@ -118,32 +117,32 @@ namespace Graphics
       bsps << new BSP( world.bsps[i] );
     }
 
-    lists << shape.genBox( AABB( Vec3::zero(), Vec3( 0.01, 0.01, 0.01 ) ), 0 );
+    lists << shape.genBox( AABB( Vec3::zero(), Vec3( 0.01f, 0.01f, 0.01f ) ), 0 );
     lists << shape.genBox( AABB( Vec3::zero(), Vec3( 10, 10, 10 ) ), 0 );
 
-    lists << shape.genRandomTetrahedicParticle( 0.5 );
+    lists << shape.genRandomTetrahedicParticle( 0.5f );
 
-    lists << shape.genBox( AABB( Vec3::zero(), Vec3( 0.3, 0.3, 0.3 ) ),
+    lists << shape.genBox( AABB( Vec3::zero(), Vec3( 0.3f, 0.3f, 0.3f ) ),
                            context.loadTexture( "tex/crate1.jpg", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR, false ) );
-    lists << shape.genBox( AABB( Vec3::zero(), Vec3( 0.6, 0.6, 0.6 ) ),
+    lists << shape.genBox( AABB( Vec3::zero(), Vec3( 0.6f, 0.6f, 0.6f ) ),
                            context.loadTexture( "tex/crate2.jpg", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR, false ) );
 
-    lists << MD2::genList( "md2/woodBarrel", INCH, Vec3( 0.0, 0.0, -0.482 ) );
-    lists << MD2::genList( "md2/metalBarrel", INCH, Vec3( 0.0, 0.0, -0.5922 ) );
+    lists << MD2::genList( "md2/woodBarrel", INCH, Vec3( 0.0f, 0.0f, -0.482f ) );
+    lists << MD2::genList( "md2/metalBarrel", INCH, Vec3( 0.0f, 0.0f, -0.5922f ) );
 
-    lists << MD2::genList( "md2/tree2", 0.1, Vec3( 0.0, 0.0, -3.8 ) );
-    lists << MD2::genList( "md2/tree3", 0.2, Vec3( 0.0, 0.0, -2.2 ) );
+    lists << MD2::genList( "md2/tree2", 0.1f, Vec3( 0.0f, 0.0f, -3.8f ) );
+    lists << MD2::genList( "md2/tree3", 0.2f, Vec3( 0.0f, 0.0f, -2.2f ) );
 
     md2s << new MD2();
     md2s.last()->load( "md2/goblin" );
-    md2s.last()->scale( 0.03 );
-    md2s.last()->translate( Vec3( 0.0, 0.0, 0.1 ) );
-    md2s.last()->translate( ANIM_CROUCH_STAND, Vec3( 0.0, 0.0, 0.15 ) );
-    md2s.last()->translate( ANIM_CROUCH_WALK, Vec3( 0.0, 0.0, 0.15 ) );
+    md2s.last()->scale( 0.03f );
+    md2s.last()->translate( Vec3( 0.0f, 0.0f, 0.1f ) );
+    md2s.last()->translate( ANIM_CROUCH_STAND, Vec3( 0.0f, 0.0f, 0.15f ) );
+    md2s.last()->translate( ANIM_CROUCH_WALK, Vec3( 0.0f, 0.0f, 0.15f ) );
 
     md2s << new MD2();
     md2s.last()->load( "md2/knight" );
-    md2s.last()->scale( 0.04 );
+    md2s.last()->scale( 0.04f );
 
     // prepare for first frame
     glEnable( GL_DEPTH_TEST );
@@ -161,12 +160,12 @@ namespace Graphics
     glPushMatrix();
 
     glTranslatef( obj->p.x, obj->p.y, obj->p.z );
-    glRotatef( obj->rotZ, 0.0, 0.0, 1.0 );
+    glRotatef( obj->rotZ, 0.0f, 0.0f, 1.0f );
 
     if( obj->type == WATER ) {
       waterObjects << obj;
     }
-    else if( obj->alpha != 1.0 ) {
+    else if( obj->alpha != 1.0f ) {
       blendedObjects << obj;
     }
     else if( obj->model >= 0 ) {
@@ -195,12 +194,12 @@ namespace Graphics
       }
     }
     if( drawAABBs ) {
-      glRotatef( -obj->rotZ, 0.0, 0.0, 1.0 );
+      glRotatef( -obj->rotZ, 0.0f, 0.0f, 1.0f );
 
       glDisable( GL_LIGHTING );
       glDisable( GL_TEXTURE_2D );
       glEnable( GL_BLEND );
-      glColor4f( 1.0, 1.0, 0.0, 0.3 );
+      glColor4f( 1.0f, 1.0f, 0.0f, 0.3f );
 
       shape.drawBox( *obj );
 
@@ -262,7 +261,7 @@ namespace Graphics
 
           waterObjects << obj;
         }
-        else if( obj->alpha != 1.0 ) {
+        else if( obj->alpha != 1.0f ) {
           blendedObjects << obj;
         }
         else {
@@ -303,8 +302,8 @@ namespace Graphics
     }
     drawnStructures.clearAll();
 
-    float minXCenter = (float) ( ( frustum.minX - World::MAX / 2 ) * Sector::DIM ) + Sector::DIM / 2.0;
-    float minYCenter = (float) ( ( frustum.minY - World::MAX / 2 ) * Sector::DIM ) + Sector::DIM / 2.0;
+    float minXCenter = (float) ( ( frustum.minX - World::MAX / 2 ) * Sector::DIM ) + Sector::DIM / 2.0f;
+    float minYCenter = (float) ( ( frustum.minY - World::MAX / 2 ) * Sector::DIM ) + Sector::DIM / 2.0f;
 
     float x = minXCenter;
     for( int i = frustum.minX; i <= frustum.maxX; i++, x += Sector::DIM ) {
@@ -330,7 +329,7 @@ namespace Graphics
       glClearColor( sky.color[0], sky.color[1], sky.color[2], sky.color[3] );
       glFogfv( GL_FOG_COLOR, sky.color );
       glFogf( GL_FOG_END,
-              bound( NIGHT_FOG_COEFF * sky.lightDir[2], NIGHT_FOG_DIST, 1.0 ) * perspectiveMax );
+              bound( NIGHT_FOG_COEFF * sky.lightDir[2], NIGHT_FOG_DIST, 1.0f ) * perspectiveMax );
     }
     // clear buffer
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
@@ -374,9 +373,9 @@ namespace Graphics
       glPushMatrix();
         glTranslatef( part->p.x, part->p.y, part->p.z );
 
-        glRotatef( part->rot.y, 0.0, 1.0, 0.0 );
-        glRotatef( part->rot.x, 1.0, 0.0, 0.0 );
-        glRotatef( part->rot.z, 0.0, 0.0, 1.0 );
+        glRotatef( part->rot.y, 0.0f, 1.0f, 0.0f );
+        glRotatef( part->rot.x, 1.0f, 0.0f, 0.0f );
+        glRotatef( part->rot.z, 0.0f, 0.0f, 1.0f );
 
         glColor4f( part->color.x, part->color.y, part->color.z, part->lifeTime );
         glCallList( lists[part->model] );
@@ -408,7 +407,7 @@ namespace Graphics
     glDisable( GL_BLEND );
 
     if( showAim ) {
-      Vec3 move = camera.at * 1.0;
+      Vec3 move = camera.at * 1.0f;
       collider.translate( camera.p, move );
       move *= collider.hit.ratio;
 
@@ -416,14 +415,14 @@ namespace Graphics
 
       glDisable( GL_TEXTURE_2D );
       glDisable( GL_LIGHTING );
-      glColor3f( 0.0, 1.0, 0.0 );
+      glColor3f( 0.0f, 1.0f, 0.0f );
       glCallList( lists[LIST_AIM] );
       glColor3fv( WHITE );
       glEnable( GL_TEXTURE_2D );
     }
 
     glLoadIdentity();
-    glRotatef( -90.0, 1.0, 0.0, 0.0 );
+    glRotatef( -90.0f, 1.0f, 0.0f, 0.0f );
 
     glDisable( GL_DEPTH_TEST );
     glDisable( GL_FOG );

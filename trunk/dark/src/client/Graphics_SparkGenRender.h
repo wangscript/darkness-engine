@@ -11,7 +11,7 @@
 #ifndef _Graphics_SparkGenRender_h_
 #define _Graphics_SparkGenRender_h_
 
-#include "World.h"
+#include "matrix/World.h"
 
 namespace Dark
 {

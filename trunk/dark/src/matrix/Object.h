@@ -148,7 +148,7 @@ namespace Dark
     public:
 
       Object() : index( -1 ), sector( null ), flags( 0 ), type( -1 ),
-          damage( Math::INF ), model( 0 ), anim( 0 ), rotZ( 0.0 ), alpha( 1.0 )
+          damage( Math::INF ), model( 0 ), anim( 0 ), rotZ( 0.0f ), alpha( 1.0f )
       {}
 
       virtual ~Object()

@@ -11,7 +11,7 @@
 #ifndef _Mind_h_
 #define _Mind_h_
 
-#include "Bot.h"
+#include "matrix/Bot.h"
 
 namespace Dark
 {

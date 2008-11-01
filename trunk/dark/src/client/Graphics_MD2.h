@@ -11,7 +11,7 @@
 #ifndef _Graphics_MD2_h_
 #define _Graphics_MD2_h_
 
-#include "Timer.h"
+#include "matrix/Timer.h"
 #include "Graphics_Context.h"
 
 namespace Dark

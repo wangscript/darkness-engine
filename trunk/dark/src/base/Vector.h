@@ -18,20 +18,19 @@ namespace Dark
   template <class Type>
   class Vector
   {
-    public:
+    private:
 
       Type *data;
-
-    protected:
-
       int  size;
       int  count;
+
+    private:
 
       void ensureCapacity()
       {
         if( size == count ) {
           size *= 2;
-          assert( size <= 2147483647 );
+          assert( size <= 1024*1024*10 );
           data = aRealloc( data, count, size );
         }
       }
@@ -75,14 +74,11 @@ namespace Dark
 
       };
 
-      Vector() : size( 8 ), count( 0 )
-      {
-        data = new Type[8];
-      }
+      Vector() : data( new Type[8] ), size( 8 ), count( 0 )
+      {}
 
-      Vector( const Vector &v ) : size( v.size ), count( v.count )
+      Vector( const Vector &v ) : data( new Type[8] ), size( v.size ), count( v.count )
       {
-        data = new Type[size];
         aCopy( data, v.data, count );
       }
 
@@ -115,6 +111,16 @@ namespace Dark
       bool operator != ( const Vector &v ) const
       {
         return count != v.count || !aEqual( data, v.data, count );
+      }
+
+      Type *dataPtr()
+      {
+        return data;
+      }
+
+      const Type *dataPtr() const
+      {
+        return data;
       }
 
       int length() const
@@ -276,11 +282,12 @@ namespace Dark
         count++;
       }
 
-      void operator -- ( int )
+      Vector operator -- ( int )
       {
         assert( count != 0 );
 
         count--;
+        return *this;
       }
 
       // remove element by index

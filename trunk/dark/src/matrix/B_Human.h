@@ -48,7 +48,7 @@ namespace Dark
 
     public:
 
-      explicit B_Human( const Vec3 &p, float h = 0.0, float v = 0.0, Mind *mind = null );
+      explicit B_Human( const Vec3 &p, float h = 0.0f, float v = 0.0f, Mind *mind = null );
   };
 
 }

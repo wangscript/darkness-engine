@@ -12,7 +12,7 @@
 #define _bv_h_
 
 // 0.1 mm
-#define EPSILON ( 0.0001 )
+#define EPSILON ( 0.0001f )
 
 #include "Bounds.h"
 #include "AABB.h"

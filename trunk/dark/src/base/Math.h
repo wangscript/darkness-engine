@@ -23,193 +23,116 @@ namespace Dark
 
     public:
 
-      static const scalar FLOAT_EPS;
-      static const scalar DOUBLE_EPS;
-      static const scalar E;
-      static const scalar LOG2E;
-      static const scalar LOG10E;
-      static const scalar LN2;
-      static const scalar LN10;
-      static const scalar PI;
-      static const scalar PI_2;
-      static const scalar PI_4;
-      static const scalar _1_PI;
-      static const scalar _2_PI;
-      static const scalar _2_SQRTPI;
-      static const scalar SQRT2;
-      static const scalar SQRT1_2;
-      static const scalar NaN;
-      static const scalar INF;
+      static const float FLOAT_EPS;
+      static const float DOUBLE_EPS;
+      static const float E;
+      static const float LOG2E;
+      static const float LOG10E;
+      static const float LN2;
+      static const float LN10;
+      static const float PI;
+      static const float PI_2;
+      static const float PI_4;
+      static const float _1_PI;
+      static const float _2_PI;
+      static const float _2_SQRTPI;
+      static const float SQRT2;
+      static const float SQRT1_2;
+      static const float NaN;
+      static const float INF;
 
       /*
        * Standard math functions
        */
-      static scalar abs( scalar x )
+      static float abs( float x )
       {
-#ifdef DARK_FLOAT_SCALAR
         return ::fabsf( x );
-#else
-        return ::fabs( x );
-#endif
       }
 
-      static scalar floor( scalar x )
+      static float floor( float x )
       {
-#ifdef DARK_FLOAT_SCALAR
         return ::floorf( x );
-#else
-        return ::floor( x );
-#endif
       }
 
-      static scalar ceil( scalar x )
+      static float ceil( float x )
       {
-#ifdef DARK_FLOAT_SCALAR
         return ::ceilf( x );
-#else
-        return ::ceil( x );
-#endif
       }
 
-      static scalar round( scalar x )
+      static float round( float x )
       {
-#ifdef DARK_FLOAT_SCALAR
         return ::roundf( x );
-#else
-        return ::round( x );
-#endif
       }
 
-      static scalar mod( scalar x, scalar y )
+      static float mod( float x, float y )
       {
-#ifdef DARK_FLOAT_SCALAR
         return ::fmodf( x, y );
-#else
-        return ::fmod( x, y );
-#endif
       }
 
-      static scalar sqrt( scalar x )
+      static float sqrt( float x )
       {
-#ifdef DARK_FLOAT_SCALAR
         return ::sqrtf( x );
-#else
-        return ::sqrt( x );
-#endif
       }
 
-      static scalar exp( scalar x )
+      static float exp( float x )
       {
-#ifdef DARK_FLOAT_SCALAR
         return ::expf( x );
-#else
-        return ::exp( x );
-#endif
       }
 
-      static scalar log( scalar x )
+      static float log( float x )
       {
-#ifdef DARK_FLOAT_SCALAR
         return ::logf( x );
-#else
-        return ::log( x );
-#endif
       }
 
-      static scalar pow( scalar x, scalar y )
+      static float pow( float x, float y )
       {
-#ifdef DARK_FLOAT_SCALAR
         return ::powf( x, y );
-#else
-        return ::pow( x, y );
-#endif
       }
 
-      static scalar sin( scalar x )
+      static float sin( float x )
       {
-#ifdef DARK_FLOAT_SCALAR
         return ::sinf( x );
-#else
-        return ::sin( x );
-#endif
       }
 
-      static scalar cos( scalar x )
+      static float cos( float x )
       {
-#ifdef DARK_FLOAT_SCALAR
         return ::cosf( x );
-#else
-        return ::cos( x );
-#endif
       }
 
-      static void sincos( scalar x, scalar *s, scalar *c )
+      static void sincos( float x, float *s, float *c )
       {
         // FreeBSD libc doesn't have sincos function
 #ifdef HAVE_SINCOS
-
-#ifdef DARK_FLOAT_SCALAR
           ::sincosf( x, s, c );
 #else
-          ::sincos( x, s, c );
-#endif
-
-#else
-
-#ifdef DARK_FLOAT_SCALAR
           *s = ::sinf( x );
           *c = ::cosf( x );
-#else
-          *s = ::sin( x );
-          *c = ::cos( x );
-#endif
-
 #endif
       }
 
-      static scalar tan( scalar x )
+      static float tan( float x )
       {
-#ifdef DARK_FLOAT_SCALAR
         return ::tanf( x );
-#else
-        return ::tan( x );
-#endif
       }
 
-      static scalar asin( scalar x )
+      static float asin( float x )
       {
-#ifdef DARK_FLOAT_SCALAR
         return ::asinf( x );
-#else
-        return ::asin( x );
-#endif
       }
 
-      static scalar acos( scalar x )
+      static float acos( float x )
       {
-#ifdef DARK_FLOAT_SCALAR
         return ::acosf( x );
-#else
-        return ::acos( x );
-#endif
       }
 
-      static scalar atan( scalar x )
+      static float atan( float x )
       {
-#ifdef DARK_FLOAT_SCALAR
         return ::atanf( x );
-#else
-        return ::atan( x );
-#endif
       }
 
-      static scalar atan2( scalar x, scalar y )
+      static float atan2( float x, float y )
       {
-#ifdef DARK_FLOAT_SCALAR
         return ::atan2f( x, y );
-#else
-        return ::atan2( x, y );
-#endif
       }
 
       /*
@@ -217,29 +140,25 @@ namespace Dark
        */
 
       // returns true, if value is not a number
-      static bool isNAN( scalar x )
+      static bool isNAN( float x )
       {
-#if defined( DARK_FLOAT_SCALAR ) && !defined( __WIN32__ )
         return isnanf( x );
-#else
-        return isnan( x );
-#endif
       }
 
-      static scalar sgn( scalar x )
+      static float sgn( float x )
       {
-        return x < (scalar) 0 ? (scalar) -1 : x > (scalar) 0 ? (scalar) 1 : (scalar) 0;
+        return x < 0.0f ? -1.0f : x > 0.0f ? 1.0f : 0.0f;
       }
 
       // deg-to-rad and rad-to-deg conversion
-      static scalar rad( scalar x )
+      static float rad( float x )
       {
-        return x * ( PI / (scalar) 180 );
+        return x * ( PI / 180.0f );
       }
 
-      static scalar deg( scalar x )
+      static float deg( float x )
       {
-        return x * ( _1_PI * (scalar) 180 );
+        return x * ( _1_PI * 180.0f );
       }
 
       // random integer from 0 to RAND_MAX
@@ -248,10 +167,10 @@ namespace Dark
         return ::rand();
       }
 
-      // random scalar from interval [0, 1]
-      static scalar frand()
+      // random float from interval [0, 1]
+      static float frand()
       {
-        return (scalar) ::rand() / (scalar) RAND_MAX;
+        return (float) ::rand() / (float) RAND_MAX;
       }
 
   };

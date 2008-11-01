@@ -12,7 +12,7 @@
 
 #include "Graphics_Context.h"
 
-#include "Translator.h"
+#include "matrix/Translator.h"
 
 namespace Dark
 {
@@ -87,12 +87,12 @@ namespace Graphics
 
     uchar *dataEnd = (uchar*) data + width * height * bpp;
     for( uchar *p = (uchar*) data; p < dataEnd; p += bpp ) {
-      float x = ( (float) p[0] - 128.0 ) / 128.0;
-      float y = ( (float) p[1] - 128.0 ) / 128.0;
-      float z = ( (float) p[2] - 128.0 ) / 128.0;
+      float x = ( (float) p[0] - 128.0f ) / 128.0f;
+      float y = ( (float) p[1] - 128.0f ) / 128.0f;
+      float z = ( (float) p[2] - 128.0f ) / 128.0f;
 
       float dot = x * lightNormal.x + y * lightNormal.y + z * lightNormal.z;
-      uchar color = (uchar) bound( dot * 256.0, 0.0, 255.0 );
+      uchar color = (uchar) bound( dot * 256.0f, 0.0f, 255.0f );
 
       p[0] = color;
       p[1] = color;
@@ -200,7 +200,7 @@ namespace Graphics
   void Context::freeTextures()
   {
     if( !textures.isEmpty() ) {
-      glDeleteTextures( textures.length(), textures.data );
+      glDeleteTextures( textures.length(), textures.dataPtr() );
     }
     textures.clear();
 

@@ -19,23 +19,23 @@ namespace Dark
 
   const char *B_Goblin::NAME = "B_Goblin";
 
-  const Vec3  B_Goblin::CAM_POS            = Vec3( 0.00, 0.00, 0.55 );
-  const Vec3  B_Goblin::CAM_POS_CROUCH     = Vec3( 0.00, 0.00, 0.40 );
-  const Vec3  B_Goblin::DIM                = Vec3( 0.24, 0.24, 0.64 );
-  const Vec3  B_Goblin::DIM_CROUCH         = Vec3( 0.24, 0.24, 0.49 );
+  const Vec3  B_Goblin::CAM_POS            = Vec3( 0.00f, 0.00f, 0.55f );
+  const Vec3  B_Goblin::CAM_POS_CROUCH     = Vec3( 0.00f, 0.00f, 0.40f );
+  const Vec3  B_Goblin::DIM                = Vec3( 0.24f, 0.24f, 0.64f );
+  const Vec3  B_Goblin::DIM_CROUCH         = Vec3( 0.24f, 0.24f, 0.49f );
 
-  const float B_Goblin::BOB_INC            = 0.05;
-  const float B_Goblin::BOB_AMPLITUDE      = 0.05;
+  const float B_Goblin::BOB_INC            = 0.05f;
+  const float B_Goblin::BOB_AMPLITUDE      = 0.05f;
 
-  const float B_Goblin::WALK_VELOCITY      = 0.4;
-  const float B_Goblin::RUN_VELOCITY       = 1.2;
-  const float B_Goblin::CROUCH_VELOCITY    = 0.4;
-  const float B_Goblin::JUMP_VELOCITY      = 4.5;
-  const float B_Goblin::AIR_CONTROL        = 0.15;
-  const float B_Goblin::GRAB_DIST          = 1.0;
+  const float B_Goblin::WALK_VELOCITY      = 0.4f;
+  const float B_Goblin::RUN_VELOCITY       = 1.2f;
+  const float B_Goblin::CROUCH_VELOCITY    = 0.4f;
+  const float B_Goblin::JUMP_VELOCITY      = 4.5f;
+  const float B_Goblin::AIR_CONTROL        = 0.15f;
+  const float B_Goblin::GRAB_DIST          = 1.0f;
 
-  const float B_Goblin::STEP_INC           = 0.1;
-  const float B_Goblin::STEP_MAX           = 0.5;
+  const float B_Goblin::STEP_INC           = 0.1f;
+  const float B_Goblin::STEP_MAX           = 0.5f;
 
   B_Goblin::B_Goblin( const Vec3 &p_, float h_, float v_, Mind *mind_ )
   {
@@ -46,20 +46,20 @@ namespace Dark
         Object::DYNAMIC_BIT | Object::PUSHING_BIT | Object::BOT_BIT;
     type    = B_GOBLIN;
 
-    damage  = 2.0;
+    damage  = 2.0f;
 
     model   = ~0;
     anim    = ANIM_STAND;
 
     newVelocity.setZero();
     lower   = -1;
-    mass    = 50.0;
+    mass    = 50.0f;
 
     h       = h_;
     v       = v_;
 
     camPos  = CAM_POS;
-    bob     = 0.0;
+    bob     = 0.0f;
 
     state   = STEPPING_BIT;
     keys    = 0;
@@ -70,8 +70,8 @@ namespace Dark
 
   void B_Goblin::onUpdate()
   {
-    h = Math::mod( h + 360.0, 360.0 );
-    v = bound( v, -89.0, 89.0 );
+    h = Math::mod( h + 360.0f, 360.0f );
+    v = bound( v, -89.0f, 89.0f );
 
     rotZ = h;
 
@@ -215,10 +215,10 @@ namespace Dark
 
     Vec3 addVelocity = velocity * move;
 
-    if( ( flags & Object::ON_FLOOR_BIT ) && floor.z != 1.0 ) {
+    if( ( flags & Object::ON_FLOOR_BIT ) && floor.z != 1.0f ) {
       float dot = addVelocity * floor;
 
-      if( dot > 0.0 ) {
+      if( dot > 0.0f ) {
         addVelocity -= dot * floor;
       }
     }
@@ -232,7 +232,7 @@ namespace Dark
 
       float orgRatio = collider.hit.ratio;
 
-      if( orgRatio != 1.0 && collider.hit.normal.z == 0.0 ) {
+      if( orgRatio != 1.0f && collider.hit.normal.z == 0.0f ) {
         float orgZ = p.z;
 
         for( float raise = STEP_INC; raise < STEP_MAX; raise += STEP_INC ) {
@@ -273,11 +273,11 @@ namespace Dark
   {
     float deltaVel = ( newVelocity - velocity ).sqL();
 
-    if( deltaVel >= 1000.0 ) {
+    if( deltaVel >= 1000.0f ) {
       damage += deltaVel;
     }
 
-    if( !( state & GROUNDED_BIT ) && hit->normal.z >= Physics::FLOOR_NORMAL_Z && deltaVel > 8.0 ) {
+    if( !( state & GROUNDED_BIT ) && hit->normal.z >= Physics::FLOOR_NORMAL_Z && deltaVel > 8.0f ) {
       addSound( SND_LAND );
     }
   }

@@ -25,7 +25,7 @@ namespace Dark
     body->keys |= Bot::KEY_FORWARD;
 
     if( Math::rand() % 101 == 0 ) {
-      body->h += ( Math::frand() * 120.0 ) - 60.0;
+      body->h += ( Math::frand() * 120.0f ) - 60.0f;
     }
   }
 

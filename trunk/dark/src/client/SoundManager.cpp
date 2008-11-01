@@ -20,7 +20,7 @@ namespace Dark
 
   SoundManager soundManager;
 
-  const float SoundManager::DMAX = 100.0;
+  const float SoundManager::DMAX = 100.0f;
   const float SoundManager::DMAX_SQ = DMAX * DMAX;
 
 #ifdef DARK_OPENAL
@@ -161,7 +161,7 @@ namespace Dark
 
           alGenSources( 1, &src->source );
           alSourcei( src->source, AL_BUFFER, buffers[ snd->sample ] );
-          alSourcef( src->source, AL_REFERENCE_DISTANCE, 2.0 );
+          alSourcef( src->source, AL_REFERENCE_DISTANCE, 2.0f );
 
           // If the object moves since source starts playing and source stands still, it's usually
           // not noticable for short-time source. After all, sound source many times does't move
@@ -474,7 +474,7 @@ namespace Dark
         }
         else {
           angle = (short) Math::round( Math::deg( Math::atan2( relPos.x, relPos.y ) ) - camera.h );
-          distance = (uchar) ( Math::sqrt( Math::sqrt( relPos.sqL() / DMAX_SQ ) ) * 256.0 );
+          distance = (uchar) ( Math::sqrt( Math::sqrt( relPos.sqL() / DMAX_SQ ) ) * 256.0f );
         }
 
         // non-continous
@@ -564,12 +564,12 @@ namespace Dark
 
   void SoundManager::setVolume( float volume )
   {
-    Mix_Volume( -1, (int) ( volume * 128.0 ) );
+    Mix_Volume( -1, (int) ( volume * 128.0f ) );
   }
 
   void SoundManager::setMusicVolume( float volume )
   {
-    Mix_VolumeMusic( (int) ( volume * 128.0 ) );
+    Mix_VolumeMusic( (int) ( volume * 128.0f ) );
   }
 
 #endif

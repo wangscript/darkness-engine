@@ -19,54 +19,54 @@ namespace Dark
 
   struct Quat
   {
-    scalar x;
-    scalar y;
-    scalar z;
-    scalar w;
+    float x;
+    float y;
+    float z;
+    float w;
 
     Quat()
     {}
 
-    Quat( scalar x_, scalar y_, scalar z_, scalar w_ ) : x( x_ ), y( y_ ), z( z_ ), w( w_ )
+    Quat( float x_, float y_, float z_, float w_ ) : x( x_ ), y( y_ ), z( z_ ), w( w_ )
     {}
 
-    explicit Quat( scalar *q )
+    explicit Quat( float *q )
     {
       *this = *(Quat*) q;
     }
 
-    explicit Quat( const Vec3 &v ) : x( v.x ), y( v.y ), z( v.z ), w( 0.0 )
+    explicit Quat( const Vec3 &v ) : x( v.x ), y( v.y ), z( v.z ), w( 0.0f )
     {
     }
 
     static Quat zero()
     {
-      return Quat( 0.0, 0.0, 0.0, 0.0 );
+      return Quat( 0.0f, 0.0f, 0.0f, 0.0f );
     }
 
     static Quat id()
     {
-      return Quat( 0.0, 0.0, 0.0, 1.0 );
+      return Quat( 0.0f, 0.0f, 0.0f, 1.0f );
     }
 
-    operator scalar* () const
+    operator float* () const
     {
-      return (scalar*) this;
+      return (float*) this;
     }
 
-    operator const scalar* () const
+    operator const float* () const
     {
-      return (const scalar*) this;
+      return (const float*) this;
     }
 
-    scalar &operator [] ( int i )
+    float &operator [] ( int i )
     {
-      return ( (scalar*) this )[i];
+      return ( (float*) this )[i];
     }
 
-    const scalar &operator [] ( int i ) const
+    const float &operator [] ( int i ) const
     {
-      return ( (const scalar*) this )[i];
+      return ( (const float*) this )[i];
     }
 
     bool operator == ( const Quat &a ) const
@@ -99,12 +99,12 @@ namespace Dark
       return Quat( -x, -y, -z, -w );
     }
 
-    scalar operator ! () const
+    float operator ! () const
     {
       return Math::sqrt( x*x + y*y + z*z + w*w );
     }
 
-    scalar sqL() const
+    float sqL() const
     {
       return x*x + y*y + z*z + w*w;
     }
@@ -124,45 +124,45 @@ namespace Dark
 
     bool isZero() const
     {
-      return 0.0 == x && x == y && y == z && z == w;
+      return 0.0f == x && x == y && y == z && z == w;
     }
 
     Quat &setZero()
     {
-      w = z = y = x = 0.0;
+      w = z = y = x = 0.0f;
       return *this;
     }
 
     bool isId() const
     {
-      return 0.0 == x && x == y && y == z && w == 1.0;
+      return 0.0f == x && x == y && y == z && w == 1.0f;
     }
 
     Quat &setId()
     {
-      z = y = x = 0.0;
-      w = 1.0;
+      z = y = x = 0.0f;
+      w = 1.0f;
       return *this;
     }
 
     bool isUnit() const
     {
-      return x*x + y*y + z*z + w*w == 1.0;
+      return x*x + y*y + z*z + w*w == 1.0f;
     }
 
     Quat operator ~ () const
     {
-      assert( x*x + y*y + z*z + w*w > 0.0 );
+      assert( x*x + y*y + z*z + w*w > 0.0f );
 
-      scalar r = 1.0 / Math::sqrt( x*x + y*y + z*z + w*w );
+      float r = 1.0f / Math::sqrt( x*x + y*y + z*z + w*w );
       return Quat( x * r, y * r, z * r, w * r );
     }
 
     Quat &norm()
     {
-      assert( x*x + y*y + z*z + w*w > 0.0 );
+      assert( x*x + y*y + z*z + w*w > 0.0f );
 
-      scalar r = 1.0 / Math::sqrt( x*x + y*y + z*z + w*w );
+      float r = 1.0f / Math::sqrt( x*x + y*y + z*z + w*w );
       x *= r;
       z *= r;
       z *= r;
@@ -188,7 +188,7 @@ namespace Dark
       return *this;
     }
 
-    Quat &operator *= ( scalar k )
+    Quat &operator *= ( float k )
     {
       x *= k;
       y *= k;
@@ -197,9 +197,9 @@ namespace Dark
       return *this;
     }
 
-    Quat &operator /= ( scalar k )
+    Quat &operator /= ( float k )
     {
-      k = 1.0 / k;
+      k = 1.0f / k;
       x *= k;
       y *= k;
       z *= k;
@@ -210,7 +210,7 @@ namespace Dark
     // quaternion multiplication
     Quat &operator ^= ( const Quat &a )
     {
-      scalar tx = x, ty = y, tz = z;
+      float tx = x, ty = y, tz = z;
 
       x = w*a.x + tx*a.w + ty*a.z - tz*a.y;
       y = w*a.y + ty*a.w + tz*a.x - tx*a.z;
@@ -230,19 +230,19 @@ namespace Dark
       return Quat( x - a.x, y - a.y, z - a.z, w - a.w );
     }
 
-    Quat operator * ( scalar k ) const
+    Quat operator * ( float k ) const
     {
       return Quat( x * k, y * k, z * k, w * k );
     }
 
-    Quat operator / ( scalar k ) const
+    Quat operator / ( float k ) const
     {
-      k = 1.0 / k;
+      k = 1.0f / k;
       return Quat( x * k, y * k, z * k, w * k );
     }
 
     // dot product
-    scalar operator * ( const Quat &a )
+    float operator * ( const Quat &a )
     {
       return x*a.x + y*a.y + z*a.z + w*a.w;
     }
@@ -257,7 +257,7 @@ namespace Dark
                    w*a.w - x*a.x - y*a.y - z*a.z );
     }
 
-    friend Quat operator * ( scalar k, const Quat &a )
+    friend Quat operator * ( float k, const Quat &a )
     {
       return Quat( a.x * k, a.y * k, a.z * k, a.w * k );
     }
@@ -275,51 +275,51 @@ namespace Dark
     Mat44 invRotMat44() const;
 
     // make quaternion for rotation around given axis
-    static Quat rotAxis( const Vec3 &axis, scalar theta )
+    static Quat rotAxis( const Vec3 &axis, float theta )
     {
-      scalar s, c;
-      Math::sincos( theta * 0.5, &s, &c );
+      float s, c;
+      Math::sincos( theta * 0.5f, &s, &c );
       Vec3 qv = s * axis;
       return Quat( qv.x, qv.y, qv.z, c );
     }
 
     // make quaternion for rotation around x axis
-    static Quat rotX( scalar theta )
+    static Quat rotX( float theta )
     {
-      scalar s, c;
-      Math::sincos( theta * 0.5, &s, &c );
-      return Quat( s, 0, 0, c );
+      float s, c;
+      Math::sincos( theta * 0.5f, &s, &c );
+      return Quat( s, 0.0f, 0.0f, c );
     }
 
     // make quaternion for rotation around y axis
-    static Quat rotY( scalar theta )
+    static Quat rotY( float theta )
     {
-      scalar s, c;
-      Math::sincos( theta * 0.5, &s, &c );
-      return Quat( 0, s, 0, c );
+      float s, c;
+      Math::sincos( theta * 0.5f, &s, &c );
+      return Quat( 0.0f, s, 0.0f, c );
     }
 
     // make quaternion for rotation around z axis
-    static Quat rotZ( scalar theta )
+    static Quat rotZ( float theta )
     {
-      scalar s, c;
-      Math::sincos( theta * 0.5, &s, &c );
-      return Quat( 0, 0, s, c );
+      float s, c;
+      Math::sincos( theta * 0.5f, &s, &c );
+      return Quat( 0.0f, 0.0f, s, c );
     }
 
     // rotZ ^ rotX ^ rotY
-    static Quat rotZXY( scalar x, scalar y, scalar z )
+    static Quat rotZXY( float x, float y, float z )
     {
-      scalar sx, cx, sy, cy, sz, cz;
+      float sx, cx, sy, cy, sz, cz;
 
-      Math::sincos( x * 0.5, &sx, &cx );
-      Math::sincos( y * 0.5, &sy, &cy );
-      Math::sincos( z * 0.5, &sz, &cz );
+      Math::sincos( x * 0.5f, &sx, &cx );
+      Math::sincos( y * 0.5f, &sy, &cy );
+      Math::sincos( z * 0.5f, &sz, &cz );
 
-      scalar cxcy = cx * cy;
-      scalar cxsy = cx * sy;
-      scalar sxcy = sx * cy;
-      scalar sxsy = sx * sy;
+      float cxcy = cx * cy;
+      float cxsy = cx * sy;
+      float sxcy = sx * cy;
+      float sxsy = sx * sy;
 
       return Quat( sxcy * cz - cxsy * sz,
                    cxsy * cz + sxcy * sz,
@@ -329,19 +329,19 @@ namespace Dark
 
     Vec3 rotate( const Vec3 &v ) const
     {
-      scalar a11 = x*x;
-      scalar a22 = y*y;
-      scalar a33 = z*z;
-      scalar a44 = w*w;
+      float a11 = x*x;
+      float a22 = y*y;
+      float a33 = z*z;
+      float a44 = w*w;
 
-      scalar a12 =  2.0 * x*y;
-      scalar a13 =  2.0 * x*z;
-      scalar a14 =  2.0 * x*w;
-      scalar a23 =  2.0 * y*z;
-      scalar a24 =  2.0 * y*w;
-      scalar a34 =  2.0 * z*w;
+      float a12 =  2.0f * x*y;
+      float a13 =  2.0f * x*z;
+      float a14 =  2.0f * x*w;
+      float a23 =  2.0f * y*z;
+      float a24 =  2.0f * y*w;
+      float a34 =  2.0f * z*w;
 
-      scalar a4433 = a44 - a33;
+      float a4433 = a44 - a33;
 
       return Vec3( ( a4433 - a22 + a11 ) * v.x + ( a12 - a34 ) * v.y + ( a24 + a13 ) * v.z,
                    ( a34 + a12 ) * v.x + ( a4433 + a22 - a11 ) * v.y + ( a23 - a14 ) * v.z,
@@ -350,19 +350,19 @@ namespace Dark
 
     Vec3 rotateInv( const Vec3 &v ) const
     {
-      scalar a11 = x*x;
-      scalar a22 = y*y;
-      scalar a33 = z*z;
-      scalar a44 = w*w;
+      float a11 = x*x;
+      float a22 = y*y;
+      float a33 = z*z;
+      float a44 = w*w;
 
-      scalar a12 =  2.0 * x*y;
-      scalar a13 =  2.0 * x*z;
-      scalar a14 = -2.0 * x*w;
-      scalar a23 =  2.0 * y*z;
-      scalar a24 = -2.0 * y*w;
-      scalar a34 = -2.0 * z*w;
+      float a12 =  2.0f * x*y;
+      float a13 =  2.0f * x*z;
+      float a14 = -2.0f * x*w;
+      float a23 =  2.0f * y*z;
+      float a24 = -2.0f * y*w;
+      float a34 = -2.0f * z*w;
 
-      scalar a4433 = a44 - a33;
+      float a4433 = a44 - a33;
 
       return Vec3( ( a4433 - a22 + a11 ) * v.x + ( a12 - a34 ) * v.y + ( a24 + a13 ) * v.z,
                    ( a34 + a12 ) * v.x + ( a4433 + a22 - a11 ) * v.y + ( a23 - a14 ) * v.z,

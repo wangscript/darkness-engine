@@ -11,10 +11,10 @@
 #ifndef _SparkGen_h_
 #define _SparkGen_h_
 
-#include "Sector.h"
-
 namespace Dark
 {
+
+  class Sector;
 
   struct SparkGen
   {

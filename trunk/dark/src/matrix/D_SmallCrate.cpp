@@ -22,7 +22,7 @@ namespace Dark
   D_SmallCrate::D_SmallCrate( const Vec3 &p_, Object *content_ )
   {
     p = p_,
-    dim = Vec3( 0.3, 0.3, 0.3 );
+    dim = Vec3( 0.3f, 0.3f, 0.3f );
 
     flags = Object::DYNAMIC_BIT | Object::CLIP_BIT | Object::FRICT_FUNC_BIT;
     type = TYPE;
@@ -32,7 +32,7 @@ namespace Dark
     model = LIST_SMALL_CRATE;
 
     velocity = Vec3::zero();
-    mass = 20.0;
+    mass = 20.0f;
 
     content = content_;
   }
@@ -46,8 +46,8 @@ namespace Dark
 
   void D_SmallCrate::onDestroy()
   {
-    world.genParticles( 10, p, velocity, 1.2, 1.2, 0.0, 20.0, LIST_SPARK,
-                        Vec3( 0.5, 0.5, 0.5 ), 0.2 );
+    world.genParticles( 10, p, velocity, 1.2f, 1.2f, 0.0f, 20.0f, LIST_SPARK,
+                        Vec3( 0.5f, 0.5f, 0.5f ), 0.2f );
 
     if( content != null ) {
       content->p = p;

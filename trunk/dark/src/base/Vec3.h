@@ -18,17 +18,17 @@ namespace Dark
 
   struct Vec3
   {
-    scalar x;
-    scalar y;
-    scalar z;
+    float x;
+    float y;
+    float z;
 
     Vec3()
     {}
 
-    Vec3( scalar x_, scalar y_, scalar z_ ) : x( x_ ), y( y_ ), z( z_ )
+    Vec3( float x_, float y_, float z_ ) : x( x_ ), y( y_ ), z( z_ )
     {}
 
-    explicit Vec3( scalar *v )
+    explicit Vec3( float *v )
     {
       *this = *(Vec3*) v;
     }
@@ -38,28 +38,28 @@ namespace Dark
 
     static Vec3 zero()
     {
-      return Vec3( 0.0, 0.0, 0.0 );
+      return Vec3( 0.0f, 0.0f, 0.0f );
     }
 
     // casting
-    operator scalar* () const
+    operator float* () const
     {
-      return (scalar*) this;
+      return (float*) this;
     }
 
-    operator const scalar* () const
+    operator const float* () const
     {
-      return (const scalar*) this;
+      return (const float*) this;
     }
 
-    scalar &operator [] ( int i )
+    float &operator [] ( int i )
     {
-      return ( (scalar*) this )[i];
+      return ( (float*) this )[i];
     }
 
-    const scalar &operator [] ( int i ) const
+    const float &operator [] ( int i ) const
     {
-      return ( (scalar*) this )[i];
+      return ( (float*) this )[i];
     }
 
     bool operator == ( const Vec3 &a ) const
@@ -72,7 +72,7 @@ namespace Dark
       return x != a.x || y != a.y || z != a.z;
     }
 
-    bool isEqual( const Vec3 &a, scalar epsilon ) const
+    bool isEqual( const Vec3 &a, float epsilon ) const
     {
       return
           Math::abs( x - a.x ) <= epsilon &&
@@ -91,47 +91,47 @@ namespace Dark
     }
 
     // length
-    scalar operator ! () const
+    float operator ! () const
     {
       return Math::sqrt( x*x + y*y + z*z );
     }
 
     // square length
-    scalar sqL() const
+    float sqL() const
     {
       return x*x + y*y + z*z;
     }
 
     bool isZero() const
     {
-      return 0.0 == x && x == y && y == z;
+      return 0.0f == x && x == y && y == z;
     }
 
     Vec3 &setZero()
     {
-      z = y = x = 0.0;
+      z = y = x = 0.0f;
       return *this;
     }
 
     bool isUnit() const
     {
-      return x*x + y*y + z*z == 1.0;
+      return x*x + y*y + z*z == 1.0f;
     }
 
     Vec3 operator ~ () const
     {
-      assert( x*x + y*y + z*z > 0.0 );
+      assert( x*x + y*y + z*z > 0.0f );
 
-      scalar r = 1.0 / Math::sqrt( x*x + y*y + z*z );
+      float r = 1.0f / Math::sqrt( x*x + y*y + z*z );
       return Vec3( x * r, y * r, z * r );
     }
 
     // normize
     Vec3 &norm()
     {
-      assert( x*x + y*y + z*z > 0.0 );
+      assert( x*x + y*y + z*z > 0.0f );
 
-      scalar r = 1.0 / Math::sqrt( x*x + y*y + z*z );
+      float r = 1.0f / Math::sqrt( x*x + y*y + z*z );
       x *= r;
       y *= r;
       z *= r;
@@ -140,18 +140,18 @@ namespace Dark
 
     bool isColinear( const Vec3 &v ) const
     {
-      scalar p1 = v.x * y * z;
-      scalar p2 = v.y * x * z;
-      scalar p3 = v.z * x * y;
+      float p1 = v.x * y * z;
+      float p2 = v.y * x * z;
+      float p3 = v.z * x * y;
 
       return p1 == p2 && p1 == p3;
     }
 
-    bool isColinear( const Vec3 &v, scalar epsilon ) const
+    bool isColinear( const Vec3 &v, float epsilon ) const
     {
-      scalar p1 = v.x * y * z;
-      scalar p2 = v.y * x * z;
-      scalar p3 = v.z * x * y;
+      float p1 = v.x * y * z;
+      float p2 = v.y * x * z;
+      float p3 = v.z * x * y;
 
       return Math::abs( p1 - p2 ) <= epsilon && Math::abs( p1 - p3 ) <= epsilon;
     }
@@ -172,7 +172,7 @@ namespace Dark
       return *this;
     }
 
-    Vec3 &operator *= ( scalar k )
+    Vec3 &operator *= ( float k )
     {
       x *= k;
       y *= k;
@@ -180,9 +180,9 @@ namespace Dark
       return *this;
     }
 
-    Vec3 &operator /= ( scalar k )
+    Vec3 &operator /= ( float k )
     {
-      k = 1.0 / k;
+      k = 1.0f / k;
       x *= k;
       y *= k;
       z *= k;
@@ -199,19 +199,19 @@ namespace Dark
       return Vec3( x - a.x, y - a.y, z - a.z );
     }
 
-    Vec3 operator * ( scalar k ) const
+    Vec3 operator * ( float k ) const
     {
       return Vec3( x * k, y * k, z * k );
     }
 
-    Vec3 operator / ( scalar k ) const
+    Vec3 operator / ( float k ) const
     {
-      k = 1.0 / k;
+      k = 1.0f / k;
       return Vec3( x * k, y * k, z * k );
     }
 
     // dot product
-    scalar operator * ( const Vec3 &a ) const
+    float operator * ( const Vec3 &a ) const
     {
       return x*a.x + y*a.y + z*a.z;
     }
@@ -231,21 +231,21 @@ namespace Dark
       // ( the length doesn't matter )
 
       // |u|^2, assume it's not 0
-      scalar k = x*x + y*y + z*z;
+      float k = x*x + y*y + z*z;
 
-      assert( k != 0.0 );
+      assert( k != 0.0f );
 
       k = ( x * a.x + y * a.y + z * a.z ) / k;
       return a - k * ( *this );
     }
 
-    friend Vec3 operator * ( scalar k, const Vec3 &a )
+    friend Vec3 operator * ( float k, const Vec3 &a )
     {
       return Vec3( a.x * k, a.y * k, a.z * k );
     }
 
     // mixed product
-    friend scalar mix( const Vec3 &a, const Vec3 &b, const Vec3 &c )
+    friend float mix( const Vec3 &a, const Vec3 &b, const Vec3 &c )
     {
       // 3x3 determinant
       return

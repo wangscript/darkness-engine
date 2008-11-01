@@ -1,5 +1,5 @@
 /*
- *  AABB.cpp
+ *  Particle.cpp
  *
  *  [description]
  *
@@ -10,12 +10,11 @@
 
 #include "precompiled.h"
 
-#include "AABB.h"
+#include "Particle.h"
 
 namespace Dark
 {
 
-  const float AABB::MAX_DIMXY = 3.01f;
-  const float AABB::REAL_MAX_DIMXY = 3.00f;
+  const float Particle::MAX_ROTVELOCITY = 1000.0f;
 
 }

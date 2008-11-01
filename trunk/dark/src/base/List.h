@@ -18,7 +18,7 @@ namespace Dark
   template <class Type, int INDEX>
   class List
   {
-    protected:
+    private:
 
       Type *firstElem;
 

@@ -12,7 +12,7 @@
 
 #include "Graphics_BSP.h"
 
-#include "BSP.h"
+#include "matrix/BSP.h"
 #include "Graphics_Frustum.h"
 
 #ifdef __WIN32__
@@ -49,7 +49,7 @@ namespace Graphics
       const Dark::BSP::Node  &node  = bsp->nodes[nodeIndex];
       const Dark::BSP::Plane &plane = bsp->planes[node.plane];
 
-      if( ( p * plane.normal - plane.distance ) < 0.0 ) {
+      if( ( p * plane.normal - plane.distance ) < 0.0f ) {
         nodeIndex = node.back;
       }
       else {

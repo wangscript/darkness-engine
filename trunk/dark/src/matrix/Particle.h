@@ -24,7 +24,7 @@ namespace Dark
   {
     public:
 
-      static const float MAX_ROTVELOCITY = 1000.0;
+      static const float MAX_ROTVELOCITY;
 
       /*
        *  FIELDS
@@ -59,7 +59,7 @@ namespace Dark
           rejection( rejection_ ),
           mass( mass_ ), lifeTime( lifeTime_ ),
           model( model_ ), color( color_ ),
-          rot( Vec3( Math::frand() * 360.0, Math::frand() * 360.0, Math::frand() * 360.0 ) ),
+          rot( Vec3( Math::frand() * 360.0f, Math::frand() * 360.0f, Math::frand() * 360.0f ) ),
           rotVelocity( Vec3( Math::frand() * MAX_ROTVELOCITY,
                              Math::frand() * MAX_ROTVELOCITY,
                              Math::frand() * MAX_ROTVELOCITY ) )

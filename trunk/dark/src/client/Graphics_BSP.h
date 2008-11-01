@@ -11,7 +11,7 @@
 #ifndef _Graphics_BSP_h_
 #define _Graphics_BSP_h_
 
-#include "BSP.h"
+#include "matrix/BSP.h"
 #include "Graphics_Context.h"
 
 #define BSP_GAMMA_CORR        0.5

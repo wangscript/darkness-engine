@@ -11,7 +11,7 @@
 #ifndef _Graphics_Terrain_h_
 #define _Graphics_Terrain_h_
 
-#include "Terrain.h"
+#include "matrix/Terrain.h"
 #include "Graphics_Context.h"
 #include "Graphics_Frustum.h"
 

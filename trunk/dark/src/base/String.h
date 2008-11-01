@@ -16,7 +16,7 @@ namespace Dark
 
   class String
   {
-    protected:
+    private:
 
       static const int BUFFER_SIZE = 32;
 
@@ -42,10 +42,8 @@ namespace Dark
         buffer[0] = '\0';
       }
 
-      String( const String &s ) : buffer( null ), count( s.count )
+      String( const String &s ) : count( s.count )
       {
-        assert( buffer == null );
-
         ensureCapacity();
         aCopy( buffer, s.buffer, count + 1 );
       }

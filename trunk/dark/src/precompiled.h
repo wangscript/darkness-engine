@@ -7,7 +7,7 @@
  *
  *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
- *  $Id$
+ *  $Id: precompiled.h 28 2008-11-01 00:44:38Z Davorin.Ucakar $
  */
 
 // defining NDEBUG disables assert macro
@@ -15,7 +15,7 @@
 
 #define DARK_USE_REUSER
 
-#include "base.h"
+#include "base/base.h"
 
 // include essential SDL since it is commonly used
 #include <SDL/SDL.h>

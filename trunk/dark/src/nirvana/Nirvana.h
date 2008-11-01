@@ -14,7 +14,7 @@
 #include "Soul.h"
 #include "Mind.h"
 
-#include "Matrix.h"
+#include "matrix/Matrix.h"
 
 #include "M_Walker.h"
 
