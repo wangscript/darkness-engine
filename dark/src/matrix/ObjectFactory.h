@@ -18,12 +18,14 @@ namespace Dark
 
   class ObjectFactory
   {
-    private:
+    protected:
 
       ObjectFactory();
       ObjectFactory( const ObjectFactory &objectFactory );
 
       static ObjectFactory objectFactory;
+
+
 
     public:
 

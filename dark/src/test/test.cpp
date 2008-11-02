@@ -10,15 +10,11 @@
 
 #include "precompiled.h"
 
-#include <typeinfo>
-
 #include "matrix/Water.h"
 
 using namespace Dark;
 
 int main( int, char *[] )
 {
-  printf( "%s\n", typeid( Dark::Water ) );
-
   return 0;
 }

@@ -41,7 +41,7 @@ namespace Dark
 
   class World : public Bounds
   {
-    protected:
+    private:
 
       // List of free indices. Indices can be reused after one full world update pass, so that all
       // references to those indices are removed (object update functions should remove all invalid
@@ -92,6 +92,9 @@ namespace Dark
       // get indices of min and max sectors which the bounds intersects
       void getInters( const Bounds &bounds, float epsilon = 0.0f );
 
+      /**
+       * Put the object into the world hashspace
+       */
       void put( Object *obj );
       void cut( Object *obj );
 

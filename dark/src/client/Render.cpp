@@ -162,7 +162,7 @@ namespace Client
     glTranslatef( obj->p.x, obj->p.y, obj->p.z );
     glRotatef( obj->rotZ, 0.0f, 0.0f, 1.0f );
 
-    if( obj->type & Object::WATER_BIT ) {
+    if( obj->flags & Object::WATER_BIT ) {
       waterObjects << obj;
     }
     else if( obj->alpha != 1.0f ) {
