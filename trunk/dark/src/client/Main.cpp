@@ -102,6 +102,7 @@ namespace Client
     }
     if( initFlags & INIT_SDL ) {
       logFile.print( "Shutting down SDL ..." );
+      SDL_ShowCursor( true );
       SDL_Quit();
       logFile.printRaw( " OK\n" );
     }
@@ -194,6 +195,9 @@ namespace Client
     int screenBpp  = atoi( config["screen.bpp"] );
     int screenFull = config["screen.full"] == "1" ? SDL_FULLSCREEN : 0;
 
+    Uint32 screenCenterX = screenX / 2;
+    Uint32 screenCenterY = screenY / 2;
+
     logFile.print( "Setting OpenGL surface %dx%d %dbpp %s ...",
                    screenX, screenY, screenBpp, screenFull ? "fullscreen" : "windowed" );
 
@@ -203,12 +207,26 @@ namespace Client
     SDL_WM_SetCaption( DARK_WM_TITLE, null );
     SDL_ShowCursor( false );
 
+    int modeResult = SDL_VideoModeOK( screenX, screenY, screenBpp, SDL_OPENGL | screenFull );
+
+    if( modeResult == 0 ) {
+      logFile.printRaw( " Mode not supported\n" );
+      shutdown();
+      return;
+    }
     if( SDL_SetVideoMode( screenX, screenY, screenBpp, SDL_OPENGL | screenFull ) == null ) {
       logFile.printRaw( " Failed\n" );
       shutdown();
       return;
     }
-    logFile.printRaw( " OK\n" );
+
+    if( modeResult != screenBpp ) {
+      logFile.printRaw( " OK, but at %dbpp\n", modeResult );
+    }
+    else {
+      logFile.printRaw( " OK\n" );
+    }
+
     initFlags |= INIT_SDL_VIDEO;
 
     logFile.println( "Initializing Graphics {" );
@@ -266,21 +284,35 @@ namespace Client
     Uint32 timeZero = SDL_GetTicks();
     Uint32 timeLast = timeZero;
 
+    // set mouse cursor to center of the screen and clear any events (key presses and mouse moves)
+    // from before
+    SDL_WarpMouse( screenCenterX, screenCenterY );
+    while( SDL_PollEvent( &event ) ) {
+    }
+
     // THE MAGNIFICANT MAIN LOOP
     do {
       // read input & events
+      input.mouse.x = 0;
+      input.mouse.y = 0;
+      input.mouse.b = 0;
       aCopy( input.keys, input.currKeys, SDLK_LAST );
-      input.mouse.b = SDL_GetRelativeMouseState( &input.mouse.x, &input.mouse.y );
 
       while( SDL_PollEvent( &event ) ) {
         switch( event.type ) {
+          case SDL_MOUSEMOTION: {
+            input.mouse.x = -event.motion.xrel;
+            input.mouse.y = -event.motion.yrel;
+
+            SDL_WarpMouse( screenCenterX, screenCenterY );
+            break;
+          }
           case SDL_KEYDOWN: {
             input.keys[event.key.keysym.sym] |= SDL_PRESSED;
             break;
           }
           case SDL_MOUSEBUTTONDOWN: {
             input.mouse.b |= event.button.button;
-            printf( "%d\n", event.button.button );
             break;
           }
           case SDL_QUIT: {
@@ -289,6 +321,7 @@ namespace Client
           }
         }
       }
+
       // update world
       isAlive &= client.update( tick );
       soundManager.update();

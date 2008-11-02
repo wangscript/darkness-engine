@@ -14,32 +14,59 @@
 namespace Dark
 {
 
+  /**
+   * Bitset data type.
+   *
+   * unit = long
+   */
   class Bitset
   {
     private:
 
+      // Number of bits per unit.
       static const int LONG_BITSIZE = (int) sizeof( long ) * 8;
+
+      // 0xfff...f
       static const long LONG_ALLBITS = -1;
 
+      // Pointer to unit[] that holds the data.
       long *data;
+
+      // Size of data array (in units, not in bits).
       int  size;
 
     public:
 
+      /**
+       * Create a new bitset without allocating any space.
+       */
       Bitset() : data( null ), size( 0 )
       {}
 
+      /**
+       * Copy construstor.
+       * @param b the original Bitset
+       */
       Bitset( const Bitset &b ) : data( new long[size] ), size( b.size )
       {
         aCopy( data, b.data, size );
       }
 
+      /**
+       * Allocate a new bitset that holds at least <code>nBits</code> bits. The size of
+       * <code>data</code> array is adjusted to least multiplier of unit size that can hold the
+       * requested number of bits.
+       * @param nBits the number of bits the bitset should hold
+       */
       explicit Bitset( int nBits )
       {
         size = ( nBits - 1 ) / LONG_BITSIZE + 1;
         data = new long[size];
       }
 
+      /**
+       * Destructor.
+       */
       ~Bitset()
       {
         if( data != null ) {
@@ -47,6 +74,11 @@ namespace Dark
         }
       }
 
+      /**
+       * Copy operator.
+       * @param b the original Bitset
+       * @return copy
+       */
       Bitset &operator = ( const Bitset &b )
       {
         if( size != b.size ) {
@@ -56,16 +88,30 @@ namespace Dark
         return *this;
       }
 
+      /**
+       * Get pointer to data array. Use with caution, since you can easily make buffer overflows
+       * if you don't check the size of data array.
+       * @return non-constant pointer to data array
+       */
       long *dataPtr()
       {
         return data;
       }
 
+      /**
+       * Get pointer to data array. Use with caution, since you can easily make buffer overflows
+       * if you don't check the size of data array.
+       * @return constant pointer to data array
+       */
       const long *dataPtr() const
       {
         return data;
       }
 
+      /**
+       * Resize the data array. New size if specified in units.
+       * @param nUnits
+       */
       void setUnitSize( int nUnits )
       {
         if( data != null ) {
@@ -75,16 +121,29 @@ namespace Dark
         data = new long[size];
       }
 
+      /**
+       * Resize the data array. New size if specified in bits.
+       * @param nBits
+       */
       void setSize( int nBits )
       {
         setUnitSize( ( nBits - 1 ) / LONG_BITSIZE + 1 );
       }
 
+      /**
+       * Size of bitset in bits.
+       * @return number of bits the bitset can hold
+       */
       int length() const
       {
         return size * LONG_BITSIZE;
       }
 
+      /**
+       * Get i-th bit.
+       * @param i bit index
+       * @return bit
+       */
       bool get( int i ) const
       {
         assert( 0 <= i && i < ( size * LONG_BITSIZE ) );
@@ -92,6 +151,10 @@ namespace Dark
         return ( data[i / LONG_BITSIZE] & ( 1 << ( i % LONG_BITSIZE ) ) ) != 0;
       }
 
+      /**
+       * Set i-th bit to true.
+       * @param i bit index
+       */
       void set( int i )
       {
         assert( 0 <= i && i < ( size * LONG_BITSIZE ) );
@@ -99,6 +162,10 @@ namespace Dark
         data[i / LONG_BITSIZE] |= 1 << ( i % LONG_BITSIZE );
       }
 
+      /**
+       * Set i-th bit to false.
+       * @param i bit index
+       */
       void clear( int i )
       {
         assert( 0 <= i && i < ( size * LONG_BITSIZE ) );
@@ -106,6 +173,9 @@ namespace Dark
         data[i / LONG_BITSIZE] &= ~( 1 << ( i % LONG_BITSIZE ) );
       }
 
+      /**
+       * @return true, if all bits are true
+       */
       bool isAllSet() const
       {
         for( int i = 0; i < size; i++ ) {
@@ -116,6 +186,9 @@ namespace Dark
         return true;
       }
 
+      /**
+       * @return true if all bits are false
+       */
       bool isAllClear() const
       {
         for( int i = 0; i < size; i++ ) {
@@ -126,8 +199,10 @@ namespace Dark
         return true;
       }
 
-      /*
-       * Set bits from inclusively "start" to non-inclusively "end" to 1
+      /**
+       * Set bits from inclusevly start to non-inclusevly end to true.
+       * @param start start index
+       * @param end end index
        */
       void set( int start, int end )
       {
@@ -155,8 +230,10 @@ namespace Dark
         }
       }
 
-      /*
-       * Set bits from inclusevly "start" to non-inclusevly "end" to 0
+      /**
+       * Set bits from inclusevly start to non-inclusevly end to false.
+       * @param start start index
+       * @param end end index
        */
       void clear( int start, int end )
       {
@@ -184,16 +261,26 @@ namespace Dark
         }
       }
 
+      /**
+       * Set all bits to true.
+       */
       void setAll()
       {
         aSet( data, LONG_ALLBITS, size );
       }
 
+      /**
+       * Set all bits to false.
+       */
       void clearAll()
       {
         aSet( data, 0, size );
       }
 
+      /**
+       * Return bitset that has all bits inverted.
+       * @return inverted bitset
+       */
       Bitset operator ~ () const
       {
         Bitset r( size );
@@ -204,6 +291,11 @@ namespace Dark
         return r;
       }
 
+      /**
+       * Return AND of two bitsets. Bitsets must be the same size.
+       * @param b the other bitset
+       * @return AND of bitsets
+       */
       Bitset operator & ( const Bitset &b ) const
       {
         assert( size == b.size );
@@ -216,6 +308,11 @@ namespace Dark
         return r;
       }
 
+      /**
+       * Return OR of two bitsets. Bitsets must be the same size.
+       * @param b the other bitset
+       * @return OR of bitsets
+       */
       Bitset operator | ( const Bitset &b ) const
       {
         assert( size == b.size );
@@ -228,6 +325,11 @@ namespace Dark
         return r;
       }
 
+      /**
+       * Return XOR of two bitsets. Bitsets must be the same size.
+       * @param b the other bitset
+       * @return XOR of bitsets
+       */
       Bitset operator ^ ( const Bitset &b ) const
       {
         assert( size == b.size );
@@ -240,6 +342,16 @@ namespace Dark
         return r;
       }
 
+      /**
+       * Let say two bitsets are characteristic vectors of two sets. Return true if first set is a
+       * subset of the second one. Other explanation: the result is true iff the following statement
+       * is true: if first bitset has true on i-th position then the second bitset also has true on
+       * i-th position.
+       * Bitsets must be the same size.
+       *
+       * @param b the other bitset
+       * @return implication of bitsets
+       */
       bool isSubset( const Bitset &b ) const
       {
         assert( size == b.size );

@@ -1,8 +1,8 @@
 /*
  *  DList.h
  *
- *  Double linked list
- *  The Type should provide the "next[INDEX]" and "prev[INDEX]" pointers
+ *  Double-linked list
+ *  The Type should provide the "prev[INDEX]" and "next[INDEX]" pointers
  *
  *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
@@ -15,18 +15,50 @@
 namespace Dark
 {
 
+  /**
+   * Double-linked list
+   *
+   * It can only be applied on classes that have next[] and prev[] members.
+   * Example:
+   * <pre>
+   * class C
+   * {
+   *   C prev[2];
+   *   C next[2];
+   *   int value;
+   * };
+   * ...
+   * DList&lt;C, 0&gt; list1;
+   * DList&lt;C, 1&gt; list2;</pre>
+   * That way the objects of the same class can be in two separate lists at once.
+   * prev[0] and next[0] point to previous and next element respectively in list1 and
+   * prev[1] and next[1] point to previous and next element respectively in list2.
+   *
+   * prev[INDEX] and next[INDEX] pointers are not cleared when element is removed from the list,
+   * they may still point to elements in the list or to invalid locations!
+   *
+   * DList class doesn't take care of memory management except for the free() method.
+   *
+   * In general all operations are O(1) except contains(), length(), disjoin() and free() are O(n).
+   */
   template <class Type, int INDEX>
   class DList
   {
     private:
 
+      // First element in list.
       Type *firstElem;
+      // Last element in list.
       Type *lastElem;
 
+      // No copying
       DList( const DList& );
 
     public:
 
+      /**
+       * DList iterator
+       */
       class Iterator
       {
         protected:
@@ -35,24 +67,25 @@ namespace Dark
 
         public:
 
+          /**
+           * Make iterator for given list. After creation it points to first element.
+           * @param l
+           */
           explicit Iterator( const DList &l ) : elem( l.firstElem )
           {}
 
+          /**
+           * When iterator advances beyond last element, it's become passed. It points to null.
+           * @return true if iterator is passed
+           */
           bool isPassed()
           {
             return elem == null;
           }
 
-          Type *get() const
-          {
-            return elem;
-          }
-
-          Type &operator * () const
-          {
-            return *elem;
-          }
-
+          /**
+           * Advance to next element.
+           */
           void next()
           {
             assert( elem != null );
@@ -60,14 +93,60 @@ namespace Dark
             elem = elem->next[INDEX];
           }
 
+          /**
+           * @return pointer current element in the list
+           */
+          Type *get()
+          {
+            return elem;
+          }
+
+          /**
+           * @return constant pointer current element in the list
+           */
+          const Type *get() const
+          {
+            return elem;
+          }
+
+          /**
+           * @return reference to current element in the list
+           */
+          Type &operator * ()
+          {
+            return *elem;
+          }
+
+          /**
+           * @return constant reference to current element in the list
+           */
+          const Type &operator * () const
+          {
+            return *elem;
+          }
+
       };
 
+      /**
+       * Create an empty list.
+       */
       DList() : firstElem( null ), lastElem( null )
       {}
 
+      /**
+       * Create a list with only one element.
+       * @param e the element
+       */
       explicit DList( const Type *e ) : firstElem( e ), lastElem( e )
-      {}
+      {
+        e->prev[INDEX] = null;
+        e->next[INDEX] = null;
+      }
 
+      /**
+       * Count the elements in the list.
+       * @return size of the list
+       */
       int length() const
       {
         int i = 1;
@@ -80,6 +159,9 @@ namespace Dark
         return i;
       }
 
+      /**
+       * @return true if the list has no elements
+       */
       bool isEmpty() const
       {
         assert( ( firstElem == null ) == ( lastElem == null ) );
@@ -87,40 +169,63 @@ namespace Dark
         return firstElem == null;
       }
 
+      /**
+       * @param e requested element
+       * @return true if some element in the list points to the requested element
+       */
       bool contains( const Type *e ) const
       {
         assert( e != null );
 
-        const Type *p = firstElem;
+        Type *p = firstElem;
 
-        while( p != e && p != lastElem ) {
+        while( p != null ) {
+          if( p == e ) {
+            return true;
+          }
           p = p->next[INDEX];
         }
-        return p == e;
+        return false;
       }
 
+      /**
+       * @return first element in the list
+       */
       Type *first() const
       {
         return firstElem;
       }
 
+      /**
+       * @return last element in the list
+       */
       Type *last() const
       {
         return lastElem;
       }
 
-      // add to the end
+      /**
+       * Add element to the beginning of the list.
+       * @param e element to be added
+       */
       void operator << ( Type *e )
       {
-        pushLast( e );
+        pushFirst( e );
       }
 
-      // add to the end
+      /**
+       * Add element to the beginning of the list.
+       * @param e element to be added
+       */
       void add( Type *e )
       {
-        pushLast( e );
+        pushFirst( e );
       }
 
+      /**
+       * Add element to the beginning of the list.
+       * @param e element to be added
+       */
       void pushFirst( Type *e )
       {
         assert( e != null );
@@ -138,6 +243,10 @@ namespace Dark
         }
       }
 
+      /**
+       * Add element to the end of the list.
+       * @param e element to be added
+       */
       void pushLast( Type *e )
       {
         assert( e != null );
@@ -155,11 +264,19 @@ namespace Dark
         }
       }
 
+      /**
+       * Pop first element from the list.
+       * @param e reference to pointer where the pointer to the first element is to be saved
+       */
       void operator >> ( Type *&e )
       {
         e = popFirst();
       }
 
+      /**
+       * Pop first element from the list.
+       * @param e pointer to the first element
+       */
       Type *popFirst()
       {
         assert( firstElem != null );
@@ -177,6 +294,10 @@ namespace Dark
         return p;
       }
 
+      /**
+       * Pop first element from the list.
+       * @param e pointer to the first element
+       */
       Type *popLast()
       {
         assert( lastElem != null );
@@ -194,6 +315,11 @@ namespace Dark
         return p;
       }
 
+      /**
+       * Insert an element after an element in the list.
+       * @param e element to be inserted
+       * @param p pointer to element after which we want to insert
+       */
       void insertAfter( Type *e, Type *p )
       {
         assert( e != null );
@@ -213,6 +339,11 @@ namespace Dark
         }
       }
 
+      /**
+       * Insert an element before an element in the list.
+       * @param e element to be inserted
+       * @param p pointer to element before which we want to insert
+       */
       void insertBefore( Type *e, Type *p )
       {
         assert( e != null );
@@ -232,6 +363,10 @@ namespace Dark
         }
       }
 
+      /**
+       * Remove an element from the list.
+       * @param e element to be removed
+       */
       void remove( Type *e )
       {
         if( e == firstElem ) {
@@ -248,21 +383,9 @@ namespace Dark
         }
       }
 
-      void free()
-      {
-        Type *p = firstElem;
-
-        while( p != null ) {
-          Type *next = p->next[INDEX];
-
-          delete p;
-          p = next;
-        }
-
-        firstElem = null;
-        lastElem = null;
-      }
-
+      /**
+       * Empty the list but don't delete the elements.
+       */
       void disjoin()
       {
         Type *p = firstElem;
@@ -277,6 +400,24 @@ namespace Dark
         }
 
         firstElem =  null;
+        lastElem = null;
+      }
+
+      /**
+       * Empty the list and delete all elements - take care of memory managment.
+       */
+      void free()
+      {
+        Type *p = firstElem;
+
+        while( p != null ) {
+          Type *next = p->next[INDEX];
+
+          delete p;
+          p = next;
+        }
+
+        firstElem = null;
         lastElem = null;
       }
 

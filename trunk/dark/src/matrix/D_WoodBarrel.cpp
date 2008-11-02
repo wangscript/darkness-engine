@@ -20,6 +20,11 @@ namespace Dark
   const char *D_WoodBarrel::NAME = "D_WoodBarrel";
   const int D_WoodBarrel::TYPE = String::hash( D_WoodBarrel::NAME );
 
+  Object *D_WoodBarrel::build( const Vec3 &p, Object *content )
+  {
+    return new D_WoodBarrel( p, content );
+  }
+
   D_WoodBarrel::D_WoodBarrel( const Vec3 &p_, Object *content_ )
   {
     p = p_,

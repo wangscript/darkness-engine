@@ -26,7 +26,7 @@ namespace Dark
     p = p_;
     dim = dim_;
 
-    flags = Object::UPDATE_FUNC_BIT;
+    flags = Object::UPDATE_FUNC_BIT | Object::WATER_BIT;
     type = TYPE;
 
     damage = Math::INF;

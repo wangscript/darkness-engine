@@ -18,6 +18,12 @@ namespace Dark
 {
 
   const char *O_Tree2::NAME = "O_Tree2";
+  const int O_Tree2::TYPE = String::hash( O_Tree2::NAME );
+
+  Object *O_Tree2::build( const Vec3 &p )
+  {
+    return new O_Tree2( p );
+  }
 
   O_Tree2::O_Tree2( const Vec3 &p_ )
   {
@@ -25,7 +31,7 @@ namespace Dark
     dim = Vec3( 0.6f, 0.6f, 2.25f );
 
     flags = Object::CLIP_BIT | Object::RELEASED_CULL_BIT;
-    type = (int) NAME;
+    type = TYPE;
 
     model = LIST_TREE2;
   }
@@ -36,7 +42,7 @@ namespace Dark
     dim = Vec3( 0.6f, 0.6f, 2.25f );
 
     flags = Object::CLIP_BIT | Object::RELEASED_CULL_BIT;
-    type = (int) NAME;
+    type = TYPE;
 
     model = LIST_TREE2;
   }

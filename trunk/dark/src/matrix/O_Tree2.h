@@ -26,6 +26,9 @@ namespace Dark
     public:
 
       static const char *NAME;
+      static const int TYPE;
+
+      static Object *build( const Vec3 &p );
 
       explicit O_Tree2( const Vec3 &p );
       O_Tree2( float x, float y );

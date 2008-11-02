@@ -18,6 +18,9 @@ namespace Dark
 
   Config config;
 
+  Config::Config()
+  {}
+
   Config::~Config()
   {
     free();
@@ -70,10 +73,16 @@ namespace Dark
     while( error == 1 ) {
       const char *name = (const char*) xmlTextReaderConstName( reader );
 
+      // only check "var" nodes, ignore others
       if( name != null && String::compare( name, "var" ) == 0 ) {
         void *pKey = xmlTextReaderGetAttribute( reader, BAD_CAST "name" );
         void *pValue = xmlTextReaderGetAttribute( reader, BAD_CAST "value" );
 
+        // error if "var" tag doesn't has "name" and "value" attributes
+        if( pKey == null || pValue == null ) {
+          error = -1;
+          break;
+        }
         String key = (const char*) pKey;
         String value = (const char*) pValue;
 
@@ -117,6 +126,7 @@ namespace Dark
       logFile.printRaw( " Write error\n" );
       return false;
     }
+    // Write the vars in the same order they are in HastString. I know, it's a mess.
     for( HashString<String, SIZE>::Iterator i( vars ); !i.isPassed(); i.next() ) {
       if( xmlTextWriterWriteString( writer, BAD_CAST "\n  " ) < 0 ||
           xmlTextWriterStartElement( writer, BAD_CAST "var" ) < 0 ||
@@ -150,7 +160,7 @@ namespace Dark
     String s = "";
 
     for( HashString<String, SIZE>::Iterator i( vars ); i.get() != null; i.next() ) {
-      s = s + *i.key() + " \"" + *i.get() + "\"\n";
+      s = s + *i.key() + " = \"" + *i.get() + "\"\n";
     }
     return s;
   }
