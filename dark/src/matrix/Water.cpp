@@ -19,6 +19,7 @@ namespace Dark
 {
 
   const char *Water::NAME = "Water";
+  const int Water::TYPE = String::hash( Water::NAME );
 
   Water::Water( const Vec3 &p_, const Vec3 &dim_ )
   {

@@ -26,7 +26,7 @@ namespace Dark
     dim = Vec3( 0.7f, 0.7f, 3.8f );
 
     flags = Object::CLIP_BIT | Object::RELEASED_CULL_BIT;
-    type = TYPE;
+    type = (int) NAME;
 
     damage = Math::INF;
 
@@ -39,7 +39,7 @@ namespace Dark
     dim = Vec3( 0.7f, 0.7f, 3.8f );
 
     flags = Object::CLIP_BIT | Object::RELEASED_CULL_BIT;
-    type = O_TREE1;
+    type = (int) NAME;
 
     damage = Math::INF;
 
@@ -60,7 +60,7 @@ namespace Dark
 
   void O_Tree1::save( FILE *stream )
   {
-    fwrite( NAME, sizeof( NAME ), 1, stream );
+//     fwrite( NAME, sizeof( NAME ), 1, stream );
 
     Object::save( stream );
   }

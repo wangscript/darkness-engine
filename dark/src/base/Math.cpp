@@ -8,8 +8,10 @@
  *  $Id$
  */
 
-#include "precompiled.h"
+#include "base.h"
 
+#include <math.h>
+#include <stdlib.h>
 #include <time.h>
 
 namespace Dark
@@ -33,9 +35,13 @@ namespace Dark
   const float Math::NaN        = (float) NAN;
   const float Math::INF        = (float) INFINITY;
 
+  const Math Math::math;
+
   Math::Math()
   {
     ::srand( time( null ) );
   }
+
+  int ( *const Math::rand )() = ::rand;
 
 }

@@ -16,8 +16,6 @@
 #include "Sound.h"
 #include "Translator.h"
 
-#include <stdio.h>
-
 namespace Dark
 {
 
@@ -85,6 +83,8 @@ namespace Dark
     public:
 
       static const int BOT_BIT = 0x00000080;
+      static const int WATER_BIT = 0x00000040;
+      static const int SPARKGEN_BIT = 0x00000020;
 
       /*
        *  RENDER FLAGS

@@ -18,6 +18,7 @@ namespace Dark
 {
 
   const char *B_Spirit::NAME = "B_Spirit";
+  const int B_Spirit::TYPE = String::hash( B_Spirit::NAME );
 
   const Vec3  B_Spirit::CAM_POS       = Vec3( 0.00f, 0.00f, 0.13f );
   const float B_Spirit::BOB_INC       = 0.04f;
@@ -33,7 +34,8 @@ namespace Dark
 
     flags   = Object::UPDATE_FUNC_BIT | Object::DYNAMIC_BIT | Object::HOVER_BIT |
         Object::SPIRIT_BIT | Object::BOT_BIT;
-    type    = B_SPIRIT;
+    type    = TYPE;
+
     damage  = Math::INF;
 
     model   = ~0;

@@ -3,7 +3,7 @@
 DIM = 16;
 VECTOR_AVG_CAPACITY = 8;
 
-sectorSize = (2 + 2 + 2 + 3) * 4 + VECTOR_AVG_CAPACITY * 4;
+sectorSize = ( 2 + 2 + 2 + 3 ) * 4 + VECTOR_AVG_CAPACITY * 4;
 
 if length( argv ) ~= 1
   disp( 'usage: hashspaceUsage sizeInMetres' );

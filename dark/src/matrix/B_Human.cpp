@@ -19,6 +19,7 @@ namespace Dark
 {
 
   const char *B_Human::NAME = "B_Human";
+  const int B_Human::TYPE = String::hash( B_Human::NAME );
 
   const Vec3  B_Human::CAM_POS            = Vec3( 0.00f, 0.00f, 0.73f );
   const Vec3  B_Human::CAM_POS_CROUCH     = Vec3( 0.00f, 0.00f, 0.23f );
@@ -45,7 +46,7 @@ namespace Dark
 
     flags   = Object::UPDATE_FUNC_BIT | Object::HIT_FUNC_BIT | Object::CLIP_BIT |
         Object::DYNAMIC_BIT | Object::PUSHING_BIT | Object::BOT_BIT;
-    type    = B_HUMAN;
+    type    = TYPE;
 
     damage  = 2.0f;
 

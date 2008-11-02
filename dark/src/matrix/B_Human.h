@@ -21,8 +21,6 @@ namespace Dark
   {
     protected:
 
-      static const char *NAME;
-
       static const Vec3  CAM_POS;
       static const Vec3  CAM_POS_CROUCH;
       static const Vec3  DIM;
@@ -47,6 +45,9 @@ namespace Dark
       void onDestroy();
 
     public:
+
+      static const char *NAME;
+      static const int TYPE;
 
       explicit B_Human( const Vec3 &p, float h = 0.0f, float v = 0.0f, Mind *mind = null );
   };

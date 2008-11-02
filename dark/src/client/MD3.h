@@ -1,0 +1,117 @@
+/*
+ *  MD3.h
+ *
+ *  [description]
+ *
+ *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
+ *
+ *  $Id$
+ */
+
+#ifndef _Client_MD3_h_
+#define _Client_MD3_h_
+
+#include "matrix/bv.h"
+#include "matrix/Timer.h"
+#include "Context.h"
+
+namespace Dark
+{
+namespace Client
+{
+
+  struct MD3Header
+  {
+    int  id;
+    int  version;
+
+    char fileName[68];
+    int  nFrames;
+    int  nTags;
+    int  nMeshes;
+    int  nSkins;
+    int  meshHeaderSize;
+
+    int  offTagStart;
+    int  offTagEnd;
+    int  fileSize;
+  };
+
+  struct MD3Mesh
+  {
+    char id[4];
+    char name[68];
+
+    int  nFrames;
+    int  nSkins;
+    int  nVertices;
+    int  nTriangles;
+
+    int  offTriangles;
+    int  headerSize;
+    int  offUV;
+    int  offVertices;
+    int  meshSize;
+  };
+
+  struct MD3Tag
+  {
+    char  name[64];
+    Vec3  p;
+    Mat33 rot;
+  };
+
+  struct MD3Bone : Bounds
+  {
+    Vec3  p;
+    float scale;
+    char  creator[16];
+  };
+
+  struct MD3Triangle
+  {
+    short vertex[3];
+    uchar normal[2];
+  };
+
+  struct MD3Face
+  {
+    int vertIndices[3];
+  };
+
+  struct MD3TexCoord
+  {
+    float texCoord[2];
+  };
+
+  struct MD3Skin
+  {
+    char name[68];
+  };
+
+  class MD3
+  {
+    protected:
+
+      MD3Skin     *skins;
+      MD3TexCoord *texCoords;
+      MD3Face     *faces;
+      MD3Triangle *triangles;
+      MD3Bone     *bones;
+
+    public:
+
+      MD3();
+      ~MD3();
+
+      bool load( const char *path );
+      void free();
+
+      void draw();
+
+  };
+
+}
+}
+
+#endif // _Client_MD3_h_

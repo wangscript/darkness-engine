@@ -21,6 +21,8 @@ namespace Dark
       Math();
       Math( const Math& );
 
+      static const Math math;
+
     public:
 
       static const float FLOAT_EPS;
@@ -41,98 +43,101 @@ namespace Dark
       static const float NaN;
       static const float INF;
 
+      static const int  INT_MAX  = -1u  >> 1;
+      static const long LONG_MAX = -1ul >> 1;
+
       /*
        * Standard math functions
        */
       static float abs( float x )
       {
-        return ::fabsf( x );
+        return __builtin_fabsf( x );
       }
 
       static float floor( float x )
       {
-        return ::floorf( x );
+        return __builtin_floorf( x );
       }
 
       static float ceil( float x )
       {
-        return ::ceilf( x );
+        return __builtin_ceilf( x );
       }
 
       static float round( float x )
       {
-        return ::roundf( x );
+        return __builtin_roundf( x );
       }
 
       static float mod( float x, float y )
       {
-        return ::fmodf( x, y );
+        return __builtin_fmodf( x, y );
       }
 
       static float sqrt( float x )
       {
-        return ::sqrtf( x );
+        return __builtin_sqrtf( x );
       }
 
       static float exp( float x )
       {
-        return ::expf( x );
+        return __builtin_expf( x );
       }
 
       static float log( float x )
       {
-        return ::logf( x );
+        return __builtin_logf( x );
       }
 
       static float pow( float x, float y )
       {
-        return ::powf( x, y );
+        return __builtin_powf( x, y );
       }
 
       static float sin( float x )
       {
-        return ::sinf( x );
+        return __builtin_sinf( x );
       }
 
       static float cos( float x )
       {
-        return ::cosf( x );
+        return __builtin_cosf( x );
       }
 
       static void sincos( float x, float *s, float *c )
       {
         // FreeBSD libc doesn't have sincos function
 #ifdef HAVE_SINCOS
-          ::sincosf( x, s, c );
+        __builtin_sincosf( x, s, c );
 #else
-          *s = ::sinf( x );
-          *c = ::cosf( x );
+        *s = __builtin_sinf( x );
+        *c = __builtin_cosf( x );
 #endif
       }
 
       static float tan( float x )
       {
-        return ::tanf( x );
+        return __builtin_tanf( x );
       }
 
       static float asin( float x )
       {
-        return ::asinf( x );
+        return __builtin_asinf( x );
       }
 
       static float acos( float x )
       {
-        return ::acosf( x );
+        return __builtin_acosf( x );
       }
 
       static float atan( float x )
       {
-        return ::atanf( x );
+        return __builtin_atanf( x );
       }
 
       static float atan2( float x, float y )
       {
-        return ::atan2f( x, y );
+        return __builtin_atan2f( x, y );
       }
 
       /*
@@ -142,7 +147,7 @@ namespace Dark
       // returns true, if value is not a number
       static bool isNAN( float x )
       {
-        return isnanf( x );
+        return __builtin_isnanf( x );
       }
 
       static float sgn( float x )
@@ -162,15 +167,13 @@ namespace Dark
       }
 
       // random integer from 0 to RAND_MAX
-      static int rand()
-      {
-        return ::rand();
-      }
+      // (pointer to rand() function in stdlib.h)
+      static int ( *const rand )();
 
       // random float from interval [0, 1]
       static float frand()
       {
-        return (float) ::rand() / (float) RAND_MAX;
+        return (float) rand() / (float) INT_MAX;
       }
 
   };

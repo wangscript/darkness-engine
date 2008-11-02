@@ -12,6 +12,7 @@
 
 #include "Water.h"
 
+#include "matrix/Water.h"
 #include "matrix/Translator.h"
 
 #include "Context.h"
@@ -47,7 +48,7 @@ namespace Client
 
   void Water::draw( const Object *obj, bool isInside )
   {
-    assert( obj->type == WATER );
+    assert( obj->flags & Object::WATER_BIT );
 
     float x0 = obj->p.x - obj->dim.x;
     float x1 = obj->p.x + obj->dim.x;

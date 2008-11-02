@@ -10,12 +10,15 @@
 
 #include "precompiled.h"
 
+#include <typeinfo>
+
+#include "matrix/Water.h"
+
 using namespace Dark;
 
 int main( int, char *[] )
 {
-  int *a = new int[2];
-  delete &a[0];
+  printf( "%s\n", typeid( Dark::Water ) );
 
   return 0;
 }
