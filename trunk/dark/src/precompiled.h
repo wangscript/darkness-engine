@@ -7,7 +7,7 @@
  *
  *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
- *  $Id: precompiled.h 28 2008-11-01 00:44:38Z Davorin.Ucakar $
+ *  $Id$
  */
 
 // defining NDEBUG disables assert macro
@@ -17,7 +17,7 @@
 
 #include "base/base.h"
 
-// include essential SDL since it is commonly used
+// include SDL since it is commonly used
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_opengl.h>

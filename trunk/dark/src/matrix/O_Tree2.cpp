@@ -25,7 +25,7 @@ namespace Dark
     dim = Vec3( 0.6f, 0.6f, 2.25f );
 
     flags = Object::CLIP_BIT | Object::RELEASED_CULL_BIT;
-    type = TYPE;
+    type = (int) NAME;
 
     model = LIST_TREE2;
   }
@@ -36,7 +36,7 @@ namespace Dark
     dim = Vec3( 0.6f, 0.6f, 2.25f );
 
     flags = Object::CLIP_BIT | Object::RELEASED_CULL_BIT;
-    type = TYPE;
+    type = (int) NAME;
 
     model = LIST_TREE2;
   }
@@ -55,7 +55,7 @@ namespace Dark
 
   void O_Tree2::save( FILE *stream )
   {
-    fwrite( NAME, sizeof( NAME ), 1, stream );
+//     fwrite( NAME, sizeof( NAME ), 1, stream );
 
     Object::save( stream );
   }

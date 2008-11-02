@@ -26,7 +26,7 @@ namespace Dark
     public:
 
       static const char *NAME;
-      static const int TYPE = LADDER;
+      static const int TYPE;
 
       Ladder( const Vec3 &p, const Vec3 &dim );
   };

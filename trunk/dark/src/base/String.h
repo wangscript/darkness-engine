@@ -302,6 +302,29 @@ namespace Dark
         return i;
       }
 
+      // Bernstein's hash function
+      static int hash( const char *s )
+      {
+        int hash = 5381;
+        int count = length( s );
+
+        for( int i = 0; i < count; i++ ) {
+          hash = hash * 33 + s[i];
+        }
+        return hash;
+      }
+
+      // Bernstein's hash function
+      int hash() const
+      {
+        int hash = 5381;
+
+        for( int i = 0; i < count; i++ ) {
+          hash = hash * 33 + buffer[i];
+        }
+        return hash;
+      }
+
       String operator + ( const char *s ) const
       {
         assert( s != null );

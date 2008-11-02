@@ -27,8 +27,8 @@ namespace Dark
 
     public:
 
-      static const int TYPE = D_BIG_CRATE;
       static const char *NAME;
+      static const int TYPE;
 
       Object *content;
 

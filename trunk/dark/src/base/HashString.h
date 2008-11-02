@@ -65,17 +65,6 @@ namespace Dark
         delete chain;
       }
 
-      // Bernstein's hash function
-      int hash( const String &s ) const
-      {
-        int hash = 5381;
-
-        for( int i = 0; i < s.length(); i++ ) {
-          hash = hash * 33 + s[i];
-        }
-        return abs( hash );
-      }
-
     public:
 
       class Iterator
@@ -201,8 +190,8 @@ namespace Dark
       // caches searched element if found
       bool contains( const String &key )
       {
-        int   i = hash( key ) % SIZE;
-        Elem  *p = data[i];
+        int  i  = abs( key.hash() ) % SIZE;
+        Elem *p = data[i];
 
         while( p != null ) {
           if( p->key == key ) {
@@ -228,8 +217,8 @@ namespace Dark
 
       Type &operator [] ( const String &key )
       {
-        int   i = hash( key ) % SIZE;
-        Elem  *p = data[i];
+        int  i  = abs( key.hash() ) % SIZE;
+        Elem *p = data[i];
 
         while( p != null ) {
           if( p->key == key ) {
@@ -262,8 +251,8 @@ namespace Dark
 
       void set( const String &key, const Type &value )
       {
-        int   i = hash( key ) % SIZE;
-        Elem  *p = data[i];
+        int  i  = abs( key.hash() ) % SIZE;
+        Elem *p = data[i];
 
         while( p != null ) {
           if( p->key == key ) {
@@ -280,7 +269,7 @@ namespace Dark
       {
         assert( !contains( key ) );
 
-        int i = hash( key ) % SIZE;
+        int i = abs( key.hash() ) % SIZE;
 
         Elem *elem = new Elem( key, value, data[i] );
 
@@ -290,7 +279,7 @@ namespace Dark
 
       void remove( const String &key )
       {
-        int i = hash( key ) % SIZE;
+        int  i  = abs( key.hash() ) % SIZE;
         Elem *p = data[i];
         Elem **prev = &data[i];
 

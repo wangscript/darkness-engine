@@ -57,31 +57,31 @@ namespace Dark
     ANIM_MAX
   };
 
-  enum ObjectEnum
-  {
-    WATER,
-    LADDER,
-
-    O_TREE1,
-    O_TREE2,
-
-    D_SMALL_CRATE,
-    D_BIG_CRATE,
-    D_WOOD_BARREL,
-    D_METAL_BARREL,
-
-    ITEM_BEGIN,
-    ITEM_END,
-
-    WEAPON_BEGIN,
-    WEAPON_END,
-
-    BOT_BEGIN,
-    B_SPIRIT,
-    B_HUMAN,
-    B_GOBLIN,
-    BOT_END
-  };
+//   enum ObjectEnum
+//   {
+//     WATER,
+//     LADDER,
+//
+//     O_TREE1,
+//     O_TREE2,
+//
+//     D_SMALL_CRATE,
+//     D_BIG_CRATE,
+//     D_WOOD_BARREL,
+//     D_METAL_BARREL,
+//
+//     ITEM_BEGIN,
+//     ITEM_END,
+//
+//     WEAPON_BEGIN,
+//     WEAPON_END,
+//
+//     BOT_BEGIN,
+//     B_SPIRIT,
+//     B_HUMAN,
+//     B_GOBLIN,
+//     BOT_END
+//   };
 
   enum SoundEnum
   {

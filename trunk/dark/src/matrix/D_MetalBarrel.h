@@ -27,8 +27,8 @@ namespace Dark
 
     public:
 
-      static const int TYPE = D_METAL_BARREL;
       static const char *NAME;
+      static const int TYPE;
 
       explicit D_MetalBarrel( const Vec3 &p = Vec3::zero() );
   };

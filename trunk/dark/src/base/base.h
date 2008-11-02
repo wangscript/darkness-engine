@@ -14,8 +14,6 @@
 #define _Dark_base_h_
 
 #include <assert.h>
-#include <math.h>
-#include <stdlib.h>
 
 /*
  *  Basic definitons and template functions

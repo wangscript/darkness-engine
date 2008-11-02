@@ -162,7 +162,7 @@ namespace Client
     glTranslatef( obj->p.x, obj->p.y, obj->p.z );
     glRotatef( obj->rotZ, 0.0f, 0.0f, 1.0f );
 
-    if( obj->type == WATER ) {
+    if( obj->type & Object::WATER_BIT ) {
       waterObjects << obj;
     }
     else if( obj->alpha != 1.0f ) {
@@ -256,7 +256,7 @@ namespace Client
           frustum.isVisible( *obj );
 
       if( isVisible ) {
-        if( obj->type == WATER && obj->includes( camera.p ) ) {
+        if( ( obj->flags & Object::WATER_BIT ) && obj->includes( camera.p ) ) {
           isUnderWater = true;
 
           waterObjects << obj;

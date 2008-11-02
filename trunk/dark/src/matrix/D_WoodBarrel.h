@@ -27,8 +27,8 @@ namespace Dark
 
     public:
 
-      static const int TYPE = D_WOOD_BARREL;
       static const char *NAME;
+      static const int TYPE;
 
       Object *content;
 

@@ -9,4 +9,4 @@ ADD_LIBRARY( matrix STATIC AABB.cpp
                            O_Tree1.cpp O_Tree2.cpp
                            D_SmallCrate.cpp D_BigCrate.cpp D_WoodBarrel.cpp D_MetalBarrel.cpp
                            B_Spirit.cpp B_Human.cpp B_Goblin.cpp
-                           Matrix.cpp )
+                           ObjectFactory.cpp Matrix.cpp )

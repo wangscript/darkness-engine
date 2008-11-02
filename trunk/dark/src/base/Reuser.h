@@ -43,7 +43,7 @@ namespace Dark
 
       // If the list of freed blocks isn't empty, reuse the last freed block (at the beginning of
       // the list), otherwise allocate new block. (Constructor is called automatically.)
-      void *operator new ( size_t size )
+      void *operator new ( uint size )
       {
         if( freeList != null ) {
           Reuser *p = freeList;

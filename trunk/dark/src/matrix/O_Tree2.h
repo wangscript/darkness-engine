@@ -25,7 +25,6 @@ namespace Dark
 
     public:
 
-      static const int TYPE = O_TREE2;
       static const char *NAME;
 
       explicit O_Tree2( const Vec3 &p );

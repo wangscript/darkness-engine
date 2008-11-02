@@ -19,6 +19,7 @@ namespace Dark
 {
 
   const char *Ladder::NAME = "Ladder";
+  const int Ladder::TYPE = String::hash( Ladder::NAME );
 
   Ladder::Ladder( const Vec3 &p_, const Vec3 &dim_ )
   {

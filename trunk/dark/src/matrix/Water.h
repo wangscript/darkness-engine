@@ -26,7 +26,7 @@ namespace Dark
     public:
 
       static const char *NAME;
-      static const int TYPE = WATER;
+      static const int TYPE;
 
       Water( const Vec3 &p, const Vec3 &dim );
   };

@@ -8,8 +8,9 @@
  *  $Id$
  */
 
-#include "precompiled.h"
+#include "base.h"
 
+#include <stdarg.h>
 #include <stdio.h>
 #include <time.h>
 

@@ -8,7 +8,7 @@
  *  $Id$
  */
 
-#include "precompiled.h"
+#include "base.h"
 
 #include <libxml/xmlreader.h>
 #include <libxml/xmlwriter.h>

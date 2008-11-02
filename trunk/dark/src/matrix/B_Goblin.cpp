@@ -18,6 +18,7 @@ namespace Dark
 {
 
   const char *B_Goblin::NAME = "B_Goblin";
+  const int B_Goblin::TYPE = String::hash( B_Goblin::NAME );
 
   const Vec3  B_Goblin::CAM_POS            = Vec3( 0.00f, 0.00f, 0.55f );
   const Vec3  B_Goblin::CAM_POS_CROUCH     = Vec3( 0.00f, 0.00f, 0.40f );
@@ -44,7 +45,7 @@ namespace Dark
 
     flags   = Object::UPDATE_FUNC_BIT | Object::HIT_FUNC_BIT | Object::CLIP_BIT |
         Object::DYNAMIC_BIT | Object::PUSHING_BIT | Object::BOT_BIT;
-    type    = B_GOBLIN;
+    type    = TYPE;
 
     damage  = 2.0f;
 

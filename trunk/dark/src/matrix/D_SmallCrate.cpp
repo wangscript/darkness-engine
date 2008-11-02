@@ -18,6 +18,7 @@ namespace Dark
 {
 
   const char *D_SmallCrate::NAME = "D_SmallCrate";
+  const int D_SmallCrate::TYPE = String::hash( D_SmallCrate::NAME );
 
   D_SmallCrate::D_SmallCrate( const Vec3 &p_, Object *content_ )
   {
