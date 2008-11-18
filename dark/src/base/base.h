@@ -13,6 +13,10 @@
 #ifndef _Dark_base_h_
 #define _Dark_base_h_
 
+#ifdef WIN32
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #include <assert.h>
 
 /*

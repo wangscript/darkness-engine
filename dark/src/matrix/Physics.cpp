@@ -376,7 +376,7 @@ namespace Dark
       // disable object if it is still and on surface
       else {
         bool isStill = obj->newVelocity.isZero();
-        bool isOnFloor = obj->flags & Object::ON_FLOOR_BIT;
+        bool isOnFloor = ( obj->flags & Object::ON_FLOOR_BIT ) != 0;
         bool isOnStillObject = obj->lower > 0 &&
             ( (DynObject*) world.objects[obj->lower] )->newVelocity.isZero();
 
