@@ -32,14 +32,14 @@ namespace Dark
   const float Math::_2_SQRTPI  = 1.12837916709551257390f;
   const float Math::SQRT2      = 1.41421356237309504880f;
   const float Math::SQRT1_2    = 0.70710678118654752440f;
-  const float Math::NaN        = (float) NAN;
-  const float Math::INF        = (float) INFINITY;
+  const float Math::NaN        = (float) HUGE_VAL * 0.0f;
+  const float Math::INF        = (float) HUGE_VAL;
 
   const Math Math::math;
 
   Math::Math()
   {
-    ::srand( time( null ) );
+    ::srand( (uint) time( null ) );
   }
 
   int ( *const Math::rand )() = ::rand;

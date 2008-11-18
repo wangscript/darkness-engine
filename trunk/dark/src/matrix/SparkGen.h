@@ -14,7 +14,7 @@
 namespace Dark
 {
 
-  class Sector;
+  struct Sector;
 
   struct SparkGen
   {

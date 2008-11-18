@@ -16,7 +16,7 @@
 namespace Dark
 {
 
-  class Sector;
+  struct Sector;
 
   // should NOT be virtual (offset of .p must be 0 otherwise a hack in Matrix::Collider.test(L)Ray
   // won't work)

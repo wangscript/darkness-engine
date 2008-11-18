@@ -12,8 +12,10 @@
 
 #include "Main.h"
 
+#ifndef WIN32
 #include <unistd.h>
 #include <sys/stat.h>
+#endif
 
 namespace Dark
 {
@@ -43,6 +45,8 @@ namespace Server
     const char *homeVar = getenv( "HOME" );
     String home( homeVar == null ? "./" DARK_RC_DIR : homeVar + String( "/" DARK_RC_DIR ) );
 
+#ifdef WIN32
+#else
     struct stat homeDirStat;
     if( stat( home.cstr(), &homeDirStat ) ) {
       printf( "No resource dir found, creating '%s' ...", home.cstr() );
@@ -54,6 +58,7 @@ namespace Server
       }
       printf( " OK\n" );
     }
+#endif
 
 #ifdef DARK_LOG_FILE
     String logPath = home + DARK_LOG_FILE;
@@ -109,6 +114,8 @@ namespace Server
 
     logFile.print( "Going to working directory '%s' ...", (const char*) data );
 
+#ifdef WIN32
+#else
     if( chdir( data ) != 0 ) {
       logFile.printRaw(" Failed\n");
       shutdown();
@@ -117,6 +124,7 @@ namespace Server
     else {
       logFile.printRaw(" OK\n");
     }
+#endif
 
     logFile.println( "MAIN LOOP {" );
     logFile.indent();

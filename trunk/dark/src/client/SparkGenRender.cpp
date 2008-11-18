@@ -39,7 +39,7 @@ namespace Client
   SparkGenRender::SparkGenRender( Dark::SparkGen *sparkGen_ ) : sparkGen( sparkGen_ )
   {
     sparks = new Spark[sparkGen->number];
-    startMillis = timer.millis;
+    startMillis = (float) timer.millis;
     nSparks = 0;
 
     for( int i = 0; i < sparkGen->number; i++ ) {
@@ -94,7 +94,7 @@ namespace Client
 
   void SparkGenRender::update() {
     if( nSparks != sparkGen->number ) {
-      int desiredNSparks = ( timer.millis - startMillis ) * sparksPerTick;
+      int desiredNSparks = (int) ( ( timer.millis - startMillis ) * sparksPerTick );
 
       nSparks = min( desiredNSparks, sparkGen->number );
     }

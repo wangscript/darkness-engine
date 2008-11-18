@@ -19,7 +19,7 @@
 namespace Dark
 {
 
-  class Sector;
+  struct Sector;
   class Matrix;
 
   // static object abstract class

@@ -55,9 +55,9 @@ namespace Dark
     world.bsps[2]->loadQBSP( "bsp/temple.bsp", BSP::BSP_SCALE, 4.0f );
     world.bsps[3]->loadQBSP( "bsp/pool.bsp", BSP::BSP_SCALE, 4.0f );
 
-    world.add( new Structure( Vec3( 47, -33, 75.5 ), 0 ) );
-    world.add( new Structure( Vec3( 33, -34, 75.5 ), 1 ) );
-    world.add( new Structure( Vec3( 40, -40, 75.8 ), 2 ) );
+    world.add( new Structure( Vec3( 47.0f, -33.0f, 75.5f ), 0 ) );
+    world.add( new Structure( Vec3( 33.0f, -34.0f, 75.5f ), 1 ) );
+    world.add( new Structure( Vec3( 40.0f, -40.0f, 75.8f ), 2 ) );
 
     world.add( new B_Goblin( Vec3( 40, -70, 90 ), 0.0f, 0.0f ) );
 

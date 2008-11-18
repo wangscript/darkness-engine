@@ -59,7 +59,7 @@ namespace Client
     sscanf( config["render.perspective.max"], "%f", &perspectiveMax );
 
     if( perspectiveAspect == 0.0f ) {
-      perspectiveAspect = (double) screenX / (double) screenY;
+      perspectiveAspect = (float) screenX / (float) screenY;
     }
 
     glViewport( 0, 0, screenX, screenY );
@@ -439,9 +439,9 @@ namespace Client
 
     font.print( -45, 33, "l %d f %d ow %d iw %d ovlp %d",
                 camera.player->lower >= 0,
-                (bool) ( camera.player->flags & Object::ON_FLOOR_BIT ),
-                (bool) ( camera.player->flags & Object::ON_WATER_BIT ),
-                (bool) ( camera.player->flags & Object::UNDER_WATER_BIT ),
+                ( camera.player->flags & Object::ON_FLOOR_BIT ) != 0,
+                ( camera.player->flags & Object::ON_WATER_BIT ) != 0,
+                ( camera.player->flags & Object::UNDER_WATER_BIT ) != 0,
                 collider.test( *camera.player ) );
 
     SDL_GL_SwapBuffers();

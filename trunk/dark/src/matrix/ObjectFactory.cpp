@@ -21,6 +21,7 @@ namespace Dark
 
   Object *ObjectFactory::create( const char *className )
   {
+		return null;
   }
 
 }

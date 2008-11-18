@@ -11,6 +11,10 @@
 #ifndef _Dark_Math_h_
 #define _Dark_Math_h_
 
+#ifdef WIN32
+#include <math.h>
+#endif
+
 namespace Dark
 {
 
@@ -43,65 +47,109 @@ namespace Dark
       static const float NaN;
       static const float INF;
 
-      static const int  INT_MAX  = -1u  >> 1;
-      static const long LONG_MAX = -1ul >> 1;
+      static const int  INT_MAX  = ( (uint) -1 ) >> 1;
+      static const long LONG_MAX = ( (ulong) -1 ) >> 1;
 
       /*
        * Standard math functions
        */
       static float abs( float x )
       {
+#ifdef WIN32
+        return fabsf( x );
+#else
         return __builtin_fabsf( x );
+#endif
       }
 
       static float floor( float x )
       {
+#ifdef WIN32
+        return floorf( x );
+#else
         return __builtin_floorf( x );
+#endif
       }
 
       static float ceil( float x )
       {
+#ifdef WIN32
+        return ceilf( x );
+#else
         return __builtin_ceilf( x );
+#endif
       }
 
       static float round( float x )
       {
+#ifdef WIN32
+        return ceilf( x + 0.5f );
+#else
         return __builtin_roundf( x );
+#endif
       }
 
       static float mod( float x, float y )
       {
+#ifdef WIN32
+        return fmodf( x, y );
+#else
         return __builtin_fmodf( x, y );
+#endif
       }
 
       static float sqrt( float x )
       {
+#ifdef WIN32
+        return sqrtf( x );
+#else
         return __builtin_sqrtf( x );
+#endif
       }
 
       static float exp( float x )
       {
+#ifdef WIN32
+        return expf( x );
+#else
         return __builtin_expf( x );
+#endif
       }
 
       static float log( float x )
       {
+#ifdef WIN32
+        return logf( x );
+#else
         return __builtin_logf( x );
+#endif
       }
 
       static float pow( float x, float y )
       {
+#ifdef WIN32
+        return powf( x, y );
+#else
         return __builtin_powf( x, y );
+#endif
       }
 
       static float sin( float x )
       {
+#ifdef WIN32
+        return sinf( x );
+#else
         return __builtin_sinf( x );
+#endif
       }
 
       static float cos( float x )
       {
+#ifdef WIN32
+        return cosf( x );
+#else
         return __builtin_cosf( x );
+#endif
       }
 
       static void sincos( float x, float *s, float *c )
@@ -110,34 +158,61 @@ namespace Dark
 #ifdef HAVE_SINCOS
         __builtin_sincosf( x, s, c );
 #else
+
+#ifdef WIN32
+        *s = sinf( x );
+        *c = cosf( x );
+#else
         *s = __builtin_sinf( x );
         *c = __builtin_cosf( x );
+#endif
+
 #endif
       }
 
       static float tan( float x )
       {
+#ifdef WIN32
+        return tanf( x );
+#else
         return __builtin_tanf( x );
+#endif
       }
 
       static float asin( float x )
       {
+#ifdef WIN32
+        return asinf( x );
+#else
         return __builtin_asinf( x );
+#endif
       }
 
       static float acos( float x )
       {
+#ifdef WIN32
+        return cosf( x );
+#else
         return __builtin_acosf( x );
+#endif
       }
 
       static float atan( float x )
       {
+#ifdef WIN32
+        return atanf( x );
+#else
         return __builtin_atanf( x );
+#endif
       }
 
       static float atan2( float x, float y )
       {
+#ifdef WIN32
+        return atan2f( x, y );
+#else
         return __builtin_atan2f( x, y );
+#endif
       }
 
       /*
@@ -147,7 +222,11 @@ namespace Dark
       // returns true, if value is not a number
       static bool isNAN( float x )
       {
+#ifdef WIN32
+        return x != x;
+#else
         return __builtin_isnanf( x );
+#endif
       }
 
       static float sgn( float x )
