@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _D_MetalBarrel_h_
-#define _D_MetalBarrel_h_
+#pragma once
 
 #include "DynObject.h"
 #include "Translator.h"
@@ -36,5 +35,3 @@ namespace Dark
   };
 
 }
-
-#endif // _D_MetalBarrel_h_

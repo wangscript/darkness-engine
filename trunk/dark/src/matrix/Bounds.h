@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Bounds_h_
-#define _Bounds_h_
+#pragma once
 
 namespace Dark
 {
@@ -119,5 +118,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Bounds_h_

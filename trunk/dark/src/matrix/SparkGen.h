@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _SparkGen_h_
-#define _SparkGen_h_
+#pragma once
 
 namespace Dark
 {
@@ -45,5 +44,3 @@ namespace Dark
   };
 
 }
-
-#endif // _SparkGen_h_

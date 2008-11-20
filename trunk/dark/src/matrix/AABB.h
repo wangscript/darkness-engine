@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _AABB_h_
-#define _AABB_h_
+#pragma once
 
 #include "BSP.h"
 
@@ -208,5 +207,3 @@ namespace Dark
   }
 
 }
-
-#endif // _AABB_h_

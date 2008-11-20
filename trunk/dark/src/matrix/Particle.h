@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Particle_h_
-#define _Particle_h_
+#pragma once
 
 #include "Timer.h"
 
@@ -94,5 +93,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Particle_h_

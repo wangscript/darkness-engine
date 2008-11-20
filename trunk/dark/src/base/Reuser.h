@@ -12,8 +12,7 @@
  *  $Id$
  */
 
-#ifndef _Reuser_h_
-#define _Reuser_h_
+#pragma once
 
 namespace Dark
 {
@@ -84,5 +83,3 @@ namespace Dark
   Reuser<Type> *Reuser<Type>::freeList = null;
 
 }
-
-#endif // _Dark_Reuser_h_

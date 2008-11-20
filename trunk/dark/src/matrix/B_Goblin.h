@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _B_Goblin_h_
-#define _B_Goblin_h_
+#pragma once
 
 #include "Bot.h"
 #include "B_Spirit.h"
@@ -54,5 +53,3 @@ namespace Dark
   };
 
 }
-
-#endif // _B_Goblin_h_

@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Terrain_h_
-#define _Terrain_h_
+#pragma once
 
 namespace Dark
 {
@@ -55,5 +54,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Terrain_h_

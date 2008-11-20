@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Dark_Math_h_
-#define _Dark_Math_h_
+#pragma once
 
 #ifdef WIN32
 #include <math.h>
@@ -258,5 +257,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Dark_Math_h_

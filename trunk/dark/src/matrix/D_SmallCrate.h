@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _D_SmallCrate_h_
-#define _D_SmallCrate_h_
+#pragma once
 
 #include "DynObject.h"
 #include "Translator.h"
@@ -39,5 +38,3 @@ namespace Dark
   };
 
 }
-
-#endif // _D_SmallCrate_h_

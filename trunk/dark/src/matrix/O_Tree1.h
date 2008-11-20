@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _O_Tree1_h_
-#define _O_Tree1_h_
+#pragma once
 
 #include "Object.h"
 #include "Translator.h"
@@ -38,5 +37,3 @@ namespace Dark
   };
 
 }
-
-#endif // _O_Tree1_h_

@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Hit_h_
-#define _Hit_h_
+#pragma once
 
 namespace Dark
 {
@@ -27,5 +26,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Hit_h_

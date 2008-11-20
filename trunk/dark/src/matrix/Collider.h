@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Collider_h_
-#define _Collider_h_
+#pragma once
 
 #include "Hit.h"
 #include "World.h"
@@ -206,5 +205,3 @@ namespace Dark
   }
 
 }
-
-#endif // _Collider_h_

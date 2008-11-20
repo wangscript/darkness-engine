@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Structure_h_
-#define _Structure_h_
+#pragma once
 
 #include "bv.h"
 
@@ -31,5 +30,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Structure_h_

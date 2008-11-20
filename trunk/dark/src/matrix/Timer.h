@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Timer_h_
-#define _Timer_h_
+#pragma once
 
 namespace Dark
 {
@@ -34,5 +33,3 @@ namespace Dark
   extern Timer timer;
 
 }
-
-#endif // _Timer_h_

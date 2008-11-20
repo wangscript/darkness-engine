@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _BSP_h_
-#define _BSP_h_
+#pragma once
 
 #include "bv.h"
 
@@ -135,5 +134,3 @@ namespace Dark
   };
 
 }
-
-#endif // _BSP_h_

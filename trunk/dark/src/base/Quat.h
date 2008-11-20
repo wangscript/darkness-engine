@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Dark_Quat_h_
-#define _Dark_Quat_h_
+#pragma once
 
 namespace Dark
 {
@@ -378,5 +377,3 @@ namespace Dark
   }
 
 }
-
-#endif // _Dark_Quat_h_

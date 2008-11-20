@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _DynObject_h_
-#define _DynObject_h_
+#pragma once
 
 #include "Object.h"
 
@@ -94,5 +93,3 @@ namespace Dark
   };
 
 }
-
-#endif // _DynObject_h_

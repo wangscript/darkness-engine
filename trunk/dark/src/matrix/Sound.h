@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Sound_h_
-#define _Sound_h_
+#pragma once
 
 namespace Dark
 {
@@ -25,5 +24,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Sound_h_

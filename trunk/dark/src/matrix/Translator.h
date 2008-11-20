@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Translator_h_
-#define _Translator_h_
+#pragma once
 
 namespace Dark
 {
@@ -118,5 +117,3 @@ namespace Dark
   extern Translator translator;
 
 }
-
-#endif // _Translator_h_

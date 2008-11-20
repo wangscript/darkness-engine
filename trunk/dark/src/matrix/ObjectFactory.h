@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _ObjectFactory_h_
-#define _ObjectFactory_h_
+#pragma once
 
 #include "Object.h"
 
@@ -34,5 +33,3 @@ namespace Dark
   };
 
 }
-
-#endif // _ObjectFactory_h_

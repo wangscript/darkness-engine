@@ -10,8 +10,7 @@
  *  $Id$
  */
 
-#ifndef _Dark_base_h_
-#define _Dark_base_h_
+#pragma once
 
 #ifdef WIN32
 #define _CRT_SECURE_NO_WARNINGS
@@ -65,5 +64,3 @@
  */
 #include "LogFile.h"
 #include "Config.h"
-
-#endif // _Dark_base_h_

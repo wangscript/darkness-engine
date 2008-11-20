@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Object_h_
-#define _Object_h_
+#pragma once
 
 #include "bv.h"
 #include "Hit.h"
@@ -238,5 +237,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Object_h_

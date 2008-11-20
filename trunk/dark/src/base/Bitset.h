@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Dark_Bitset_h_
-#define _Dark_Bitset_h_
+#pragma once
 
 namespace Dark
 {
@@ -369,5 +368,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Dark_Bitset_h_

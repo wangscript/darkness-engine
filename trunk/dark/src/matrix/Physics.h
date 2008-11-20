@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Physics_h_
-#define _Physics_h_
+#pragma once
 
 #include "Collider.h"
 #include "DynObject.h"
@@ -91,5 +90,3 @@ namespace Dark
   extern Physics physics;
 
 }
-
-#endif // _Physics_h_

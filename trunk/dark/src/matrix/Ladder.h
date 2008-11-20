@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Ladder_h_
-#define _Ladder_h_
+#pragma once
 
 #include "Object.h"
 #include "Translator.h"
@@ -32,5 +31,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Ladder_h_

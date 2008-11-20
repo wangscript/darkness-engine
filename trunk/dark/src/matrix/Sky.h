@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Sky_h_
-#define _Sky_h_
+#pragma once
 
 #include "Timer.h"
 
@@ -32,5 +31,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Sky_h_

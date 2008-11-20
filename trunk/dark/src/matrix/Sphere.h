@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Sphere_h_
-#define _Sphere_h_
+#pragma once
 
 namespace Dark
 {
@@ -52,5 +51,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Sphere_h_

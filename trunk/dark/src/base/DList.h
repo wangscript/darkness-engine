@@ -9,8 +9,7 @@
  *  $Id$
  */
 
-#ifndef _Dark_DList_h_
-#define _Dark_DList_h_
+#pragma once
 
 namespace Dark
 {
@@ -424,5 +423,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Dark_DList_h_

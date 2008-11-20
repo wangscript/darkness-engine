@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Matrix_h_
-#define _Matrix_h_
+#pragma once
 
 #include "World.h"
 #include "Bot.h"
@@ -34,5 +33,3 @@ namespace Dark
   extern Matrix matrix;
 
 }
-
-#endif // _Matrix_h_
