@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Dark_SVector_h_
-#define _Dark_SVector_h_
+#pragma once
 
 namespace Dark
 {
@@ -331,5 +330,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Dark_SVector_h_

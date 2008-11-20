@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Dark_Mat44_h_
-#define _Dark_Mat44_h_
+#pragma once
 
 namespace Dark
 {
@@ -536,5 +535,3 @@ namespace Dark
   {}
 
 }
-
-#endif // _Dark_Mat44_h_

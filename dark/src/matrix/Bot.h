@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Bot_h_
-#define _Bot_h_
+#pragma once
 
 #include "DynObject.h"
 #include "Weapon.h"
@@ -71,5 +70,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Bot_h_

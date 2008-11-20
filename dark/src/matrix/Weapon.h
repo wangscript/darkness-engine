@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Weapon_h_
-#define _Weapon_h_
+#pragma once
 
 #include "Object.h"
 
@@ -22,5 +21,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Weapon_h_

@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _B_Spirit_h_
-#define _B_Spirit_h_
+#pragma once
 
 #include "Bot.h"
 
@@ -44,5 +43,3 @@ namespace Dark
   };
 
 }
-
-#endif // _B_Spirit_h_

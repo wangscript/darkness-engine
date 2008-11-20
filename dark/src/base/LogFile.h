@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Dark_LogFile_h_
-#define _Dark_LogFile_h_
+#pragma once
 
 namespace Dark
 {
@@ -64,5 +63,3 @@ namespace Dark
   extern LogFile logFile;
 
 }
-
-#endif // _Dark_LogFile_h_

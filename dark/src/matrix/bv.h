@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _bv_h_
-#define _bv_h_
+#pragma once
 
 // 0.1 mm
 #define EPSILON ( 0.0001f )
@@ -17,5 +16,3 @@
 #include "Bounds.h"
 #include "AABB.h"
 #include "Sphere.h"
-
-#endif // _bv_h_

@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _World_h_
-#define _World_h_
+#pragma once
 
 #include "Timer.h"
 #include "Translator.h"
@@ -204,5 +203,3 @@ namespace Dark
   }
 
 }
-
-#endif // _World_h_

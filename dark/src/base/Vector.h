@@ -9,8 +9,7 @@
  *  $Id$
  */
 
-#ifndef _Dark_Vector_h_
-#define _Dark_Vector_h_
+#pragma once
 
 namespace Dark
 {
@@ -377,5 +376,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Dark_Vector_h_

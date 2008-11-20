@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Dark_Vec3_h_
-#define _Dark_Vec3_h_
+#pragma once
 
 namespace Dark
 {
@@ -257,5 +256,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Dark_Vec3_h_

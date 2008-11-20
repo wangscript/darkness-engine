@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Dark_common_h_
-#define _Dark_common_h_
+#pragma once
 
 /*
  * NEW "RESERVED WORDS"
@@ -247,5 +246,3 @@ namespace Dark
   }
 
 }
-
-#endif // _Dark_common_h_

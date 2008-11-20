@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Vehicle_h_
-#define _Vehicle_h_
+#pragma once
 
 #include "Bot.h"
 
@@ -21,5 +20,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Vehicle_h_

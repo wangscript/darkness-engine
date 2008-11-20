@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Dark_HashString_h_
-#define _Dark_HashString_h_
+#pragma once
 
 namespace Dark
 {
@@ -319,5 +318,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Dark_HashString_h_

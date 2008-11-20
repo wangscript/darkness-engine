@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Dark_Config_h_
-#define _Dark_Config_h_
+#pragma once
 
 namespace Dark
 {
@@ -117,5 +116,3 @@ namespace Dark
   extern Config config;
 
 }
-
-#endif // _Dark_Config_h_

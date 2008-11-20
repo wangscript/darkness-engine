@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Water_h_
-#define _Water_h_
+#pragma once
 
 #include "Object.h"
 #include "Translator.h"
@@ -32,5 +31,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Water_h_
