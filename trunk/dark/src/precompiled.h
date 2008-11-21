@@ -18,6 +18,12 @@
 #include "base/base.h"
 
 // include SDL since it is commonly used
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-#include <SDL/SDL_opengl.h>
+#ifdef WIN32
+#  include <SDL.h>
+#  include <SDL_image.h>
+#  include <SDL_opengl.h>
+#else
+#  include <SDL/SDL.h>
+#  include <SDL/SDL_image.h>
+#  include <SDL/SDL_opengl.h>
+#endif
