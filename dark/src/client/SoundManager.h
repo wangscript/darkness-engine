@@ -16,13 +16,28 @@
 
 #define DARK_OPENAL
 
-#ifdef DARK_OPENAL
-#  include <AL/al.h>
-#  include <AL/alc.h>
-#  include <AL/alut.h>
-#  include <vorbis/vorbisfile.h>
+#ifdef WIN32
+
+#  ifdef DARK_OPENAL
+#    include <al.h>
+#    include <alc.h>
+#    include <AL/alut.h>
+#    include <vorbis/vorbisfile.h>
+#  else
+#    include <SDL_mixer.h>
+#  endif
+
 #else
-#  include <SDL/SDL_mixer.h>
+
+#  ifdef DARK_OPENAL
+#    include <AL/al.h>
+#    include <AL/alc.h>
+#    include <AL/alut.h>
+#    include <vorbis/vorbisfile.h>
+#  else
+#    include <SDL/SDL_mixer.h>
+#  endif
+
 #endif
 
 namespace Dark

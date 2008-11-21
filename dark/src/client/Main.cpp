@@ -16,8 +16,11 @@
 #include "SoundManager.h"
 #include "Render.h"
 
-#include <unistd.h>
-#include <sys/stat.h>
+#ifdef WIN32
+#else
+#  include <unistd.h>
+#  include <sys/stat.h>
+#endif
 
 namespace Dark
 {
@@ -114,6 +117,8 @@ namespace Client
     const char *homeVar = getenv( "HOME" );
     String home( homeVar == null ? "./" DARK_RC_DIR : homeVar + String( "/" DARK_RC_DIR ) );
 
+#ifdef WIN32
+#else
     struct stat homeDirStat;
     if( stat( home.cstr(), &homeDirStat ) ) {
       printf( "No resource dir found, creating '%s' ...", home.cstr() );
@@ -125,6 +130,7 @@ namespace Client
       }
       printf( " OK\n" );
     }
+#endif
 
 #ifdef DARK_LOG_FILE
     String logPath = home + DARK_LOG_FILE;
@@ -181,6 +187,8 @@ namespace Client
 
     logFile.print( "Going to working directory '%s' ...", (const char*) data );
 
+#ifdef WIN32
+#else
     if( chdir( data ) != 0 ) {
       logFile.printRaw(" Failed\n");
       shutdown();
@@ -189,6 +197,7 @@ namespace Client
     else {
       logFile.printRaw(" OK\n");
     }
+#endif
 
     int screenX    = atoi( config["screen.width"] );
     int screenY    = atoi( config["screen.height"] );
