@@ -21,7 +21,6 @@ namespace Dark
   const float Sector::RADIUS = Sector::DIM * Math::SQRT2;
 
   const float World::DIM = Sector::DIM * World::MAX / 2.0f;
-  const int World::MAX;
 
   World::World() :
       Bounds( Vec3( -World::DIM, -World::DIM, -World::DIM ),
