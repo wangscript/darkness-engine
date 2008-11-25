@@ -86,8 +86,11 @@ namespace Dark
         String key = (const char*) pKey;
         String value = (const char*) pValue;
 
+				// msvc has problems with this WTF???
+#ifndef WIN32
         ::free( pKey );
         ::free( pValue );
+#endif
 
         add( key, value );
       }
