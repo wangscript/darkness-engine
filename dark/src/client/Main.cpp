@@ -17,6 +17,9 @@
 #include "Render.h"
 
 #ifdef WIN32
+#  include <direct.h>
+#  include <sys/types.h>
+#  include <sys/stat.h>
 #else
 #  include <unistd.h>
 #  include <sys/stat.h>
@@ -31,14 +34,12 @@ namespace Client
 
   void Main::defaultConfig()
   {
-    const SDL_VideoInfo *screen = SDL_GetVideoInfo();
-
     config.add( "data",                               "/usr/share/dark/data" );
     config.add( "tick",                               "20" );
 
-    config.add( "screen.width",                       screen->current_w );
-    config.add( "screen.height",                      screen->current_h );
-    config.add( "screen.bpp",                         screen->vfmt->BitsPerPixel );
+    config.add( "screen.width",                       "1024" );
+    config.add( "screen.height",                      "768" );
+    config.add( "screen.bpp",                         "16" );
     config.add( "screen.nvVSync",                     "1" );
     config.add( "screen.full",                        "0" );
 
@@ -114,11 +115,26 @@ namespace Client
 
   void Main::main()
   {
-    const char *homeVar = getenv( "HOME" );
-    String home( homeVar == null ? "./" DARK_RC_DIR : homeVar + String( "/" DARK_RC_DIR ) );
-
 #ifdef WIN32
+		const char *homeVar = getenv( "HOME" );
+    String home( homeVar == null ? DARK_RC_DIR : homeVar + String( "\\" DARK_RC_DIR ) );
+
+		struct _stat homeDirStat;
+    if( _stat( home.cstr(), &homeDirStat ) ) {
+      printf( "No resource dir found, creating '%s' ...", home.cstr() );
+
+      if( mkdir( home.cstr() ) ) {
+        printf( " Failed\n" );
+        shutdown();
+        return;
+      }
+      printf( " OK\n" );
+    }
+		home = home + "\\";
 #else
+		const char *homeVar = getenv( "HOME" );
+    String home( homeVar == null ? DARK_RC_DIR "/" : homeVar + String( "/" DARK_RC_DIR "/" ) );
+
     struct stat homeDirStat;
     if( stat( home.cstr(), &homeDirStat ) ) {
       printf( "No resource dir found, creating '%s' ...", home.cstr() );
@@ -188,14 +204,22 @@ namespace Client
     logFile.print( "Going to working directory '%s' ...", (const char*) data );
 
 #ifdef WIN32
-#else
-    if( chdir( data ) != 0 ) {
-      logFile.printRaw(" Failed\n");
+		if( chdir( data ) != 0 ) {
+      logFile.printRaw( " Failed\n" );
       shutdown();
       return;
     }
     else {
-      logFile.printRaw(" OK\n");
+      logFile.printRaw( " OK\n" );
+    }
+#else
+    if( chdir( data ) != 0 ) {
+      logFile.printRaw( " Failed\n" );
+      shutdown();
+      return;
+    }
+    else {
+      logFile.printRaw( " OK\n" );
     }
 #endif
 
