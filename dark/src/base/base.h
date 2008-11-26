@@ -24,11 +24,6 @@
 #include "common.h"
 
 /*
- *  Reuser base class for improved memory management (reusing freed blocks)
- */
-#include "Reuser.h"
-
-/*
  *  Containers
  */
 #include "Vector.h"
@@ -41,6 +36,11 @@
  *  String
  */
 #include "String.h"
+
+/*
+ *  Reuser base class for improved memory management (reusing freed blocks)
+ */
+#include "Reuser.h"
 
 /*
  *  Containers 2
