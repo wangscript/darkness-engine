@@ -43,30 +43,4 @@ Download and install CMake.
 Checkout https://darkness-engine.googlecode.com/svn/trunk/dark into D:\Devel\dark.
 Open CMake GUI and drag-drop CMakeLists.txt from D:\Devel\dark to CMake window. Click Configure
 twice and then OK. (Of course, you select VS2008 as target when asked).
-For each project in solution open properties and:
-* delete any non-windows-looking include and library paths paths (e.g. \usr\include\libxml2).
-* delete all additional command line options from C/C++/Command Line section.
-* set following include paths:
-  * ..
-  * ../matrix
-  * ../nirvana
-  * ../../../ogg/include
-  * ../../../vorbis/include
-  * ../../../iconv/include
-  * ../../../libxml2/include
-  * ../../../OpenAL/include
-  * ../../../freealut/include
-  * ../../../SDL/include
-  * ../../../SDL_image/include
-On projects that built do executables (dark, server):
-* add the following library paths:
-  * ../../../ogg/lib
-  * ../../../vorbis/lib
-  * ../../../iconv/lib
-  * ../../../libxml2/lib
-  * ../../../OpenAL/lib
-  * ../../../freealut/lib
-  * ../../../SDL/lib
-  * ../../../SDL_image/lib
-* correct xml2.lib to libxml2.lib
-* correct GL.lib to opengl32.lib
+Build.
