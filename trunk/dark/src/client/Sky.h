@@ -41,7 +41,6 @@ namespace Client
       float diffuseColor[4];
       float ambientColor[4];
 
-      // heading in degrees, period in seconds
       void init();
 
       void update();

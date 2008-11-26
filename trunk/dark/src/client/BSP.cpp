@@ -119,7 +119,7 @@ namespace Client
 
       char *bits = bsp->lightmaps[i].bits;
       for( int j = 0; j < Dark::BSP::LIGHTMAP_SIZE; j++ ) {
-        bits[j] += (int) ( ( 255 - bits[j] ) * BSP_GAMMA_CORR );
+        bits[j] += (char) ( ( 255 - bits[j] ) * BSP_GAMMA_CORR );
       }
 
       lightMaps[i] = context.createTexture( bits,

@@ -39,7 +39,7 @@ namespace Client
 
     config.add( "screen.width",                       "1024" );
     config.add( "screen.height",                      "768" );
-    config.add( "screen.bpp",                         "16" );
+    config.add( "screen.bpp",                         "32" );
     config.add( "screen.nvVSync",                     "1" );
     config.add( "screen.full",                        "0" );
 
@@ -123,7 +123,7 @@ namespace Client
     if( _stat( home.cstr(), &homeDirStat ) ) {
       printf( "No resource dir found, creating '%s' ...", home.cstr() );
 
-      if( mkdir( home.cstr() ) ) {
+      if( _mkdir( home.cstr() ) ) {
         printf( " Failed\n" );
         shutdown();
         return;
@@ -204,7 +204,7 @@ namespace Client
     logFile.print( "Going to working directory '%s' ...", (const char*) data );
 
 #ifdef WIN32
-		if( chdir( data ) != 0 ) {
+		if( _chdir( data ) != 0 ) {
       logFile.printRaw( " Failed\n" );
       shutdown();
       return;
@@ -228,15 +228,17 @@ namespace Client
     int screenBpp  = atoi( config["screen.bpp"] );
     int screenFull = config["screen.full"] == "1" ? SDL_FULLSCREEN : 0;
 
-    Uint32 screenCenterX = screenX / 2;
-    Uint32 screenCenterY = screenY / 2;
+    Uint16 screenCenterX = (Uint16) ( screenX / 2 );
+    Uint16 screenCenterY = (Uint16) ( screenY / 2 );
 
     logFile.print( "Setting OpenGL surface %dx%d %dbpp %s ...",
                    screenX, screenY, screenBpp, screenFull ? "fullscreen" : "windowed" );
 
+#ifndef WIN32
     if( config["screen.nvVSync"] == "1" ) {
       putenv( (char*) "__GL_SYNC_TO_VBLANK=1" );
     }
+#endif
     SDL_WM_SetCaption( DARK_WM_TITLE, null );
     SDL_ShowCursor( false );
 
