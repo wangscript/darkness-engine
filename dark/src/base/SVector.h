@@ -306,10 +306,20 @@ namespace Dark
         return data[count];
       }
 
-      // sort elements with quicksort algorithm
+      /**
+       * Sort elements with quicksort algorithm (last element as pivot).
+       */
       void sort()
       {
-        aSort( data, 0, count - 1 );
+        aSort( data, count );
+      }
+
+      /**
+       * Sort elements with quicksort algorithm (middle element as pivot).
+       */
+      void sort2()
+      {
+        aSort2( data, count );
       }
 
       // remove all elements
@@ -318,7 +328,10 @@ namespace Dark
         count = 0;
       }
 
-      // remove and delete all elements ( for vector of pointers )
+      /**
+       * Empty the list and delete all elements - take care of memory managment. Use this function
+       * only with vector of pointer that you want to be deleted.
+       */
       void free()
       {
         for( int i = 0; i < count; i++ ) {
