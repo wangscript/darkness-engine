@@ -288,7 +288,7 @@ namespace Dark
 
         swap( *top, *last );
 
-        aSort( firts, top - 1 );
+        aSort( first, top - 1 );
         aSort( top + 1, last );
       }
       else if( *first > *last ) {
@@ -306,7 +306,7 @@ namespace Dark
    * @param end index of the last element to be sorted
    */
   template <class Type>
-  inline void aSort( Type *array, Type *last )
+  inline void aSort2( Type *first, Type *last )
   {
     if( first < last ) {
       if( last - first > 1 ) {
@@ -333,7 +333,7 @@ namespace Dark
 
         swap( *top, *last );
 
-        aSort( firts, top - 1 );
+        aSort( first, top - 1 );
         aSort( top + 1, last );
       }
       else if( *first > *last ) {

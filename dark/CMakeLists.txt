@@ -42,7 +42,7 @@ ELSE( WIN32 )
 
   INCLUDE_DIRECTORIES( /usr/include/libxml2 )
   LINK_LIBRARIES( xml2 SDL SDL_image SDL_mixer GL GLU openal alut vorbisfile )
-  ADD_DEFINITIONS( -g -pedantic -Wall -Wextra -Winvalid-pch -pipe )
+  ADD_DEFINITIONS( -g -Wall -Wextra -Winvalid-pch -pipe -I/usr/include -I/usr/include/SDL  )
 
 ENDIF( WIN32 )
 
