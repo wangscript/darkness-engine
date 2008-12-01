@@ -79,8 +79,7 @@ namespace Dark
       /**
        * Load variables from an XML file. It only reads the nodes named "var" that must have the
        * following format:
-       * <pre>
-       * &lt;var name="varName" value="varValue"/&gt;</pre>
+       * <pre>&lt;var name="varName" value="varValue"/&gt;</pre>
        * Everything else is ignored.
        * @param file file path
        * @return true if successful

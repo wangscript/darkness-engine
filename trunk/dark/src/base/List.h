@@ -17,10 +17,9 @@ namespace Dark
   /**
    * Linked list
    *
-   * It can only be applied on classes that have next[] member.
+   * It can only be applied on classes that have <code>next[]</code> member.
    * Example:
-   * <pre>
-   * class C
+   * <pre>class C
    * {
    *   C next[2];
    *   int value;
@@ -29,15 +28,17 @@ namespace Dark
    * List&lt;C, 0&gt; list1;
    * List&lt;C, 1&gt; list2;</pre>
    * That way the objects of the same class can be in two separate lists at once.
-   * next[0] points to next element in list1 and
-   * next[1] points to next element in list2.
+   * <code>next[0]</code> points to next element in <code>list1</code> and
+   * <code>next[1]</code> points to next element in <code>list2</code>.
    *
-   * next[INDEX] pointer is not cleared when element is removed from the list,
+   * <code>next[INDEX]</code> pointer is not cleared when element is removed from the list,
    * it may still point to elements in the list or to invalid locations!
    *
-   * List class doesn't take care of memory management except for the free() method.
+   * <code>List</code> class doesn't take care of memory management except for the
+   * <code>free()</code> method.
    *
-   * In general all operations are O(1) except contains(), length(), disjoin() and free() are O(n).
+   * In general all operations are O(1) except <code>contains()</code>, <code>length()</code> and
+   * <code>free()</code> are O(n).
    */
   template <class Type, int INDEX>
   class List
@@ -47,13 +48,13 @@ namespace Dark
       // First element in list.
       Type *firstElem;
 
-      // No copying
+      // No copying.
       List( const List& );
 
     public:
 
       /**
-       * List iterator
+       * List iterator.
        */
       class Iterator
       {
@@ -235,10 +236,14 @@ namespace Dark
         Type *p = firstElem;
 
         firstElem = p->next[INDEX];
-        p->next[INDEX] = null;
         return p;
       }
 
+      /**
+       * Insert an element after an element in the list.
+       * @param e element to be inserted
+       * @param p pointer to element after which we want to insert
+       */
       void insertAfter( Type *e, Type *p )
       {
         assert( e != null );
@@ -248,7 +253,12 @@ namespace Dark
         p->next[INDEX] = e;
       }
 
-      // UNSAFE !!!
+      /**
+       * Remove an element from the list. Becouse we don't have double-linked list, you have to
+       * provide pointer to previous element.
+       * @param e element to be removed
+       * @param prev previous element
+       */
       void remove( Type *e, Type *prev )
       {
         assert( prev == null || prev->next[INDEX] == e );
@@ -259,9 +269,19 @@ namespace Dark
         else {
           prev->next[INDEX] = e->next[INDEX];
         }
-        e->next[INDEX] = null;
       }
 
+      /**
+       * Empty the list but don't delete the elements.
+       */
+      void clear()
+      {
+        firstElem = null;
+      }
+
+      /**
+       * Empty the list and delete all elements - take care of memory managment.
+       */
       void free()
       {
         Type *p = firstElem;
@@ -270,19 +290,6 @@ namespace Dark
           Type *next = p->next[INDEX];
 
           delete p;
-          p = next;
-        }
-        firstElem = null;
-      }
-
-      void disjoin()
-      {
-        Type *p = firstElem;
-
-        while( p != null ) {
-          Type *next = p->next[INDEX];
-
-          p->next[INDEX] = null;
           p = next;
         }
         firstElem = null;

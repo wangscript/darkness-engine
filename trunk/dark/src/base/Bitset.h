@@ -88,8 +88,44 @@ namespace Dark
       }
 
       /**
-       * Get pointer to data array. Use with caution, since you can easily make buffer overflows
-       * if you don't check the size of data array.
+       * Equality operator.
+       * @param b
+       * @return true if all bits up to <code>lenght()</code> are equal.
+       */
+      bool operator == ( const Bitset &b )
+      {
+        if( size != b.size ) {
+          return false;
+        }
+        for( int i = 0; i < size; i++ ) {
+          if( data[i] != b.data[i] ) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      /**
+       * Inequality operator.
+       * @param b
+       * @return false if all bits up to <code>lenght()</code> are equal.
+       */
+      bool operator != ( const Bitset &b )
+      {
+        if( size != b.size ) {
+          return true;
+        }
+        for( int i = 0; i < size; i++ ) {
+          if( data[i] != b.data[i] ) {
+            return true;
+          }
+        }
+        return false;
+      }
+
+      /**
+       * Get pointer to <code>data</code> array. Use with caution, since you can easily make buffer
+       * overflows if you don't check the size of <code>data</code> array.
        * @return non-constant pointer to data array
        */
       long *dataPtr()
@@ -98,9 +134,9 @@ namespace Dark
       }
 
       /**
-       * Get pointer to data array. Use with caution, since you can easily make buffer overflows
-       * if you don't check the size of data array.
-       * @return constant pointer to data array
+       * Get pointer to <code>data</code> array. Use with caution, since you can easily make buffer
+       * overflows if you don't check the size of <code>data</code> array.
+       * @return non-constant pointer to data array
        */
       const long *dataPtr() const
       {
@@ -108,7 +144,7 @@ namespace Dark
       }
 
       /**
-       * Resize the data array. New size if specified in units.
+       * Resize the <code>data</code> array. New size if specified in units.
        * @param nUnits
        */
       void setUnitSize( int nUnits )
@@ -121,7 +157,7 @@ namespace Dark
       }
 
       /**
-       * Resize the data array. New size if specified in bits.
+       * Resize the <code>data</code> array. New size if specified in bits.
        * @param nBits
        */
       void setSize( int nBits )

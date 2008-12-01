@@ -88,6 +88,14 @@ namespace Dark
         }
       }
 
+      void setOnLadder()
+      {
+        flags |= Object::ON_LADDER_BIT;
+
+        flags &= ~Object::ON_FLOOR_BIT;
+        lower = -1;
+      }
+
       virtual void load( FILE *stream );
       virtual void save( FILE *stream );
   };

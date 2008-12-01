@@ -35,7 +35,7 @@ IF(WIN32)
       openal32.lib 
       alut.lib 
       vorbisfile.lib )
-  # it's lowercase so that precompile.sh script doesn't screw up
+  # lowercase so that precompile.sh script doesn't screw up
   add_definitions( /W4 /fp:strict )
 
 ELSE(WIN32)

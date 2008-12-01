@@ -246,8 +246,8 @@ namespace Dark
     for( int i = 0; i < World::MAX; i++ ) {
       for( int j = 0; j < World::MAX; j++ ) {
         sectors[i][j].structures.clear();
-        sectors[i][j].objects.disjoin();
-        sectors[i][j].particles.disjoin();
+        sectors[i][j].objects.clear();
+        sectors[i][j].particles.clear();
       }
     }
 

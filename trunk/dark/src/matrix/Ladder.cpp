@@ -43,7 +43,8 @@ namespace Dark
     for( int i = 0; i < iMax; i++ ) {
       DynObject *obj = (DynObject*) objects[i];
 
-      if( obj->flags & Object::DYNAMIC_BIT ) {
+      if( obj->flags & Object::CLIMBER_BIT ) {
+        obj->setOnLadder();
       }
     }
   }
