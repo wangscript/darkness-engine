@@ -23,7 +23,6 @@ IF(WIN32)
       ../../../vorbis/lib
       ../../../OpenAL/libs/Win32
       ../../../freealut/lib )
-  ADD_DEFINITIONS( /W4 )
   LINK_LIBRARIES(
       iconv.lib
       libxml2.lib
@@ -36,12 +35,14 @@ IF(WIN32)
       openal32.lib 
       alut.lib 
       vorbisfile.lib )
+  # it's lowercase so that precompile.sh script doesn't screw up
+  add_definitions( /W4 /fp:strict )
 
 ELSE(WIN32)
 
   INCLUDE_DIRECTORIES( /usr/include/libxml2 )
-  ADD_DEFINITIONS( -O0 -g -pedantic -Wall -Wextra -Winvalid-pch -pipe )
   LINK_LIBRARIES( xml2 SDL SDL_image SDL_mixer GL GLU openal alut vorbisfile )
+  ADD_DEFINITIONS( -O0 -g -pedantic -Wall -Wextra -Winvalid-pch -pipe )
 
 ENDIF(WIN32)
 

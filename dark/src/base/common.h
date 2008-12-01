@@ -203,46 +203,59 @@ namespace Dark
   }
 
   /*
-   * Perform quicksort on the array in range between inclusive "begin" and exclusive "end"
+   * Perform quicksort on the array. Non-recursive quicksort algorithm is used which
+   * takes last element in partition as a pivot. Note that When sorting nearly sorted
+   * array it takes nearly O(n^2) time!
    */
   template <class Type>
-  static void aSort( Type *array, int begin, int end )
+  inline void aSort( Type *array, int count )
   {
-    int first = begin;
-    int last = end - 1;
+    Type *stack[ max( 2, 4 * ( count - 2 ) ) ];
+    Type **sp = stack;
+    Type *first = array;
+    Type *last = array + count - 1;
 
-    if( first < last ) {
-      if( first + 1 == last ) {
-        if( array[first] > array[last] ) {
-          swap( array[first], array[last] );
+    *( sp++ ) = first;
+    *( sp++ ) = last;
+
+    do {
+      last = *( --sp );
+      first = *( --sp );
+
+      if( first < last ) {
+        if( last - first > 1 ) {
+          int pivotValue = *last;
+          Type *top = first;
+          Type *bottom = last - 1;
+
+          do {
+            while( top <= bottom && *top <= pivotValue ) {
+              top++;
+            }
+            while( top < bottom && *bottom > pivotValue ) {
+              bottom--;
+            }
+            if( top >= bottom ) {
+              break;
+            }
+            swap( *top, *bottom );
+          }
+          while( true );
+
+          swap( *top, *last );
+
+          *( sp++ ) = first;
+          *( sp++ ) = top - 1;
+          *( sp++ ) = top + 1;
+          *( sp++ ) = last;
         }
-      }
-      else {
-        int pivotValue = array[last];
-        int top = first;
-        int bottom = last - 1;
-
-        do {
-          while( top <= bottom && array[top] <= pivotValue ) {
-            top++;
-          }
-          while( top < bottom && array[bottom] > pivotValue ) {
-            bottom--;
-          }
-          if( top <= bottom ) {
-            swap( array[top], array[bottom] );
-          }
-          else {
-            break;
-          }
+        else if( *first > *last ) {
+          swap( *first, *last );
         }
-        while( true );
-
-        swap( array[top], array[last] );
-        aSort( array, begin, top );
-        aSort( array, top + 1, end );
       }
     }
+    while( sp != stack );
   }
+
 
 }
