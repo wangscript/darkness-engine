@@ -67,7 +67,6 @@ namespace Dark
 
     world.genParticles( 1000, Vec3( 40, -42, 74 ), Vec3( 0, 0, 10 ), 15.0f, 1.95f, 0.1f, 5.0f,
                         LIST_SPARK, Vec3( 0.4f, 0.4f, 0.4f ), 0.2f );
-
     world.add( new D_MetalBarrel( Vec3( 51.0f, -42.0f, 80.0f ) ) );
     world.add( new D_MetalBarrel( Vec3( 51.0f, -42.0f, 82.0f ) ) );
     world.add( new D_MetalBarrel( Vec3( 51.0f, -42.0f, 84.0f ) ) );

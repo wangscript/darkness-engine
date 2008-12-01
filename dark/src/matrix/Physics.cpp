@@ -104,6 +104,14 @@ namespace Dark
         obj->newVelocity *= 1.0f - AIR_FRICTION;
       }
     }
+    else if( obj->flags & Object::CLIMBING_LADDER_BIT ) {
+      if( obj->newVelocity.sqL() <= STICK_VELOCITY ) {
+        obj->newVelocity.setZero();
+      }
+      else {
+        obj->newVelocity *= 1.0 - FLOOR_FRICTION;
+      }
+    }
     else {
       if( obj->flags & Object::ON_WATER_BIT ) {
         obj->flags &= ~Object::ON_WATER_BIT;

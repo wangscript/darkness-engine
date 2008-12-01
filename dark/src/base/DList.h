@@ -17,10 +17,10 @@ namespace Dark
   /**
    * Double-linked list
    *
-   * It can only be applied on classes that have next[] and prev[] members.
+   * It can only be applied on classes that have <code>next[]</code> and <code>prev[]</code>
+   * members.
    * Example:
-   * <pre>
-   * class C
+   * <pre>class C
    * {
    *   C prev[2];
    *   C next[2];
@@ -30,15 +30,19 @@ namespace Dark
    * DList&lt;C, 0&gt; list1;
    * DList&lt;C, 1&gt; list2;</pre>
    * That way the objects of the same class can be in two separate lists at once.
-   * prev[0] and next[0] point to previous and next element respectively in list1 and
-   * prev[1] and next[1] point to previous and next element respectively in list2.
+   * <code>prev[0]</code> and <code>next[0]</code> point to previous and next element respectively
+   * in <code>list1</code> and
+   * <code>prev[1]</code> and <code>next[1]</code> point to previous and next element respectively
+   * in <code>list2</code>.
    *
-   * prev[INDEX] and next[INDEX] pointers are not cleared when element is removed from the list,
-   * they may still point to elements in the list or to invalid locations!
+   * <code>prev[INDEX]</code> and <code>next[INDEX]</code> pointers are not cleared when element is
+   * removed from the list, they may still point to elements in the list or to invalid locations!
    *
-   * DList class doesn't take care of memory management except for the free() method.
+   * <code>DList</code> class doesn't take care of memory management except for the
+   * <code>free()</code> method.
    *
-   * In general all operations are O(1) except contains(), length(), disjoin() and free() are O(n).
+   * In general all operations are O(1) except <code>contains()</code>, <code>length()</code> and
+   * <code>free()</code> are O(n).
    */
   template <class Type, int INDEX>
   class DList
@@ -50,13 +54,13 @@ namespace Dark
       // Last element in list.
       Type *lastElem;
 
-      // No copying
+      // No copying.
       DList( const DList& );
 
     public:
 
       /**
-       * DList iterator
+       * DList iterator.
        */
       class Iterator
       {
@@ -294,8 +298,8 @@ namespace Dark
       }
 
       /**
-       * Pop first element from the list.
-       * @param e pointer to the first element
+       * Pop last element from the list.
+       * @param e pointer to the last element
        */
       Type *popLast()
       {
@@ -332,8 +336,10 @@ namespace Dark
           lastElem = e;
         }
         else {
-          e->next[INDEX] = p->next[INDEX];
-          p->next[INDEX]->prev[INDEX] = e;
+          Type *next = p->next[INDEX];
+
+          next->prev[INDEX] = e;
+          e->next[INDEX] = next;
           p->next[INDEX] = e;
         }
       }
@@ -356,8 +362,10 @@ namespace Dark
           firstElem = e;
         }
         else {
-          e->prev[INDEX] = p->prev[INDEX];
-          p->prev[INDEX]->next[INDEX] = e;
+          Type *prev = p->prev[INDEX];
+
+          prev->next[INDEX] = e;
+          e->prev[INDEX] = prev;
           p->prev[INDEX] = e;
         }
       }
@@ -385,20 +393,9 @@ namespace Dark
       /**
        * Empty the list but don't delete the elements.
        */
-      void disjoin()
+      void clear()
       {
-        Type *p = firstElem;
-
-        while( p != null ) {
-          Type *next = p->next[INDEX];
-
-          p->next[INDEX] = null;
-          p->prev[INDEX] = null;
-
-          p = next;
-        }
-
-        firstElem =  null;
+        firstElem = null;
         lastElem = null;
       }
 

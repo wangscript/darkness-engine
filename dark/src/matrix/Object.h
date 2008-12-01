@@ -77,7 +77,16 @@ namespace Dark
       static const int UNDER_WATER_BIT = 0x00010000;
 
       // if object intersects with water (cleared when comes out of water)
-      static const int IN_WATER_BIT   = 0x00008000;
+      static const int IN_WATER_BIT = 0x00008000;
+
+      // if object can climb
+      static const int CLIMBER_BIT = 0x00004000;
+
+      // if object is on ladder (this bit is cleared every ipdate)
+      static const int ON_LADDER_BIT = 0x00002000;
+
+      // if object is on ladder (cleared when goes off the ladder)
+      static const int CLIMBING_LADDER_BIT = 0x00001000;
 
     public:
 

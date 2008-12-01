@@ -312,11 +312,14 @@ namespace Client
     SDL_Event event;
 
     bool isAlive = true;
+    bool isActive = true;
     int  nFrames = 0;
 
     Uint32 tick     = atoi( config["tick"] );
+    // time passed form start of the frame
     Uint32 time;
     Uint32 timeZero = SDL_GetTicks();
+    // time at start of the frame
     Uint32 timeLast = timeZero;
 
     // set mouse cursor to center of the screen and clear any events (key presses and mouse moves)
@@ -344,17 +347,40 @@ namespace Client
           }
           case SDL_KEYDOWN: {
             input.keys[event.key.keysym.sym] |= SDL_PRESSED;
+
+	    if( event.key.keysym.sym == SDLK_F12 ) {
+	      SDL_WM_IconifyWindow();
+	      isActive = false;
+	    }
             break;
           }
           case SDL_MOUSEBUTTONDOWN: {
             input.mouse.b |= event.button.button;
             break;
           }
+	  case SDL_ACTIVEEVENT: {
+	    isActive |= event.active.gain && event.active.state == SDL_APPACTIVE;
+	    break;
+	  }
           case SDL_QUIT: {
             isAlive = false;
             break;
           }
         }
+      }
+
+      // waste time when iconified
+      if( !isActive ) {
+	time = SDL_GetTicks() - timeLast;
+
+	if( time < tick ) {
+	  SDL_Delay( max( tick - time, 1u ) );
+	}
+	else if( time > 10 * tick ) {
+	  timeLast += time - tick;
+	}
+	timeLast += tick;
+	continue;
       }
 
       // update world
@@ -369,15 +395,15 @@ namespace Client
         render.draw();
         nFrames++;
 
-        // if there's still some time left, waste it
-        time = SDL_GetTicks() - timeLast;
+	// if there's still some time left, waste it
+	time = SDL_GetTicks() - timeLast;
 
-        if( time < tick ) {
-          SDL_Delay( max( tick - time, 1u ) );
-        }
+	if( time < tick ) {
+	  SDL_Delay( max( tick - time, 1u ) );
+	}
       }
       else if( time > 10 * tick ) {
-        timeLast += time - tick;
+	timeLast += time - tick;
       }
       timeLast += tick;
     }

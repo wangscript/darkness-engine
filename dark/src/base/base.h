@@ -19,12 +19,12 @@
 #include <assert.h>
 
 /*
- *  Basic definitons and template functions
+ * Basic definitons and template functions
  */
 #include "common.h"
 
 /*
- *  Containers
+ * Containers
  */
 #include "Vector.h"
 #include "SVector.h"
@@ -33,24 +33,28 @@
 #include "DList.h"
 
 /*
- *  String
+ * String
  */
 #include "String.h"
 
 /*
- *  Reuser base class for improved memory management (reusing freed blocks)
+ * Reuser base class for improved memory management (reusing freed blocks)
  */
 #include "Reuser.h"
 
 /*
- *  Containers 2
+ * Containers 2
  */
-#include "Bitset.h"
 #include "HashIndex.h"
 #include "HashString.h"
 
 /*
- *  Math
+ * Bitset
+ */
+#include "Bitset.h"
+
+/*
+ * Math
  */
 #include "Math.h"
 
@@ -60,7 +64,7 @@
 #include "Mat44.h"
 
 /*
- *  Utilities
+ * Utilities
  */
 #include "LogFile.h"
 #include "Config.h"
