@@ -530,7 +530,7 @@ namespace Dark
        */
       void sort()
       {
-        aSort( data, 0, count - 1 );
+        aSort( data, count );
       }
 
       /**
@@ -538,7 +538,7 @@ namespace Dark
        */
       void sort2()
       {
-        aSort2( data, 0, count - 1 );
+        aSort2( data, count );
       }
 
       /**
