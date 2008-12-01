@@ -2,19 +2,19 @@ cmake_minimum_required( VERSION 2.6 )
 
 PROJECT( Dark CXX )
 
-IF(WIN32)
+IF( WIN32 )
 
   INCLUDE_DIRECTORIES(
-      ../iconv/include 
-      ../libxml2/include 
+      ../iconv/include
+      ../libxml2/include
       ../SDL/include
       ../SDL_image/include
-      ../ogg/include 
+      ../ogg/include
       ../vorbis/include
       ../OpenAL/include
       ../freealut/include )
   LINK_DIRECTORIES(
-      ../../../iconv/lib 
+      ../../../iconv/lib
       ../../../libxml2/lib
       ../../../SDL/lib
       ../../../SDL_image/lib
@@ -32,18 +32,18 @@ IF(WIN32)
       SDL_mixer.lib
       opengl32.lib
       glu32.lib
-      openal32.lib 
-      alut.lib 
+      openal32.lib
+      alut.lib
       vorbisfile.lib )
   # lowercase so that precompile.sh script doesn't screw up
   add_definitions( /W4 /fp:strict )
 
-ELSE(WIN32)
+ELSE( WIN32 )
 
   INCLUDE_DIRECTORIES( /usr/include/libxml2 )
   LINK_LIBRARIES( xml2 SDL SDL_image SDL_mixer GL GLU openal alut vorbisfile )
-  ADD_DEFINITIONS( -O0 -g -pedantic -Wall -Wextra -Winvalid-pch -pipe )
+  ADD_DEFINITIONS( -g -pedantic -Wall -Wextra -Winvalid-pch -pipe )
 
-ENDIF(WIN32)
+ENDIF( WIN32 )
 
 SUBDIRS( src )

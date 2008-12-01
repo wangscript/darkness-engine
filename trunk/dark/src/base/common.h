@@ -264,53 +264,37 @@ namespace Dark
    * @param end index of the last element to be sorted
    */
   template <class Type>
-  inline void aSort( Type *array, int count )
+  inline void aSort( Type *first, Type *last )
   {
-    Type *stack[ max( 2, 4 * ( count - 2 ) ) ];
-    Type **sp = stack;
-    Type *first = array;
-    Type *last = array + count - 1;
+    if( first < last ) {
+      if( last - first > 1 ) {
+        int pivotValue = *last;
+        Type *top = first;
+        Type *bottom = last - 1;
 
-    *( sp++ ) = first;
-    *( sp++ ) = last;
-
-    do {
-      last = *( --sp );
-      first = *( --sp );
-
-      if( first < last ) {
-        if( last - first > 1 ) {
-          int pivotValue = *last;
-          Type *top = first;
-          Type *bottom = last - 1;
-
-          do {
-            while( top <= bottom && *top <= pivotValue ) {
-              top++;
-            }
-            while( top < bottom && *bottom > pivotValue ) {
-              bottom--;
-            }
-            if( top >= bottom ) {
-              break;
-            }
-            swap( *top, *bottom );
+        do {
+          while( top <= bottom && *top <= pivotValue ) {
+            top++;
           }
-          while( true );
-
-          swap( *top, *last );
-
-          *( sp++ ) = first;
-          *( sp++ ) = top - 1;
-          *( sp++ ) = top + 1;
-          *( sp++ ) = last;
+          while( top < bottom && *bottom > pivotValue ) {
+            bottom--;
+          }
+          if( top >= bottom ) {
+            break;
+          }
+          swap( *top, *bottom );
         }
-        else if( *first > *last ) {
-          swap( *first, *last );
-        }
+        while( true );
+
+        swap( *top, *last );
+
+        aSort( firts, top - 1 );
+        aSort( top + 1, last );
+      }
+      else if( *first > *last ) {
+        swap( *first, *last );
       }
     }
-    while( sp != stack );
   }
 
   /**
@@ -322,56 +306,40 @@ namespace Dark
    * @param end index of the last element to be sorted
    */
   template <class Type>
-  inline void aSort( Type *array, int count )
+  inline void aSort( Type *array, Type *last )
   {
-    Type *stack[ max( 2, 4 * ( count - 2 ) ) ];
-    Type **sp = stack;
-    Type *first = array;
-    Type *last = array + count - 1;
+    if( first < last ) {
+      if( last - first > 1 ) {
+        Type *pivot = first + ( last - first ) / 2;
+        int  pivotValue = *pivot;
+        Type *top = first;
+        Type *bottom = last - 1;
 
-    *( sp++ ) = first;
-    *( sp++ ) = last;
+        swap( *pivot, *last );
 
-    do {
-      last = *( --sp );
-      first = *( --sp );
-
-      if( first < last ) {
-        if( last - first > 1 ) {
-          Type *pivot = first + ( last - first ) / 2;
-          int pivotValue = *pivot;
-          Type *top = first;
-          Type *bottom = last - 1;
-
-          swap( *pivot, *last );
-
-          do {
-            while( top <= bottom && *top <= pivotValue ) {
-              top++;
-            }
-            while( top < bottom && *bottom > pivotValue ) {
-              bottom--;
-            }
-            if( top >= bottom ) {
-              break;
-            }
-            swap( *top, *bottom );
+        do {
+          while( top <= bottom && *top <= pivotValue ) {
+            top++;
           }
-          while( true );
-
-          swap( *top, *last );
-
-          *( sp++ ) = first;
-          *( sp++ ) = top - 1;
-          *( sp++ ) = top + 1;
-          *( sp++ ) = last;
+          while( top < bottom && *bottom > pivotValue ) {
+            bottom--;
+          }
+          if( top >= bottom ) {
+            break;
+          }
+          swap( *top, *bottom );
         }
-        else if( *first > *last ) {
-          swap( *first, *last );
-        }
+        while( true );
+
+        swap( *top, *last );
+
+        aSort( firts, top - 1 );
+        aSort( top + 1, last );
+      }
+      else if( *first > *last ) {
+        swap( *first, *last );
       }
     }
-    while( sp != stack );
   }
 
 }

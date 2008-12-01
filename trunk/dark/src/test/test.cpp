@@ -105,6 +105,46 @@ inline void arSort( Type *first, Type *last )
   }
 }
 
+template <class Type>
+static void oaSort( Type *array, int begin, int end )
+{
+  int first = begin;
+  int last = end - 1;
+
+  if( first < last ) {
+    if( first + 1 == last ) {
+      if( array[first] > array[last] ) {
+        swap( array[first], array[last] );
+      }
+    }
+    else {
+      int pivotValue = array[last];
+      int top = first;
+      int bottom = last - 1;
+
+      do {
+        while( top <= bottom && array[top] <= pivotValue ) {
+          top++;
+        }
+        while( top < bottom && array[bottom] > pivotValue ) {
+          bottom--;
+        }
+        if( top < bottom ) {
+          swap( array[top], array[bottom] );
+        }
+        else {
+          break;
+        }
+      }
+      while( true );
+
+      swap( array[top], array[last] );
+      oaSort( array, begin, top );
+      oaSort( array, top + 1, end );
+    }
+  }
+}
+
 #define MAX 2000
 #define TESTS 10000
 
@@ -119,8 +159,9 @@ int main( int, char *[] )
     for( int j = 0; j < MAX; j++ ) {
       array[j] = rand() % 1000;
     }
-    arSort( array, array + MAX - 1 );
+    //arSort( array, array + MAX - 1 );
     //aSort<int, 4*MAX>( array, MAX );
+    oaSort( array, 0, MAX );
   }
   printf( "%d\n", (int)( clock() - t0 ) / 1000 );
 //   for( int i = 0; i < MAX; i++ ) {
