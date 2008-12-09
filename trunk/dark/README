@@ -1,19 +1,12 @@
-Following programs libraries are required to compile:
+Following programs and libraries are required to compile:
 
 - cmake
-
 - libxml2
-
-SDL
 - SDL
 - SDL_image
 - SDL_net
 - SDL_mixer
-
-OpenGL (MesaGL header files recommended)
-- GL
-- GLU
-
-OpenAL
-- openal
+- MesaGL or OpenGL
+- MesaGLU or OpenGL GLU
+- OpenAL
 - freealut
