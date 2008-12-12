@@ -13,7 +13,7 @@
 #include <time.h>
 
 template <class TypeA, class TypeB>
-    inline void swap( TypeA &a, TypeB &b )
+inline void swap( TypeA &a, TypeB &b )
 {
   TypeA temp = a;
 
@@ -268,6 +268,8 @@ int main( int, char *[] )
     for( int j = 0; j < MAX; j++ ) {
       array[j] = rand() % MAX;
     }
+    //sort( array, 0, MAX );
+    //quickSort( array, MAX );
     //arSort( array, array + MAX - 1 );
     //Dark::aSort( array, MAX );
     TQuickSortInc( array, MAX );
