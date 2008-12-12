@@ -269,9 +269,9 @@ int main( int, char *[] )
       array[j] = rand() % MAX;
     }
     //arSort( array, array + MAX - 1 );
-		//Dark::aSort( array, MAX );
-		TQuickSortInc( array, MAX );
-		//Dark::aSort( array, MAX );
+    //Dark::aSort( array, MAX );
+    TQuickSortInc( array, MAX );
+    //Dark::aSort( array, MAX );
   }
   printf( "%d\n", (int)( clock() - t0 ) );
   // for( int i = 0; i < MAX; i++ ) {

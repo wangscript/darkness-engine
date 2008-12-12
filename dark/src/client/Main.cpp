@@ -116,10 +116,10 @@ namespace Client
   void Main::main()
   {
 #ifdef WIN32
-		const char *homeVar = getenv( "HOME" );
+    const char *homeVar = getenv( "HOME" );
     String home( homeVar == null ? DARK_RC_DIR : homeVar + String( "\\" DARK_RC_DIR ) );
 
-		struct _stat homeDirStat;
+    struct _stat homeDirStat;
     if( _stat( home.cstr(), &homeDirStat ) ) {
       printf( "No resource dir found, creating '%s' ...", home.cstr() );
 
@@ -130,9 +130,9 @@ namespace Client
       }
       printf( " OK\n" );
     }
-		home = home + "\\";
+    home = home + "\\";
 #else
-		const char *homeVar = getenv( "HOME" );
+    const char *homeVar = getenv( "HOME" );
     String home( homeVar == null ? DARK_RC_DIR "/" : homeVar + String( "/" DARK_RC_DIR "/" ) );
 
     struct stat homeDirStat;
@@ -204,7 +204,7 @@ namespace Client
     logFile.print( "Going to working directory '%s' ...", (const char*) data );
 
 #ifdef WIN32
-		if( _chdir( data ) != 0 ) {
+    if( _chdir( data ) != 0 ) {
       logFile.printRaw( " Failed\n" );
       shutdown();
       return;
@@ -348,20 +348,20 @@ namespace Client
           case SDL_KEYDOWN: {
             input.keys[event.key.keysym.sym] |= SDL_PRESSED;
 
-	    if( event.key.keysym.sym == SDLK_F12 ) {
-	      SDL_WM_IconifyWindow();
-	      isActive = false;
-	    }
+      if( event.key.keysym.sym == SDLK_F12 ) {
+        SDL_WM_IconifyWindow();
+        isActive = false;
+      }
             break;
           }
           case SDL_MOUSEBUTTONDOWN: {
             input.mouse.b |= event.button.button;
             break;
           }
-	  case SDL_ACTIVEEVENT: {
-	    isActive |= event.active.gain && event.active.state == SDL_APPACTIVE;
-	    break;
-	  }
+    case SDL_ACTIVEEVENT: {
+      isActive |= event.active.gain && event.active.state == SDL_APPACTIVE;
+      break;
+    }
           case SDL_QUIT: {
             isAlive = false;
             break;
@@ -371,16 +371,16 @@ namespace Client
 
       // waste time when iconified
       if( !isActive ) {
-	time = SDL_GetTicks() - timeLast;
+  time = SDL_GetTicks() - timeLast;
 
-	if( time < tick ) {
-	  SDL_Delay( max( tick - time, 1u ) );
-	}
-	else if( time > 10 * tick ) {
-	  timeLast += time - tick;
-	}
-	timeLast += tick;
-	continue;
+  if( time < tick ) {
+    SDL_Delay( max( tick - time, 1u ) );
+  }
+  else if( time > 10 * tick ) {
+    timeLast += time - tick;
+  }
+  timeLast += tick;
+  continue;
       }
 
       // update world
@@ -395,15 +395,15 @@ namespace Client
         render.draw();
         nFrames++;
 
-	// if there's still some time left, waste it
-	time = SDL_GetTicks() - timeLast;
+  // if there's still some time left, waste it
+  time = SDL_GetTicks() - timeLast;
 
-	if( time < tick ) {
-	  SDL_Delay( max( tick - time, 1u ) );
-	}
+  if( time < tick ) {
+    SDL_Delay( max( tick - time, 1u ) );
+  }
       }
       else if( time > 10 * tick ) {
-	timeLast += time - tick;
+  timeLast += time - tick;
       }
       timeLast += tick;
     }
