@@ -130,7 +130,7 @@ namespace Dark
       return false;
     }
     // Write the vars in the same order they are in HastString. I know, it's a mess.
-    for( HashString<String, SIZE>::Iterator i( vars ); !i.isPassed(); i.next() ) {
+    for( HashString<String, SIZE>::Iterator i( vars ); !i.isPassed(); i++ ) {
       if( xmlTextWriterWriteString( writer, BAD_CAST "\n  " ) < 0 ||
           xmlTextWriterStartElement( writer, BAD_CAST "var" ) < 0 ||
           xmlTextWriterWriteAttribute( writer, BAD_CAST "name", BAD_CAST i.key()->cstr() ) < 0 ||
@@ -162,8 +162,8 @@ namespace Dark
   {
     String s = "";
 
-    for( HashString<String, SIZE>::Iterator i( vars ); i.get() != null; i.next() ) {
-      s = s + *i.key() + " = \"" + *i.get() + "\"\n";
+    for( HashString<String, SIZE>::Iterator i( vars ); i.value() != null; i++ ) {
+      s = s + *i.key() + " = \"" + *i.value() + "\"\n";
     }
     return s;
   }

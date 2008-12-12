@@ -22,11 +22,16 @@ namespace Dark
 
     private:
 
+			// Pointer to data array
       Type data[SIZE];
+			// Number of elements in vector
       int count;
 
     public:
 
+      /**
+       * Vector iterator.
+       */
       class Iterator
       {
         protected:
@@ -37,29 +42,73 @@ namespace Dark
 
         public:
 
+          /**
+           * Make iterator for given vector. After creation it points to first element.
+           * @param v
+           */
           explicit Iterator( SVector &v ) : data( v.data ), count( v.count ), index( 0 )
           {}
 
+          /**
+					 * Returns true if iterator is on specified index.
+					 * @param e
+					 * @return
+					 */
+					bool operator == ( int index_ )
+					{
+						return index == index_;
+					}
+
+          /**
+           * When iterator advances beyond last element, it's become passed. It points to an invalid
+           * location.
+           * @return true if iterator is passed
+           */
           bool isPassed() const
           {
             return index >= count;
           }
 
-          Type *get() const
-          {
-            return &data[index];
-          }
-
-          Type &operator * () const
-          {
-            return data[index];
-          }
-
-          void next()
+					/**
+           * Advance to next element.
+           */
+          void operator ++ ( int )
           {
             assert( index < count );
 
             index++;
+          }
+
+          /**
+           * @return pointer to current element in the vector
+           */
+          Type *get()
+          {
+            return &data[index];
+          }
+
+          /**
+           * @return constant pointer to current element in the vector
+           */
+          const Type *get() const
+          {
+            return &data[index];
+          }
+
+          /**
+           * @return reference to current element in the vector
+           */
+          Type &operator * ()
+          {
+            return data[index];
+          }
+
+          /**
+           * @return constant reference to current element in the vector
+           */
+          const Type &operator * () const
+          {
+            return data[index];
           }
 
       };

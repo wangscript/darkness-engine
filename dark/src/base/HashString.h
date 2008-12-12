@@ -89,27 +89,7 @@ namespace Dark
             return elem == null;
           }
 
-          String *key() const
-          {
-            return &elem->key;
-          }
-
-          Type *value() const
-          {
-            return &elem->value;
-          }
-
-          Type *get() const
-          {
-            return value();
-          }
-
-          Type &operator * () const
-          {
-            return elem->value;
-          }
-
-          void next()
+					void operator ++ ( int )
           {
             assert( elem != null );
 
@@ -126,6 +106,43 @@ namespace Dark
             else {
               elem = null;
             }
+          }
+
+          String *key() const
+          {
+            return &elem->key;
+          }
+
+          /**
+           * @return pointer to current element's value
+           */
+          Type *value()
+          {
+            return &elem->value;
+          }
+
+					/**
+           * @return constant pointer to current element's value
+           */
+          const Type *value() const
+          {
+            return value();
+          }
+
+          /**
+           * @return reference to current element's value
+           */
+					Type &operator * ()
+          {
+            return elem->value;
+          }
+
+					/**
+           * @return constant reference to current element's value
+           */
+					const Type &operator * () const
+          {
+            return elem->value;
           }
 
       };
