@@ -24,8 +24,8 @@ namespace Dark
 
   void Nirvana::load()
   {
-    add( new M_Walker( (Bot*) world.objects[1] ) );
-    add( new M_Walker( (Bot*) world.objects[2] ) );
+    //add( new M_Walker( (Bot*) world.objects[1] ) );
+    //add( new M_Walker( (Bot*) world.objects[2] ) );
   }
 
   void Nirvana::start()
@@ -75,8 +75,7 @@ namespace Dark
     // remove unneccessary minds
     for( DList<Mind, 0>::Iterator i( minds ); !i.isPassed(); ) {
       Mind *mind = i.get();
-
-      i.next();
+      i++;
 
       if( !mind->isUpdated ) {
         minds.remove( mind );
@@ -86,7 +85,7 @@ namespace Dark
 
   void Nirvana::think()
   {
-    for( DList<Mind, 0>::Iterator i( minds ); !i.isPassed(); i.next() ) {
+    for( DList<Mind, 0>::Iterator i( minds ); !i.isPassed(); i++ ) {
       ( *i ).isUpdated = true;
       ( *i ).update();
     }

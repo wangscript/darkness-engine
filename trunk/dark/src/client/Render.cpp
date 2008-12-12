@@ -462,7 +462,7 @@ namespace Client
       uint key = i.key();
 
       // we should advance now, so that we don't remove the element the iterator is pointing at
-      i.next();
+      i++;
 
       if( model.state == Model::NOT_UPDATED ) {
         models.remove( key );
@@ -480,7 +480,7 @@ namespace Client
       uint key = i.key();
 
       // we should advance now, so that we don't remove the element the iterator is pointing at
-      i.next();
+      i++;
 
       if( sparkGenRender.state == SparkGenRender::NOT_UPDATED ) {
         sparkGenRenders.remove( key );

@@ -63,6 +63,16 @@ namespace Dark
           {}
 
           /**
+					 * Returns true if iterator is on specified index.
+					 * @param e
+					 * @return
+					 */
+					bool operator == ( int index_ )
+					{
+						return index == index_;
+					}
+
+          /**
            * When iterator advances beyond last element, it's become passed. It points to an invalid
            * location.
            * @return true if iterator is passed
@@ -75,7 +85,7 @@ namespace Dark
           /**
            * Advance to next element.
            */
-          void next()
+          void operator ++ ( int )
           {
             assert( index < count );
 
@@ -83,7 +93,7 @@ namespace Dark
           }
 
           /**
-           * @return pointer current element in the vector
+           * @return pointer to current element in the vector
            */
           Type *get()
           {
@@ -91,7 +101,7 @@ namespace Dark
           }
 
           /**
-           * @return constant pointer current element in the vector
+           * @return constant pointer to current element in the vector
            */
           const Type *get() const
           {
@@ -467,17 +477,17 @@ namespace Dark
       {
         assert( 0 <= index && index < count );
 
+				count--;
         aCopy( data + index, data + index + 1, count - index );
       }
 
       // find and remove given element
       bool exclude( const Type &e )
       {
-        int i = aIndex( data, count, e );
+        int index = aIndex( data, count, e );
 
-        if( i != -1 ) {
-          count--;
-          aCopy( data + i, data + i + 1, count - i );
+        if( index != -1 ) {
+          remove( index );
 
           return true;
         }

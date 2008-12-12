@@ -88,7 +88,7 @@ namespace Client
 
     for( HashIndex<ContSource, HASHTABLE_SIZE>::Iterator i( contSources );
          !i.isPassed();
-         i.next() )
+         i++ )
     {
       ContSource &src = *i;
 
@@ -229,7 +229,7 @@ namespace Client
       uint key = i.key();
 
       // we should advance now, so that we don't remove the element the iterator is pointing at
-      i.next();
+      i++;
 
       if( src->state == ContSource::NOT_UPDATED ) {
         alSourceStop( src->source );

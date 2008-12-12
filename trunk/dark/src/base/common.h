@@ -42,7 +42,7 @@ namespace Dark
   typedef unsigned long  ulong;
 
   /*
-   * GENERIC TEMPLATES
+   * MISCELLANEOUS TEMPLATES
    */
 
   /**
@@ -50,10 +50,10 @@ namespace Dark
    * @param a reference to first variable
    * @param b reference to second variable
    */
-  template <class TypeA, class TypeB>
-  inline void swap( TypeA &a, TypeB &b )
+  template <class ValueA, class ValueB>
+  inline void swap( ValueA &a, ValueB &b )
   {
-    TypeA temp = a;
+    ValueA temp = a;
 
     a = b;
     b = temp;
@@ -64,8 +64,8 @@ namespace Dark
    * @param a
    * @return absolute value
    */
-  template <class Type>
-  inline Type abs( Type a )
+  template <class Value>
+  inline Value abs( Value a )
   {
     return a < 0 ? -a : a;
   }
@@ -76,8 +76,8 @@ namespace Dark
    * @param b
    * @return minimum of a and b
    */
-  template <class Type, class TypeB>
-  inline Type min( Type a, TypeB b )
+  template <class Value, class ValueB>
+  inline Value min( Value a, ValueB b )
   {
     return a < b ? a : b;
   }
@@ -88,14 +88,14 @@ namespace Dark
    * @param b
    * @return maximum of a and b
    */
-  template <class Type, class TypeB>
-  inline Type max( Type a, TypeB b )
+  template <class Value, class ValueB>
+  inline Value max( Value a, ValueB b )
   {
     return a > b ? a : b;
   }
 
   /**
-   * Bound c between a and b. Equals to max( min( c, b ), a ).
+   * c bounded between a and b. Equals to max( min( c, b ), a ).
    * @param c
    * @param a
    * @param b
@@ -113,6 +113,108 @@ namespace Dark
       return b < c ? b : c;
     }
   }
+
+	/*
+	 * ITERABLE CONTAINER UTILITY TEMPLATES
+	 */
+
+	/**
+	 * Compare all elements. (Like STL equal)
+	 */
+	template <class IteratorA, class IteratorB>
+	inline bool iEquals( IteratorA beginA, IteratorA endA, IteratorB beginB )
+	{
+		while( beginA != endA ) {
+			if( *beginA != *beginB ) {
+				return false;
+			}
+			beginA++;
+			beginB++;
+		}
+		return true;
+	}
+
+	/**
+	 * Set all elements. (Like STL fill)
+	 */
+	template <class Iterator, class Value>
+	inline void iSet( Iterator begin, Iterator end, Value value )
+	{
+		while( begin != end ) {
+			*begin = value;
+			begin++;
+		}
+	}
+
+	/**
+	 * Copy elements from first to last. (Like STL copy)
+	 */
+	template <class IteratorA, class IteratorB>
+	inline void iCopy( IteratorA beginA, IteratorA endA, IteratorB beginB )
+	{
+		while( beginA != endA ) {
+			*beginB = *beginA;
+			beginA++;
+			beginB++;
+		}
+	}
+
+	/**
+	 * Copy elements from last to first. (Like STL copy_backward)
+	 */
+	template <class IteratorA, class IteratorB>
+	inline void iRCopy( IteratorA beginA, IteratorA endA, IteratorB endB )
+	{
+		while( endA != beginA ) {
+			endA--;
+			endB--;
+			*endB = *endA;
+		}
+	}
+
+	/**
+	 * Find first occurence of given element. (Like STL find)
+	 */
+	template <class Iterator, class Value>
+	inline Iterator iIndex( Iterator begin, Iterator end, Value value )
+	{
+		while( begin != end ) {
+			if( *begin == value ) {
+				return begin;
+			}
+			begin++;
+		}
+		return end;
+	}
+
+	/**
+	 * Find last occurence of given element.
+	 */
+	template <class Iterator, class Value>
+	inline Iterator iLastIndex( Iterator begin, Iterator end, Value value )
+	{
+		Iterator i = end;
+
+		while( i != begin ) {
+			i--;
+			if( *i == value ) {
+				return i;
+			}
+		}
+		return end;
+	}
+
+	/**
+	 * Delete elements that have been previously allocated with new operator.
+	 */
+	template <class Iterator>
+	inline void iFree( Iterator begin, Iterator end )
+	{
+		while( begin != end ) {
+			delete *begin;
+			begin++;
+		}
+	}
 
   /*
    * ARRAY UTILIY TEMPLATES
@@ -184,29 +286,7 @@ namespace Dark
     }
   }
 
-  /**
-   * Reallocate array (realloc).
-   * Allocates new block of size newSize * typeof( Type ) and copies first "count" elements of
-   * source array. newCount should be equal to or greater than count.
-   * @param array pointer to the source array
-   * @param count number of elements to be copied
-   * @param newCount number of elements in the new array
-   * @return
-   */
-  template <class Type>
-  inline Type *aRealloc( Type *array, int count, int newCount )
-  {
-    assert( count <= newCount );
-
-    Type *newArray = new Type[newCount];
-
-    aCopy( newArray, array, count );
-    delete[] array;
-
-    return newArray;
-  }
-
-  /**
+	/**
    * Find the first occurence of an element.
    * @param array pointer to the first element in the array
    * @param count number of elements to be looked upon
@@ -256,90 +336,98 @@ namespace Dark
   }
 
   /**
-   * Perform quicksort on the array. Non-recursive quicksort algorithm is used which takes last
-   * element in partition as a pivot so sorting a sorted or nearly sorted array will take O(n^2)
-   * time instead of O(n log n) as in general case.
-   * @param array pointer to the first element in the array
-   * @param begin index of the fist element to be sorted
-   * @param end index of the last element to be sorted
+   * Reallocate array (realloc).
+   * Allocates new block of size newSize * typeof( Type ) and copies first "count" elements of
+   * source array. newCount should be equal to or greater than count.
+   * @param array pointer to the source array
+   * @param count number of elements to be copied
+   * @param newCount number of elements in the new array
+   * @return
    */
   template <class Type>
-  inline void aSort( Type *first, Type *last )
+  inline Type *aRealloc( Type *array, int count, int newCount )
   {
-    if( first < last ) {
-      if( last - first > 1 ) {
-        int pivotValue = *last;
-        Type *top = first;
-        Type *bottom = last - 1;
+    assert( count <= newCount );
 
-        do {
-          while( top <= bottom && *top <= pivotValue ) {
-            top++;
-          }
-          while( top < bottom && *bottom > pivotValue ) {
-            bottom--;
-          }
-          if( top >= bottom ) {
-            break;
-          }
-          swap( *top, *bottom );
-        }
-        while( true );
+    Type *newArray = new Type[newCount];
 
-        swap( *top, *last );
+		aCopy( newArray, array, count );
+    delete[] array;
 
-        aSort( first, top - 1 );
-        aSort( top + 1, last );
-      }
-      else if( *first > *last ) {
-        swap( *first, *last );
-      }
-    }
+    return newArray;
   }
 
   /**
-   * Perform quicksort on the array. Non-recursive quicksort algorithm is used which takes middle
-   * element in partition as a pivot so sorting a sorted or nearly sorted array performs well
-   * (O(n log n) time) on nearly sorted arrays.
+   * Perform quicksort on the array. Non-recursive quicksort algorithm is used which takes first
+   * element in partition as a pivot so sorting a sorted or nearly sorted array will take O(n^2)
+   * time instead of O(n log n) as in general case.
    * @param array pointer to the first element in the array
-   * @param begin index of the fist element to be sorted
-   * @param end index of the last element to be sorted
+   * @param count number of elements to be sorted
    */
   template <class Type>
-  inline void aSort2( Type *first, Type *last )
-  {
-    if( first < last ) {
-      if( last - first > 1 ) {
-        Type *pivot = first + ( last - first ) / 2;
-        int  pivotValue = *pivot;
-        Type *top = first;
-        Type *bottom = last - 1;
+	static void aSort( Type *array, int count )
+	{
+		Type *first = array;
+		Type *last = array + count - 1;
 
-        swap( *pivot, *last );
+		Type *stack[2048];
+		Type **sp = stack;
 
-        do {
-          while( top <= bottom && *top <= pivotValue ) {
-            top++;
-          }
-          while( top < bottom && *bottom > pivotValue ) {
-            bottom--;
-          }
-          if( top >= bottom ) {
-            break;
-          }
-          swap( *top, *bottom );
-        }
-        while( true );
+		*( sp++ ) = first;
+		*( sp++ ) = last;
 
-        swap( *top, *last );
+		do {
+			last = *( --sp );
+			first = *( --sp );
 
-        aSort( first, top - 1 );
-        aSort( top + 1, last );
-      }
-      else if( *first > *last ) {
-        swap( *first, *last );
-      }
-    }
-  }
+			if( last <= first ) {
+				continue;
+			}
+
+			// 8-14 seem as optimal tresholds for switching to selection sort
+			if( last - first <= 10 ) {
+				// selection sort
+				for( Type *i = first; i < last; ) {
+					Type *pivot = i;
+					Type *min = i;
+					i++;
+
+					for( Type *j = i; j <= last; j++ ) {
+						if( *j < *min ) {
+							min = j;
+						}
+					}
+					swap( *pivot, *min );
+				}
+			}
+			else {
+				// quicksort
+				Type *top = first;
+				Type *bottom = last - 1;
+
+				do {
+					while( top <= bottom && *top <= *last ) {
+						top++;
+					}
+					while( top < bottom && *bottom > *last ) {
+						bottom--;
+					}
+					if( top >= bottom ) {
+						break;
+					}
+					swap( *top, *bottom );
+				}
+				while( true );
+
+				swap( *top, *last );
+
+				*( sp++ ) = first;
+				*( sp++ ) = top - 1;
+				*( sp++ ) = top + 1;
+				*( sp++ ) = last;
+			}
+		}
+		while( sp != stack );
+	}
 
 }

@@ -109,7 +109,7 @@ namespace Dark
         obj->newVelocity.setZero();
       }
       else {
-        obj->newVelocity *= 1.0 - FLOOR_FRICTION;
+        obj->newVelocity *= 1.0f - FLOOR_FRICTION;
       }
     }
     else {
@@ -284,7 +284,8 @@ namespace Dark
 
     int traceSplits = 0;
     do {
-      collider.translate( *obj, move, obj );
+      //collider.translate( *obj, move, obj );
+			collider.hit.ratio = 1.0f;
       obj->p += collider.hit.ratio * move;
       leftRatio -= leftRatio * collider.hit.ratio;
 
@@ -384,7 +385,7 @@ namespace Dark
       // disable object if it is still and on surface
       else {
         bool isStill = obj->newVelocity.isZero();
-        bool isOnFloor = ( obj->flags & Object::ON_FLOOR_BIT ) != 0;
+        bool isOnFloor = obj->flags & Object::ON_FLOOR_BIT;
         bool isOnStillObject = obj->lower > 0 &&
             ( (DynObject*) world.objects[obj->lower] )->newVelocity.isZero();
 
@@ -396,8 +397,7 @@ namespace Dark
       // handle physics
       if( !( obj->flags & Object::DISABLED_BIT ) ) {
         if( handleObjFriction() ) {
-          // if objects is still in movement or not on a still surface after friction changed its
-          // velocity, handle physics
+          // if objects is still in movement or not on a still surface after friction changed its velocity, handle physics
           handleObjMove();
           obj->newVelocity *= 1.0f - leftRatio;
         }

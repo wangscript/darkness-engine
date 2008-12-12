@@ -71,6 +71,16 @@ namespace Dark
           explicit Iterator( List &l ) : elem( l.firstElem )
           {}
 
+					/**
+					 * Returns true if iterator is on specified element.
+					 * @param e
+					 * @return
+					 */
+					bool operator == ( const Type *e )
+					{
+						return elem == e;
+					}
+
           /**
            * When iterator advances beyond last element, it's become passed. It points to null.
            * @return true if iterator is passed
@@ -83,7 +93,7 @@ namespace Dark
           /**
            * Advance to next element.
            */
-          void next()
+          void operator ++ ( int )
           {
             assert( elem != null );
 
@@ -91,7 +101,7 @@ namespace Dark
           }
 
           /**
-           * @return pointer current element in the list
+           * @return pointer to current element in the list
            */
           Type *get()
           {
@@ -99,7 +109,7 @@ namespace Dark
           }
 
           /**
-           * @return constant pointer current element in the list
+           * @return constant pointer to current element in the list
            */
           const Type *get() const
           {
