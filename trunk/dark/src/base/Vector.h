@@ -310,9 +310,9 @@ namespace Dark
       }
 
       /**
-       * @return first element
+       * @return reference to first element
        */
-      Type first() const
+      Type &first()
       {
         assert( count != 0 );
 
@@ -320,9 +320,29 @@ namespace Dark
       }
 
       /**
-       * @return last element
+       * @return constant reference to first element
        */
-      Type last() const
+      const Type &first() const
+      {
+        assert( count != 0 );
+
+        return data[0];
+      }
+
+      /**
+       * @return reference to last element
+       */
+      Type &last()
+      {
+        assert( count != 0 );
+
+        return data[count - 1];
+      }
+
+      /**
+       * @return constant reference to last element
+       */
+      const Type &last() const
       {
         assert( count != 0 );
 

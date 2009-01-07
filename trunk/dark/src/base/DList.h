@@ -202,17 +202,33 @@ namespace Dark
       }
 
       /**
-       * @return first element in the list
+       * @return pointer to first element in the list
        */
-      Type *first() const
+      Type *first()
       {
         return firstElem;
       }
 
       /**
-       * @return last element in the list
+       * @return constant pointer to first element in the list
        */
-      Type *last() const
+      const Type *first() const
+      {
+        return firstElem;
+      }
+
+      /**
+       * @return pointer to last element in the list
+       */
+      Type *last()
+      {
+        return lastElem;
+      }
+
+      /**
+       * @return constant pointer to last element in the list
+       */
+      const Type *last() const
       {
         return lastElem;
       }
