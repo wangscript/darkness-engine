@@ -1,8 +1,10 @@
-- Object: private (sectorm index, lower, ...), friends (World, Collider, ...)
+- Object: private (sector, index, lower, ...), friends (World, Collider, ...)
 - Object::createRenderer implemented in client/O_XXX
 - static Object::create()
 - register of objects: create( String className )
 - static registration?
+
+- Object isUpdated, onUpdateSelf, thread-safe update
 
 Matrix/World
   - networking support

@@ -202,7 +202,7 @@ namespace Dark
         return b.operator != ( a );
       }
 
-      static bool areEqual( const char *a, const char *b )
+      static bool equals( const char *a, const char *b )
       {
         assert( a != null && b != null );
 

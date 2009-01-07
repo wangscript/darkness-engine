@@ -395,15 +395,15 @@ namespace Client
         render.draw();
         nFrames++;
 
-  // if there's still some time left, waste it
-  time = SDL_GetTicks() - timeLast;
+        // if there's still some time left, waste it
+        time = SDL_GetTicks() - timeLast;
 
-  if( time < tick ) {
-    SDL_Delay( max( tick - time, 1u ) );
-  }
+        if( time < tick ) {
+          SDL_Delay( max( tick - time, 1u ) );
+        }
       }
       else if( time > 10 * tick ) {
-  timeLast += time - tick;
+        timeLast += time - tick;
       }
       timeLast += tick;
     }

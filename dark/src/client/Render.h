@@ -16,6 +16,7 @@
 #include "Font.h"
 #include "BSP.h"
 #include "Terrain.h"
+#include "OBJ.h"
 #include "MD2.h"
 #include "Model.h"
 #include "SparkGenRender.h"

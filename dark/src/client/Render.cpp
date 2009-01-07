@@ -66,7 +66,6 @@ namespace Client
     glMatrixMode( GL_PROJECTION );
       glLoadIdentity();
       gluPerspective( perspectiveAngle, perspectiveAspect, perspectiveMin, perspectiveMax );
-//       gluPerspective( 150, perspectiveAspect, perspectiveMin, perspectiveMax );
     glMatrixMode( GL_MODELVIEW );
 
     glLoadIdentity();
@@ -110,8 +109,8 @@ namespace Client
     sky.init();
     water.init();
 
-    terra.init( context.loadTexture( "terra/map.png", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR, false ),
-                context.loadTexture( "terra/detail.jpg", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR, true ) );
+    terra.init( context.loadTexture( "terra/map.png", false ),
+                context.loadTexture( "terra/detail.jpg", true ) );
 
     for( int i = 0; i < world.bsps.length(); i++ ) {
       bsps << new BSP( world.bsps[i] );
@@ -123,15 +122,15 @@ namespace Client
     lists << shape.genRandomTetrahedicParticle( 0.5f );
 
     lists << shape.genBox( AABB( Vec3::zero(), Vec3( 0.3f, 0.3f, 0.3f ) ),
-                           context.loadTexture( "tex/crate1.jpg", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR, false ) );
+                           context.loadTexture( "tex/crate1.jpg", false ) );
     lists << shape.genBox( AABB( Vec3::zero(), Vec3( 0.6f, 0.6f, 0.6f ) ),
-                           context.loadTexture( "tex/crate2.jpg", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR, false ) );
+                           context.loadTexture( "tex/crate2.jpg", false ) );
 
     lists << MD2::genList( "md2/woodBarrel", INCH, Vec3( 0.0f, 0.0f, -0.482f ) );
     lists << MD2::genList( "md2/metalBarrel", INCH, Vec3( 0.0f, 0.0f, -0.5922f ) );
 
-    lists << MD2::genList( "md2/tree2", 0.1f, Vec3( 0.0f, 0.0f, -3.8f ) );
-    lists << MD2::genList( "md2/tree3", 0.2f, Vec3( 0.0f, 0.0f, -2.2f ) );
+//     lists << MD2::genList( "md2/tree2", 0.1f, Vec3( 0.0f, 0.0f, -3.8f ) );
+//     lists << MD2::genList( "md2/tree3", 0.2f, Vec3( 0.0f, 0.0f, -2.2f ) );
 
     md2s << new MD2();
     md2s.last()->load( "md2/goblin" );
@@ -143,6 +142,9 @@ namespace Client
     md2s << new MD2();
     md2s.last()->load( "md2/knight" );
     md2s.last()->scale( 0.04f );
+
+    lists << OBJ::genList( "obj/monkey" );
+    lists << OBJ::genList( "obj/monkey" );
 
     // prepare for first frame
     glEnable( GL_DEPTH_TEST );
