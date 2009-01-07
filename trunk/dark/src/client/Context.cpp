@@ -35,7 +35,7 @@ namespace Client
   }
 
   uint Context::createTexture( char *data, int width, int height, int bpp,
-                               int magFilter, int minFilter, bool wrap )
+                               bool wrap, int magFilter, int minFilter )
   {
     logFile.print( "Loading texture into context ..." );
 
@@ -80,8 +80,7 @@ namespace Client
   }
 
   uint Context::createNormalmap( char *data, int width, int height, int bpp,
-                                 int magFilter, int minFilter, bool wrap,
-                                 const Vec3 &lightNormal )
+                                 const Vec3 &lightNormal, bool wrap, int magFilter, int minFilter )
   {
     logFile.print( "Loading texture into context ..." );
 
@@ -139,7 +138,7 @@ namespace Client
     return texNum;
   }
 
-  uint Context::loadTexture( const char *fileName, int magFilter, int minFilter, bool wrap )
+  uint Context::loadTexture( const char *fileName, bool wrap, int magFilter, int minFilter )
   {
     logFile.print( "Reading texture from file '%s' ...", fileName );
 
@@ -161,7 +160,7 @@ namespace Client
     int bpp = image->format->BitsPerPixel >> 3;   // bytes per pixel
 
     int texNum = createTexture( (char*) image->pixels, image->w, image->h, bpp,
-                                 magFilter, minFilter, wrap );
+                                 wrap, magFilter, minFilter );
 
     SDL_FreeSurface( image );
 
@@ -172,8 +171,8 @@ namespace Client
     return texNum;
   }
 
-  uint Context::loadNormalmap( const char *fileName, int magFilter, int minFilter, bool wrap,
-                               const Vec3 &lightNormal )
+  uint Context::loadNormalmap( const char *fileName, const Vec3 &lightNormal,
+                               bool wrap, int magFilter, int minFilter )
   {
     logFile.print( "Reading texture from file '%s' ...", fileName );
 
@@ -190,7 +189,7 @@ namespace Client
     assert( image->w == image->h );
 
     int texNum = createNormalmap( (char*) image->pixels, image->w, image->h, bpp,
-                                  magFilter, minFilter, wrap, lightNormal );
+                                  lightNormal, wrap, magFilter, minFilter );
 
     SDL_FreeSurface( image );
 

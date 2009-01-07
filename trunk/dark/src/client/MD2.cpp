@@ -336,7 +336,7 @@ namespace Client
 
     logFile.printRaw( "OK\n" );
 
-    texId = context.loadTexture( skinFile.cstr(), GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR, true );
+    texId = context.loadTexture( skinFile.cstr(), true );
 
     if( texId == 0 ) {
       return false;

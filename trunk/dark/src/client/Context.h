@@ -37,15 +37,33 @@ namespace Client
 
       void init();
 
-      uint createTexture( char *data, int width, int height, int bytesPerPixel,
-                          int magFilter, int minFilter, bool wrap );
-      uint createNormalmap( char *data, int width, int height, int bytesPerPixel,
-                            int magFilter, int minFilter, bool wrap,
-                            const Vec3 &lightNormal );
+      uint createTexture( char *data,
+                          int width,
+                          int height,
+                          int bytesPerPixel,
+                          bool wrap = true,
+                          int magFilter = GL_LINEAR,
+                          int minFilter = GL_LINEAR_MIPMAP_NEAREST );
 
-      uint loadTexture( const char *fileName, int magFilter, int minFilter, bool wrap );
-      uint loadNormalmap( const char *fileName, int magFilter, int minFilter, bool wrap,
-                          const Vec3 &lightNormal );
+      uint createNormalmap( char *data,
+                            int width,
+                            int height,
+                            int bytesPerPixel,
+                            const Vec3 &lightNormal,
+                            bool wrap = true,
+                            int magFilter = GL_LINEAR,
+                            int minFilter = GL_LINEAR_MIPMAP_LINEAR );
+
+      uint loadTexture( const char *fileName,
+                        bool wrap = true,
+                        int magFilter = GL_LINEAR,
+                        int minFilter = GL_LINEAR_MIPMAP_NEAREST );
+
+      uint loadNormalmap( const char *fileName,
+                          const Vec3 &lightNormal,
+                          bool wrap = true,
+                          int magFilter = GL_LINEAR,
+                          int minFilter = GL_LINEAR_MIPMAP_NEAREST );
 
       void freeTextures();
 

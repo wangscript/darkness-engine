@@ -65,13 +65,11 @@ namespace Client
   {
     Dark::BSP::Face &face = bsp->faces[faceIndex];
 
-    glEnableClientState( GL_VERTEX_ARRAY );
     glVertexPointer( 3, GL_FLOAT, sizeof( Dark::BSP::Vertex ),
                      (float*) bsp->vertices[face.firstVertex].p );
 
     glActiveTexture( GL_TEXTURE0 );
     glClientActiveTexture( GL_TEXTURE0 );
-    glEnableClientState( GL_TEXTURE_COORD_ARRAY );
 
     glBindTexture( GL_TEXTURE_2D, textures[face.texture] );
     glTexCoordPointer( 2, GL_FLOAT, sizeof( Dark::BSP::Vertex ),
@@ -79,7 +77,6 @@ namespace Client
 
     glActiveTexture( GL_TEXTURE1 );
     glClientActiveTexture( GL_TEXTURE1 );
-    glEnableClientState( GL_TEXTURE_COORD_ARRAY );
 
     glBindTexture( GL_TEXTURE_2D, lightMaps[face.lightmap] );
     glTexCoordPointer( 2, GL_FLOAT, sizeof( Dark::BSP::Vertex ),
@@ -108,8 +105,6 @@ namespace Client
     for( int i = 0; i < bsp->nTextures; i++ ) {
       if( bsp->textures[i] >= 0 ) {
         textures[i] = context.loadTexture( translator.textures[ bsp->textures[i] ],
-                                           GL_LINEAR,
-                                           GL_LINEAR_MIPMAP_LINEAR,
                                            true );
       }
     }
@@ -126,7 +121,7 @@ namespace Client
                                             Dark::BSP::LIGHTMAP_DIM,
                                             Dark::BSP::LIGHTMAP_DIM,
                                             Dark::BSP::LIGHTMAP_BPP,
-                                            GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR, true );
+                                            true );
     }
 
     hiddenFaces.setSize( bsp->nFaces );
@@ -211,10 +206,16 @@ namespace Client
     glFrontFace( GL_CW );
     glActiveTexture( GL_TEXTURE1 );
     glEnable( GL_TEXTURE_2D );
+
+    glEnableClientState( GL_VERTEX_ARRAY );
+    glEnableClientState( GL_TEXTURE_COORD_ARRAY );
   }
 
   void BSP::endRender()
   {
+    glDisableClientState( GL_VERTEX_ARRAY );
+    glDisableClientState( GL_TEXTURE_COORD_ARRAY );
+
     glDisable( GL_TEXTURE_2D );
     glActiveTexture( GL_TEXTURE0 );
     glFrontFace( GL_CCW );

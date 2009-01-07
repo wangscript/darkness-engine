@@ -34,7 +34,7 @@ namespace Client
 
   void Water::init()
   {
-    texture = context.loadTexture( "tex/water1.jpg", GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR, true );
+    texture = context.loadTexture( "tex/water1.jpg", true );
   }
 
   void Water::update()
