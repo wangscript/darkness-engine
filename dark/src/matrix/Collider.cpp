@@ -113,7 +113,7 @@ namespace Dark
           }
         }
 
-        for( Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
+        for( const Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
           if( ( sObj->flags & Object::CLIP_BIT ) && sObj->includes( point, EPSILON ) ) {
             return false;
           }
@@ -134,7 +134,7 @@ namespace Dark
 
         const Sector &sector = world.sectors[x][y];
 
-        for( Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
+        for( const Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
           if( ( sObj->flags & Object::CLIP_BIT ) && sObj->includes( point, EPSILON ) ) {
             return false;
           }
@@ -174,7 +174,7 @@ namespace Dark
           }
         }
 
-        for( Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
+        for( const Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
           if( ( sObj->flags & Object::CLIP_BIT ) && sObj->includes( point, EPSILON ) ) {
             return false;
           }
@@ -509,7 +509,7 @@ namespace Dark
     for( int x = world.minSectX; x <= world.maxSectX; x++ ) {
       for( int y = world.minSectY; y <= world.maxSectY; y++ ) {
 
-        const Sector &sector = world.sectors[x][y];
+        Sector &sector = world.sectors[x][y];
         const int iMax = sector.structures.length();
 
         for( int i = 0; i < iMax; i++ ) {
@@ -633,7 +633,7 @@ namespace Dark
           }
         }
 
-        for( Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
+        for( const Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
           if( sObj != exclObj && ( sObj->flags & Object::CLIP_BIT ) &&
               sObj->overlaps( aabb, EPSILON ) )
           {
@@ -656,7 +656,7 @@ namespace Dark
 
         const Sector &sector = world.sectors[x][y];
 
-        for( Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
+        for( const Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
           if( sObj != exclObj && ( sObj->flags & Object::CLIP_BIT ) &&
               sObj->overlaps( aabb, EPSILON ) )
           {
@@ -698,7 +698,7 @@ namespace Dark
           }
         }
 
-        for( Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
+        for( const Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
           if( sObj != exclObj && ( sObj->flags & Object::CLIP_BIT ) &&
               sObj->overlaps( aabb, EPSILON ) )
           {
@@ -930,7 +930,7 @@ namespace Dark
     for( int x = world.minSectX; x <= world.maxSectX; x++ ) {
       for( int y = world.minSectY; y <= world.maxSectY; y++ ) {
 
-        const Sector &sector = world.sectors[x][y];
+        Sector &sector = world.sectors[x][y];
         const int iMax = sector.structures.length();
 
         for( int i = 0; i < iMax; i++ ) {
@@ -973,7 +973,7 @@ namespace Dark
     for( int x = world.minSectX; x <= world.maxSectX; x++ ) {
       for( int y = world.minSectY; y <= world.maxSectY; y++ ) {
 
-        const Sector &sector = world.sectors[x][y];
+        Sector &sector = world.sectors[x][y];
 
         if( structs != null ) {
           const int iMax = sector.structures.length();
@@ -1010,7 +1010,7 @@ namespace Dark
     for( int x = world.minSectX; x <= world.maxSectX; x++ ) {
       for( int y = world.minSectY; y <= world.maxSectY; y++ ) {
 
-        const Sector &sector = world.sectors[x][y];
+        Sector &sector = world.sectors[x][y];
 
         if( objects != null ) {
           for( Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {

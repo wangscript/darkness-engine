@@ -185,16 +185,40 @@ namespace Dark
         return aLastIndex( data, count, e );
       }
 
-      // first element
-      Type first() const
+      /**
+       * @return reference to first element
+       */
+      Type &first()
       {
         assert( count != 0 );
 
         return data[0];
       }
 
-      // last element
-      Type last() const
+      /**
+       * @return constant reference to first element
+       */
+      const Type &first() const
+      {
+        assert( count != 0 );
+
+        return data[0];
+      }
+
+      /**
+       * @return reference to last element
+       */
+      Type &last()
+      {
+        assert( count != 0 );
+
+        return data[count - 1];
+      }
+
+      /**
+       * @return constant reference to last element
+       */
+      const Type &last() const
       {
         assert( count != 0 );
 

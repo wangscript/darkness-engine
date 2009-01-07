@@ -21,7 +21,7 @@ namespace Dark
 
       char *buffer;
       int  count;
-      char baseBuffer[32];
+      char baseBuffer[BUFFER_SIZE];
 
       String( int count_, int ) : count( count_ )
       {
