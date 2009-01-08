@@ -16,28 +16,45 @@ namespace Dark
 namespace Client
 {
 
-  struct ContextList
-  {
-    uint base;
-    uint count;
-  };
-
   class Context
   {
-    protected:
+    private:
 
-      uint *loadedTextures;
+      struct Entry
+      {
+        Vector<List*>    lists;
+        Vector<Texture*> textures;
+        Vector<Sound*>   sounds;
+      };
+
+      struct List
+      {
+        uint base;
+        uint count;
+      };
+
+      struct Texture
+      {
+        uint id;
+        int  nUsers;
+      };
+
+      struct Sound
+      {
+        uint id;
+      };
+
+      Vector<List>      lists;
+      Vector<Texture>   textures;
 
     public:
-
-      Vector<uint>        textures;
-      Vector<ContextList> lists;
 
       ~Context();
 
       void init();
 
-      uint createTexture( char *data,
+      uint createTexture( const String &context,
+                          char *data,
                           int width,
                           int height,
                           int bytesPerPixel,
@@ -45,7 +62,8 @@ namespace Client
                           int magFilter = GL_LINEAR,
                           int minFilter = GL_LINEAR_MIPMAP_NEAREST );
 
-      uint createNormalmap( char *data,
+      uint createNormalmap( const String &context,
+                            char *data,
                             int width,
                             int height,
                             int bytesPerPixel,
@@ -54,12 +72,14 @@ namespace Client
                             int magFilter = GL_LINEAR,
                             int minFilter = GL_LINEAR_MIPMAP_LINEAR );
 
-      uint loadTexture( const char *fileName,
+      uint loadTexture( const String &context,
+                        const char *fileName,
                         bool wrap = true,
                         int magFilter = GL_LINEAR,
                         int minFilter = GL_LINEAR_MIPMAP_NEAREST );
 
-      uint loadNormalmap( const char *fileName,
+      uint loadNormalmap( const String &context,
+                          const char *fileName,
                           const Vec3 &lightNormal,
                           bool wrap = true,
                           int magFilter = GL_LINEAR,

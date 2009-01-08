@@ -6,6 +6,10 @@
 
 - Object isUpdated, onUpdateSelf, thread-safe update
 
+- Context, add Sounds?
+
+- remove Translator?
+
 Matrix/World
   - networking support
   - SparkGen -> Object

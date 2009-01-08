@@ -21,10 +21,14 @@
  *
  * There are also unsigned integer types defined in here:
  * <pre>
- * typedef unsigned char  uchar;
+ * typedef signed   char  byte;
+ * typedef unsigned char  ubyte;
  * typedef unsigned short ushort;
  * typedef unsigned int   uint;
  * typedef unsigned long  ulong;</pre>
+ *
+ * Be careful about use of char, byte and ubyte; char may be either signed or unsigned depending
+ * on the platform.
  *
  * You may add <code>null</code> and those types to your ~/.kde/share/apps/katepart/syntax/cpp.xml
  * or global file $KDEDIR/share/apps/katepart/syntax/cpp.xml to look like reserved words in
@@ -36,7 +40,8 @@ namespace Dark
 
 # define null 0
 
-  typedef unsigned char  uchar;
+  typedef signed   char  byte;
+  typedef unsigned char  ubyte;
   typedef unsigned short ushort;
   typedef unsigned int   uint;
   typedef unsigned long  ulong;
