@@ -68,12 +68,6 @@ namespace Dark
        * @param key variable name
        * @return variable value
        */
-      String get( const String &key );
-
-      /**
-       * @param key variable name
-       * @return variable value
-       */
       String &operator [] ( const String &key );
 
       /**
@@ -107,7 +101,7 @@ namespace Dark
        * key2 = "value2"</pre>
        * @return formatted String
        */
-      String toString();
+      String toString( const String &indentString = "" );
 
       void free();
   };

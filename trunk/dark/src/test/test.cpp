@@ -8,68 +8,76 @@
  *  $Id$
  */
 
-#include "precompiled.h"
+#include "../base/base.h"
 
-#include <time.h>
+#include <cstdlib>
+#include <cstdio>
+#include <ctime>
+#include <algorithm>
 
-template <class TypeA, class TypeB>
-inline void swap( TypeA &a, TypeB &b )
+using namespace std;
+
+template <class Type, int STACK_SIZE>
+inline void aSort( Type *array, int count )
 {
-  TypeA temp = a;
+  Type *stack[STACK_SIZE];
+  Type **sp = stack;
+  Type *first = array;
+  Type *last = array + count - 1;
 
-  a = b;
-  b = temp;
+  *( sp++ ) = first;
+  *( sp++ ) = last;
+
+  do {
+    last = *( --sp );
+    first = *( --sp );
+
+    if( first < last ) {
+      if( last - first > 10 ) {
+        int pivotValue = *last;
+        Type *top = first;
+        Type *bottom = last - 1;
+
+        do {
+          while( top <= bottom && *top <= pivotValue ) {
+            top++;
+          }
+          while( top < bottom && *bottom > pivotValue ) {
+            bottom--;
+          }
+          if( top >= bottom ) {
+            break;
+          }
+          swap( *top, *bottom );
+        }
+        while( true );
+
+        swap( *top, *last );
+
+        *( sp++ ) = first;
+        *( sp++ ) = top - 1;
+        *( sp++ ) = top + 1;
+        *( sp++ ) = last;
+      }
+      else {
+        // selection sort
+        for( Type *i = first; i < last; ) {
+          Type *pivot = i;
+          Type *min = i;
+          i++;
+
+          for( Type *j = i; j <= last; j++ ) {
+            if( *j < *min ) {
+              min = j;
+            }
+          }
+          swap( *pivot, *min );
+        }
+      }
+    }
+  }
+  while( sp != stack );
 }
-
-//template <class Type, int STACK_SIZE>
-//inline void aSort( Type *array, int count )
-//{
-//  Type *stack[STACK_SIZE];
-//  Type **sp = stack;
-//  Type *first = array;
-//  Type *last = array + count - 1;
-//
-//  *( sp++ ) = first;
-//  *( sp++ ) = last;
-//
-//  do {
-//    last = *( --sp );
-//    first = *( --sp );
-//
-//    if( first < last ) {
-//      if( last - first > 1 ) {
-//        int pivotValue = *last;
-//        Type *top = first;
-//        Type *bottom = last - 1;
-//
-//        do {
-//          while( top <= bottom && *top <= pivotValue ) {
-//            top++;
-//          }
-//          while( top < bottom && *bottom > pivotValue ) {
-//            bottom--;
-//          }
-//          if( top >= bottom ) {
-//            break;
-//          }
-//          swap( *top, *bottom );
-//        }
-//        while( true );
-//
-//        swap( *top, *last );
-//
-//        *( sp++ ) = first;
-//        *( sp++ ) = top - 1;
-//        *( sp++ ) = top + 1;
-//        *( sp++ ) = last;
-//      }
-//      else if( *first > *last ) {
-//        swap( *first, *last );
-//      }
-//    }
-//  }
-//  while( sp != stack );
-//}
 
 template <class Type>
 inline void arSort( Type *first, Type *last )
@@ -152,7 +160,7 @@ void TQuickSortInc( T *a, int num_el )
 {
    int s_pos=0;
    T *first = a, *last = a + (num_el - 1);
-   T *stack[32*2]; 
+   T *stack[32*2];
 
    T temp;
 
@@ -169,9 +177,9 @@ void TQuickSortInc( T *a, int num_el )
             T *max = lo;
             for( T *p = lo+1; p <= hi; p++ )
             {
-               if(!(p[0] < max[0])) max = p;  
+               if(!(p[0] < max[0])) max = p;
             }
-            temp = max[0]; max[0] = hi[0];  hi[0] = temp;  
+            temp = max[0]; max[0] = hi[0];  hi[0] = temp;
 
             hi--;
          }
@@ -182,7 +190,7 @@ void TQuickSortInc( T *a, int num_el )
 
 
          T *mid = (last - first >> 1) + first;
-         temp = first[0]; first[0] = mid[0];  mid[0] = temp;  
+         temp = first[0]; first[0] = mid[0];  mid[0] = temp;
 
 
          T *cfirst = first,
@@ -196,20 +204,20 @@ void TQuickSortInc( T *a, int num_el )
             {
                cfirst++;
             }
-            while( cfirst <= last && cfirst[0] < first[0] ); 
+            while( cfirst <= last && cfirst[0] < first[0] );
 
             do
             {
                clast--;
             }
-            while( clast > first && !(clast[0] < first[0] )); 
+            while( clast > first && !(clast[0] < first[0] ));
 
             if (clast < cfirst) break;
-            temp = cfirst[0]; cfirst[0] = clast[0];  clast[0] = temp;  
+            temp = cfirst[0]; cfirst[0] = clast[0];  clast[0] = temp;
          }
          while(1);
 
-         temp = first[0]; first[0] = clast[0];  clast[0] = temp;  
+         temp = first[0]; first[0] = clast[0];  clast[0] = temp;
 
 
 
@@ -254,7 +262,7 @@ void TQuickSortInc( T *a, int num_el )
    while(1);
 }
 
-#define MAX 100000
+#define MAX 200
 #define TESTS 500
 
 int main( int, char *[] )
@@ -271,13 +279,13 @@ int main( int, char *[] )
     //sort( array, 0, MAX );
     //quickSort( array, MAX );
     //arSort( array, array + MAX - 1 );
-    //Dark::aSort( array, MAX );
-    TQuickSortInc( array, MAX );
-    //Dark::aSort( array, MAX );
+    Dark::aSort( array, MAX );
+    //TQuickSortInc( array, MAX );
+    //aSort<int, 2048>( array, MAX );
   }
-  printf( "%d\n", (int)( clock() - t0 ) );
-  // for( int i = 0; i < MAX; i++ ) {
-  //   printf( "%d ", array[i] );
-  // }
+  printf( "%d\n", (int)( clock() - t0 ) / 1000 );
+  for( int i = 0; i < MAX; i++ ) {
+    printf( "%d ", array[i] );
+  }
   return 0;
 }

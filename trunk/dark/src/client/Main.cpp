@@ -41,7 +41,7 @@ namespace Client
     config.add( "screen.height",                      "768" );
     config.add( "screen.bpp",                         "32" );
     config.add( "screen.nvVSync",                     "1" );
-    config.add( "screen.full",                        "0" );
+    config.add( "screen.full",                        "1" );
 
     config.add( "sound.volume.effects",               "1.0" );
     config.add( "sound.volume.music",                 "1.0" );
@@ -198,6 +198,10 @@ namespace Client
       logFile.unindent();
       logFile.println( "}" );
     }
+
+    logFile.println( "Printing current config {" );
+    logFile.print( "%s", config.toString( "  " ).cstr() );
+    logFile.println( "}" );
 
     const char *data = config["data"].cstr();
 

@@ -27,11 +27,21 @@ namespace Dark
         Elem( uint key_, const Type &value_, Elem *next_ ) :
             key( key_ ), value( value_ ), next( next_ )
         {}
+
+        Elem( uint key_, Elem *next_ ) :
+            key( key_ ), next( next_ )
+        {}
       };
 
       Elem *data[SIZE];
+      // we cache found element since we often want its value after a search
       Elem *cached;
 
+      /**
+       * @param chainA
+       * @param chainB
+       * @return true if chains are equal length and all elements are equal
+       */
       bool areChainsEqual( const Elem *chainA, const Elem *chainB ) const
       {
         if( chainA != null && chainB != null ) {
@@ -46,6 +56,11 @@ namespace Dark
         }
       }
 
+      /**
+       * Allocate space and make a copy of a given chain.
+       * @param chain
+       * @return pointer to first element of newly allocated chain
+       */
       Elem *copyChain( const Elem *chain ) const
       {
         if( chain != null ) {
@@ -56,6 +71,10 @@ namespace Dark
         }
       }
 
+      /**
+       * Delete all elements in given chain.
+       * @param chain
+       */
       void freeChain( const Elem *chain ) const
       {
         if( chain->next != null ) {
@@ -64,53 +83,88 @@ namespace Dark
         delete chain;
       }
 
+      /**
+       * Delete all elements and their values in given chain.
+       * @param chain
+       */
+      void freeChainAndValues( const Elem *chain ) const
+      {
+        if( chain->next != null ) {
+          freeChain( chain->next );
+        }
+        delete chain->value;
+        delete chain;
+      }
+
     public:
 
-      class Iterator
+      /**
+       * HashIndex iterator.
+       */
+      class Iterator : public Dark::Iterator<Elem>
       {
-        protected:
+        private:
+
+          typedef Dark::Iterator<Elem> IT;
 
           Elem **data;
-          Elem *elem;
           int  index;
+
+          void operator -- ( int );
 
         public:
 
-          explicit Iterator( HashIndex &t ) : data( t.data ), elem( data[0] ), index( 0 )
+          /**
+           * Make iterator for given HastIndex. After creation it points to first element.
+           * @param t
+           */
+          explicit Iterator( HashIndex &t ) : IT( t.data[0] ), data( t.data ), index( 0 )
           {
-            while( elem == null && index < SIZE - 1 ) {
+            while( IT::elem == null && index < SIZE - 1 ) {
               index++;
-              elem = data[index];
+              IT::elem = data[index];
             }
           }
 
-					bool isPassed() const
+          /**
+           * When iterator advances beyond last element, it becomes passed. It points to an invalid
+           * location.
+           * @return true if iterator is passed
+           */
+          bool isPassed()
           {
-            return elem == null;
+            return IT::elem == null;
           }
 
+          /**
+           * Advance to the next element.
+           * @param
+           */
           void operator ++ ( int )
           {
-            assert( elem != null );
+            assert( IT::elem != null );
 
-            if( elem->next != null ) {
-              elem = elem->next;
+            if( IT::elem->next != null ) {
+              IT::elem = IT::elem->next;
             }
             else if( index < SIZE - 1 ) {
               do {
                 index++;
-                elem = data[index];
+                IT::elem = data[index];
               }
-              while( elem == null && index < SIZE - 1 );
+              while( IT::elem == null && index < SIZE - 1 );
             }
             else {
-              elem = null;
+              IT::elem = null;
             }
           }
 
+          /**
+           * @return current element's key
+           */
           uint key() const
           {
-            return elem->key;
+            return IT::elem->key;
           }
 
           /**
@@ -118,10 +172,10 @@ namespace Dark
            */
           Type *value()
           {
-            return &elem->value;
+            return &IT::elem->value;
           }
 
-					/**
+          /**
            * @return constant pointer to current element's value
            */
           const Type *value() const
@@ -132,23 +186,24 @@ namespace Dark
           /**
            * @return reference to current element's value
            */
-					Type &operator * ()
+          Type &operator * ()
           {
-            return elem->value;
+            return IT::elem->value;
           }
 
-					/**
+          /**
            * @return constant reference to current element's value
            */
-					const Type &operator * () const
+          const Type &operator * () const
           {
-            return elem->value;
+            return IT::elem->value;
           }
 
       };
 
-      static const int CAPACITY = SIZE;
-
+      /**
+       * Constructor.
+       */
       HashIndex()
       {
         for( int i = 0; i < SIZE; i++ ) {
@@ -156,6 +211,10 @@ namespace Dark
         }
       }
 
+      /**
+       * Copy constructor.
+       * @param t
+       */
       HashIndex( const HashIndex &t )
       {
         for( int i = 0; i < SIZE; i++ ) {
@@ -163,11 +222,19 @@ namespace Dark
         }
       }
 
+      /**
+       * Destructor.
+       */
       ~HashIndex()
       {
-        free();
+        clear();
       }
 
+      /**
+       * Copy operator.
+       * @param t
+       * @return
+       */
       HashIndex &operator = ( const HashIndex &t )
       {
         for( int i = 0; i < SIZE; i++ ) {
@@ -178,6 +245,11 @@ namespace Dark
         }
       }
 
+      /**
+       * Equality operator.
+       * @param t
+       * @return
+       */
       bool operator == ( const HashIndex &t ) const
       {
         for( int i = 0; i < SIZE; i++ ) {
@@ -188,6 +260,11 @@ namespace Dark
         return true;
       }
 
+      /**
+       * Inequality operator.
+       * @param t
+       * @return
+       */
       bool operator != ( const HashIndex &t ) const
       {
         for( int i = 0; i < SIZE; i++ ) {
@@ -198,16 +275,61 @@ namespace Dark
         return false;
       }
 
+      /**
+       * @return number of elements
+       */
       int length() const
       {
         return SIZE;
       }
 
-      // caches searched element if found
+      /**
+       * @return capacity
+       */
+      int capacity() const
+      {
+        return SIZE;
+      }
+
+      /**
+       * @return true if HashIndex has no elements
+       */
+      bool isEmpty() const
+      {
+        for( int i = 0; i < SIZE; i++ ) {
+          if( data[i] != null ) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      /**
+       * @return cached element's key
+       */
+      uint &cachedKey() const
+      {
+        return cached->key;
+      }
+
+      /**
+       * @return cached element's value
+       */
+      Type &cachedValue() const
+      {
+        return cached->value;
+      }
+
+      /**
+       * Find element with given value.
+       * This function caches the found element.
+       * @param key
+       * @return true if found
+       */
       bool contains( uint key )
       {
-        int   i = key % SIZE;
-        Elem  *p = data[i];
+        int  i = key % SIZE;
+        Elem *p = data[i];
 
         while( p != null ) {
           if( p->key == key ) {
@@ -221,66 +343,30 @@ namespace Dark
         return false;
       }
 
-      bool isEmpty() const
-      {
-        for( int i = 0; i < SIZE; i++ ) {
-          if( data[i] != null ) {
-            return false;
-          }
-        }
-        return true;
-      }
-
+      /**
+       * If given key exists, return reference to it's value, otherwise create a new element with
+       * the given key and return reference to it's UNINITIALIZED value.
+       * This function caches the found element.
+       * @param key
+       * @return reference to value associated to the given key
+       */
       Type &operator [] ( uint key )
       {
-        int   i = key % SIZE;
-        Elem  *p = data[i];
+        if( !contains( key ) ) {
+          int i = key % SIZE;
+          Elem *elem = new Elem( key, data[i] );
 
-        while( p != null ) {
-          if( p->key == key ) {
-            cached = p;
-            break;
-          }
-          else {
-            p = p->next;
-          }
+          data[i] = elem;
+          cached = elem;
         }
-        assert( p != null );
-
         return cached->value;
       }
 
-      Type get( uint key )
-      {
-        return operator [] ( key );
-      }
-
-      uint &cachedKey() const
-      {
-        return cached->key;
-      }
-
-      Type &cachedValue() const
-      {
-        return cached->value;
-      }
-
-      void set( uint key, const Type &value )
-      {
-        int   i = key % SIZE;
-        Elem  *p = data[i];
-
-        while( p != null ) {
-          if( p->key == key ) {
-            p->value = value;
-            return;
-          }
-          else {
-            p = p->next;
-          }
-        }
-      }
-
+      /**
+       * Add new element. The key must not yet exist in this HashIndex.
+       * @param key
+       * @param value
+       */
       void add( uint key, const Type &value )
       {
         assert( !contains( key ) );
@@ -292,6 +378,10 @@ namespace Dark
         cached = elem;
       }
 
+      /**
+       * Remove element with given key.
+       * @param key
+       */
       void remove( uint key )
       {
         int i = key % SIZE;
@@ -311,7 +401,10 @@ namespace Dark
         }
       }
 
-      void free()
+      /**
+       * Remove all elements.
+       */
+      void clear()
       {
         for( int i = 0; i < SIZE; i++ ) {
           if( data[i] != null ) {
@@ -321,11 +414,22 @@ namespace Dark
         }
       }
 
-      void clear()
+      /**
+       * Remove all elements and delete their values.
+       */
+      void free()
       {
-        free();
+        for( int i = 0; i < SIZE; i++ ) {
+          if( data[i] != null ) {
+            freeChainAndValues( data[i] );
+            data[i] = null;
+          }
+        }
       }
 
+      /**
+       * Deallocate memory from Reuser.
+       */
       static void deallocate()
       {
         Elem::deallocate();

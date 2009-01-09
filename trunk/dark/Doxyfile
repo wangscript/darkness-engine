@@ -6,7 +6,7 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = dark
 PROJECT_NUMBER         = 0.1
-OUTPUT_DIRECTORY       = 
+OUTPUT_DIRECTORY       = doxygen
 CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English
 BRIEF_MEMBER_DESC      = YES
@@ -153,7 +153,7 @@ FILE_PATTERNS          = *.c \
                          *.moc \
                          *.xpm \
                          *.dox
-RECURSIVE              = yes
+RECURSIVE              = YES
 EXCLUDE                = 
 EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       = 
@@ -245,7 +245,7 @@ MAN_LINKS              = NO
 #---------------------------------------------------------------------------
 # configuration options related to the XML output
 #---------------------------------------------------------------------------
-GENERATE_XML           = yes
+GENERATE_XML           = YES
 XML_OUTPUT             = xml
 XML_SCHEMA             = 
 XML_DTD                = 

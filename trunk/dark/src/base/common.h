@@ -70,7 +70,7 @@ namespace Dark
    * @return absolute value
    */
   template <class Value>
-  inline Value abs( Value a )
+  inline Value abs( const Value &a )
   {
     return a < 0 ? -a : a;
   }
@@ -82,7 +82,7 @@ namespace Dark
    * @return minimum of a and b
    */
   template <class Value, class ValueB>
-  inline Value min( Value a, ValueB b )
+  inline const Value &min( const Value &a, const ValueB &b )
   {
     return a < b ? a : b;
   }
@@ -94,7 +94,7 @@ namespace Dark
    * @return maximum of a and b
    */
   template <class Value, class ValueB>
-  inline Value max( Value a, ValueB b )
+  inline const Value &max( const Value &a, const ValueB &b )
   {
     return a > b ? a : b;
   }
@@ -106,8 +106,8 @@ namespace Dark
    * @param b
    * @return clamped value of c
    */
-  template <class Type, class TypeA, class TypeB>
-  inline Type bound( Type c, TypeA a, TypeB b )
+  template <class ValueC, class ValueA, class ValueB>
+  inline const ValueC &bound( const ValueC &c, const ValueA &a, const ValueB &b )
   {
     assert( a < b );
 
@@ -119,107 +119,217 @@ namespace Dark
     }
   }
 
-	/*
-	 * ITERABLE CONTAINER UTILITY TEMPLATES
-	 */
+  /**
+   * Pointer iterator
+   */
+  template <class Type>
+  class Iterator
+  {
+    protected:
 
-	/**
-	 * Compare all elements. (Like STL equal)
-	 */
-	template <class IteratorA, class IteratorB>
-	inline bool iEquals( IteratorA beginA, IteratorA endA, IteratorB beginB )
-	{
-		while( beginA != endA ) {
-			if( *beginA != *beginB ) {
-				return false;
-			}
-			beginA++;
-			beginB++;
-		}
-		return true;
-	}
+      Type *elem;
+      const Type *past;
 
-	/**
-	 * Set all elements. (Like STL fill)
-	 */
-	template <class Iterator, class Value>
-	inline void iSet( Iterator begin, Iterator end, Value value )
-	{
-		while( begin != end ) {
-			*begin = value;
-			begin++;
-		}
-	}
+      /**
+       * @param start first element
+       */
+      Iterator( Type *start ) : elem( start )
+      {}
 
-	/**
-	 * Copy elements from first to last. (Like STL copy)
-	 */
-	template <class IteratorA, class IteratorB>
-	inline void iCopy( IteratorA beginA, IteratorA endA, IteratorB beginB )
-	{
-		while( beginA != endA ) {
-			*beginB = *beginA;
-			beginA++;
-			beginB++;
-		}
-	}
+    public:
 
-	/**
-	 * Copy elements from last to first. (Like STL copy_backward)
-	 */
-	template <class IteratorA, class IteratorB>
-	inline void iRCopy( IteratorA beginA, IteratorA endA, IteratorB endB )
-	{
-		while( endA != beginA ) {
-			endA--;
-			endB--;
-			*endB = *endA;
-		}
-	}
+      /**
+       * @param start first element for forward iterator or successor of last element for backward
+       * iterator
+       * @param past_ successor of last element for forward iterator or first element for backward
+       * iterator
+       */
+      Iterator( Type *start, const Type *past_ ) : elem( start ), past( past_ )
+      {}
 
-	/**
-	 * Find first occurence of given element. (Like STL find)
-	 */
-	template <class Iterator, class Value>
-	inline Iterator iIndex( Iterator begin, Iterator end, Value value )
-	{
-		while( begin != end ) {
-			if( *begin == value ) {
-				return begin;
-			}
-			begin++;
-		}
-		return end;
-	}
+      /**
+       * Returns true if iterator is on specified element.
+       * @param e
+       * @return
+       */
+      bool operator == ( const Type *e ) const
+      {
+        return elem == e;
+      }
 
-	/**
-	 * Find last occurence of given element.
-	 */
-	template <class Iterator, class Value>
-	inline Iterator iLastIndex( Iterator begin, Iterator end, Value value )
-	{
-		Iterator i = end;
+      /**
+       * Returns true if iterator is not on specified element.
+       * @param e
+       * @return
+       */
+      bool operator != ( const Type *e ) const
+      {
+        return elem != e;
+      }
 
-		while( i != begin ) {
-			i--;
-			if( *i == value ) {
-				return i;
-			}
-		}
-		return end;
-	}
+      /**
+       * When iterator advances beyond last element, it becomes passed. It points to an invalid
+       * location.
+       * @return true if iterator is passed
+       */
+      bool isPassed() const
+      {
+        return elem == past;
+      }
 
-	/**
-	 * Delete elements that have been previously allocated with new operator.
-	 */
-	template <class Iterator>
-	inline void iFree( Iterator begin, Iterator end )
-	{
-		while( begin != end ) {
-			delete *begin;
-			begin++;
-		}
-	}
+      /**
+       * Advance to next element.
+       */
+      void operator ++ ( int )
+      {
+        assert( elem != past );
+
+        elem++;
+      }
+
+      /**
+       * Advance to previous element.
+       */
+      void operator -- ( int )
+      {
+        assert( elem != past );
+
+        elem--;
+      }
+
+      /**
+       * @return reference to current element in the list
+       */
+      Type &operator * ()
+      {
+        return *elem;
+      }
+
+      /**
+       * @return constant reference to current element in the list
+       */
+      const Type &operator * () const
+      {
+        return *elem;
+      }
+
+  };
+
+  /*
+   * ITERABLE CONTAINER UTILITY TEMPLATES
+   */
+
+  /**
+   * Compare all elements. (Like STL equal)
+   * @param iA
+   * @param iB
+   * @return true if all elements are equal
+   */
+  template <class IteratorA, class IteratorB>
+  inline bool iEquals( IteratorA iA, IteratorB iB )
+  {
+    while( !iA.isPassed() ) {
+      if( *iA != *iB ) {
+        return false;
+      }
+      iA++;
+      iB++;
+    }
+    return true;
+  }
+
+  /**
+   * Set all elements. (Like STL fill)
+   * @param i
+   * @param value
+   */
+  template <class Iterator, class Value>
+  inline void iSet( Iterator i, Value value )
+  {
+    while( !i.isPassed() ) {
+      *i = value;
+      i++;
+    }
+  }
+
+  /**
+   * Copy elements from first to last. (Like STL copy)
+   * @param iA
+   * @param iB
+   */
+  template <class IteratorA, class IteratorB>
+  inline void iCopy( IteratorA iA, IteratorB iB )
+  {
+    while( !iA.isPassed() ) {
+      *iB = *iA;
+      iA++;
+      iB++;
+    }
+  }
+
+  /**
+   * Copy elements from first to last. (Like STL copy)
+   * @param iA
+   * @param iB
+   */
+  template <class BackwardIteratorA, class BackwardIteratorB>
+  inline void iReverseCopy( BackwardIteratorA iA, BackwardIteratorB iB )
+  {
+    while( !iA.isPassed() ) {
+      iA--;
+      iB--;
+      *iB = *iA;
+    }
+  }
+
+  /**
+   * Find first occurence of given element. (Like STL find)
+   * @param begin
+   * @param value
+   * @return iterator at the elements found, passed iterator if not found
+   */
+  template <class Iterator, class Value>
+  inline Iterator iIndex( Iterator i, Value value )
+  {
+    while( !i.isPassed() ) {
+      if( *i == value ) {
+        break;
+      }
+      i++;
+    }
+    return i;
+  }
+
+  /**
+   * Find last occurence of given element.
+   * @param begin
+   * @param value
+   * @return iterator at the elements found, passed iterator if not found
+   */
+  template <class BackwardIterator, class Value>
+  inline BackwardIterator iLastIndex( BackwardIterator i, Value value )
+  {
+    while( !i.isPassed() ) {
+      i--;
+      if( *i == value ) {
+        break;
+      }
+    }
+    return i;
+  }
+
+  /**
+   * Delete elements that have been previously allocated with new operator.
+   */
+  template <class Iterator, class Type>
+  inline void iFree( Iterator i )
+  {
+    while( !i.isPassed() ) {
+      Type *p = *i;
+      i++;
+      delete p;
+    }
+  }
 
   /*
    * ARRAY UTILIY TEMPLATES
@@ -232,8 +342,8 @@ namespace Dark
    * @param value value to be set
    * @param count number of elements to be set
    */
-  template <class Type, class TypeV>
-  inline void aSet( Type *dest, TypeV value, int count )
+  template <class Type, class Value>
+  inline void aSet( Type *dest, const Value &value, int count )
   {
     for( int i = 0; i < count; i++ ) {
       dest[i] = value;
@@ -284,22 +394,22 @@ namespace Dark
    * @param count number of elements to be copied
    */
   template <class Type>
-  inline void aRCopy( Type *dest, const Type *src, int count )
+  inline void aReverseCopy( Type *dest, const Type *src, int count )
   {
     for( int i = count - 1; i >= 0; i-- ) {
       dest[i] = src[i];
     }
   }
 
-	/**
+  /**
    * Find the first occurence of an element.
    * @param array pointer to the first element in the array
    * @param count number of elements to be looked upon
    * @param value value we look for
    * @return index of the first occurence, -1 if not found
    */
-  template <class Type, class TypeV>
-  inline int aIndex( const Type *array, int count, TypeV value )
+  template <class Type, class Value>
+  inline int aIndex( const Type *array, int count, const Value &value )
   {
     for( int i = 0; i < count; i++ ) {
       if( array[i] == value ) {
@@ -316,8 +426,8 @@ namespace Dark
    * @param value value we look for
    * @return index of the first occurence, -1 if not found
    */
-  template <class Type, class TypeV>
-  inline int aLastIndex( const Type *array, int count, TypeV value )
+  template <class Type, class Value>
+  inline int aLastIndex( const Type *array, int count, const Value &value )
   {
     for( int i = count - 1; i <= 0; i-- ) {
       if( array[i] == value ) {
@@ -356,83 +466,76 @@ namespace Dark
 
     Type *newArray = new Type[newCount];
 
-		aCopy( newArray, array, count );
+    aCopy( newArray, array, count );
     delete[] array;
 
     return newArray;
   }
 
   /**
-   * Perform quicksort on the array. Non-recursive quicksort algorithm is used which takes first
+   * Utility function for aSort. It could also be called directly. Type must have operator &lt;
+   * defined.
+   * @param first pointer to first element in the array to be sorted
+   * @param last pointer to last element in the array
+   */
+  template <class Type>
+  static void aQuicksort( Type *first, Type *last )
+  {
+    // 8-14 seem as optimal tresholds for switching to selection sort
+    if( last - first > 10 ) {
+      // quicksort
+      Type *top = first;
+      Type *bottom = last - 1;
+
+      do {
+        while( top <= bottom && !( *last < *top ) ) {
+          top++;
+        }
+        while( top < bottom && *last < *bottom ) {
+          bottom--;
+        }
+        if( top >= bottom ) {
+          break;
+        }
+        swap( *top, *bottom );
+      }
+      while( true );
+
+      swap( *top, *last );
+
+      aQuicksort( first, top - 1 );
+      aQuicksort( top + 1, last );
+    }
+    else {
+      // selection sort
+      for( Type *i = first; i < last; ) {
+        Type *pivot = i;
+        Type *min = i;
+        i++;
+
+        for( Type *j = i; j <= last; j++ ) {
+          if( *j < *min ) {
+            min = j;
+          }
+        }
+        swap( *pivot, *min );
+      }
+    }
+  }
+
+  /**
+   * Perform quicksort on the array. Recursive quicksort algorithm is used which takes first
    * element in partition as a pivot so sorting a sorted or nearly sorted array will take O(n^2)
-   * time instead of O(n log n) as in general case.
+   * time instead of O(n log n) as in general case. Type must have operator &lt; defined.
    * @param array pointer to the first element in the array
    * @param count number of elements to be sorted
    */
   template <class Type>
-	static void aSort( Type *array, int count )
-	{
-		Type *first = array;
-		Type *last = array + count - 1;
+  inline void aSort( Type *array, int count )
+  {
+    assert( count > 1 );
 
-		Type *stack[2048];
-		Type **sp = stack;
-
-		*( sp++ ) = first;
-		*( sp++ ) = last;
-
-		do {
-			last = *( --sp );
-			first = *( --sp );
-
-			if( last <= first ) {
-				continue;
-			}
-
-			// 8-14 seem as optimal tresholds for switching to selection sort
-			if( last - first <= 10 ) {
-				// selection sort
-				for( Type *i = first; i < last; ) {
-					Type *pivot = i;
-					Type *min = i;
-					i++;
-
-					for( Type *j = i; j <= last; j++ ) {
-						if( *j < *min ) {
-							min = j;
-						}
-					}
-					swap( *pivot, *min );
-				}
-			}
-			else {
-				// quicksort
-				Type *top = first;
-				Type *bottom = last - 1;
-
-				do {
-					while( top <= bottom && *top <= *last ) {
-						top++;
-					}
-					while( top < bottom && *bottom > *last ) {
-						bottom--;
-					}
-					if( top >= bottom ) {
-						break;
-					}
-					swap( *top, *bottom );
-				}
-				while( true );
-
-				swap( *top, *last );
-
-				*( sp++ ) = first;
-				*( sp++ ) = top - 1;
-				*( sp++ ) = top + 1;
-				*( sp++ ) = last;
-			}
-		}
-		while( sp != stack );
-	}
+    aQuicksort( array, array + count - 1 );
+  }
 
 }
