@@ -95,7 +95,7 @@ namespace Client
       alSourceStop( src.source );
       alDeleteSources( 1, &src.source );
     }
-    contSources.free();
+    contSources.clear();
     contSources.deallocate();
 
     alDeleteBuffers( MAX_BUFFERS, buffers );
@@ -224,7 +224,9 @@ namespace Client
     }
 
     // remove continous sounds that are not played any more
-    for( HashIndex<ContSource, HASHTABLE_SIZE>::Iterator i( contSources ); !i.isPassed(); ) {
+    for( HashIndex<ContSource, HASHTABLE_SIZE>::Iterator i( contSources );
+         !i.isPassed(); )
+    {
       ContSource *src = i.value();
       uint key = i.key();
 

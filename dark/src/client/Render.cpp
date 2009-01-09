@@ -495,8 +495,8 @@ namespace Client
 
   void Render::free()
   {
-    sparkGenRenders.free();
-    models.free();
+    sparkGenRenders.clear();
+    models.clear();
     md2s.free();
     bsps.free();
     context.free();

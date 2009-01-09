@@ -11,7 +11,7 @@
 #pragma once
 
 #ifdef WIN32
-#include <math.h>
+#include <cmath>
 #endif
 
 namespace Dark
@@ -46,8 +46,8 @@ namespace Dark
       static const float NaN;
       static const float INF;
 
-      static const int  INT_MAX  = ( (uint) -1 ) >> 1;
-      static const long LONG_MAX = ( (ulong) -1 ) >> 1;
+      static const int  INT_MAX  = ~0U >> 1;
+      static const long LONG_MAX = ~0UL >> 1;
 
       /*
        * Standard math functions
@@ -219,7 +219,7 @@ namespace Dark
        */
 
       // returns true, if value is not a number
-      static bool isNAN( float x )
+      static bool isNaN( float x )
       {
 #ifdef WIN32
         return x != x;
@@ -244,7 +244,7 @@ namespace Dark
         return x * ( _1_PI * 180.0f );
       }
 
-      // random integer from 0 to RAND_MAX
+      // random integer from 0 to RAND_MAX == INT_MAX
       // (pointer to rand() function in stdlib.h)
       static int ( *const rand )();
 

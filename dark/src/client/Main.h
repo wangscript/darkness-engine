@@ -14,7 +14,7 @@
 #define DARK_APP_NAME            "Darkness"
 #define DARK_WM_TITLE            DARK_APP_NAME
 #define DARK_RC_DIR              ".dark"
-//#define DARK_LOG_FILE            "client.log"
+#define DARK_LOG_FILE            "client.log"
 #define DARK_CONFIG_FILE         "client.xml"
 
 namespace Dark

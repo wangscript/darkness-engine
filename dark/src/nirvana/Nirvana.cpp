@@ -74,11 +74,11 @@ namespace Dark
     }
     // remove unneccessary minds
     for( DList<Mind, 0>::Iterator i( minds ); !i.isPassed(); ) {
-      Mind *mind = i.get();
+      Mind &mind = *i;
       i++;
 
-      if( !mind->isUpdated ) {
-        minds.remove( mind );
+      if( !mind.isUpdated ) {
+        minds.remove( &mind );
       }
     }
   }
@@ -86,8 +86,10 @@ namespace Dark
   void Nirvana::think()
   {
     for( DList<Mind, 0>::Iterator i( minds ); !i.isPassed(); i++ ) {
-      ( *i ).isUpdated = true;
-      ( *i ).update();
+      Mind &mind = *i;
+
+      mind.update();
+      mind.isUpdated = true;
     }
   }
 

@@ -63,7 +63,7 @@ namespace Dark
 
   Translator::~Translator()
   {
-    textureIndices.free();
+    textureIndices.clear();
     textureIndices.deallocate();
   }
 

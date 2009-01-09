@@ -23,40 +23,70 @@ namespace Dark
       bool   isStdout;
 
     public:
-      /*
-       * first parameter is file name (if NULL, it writes to stdout), the other tells us
-       * if we want to clear its content if the file already exists
+      /**
+       * First parameter is file name (if NULL, it writes to stdout), the other tells us
+       * if we want to clear its content if the file already exists.
+       * @param fileName
+       * @param clearFile
+       * @param indentStr
+       * @return
        */
       bool init( const char *fileName, bool clearFile = true, const char *indentStr = "  " );
 
-      // indents and prints the text
+      /**
+       * Indents and prints the text.
+       * @param s
+       */
       void print( const char *s, ... ) const;
 
-      // do not indent
+      /**
+       * Do not indent.
+       * @param s
+       */
       void printRaw( const char *s, ... ) const;
 
-      // indents, prints the text and terminates the line
+      /**
+       * Indents, prints the text and terminates the line.
+       * @param s
+       */
       void println( const char *s, ... ) const;
 
-      // adds the current time at the beginning of a line
+      /**
+       * Adds the current time at the beginning of a line.
+       * @param s
+       */
       void printlnBT( const char *s, ... ) const;
 
-      // adds the current time at the end of a line
+      /**
+       * Adds the current time at the end of a line.
+       * @param s
+       */
       void printlnET( const char *s, ... ) const;
 
-      // adds the current time and date at the end
+      /**
+       * Adds the current time and date at the end.
+       * @param s
+       */
       void printlnETD( const char *s, ... ) const;
 
-      // write a blank line
+      /**
+       * Write a blank line.
+       */
       void println() const;
 
-      // increases ident
+      /**
+       * Increases ident.
+       */
       void indent();
 
-      // decreases ident
+      /**
+       * Decreases ident.
+       */
       void unindent();
 
-      // clears content of a file
+      /**
+       * Clears content of a file.
+       */
       void clear() const;
   };
 

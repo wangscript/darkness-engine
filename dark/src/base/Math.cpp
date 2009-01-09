@@ -10,9 +10,9 @@
 
 #include "base.h"
 
-#include <math.h>
-#include <stdlib.h>
-#include <time.h>
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
 
 namespace Dark
 {
@@ -39,7 +39,7 @@ namespace Dark
 
   Math::Math()
   {
-    ::srand( (uint) time( null ) );
+    srand( (uint) time( null ) );
   }
 
   int ( *const Math::rand )() = ::rand;

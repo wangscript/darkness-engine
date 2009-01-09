@@ -50,17 +50,20 @@ namespace Dark
 
       // No copying.
       List( const List& );
+      List &operator = ( const List& );
 
     public:
 
       /**
        * List iterator.
        */
-      class Iterator
+      class Iterator : public Dark::Iterator<Type>
       {
-        protected:
+        private:
 
-          Type *elem;
+          typedef Dark::Iterator<Type> IT;
+
+          void operator -- ( int );
 
         public:
 
@@ -68,26 +71,17 @@ namespace Dark
            * Make iterator for given list. After creation it points to first element.
            * @param l
            */
-          explicit Iterator( List &l ) : elem( l.firstElem )
+          explicit Iterator( List &l ) : IT( l.firstElem )
           {}
 
-					/**
-					 * Returns true if iterator is on specified element.
-					 * @param e
-					 * @return
-					 */
-					bool operator == ( const Type *e )
-					{
-						return elem == e;
-					}
-
           /**
-           * When iterator advances beyond last element, it's become passed. It points to null.
+           * When iterator advances beyond last element, it becomes passed. It points to an invalid
+           * location.
            * @return true if iterator is passed
            */
-          bool isPassed() const
+          bool isPassed()
           {
-            return elem == null;
+            return IT::elem == null;
           }
 
           /**
@@ -95,41 +89,9 @@ namespace Dark
            */
           void operator ++ ( int )
           {
-            assert( elem != null );
+            assert( IT::elem != null );
 
-            elem = elem->next[INDEX];
-          }
-
-          /**
-           * @return pointer to current element in the list
-           */
-          Type *get()
-          {
-            return elem;
-          }
-
-          /**
-           * @return constant pointer to current element in the list
-           */
-          const Type *get() const
-          {
-            return elem;
-          }
-
-          /**
-           * @return reference to current element in the list
-           */
-          Type &operator * ()
-          {
-            return *elem;
-          }
-
-          /**
-           * @return constant reference to current element in the list
-           */
-          const Type &operator * () const
-          {
-            return *elem;
+            IT::elem = IT::elem->next[INDEX];
           }
 
       };

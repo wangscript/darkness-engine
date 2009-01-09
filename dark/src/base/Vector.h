@@ -45,13 +45,11 @@ namespace Dark
       /**
        * Vector iterator.
        */
-      class Iterator
+      class Iterator : public Dark::Iterator<Type>
       {
-        protected:
+        private:
 
-          Type *data;
-          int  count;
-          int  index;
+          typedef Dark::Iterator<Type> IT;
 
         public:
 
@@ -59,70 +57,8 @@ namespace Dark
            * Make iterator for given vector. After creation it points to first element.
            * @param v
            */
-          explicit Iterator( Vector &v ) : data( v.data ), count( v.count ), index( 0 )
+          explicit Iterator( Vector &v ) : IT( v.data, v.data + v.count )
           {}
-
-          /**
-					 * Returns true if iterator is on specified index.
-					 * @param e
-					 * @return
-					 */
-					bool operator == ( int index_ )
-					{
-						return index == index_;
-					}
-
-          /**
-           * When iterator advances beyond last element, it's become passed. It points to an invalid
-           * location.
-           * @return true if iterator is passed
-           */
-          bool isPassed()
-          {
-            return index >= count;
-          }
-
-          /**
-           * Advance to next element.
-           */
-          void operator ++ ( int )
-          {
-            assert( index < count );
-
-            index++;
-          }
-
-          /**
-           * @return pointer to current element in the vector
-           */
-          Type *get()
-          {
-            return &data[index];
-          }
-
-          /**
-           * @return constant pointer to current element in the vector
-           */
-          const Type *get() const
-          {
-            return &data[index];
-          }
-
-          /**
-           * @return reference to current element in the vector
-           */
-          Type &operator * ()
-          {
-            return data[index];
-          }
-
-          /**
-           * @return constant reference to current element in the vector
-           */
-          const Type &operator * () const
-          {
-            return data[index];
-          }
 
       };
 
@@ -134,7 +70,7 @@ namespace Dark
 
       /**
        * Copy constructor.
-       * @param v original vector
+       * @param v
        */
       Vector( const Vector &v ) : data( new Type[8] ), size( v.size ), count( v.count )
       {
@@ -143,7 +79,7 @@ namespace Dark
 
       /**
        * Create empty vector with given initial capacity.
-       * @param initSize initial capacity
+       * @param initSize
        */
       explicit Vector( int initSize ) : size( initSize ), count( 0 )
       {
@@ -176,7 +112,7 @@ namespace Dark
       }
 
       /**
-       * Euality operator. Capacity of vectors doesn't matter.
+       * Equality operator. Capacity of vectors doesn't matter.
        * @param v
        * @return true if all elements in both vectors are equal
        */
@@ -186,7 +122,7 @@ namespace Dark
       }
 
       /**
-       * Ineuality operator. Capacity of vectors doesn't matter.
+       * Inequality operator. Capacity of vectors doesn't matter.
        * @param v
        * @return false if all elements in both vectors are equal
        */
@@ -254,7 +190,7 @@ namespace Dark
       }
 
       /**
-       * @param e element to be looked for
+       * @param e
        * @return true if the element is found in the vector
        */
       bool contains( const Type &e )
@@ -268,7 +204,7 @@ namespace Dark
       }
 
       /**
-       * @param i index
+       * @param i
        * @return reference i-th element
        */
       Type &operator [] ( int i )
@@ -279,7 +215,7 @@ namespace Dark
       }
 
       /**
-       * @param i index
+       * @param i
        * @return constant reference i-th element
        */
       const Type &operator [] ( int i ) const
@@ -291,7 +227,7 @@ namespace Dark
 
       /**
        * Find the first occurence of an element.
-       * @param e element to be looked for
+       * @param e
        * @return index of first occurence, -1 if not found
        */
       int index( const Type &e ) const
@@ -301,7 +237,7 @@ namespace Dark
 
       /**
        * Find the last occurence of an element.
-       * @param e element to be looked for
+       * @param e
        * @return index of last occurence, -1 if not found
        */
       int lastIndex( const Type &e ) const
@@ -351,7 +287,7 @@ namespace Dark
 
       /**
        * Add an element to the end.
-       * @param e element to be added
+       * @param e
        */
       void operator << ( const Type &e )
       {
@@ -360,7 +296,7 @@ namespace Dark
 
       /**
        * Add an element to the end.
-       * @param e element to be added
+       * @param e
        */
       void add( const Type &e )
       {
@@ -389,7 +325,7 @@ namespace Dark
 
       /**
        * Add all elements from a vector to the end.
-       * @param v vector to be added
+       * @param v
        */
       void addAll( const Vector &v )
       {
@@ -398,8 +334,8 @@ namespace Dark
 
       /**
        * Add all elements from an array to the end.
-       * @param array pointer to first element from the array
-       * @param arrayCount number of elements in the array
+       * @param array
+       * @param arrayCount
        */
       void addAll( const Type *array, int arrayCount )
       {
@@ -418,7 +354,7 @@ namespace Dark
       /**
        * Add an element to the end, but only if there's no any equal element in the vector.
        * This function is useful if you plan to use vector as a set.
-       * @param e element to be included
+       * @param e
        * @return true if element has been added
        */
       bool include( const Type &e )
@@ -436,8 +372,8 @@ namespace Dark
       }
 
       /**
-       * Include all elements from a vector.
-       * @param v vector to be included
+       * Add all elements from given vector which are not yet included in this vector.
+       * @param v
        * @return number of elements that have been added
        */
       int includeAll( const Vector &v )
@@ -446,9 +382,9 @@ namespace Dark
       }
 
       /**
-       * Include all elements from an array.
-       * @param array pointer to the first element of the array
-       * @param count number of elements in the array
+       * Add all elements from given array which are not yet included in this vector.
+       * @param array
+       * @param count
        * @return number of elements that have been added
        */
       int includeAll( const Type *array, int count )
@@ -461,10 +397,10 @@ namespace Dark
       }
 
       /**
-       * Insert an element to the given position. All later elements are shifted to make a gap
+       * Insert an element at given position. All later elements are shifted to make a gap
        * for the new element.
-       * @param e element to be inserted
-       * @param index position
+       * @param e
+       * @param index
        */
       void insert( const Type &e, int index )
       {
@@ -481,7 +417,7 @@ namespace Dark
        * @param
        * @return
        */
-      Vector operator -- ( int )
+      Vector &operator -- ( int )
       {
         assert( count != 0 );
 
@@ -497,11 +433,15 @@ namespace Dark
       {
         assert( 0 <= index && index < count );
 
-				count--;
+        count--;
         aCopy( data + index, data + index + 1, count - index );
       }
 
-      // find and remove given element
+      /**
+       * Find and remove the given element.
+       * @param e
+       * @return
+       */
       bool exclude( const Type &e )
       {
         int index = aIndex( data, count, e );
@@ -516,11 +456,21 @@ namespace Dark
         }
       }
 
+      /**
+       * Remove intersection of vectors from this vector.
+       * @param v
+       * @return
+       */
       int excludeAll( const Vector &v )
       {
         return excludeAll( v.data, v.count );
       }
 
+      /**
+       * Remove intersection of this vector and given array from this vector.
+       * @param v
+       * @return
+       */
       int excludeAll( const Type *array, int count )
       {
         int n = 0;
@@ -530,6 +480,10 @@ namespace Dark
         return n;
       }
 
+      /**
+       * Remove first element
+       * @return value of removed element
+       */
       Type popFirst()
       {
         Type e = data[0];
@@ -540,12 +494,19 @@ namespace Dark
         return e;
       }
 
-      // pop
+      /**
+       * Remove last element
+       * @param e reference to variable to be overwritten with value of removed element
+       */
       void operator >> ( Type &e )
       {
         e = popLast();
       }
 
+      /**
+       * Remove last element
+       * @return value of removed element
+       */
       Type popLast()
       {
         assert( count != 0 );

@@ -16,20 +16,20 @@ namespace Dark
   /**
    * Bitset data type.
    *
-   * unit = long
+   * unit = ulong
    */
   class Bitset
   {
     private:
 
       // Number of bits per unit.
-      static const int LONG_BITSIZE = (int) sizeof( long ) * 8;
+      static const int ULONG_BITSIZE = sizeof( ulong ) * 8;
 
       // 0xfff...f
-      static const long LONG_ALLBITS = -1;
+      static const ulong ULONG_ALLBITS = ~0UL;
 
       // Pointer to unit[] that holds the data.
-      long *data;
+      ulong *data;
 
       // Size of data array (in units, not in bits).
       int  size;
@@ -46,7 +46,7 @@ namespace Dark
        * Copy construstor.
        * @param b the original Bitset
        */
-      Bitset( const Bitset &b ) : data( new long[size] ), size( b.size )
+      Bitset( const Bitset &b ) : data( new ulong[size] ), size( b.size )
       {
         aCopy( data, b.data, size );
       }
@@ -59,8 +59,8 @@ namespace Dark
        */
       explicit Bitset( int nBits )
       {
-        size = ( nBits - 1 ) / LONG_BITSIZE + 1;
-        data = new long[size];
+        size = ( nBits - 1 ) / ULONG_BITSIZE + 1;
+        data = new ulong[size];
       }
 
       /**
@@ -128,7 +128,7 @@ namespace Dark
        * overflows if you don't check the size of <code>data</code> array.
        * @return non-constant pointer to data array
        */
-      long *dataPtr()
+      ulong *dataPtr()
       {
         return data;
       }
@@ -138,7 +138,7 @@ namespace Dark
        * overflows if you don't check the size of <code>data</code> array.
        * @return non-constant pointer to data array
        */
-      const long *dataPtr() const
+      const ulong *dataPtr() const
       {
         return data;
       }
@@ -153,7 +153,7 @@ namespace Dark
           delete[] data;
         }
         size = nUnits;
-        data = new long[size];
+        data = new ulong[size];
       }
 
       /**
@@ -162,7 +162,7 @@ namespace Dark
        */
       void setSize( int nBits )
       {
-        setUnitSize( ( nBits - 1 ) / LONG_BITSIZE + 1 );
+        setUnitSize( ( nBits - 1 ) / ULONG_BITSIZE + 1 );
       }
 
       /**
@@ -171,7 +171,7 @@ namespace Dark
        */
       int length() const
       {
-        return size * LONG_BITSIZE;
+        return size * ULONG_BITSIZE;
       }
 
       /**
@@ -181,9 +181,9 @@ namespace Dark
        */
       bool get( int i ) const
       {
-        assert( 0 <= i && i < ( size * LONG_BITSIZE ) );
+        assert( 0 <= i && i < ( size * ULONG_BITSIZE ) );
 
-        return ( data[i / LONG_BITSIZE] & ( 1 << ( i % LONG_BITSIZE ) ) ) != 0;
+        return ( data[i / ULONG_BITSIZE] & ( 1 << ( i % ULONG_BITSIZE ) ) ) != 0;
       }
 
       /**
@@ -192,9 +192,9 @@ namespace Dark
        */
       void set( int i )
       {
-        assert( 0 <= i && i < ( size * LONG_BITSIZE ) );
+        assert( 0 <= i && i < ( size * ULONG_BITSIZE ) );
 
-        data[i / LONG_BITSIZE] |= 1 << ( i % LONG_BITSIZE );
+        data[i / ULONG_BITSIZE] |= 1 << ( i % ULONG_BITSIZE );
       }
 
       /**
@@ -203,9 +203,9 @@ namespace Dark
        */
       void clear( int i )
       {
-        assert( 0 <= i && i < ( size * LONG_BITSIZE ) );
+        assert( 0 <= i && i < ( size * ULONG_BITSIZE ) );
 
-        data[i / LONG_BITSIZE] &= ~( 1 << ( i % LONG_BITSIZE ) );
+        data[i / ULONG_BITSIZE] &= ~( 1 << ( i % ULONG_BITSIZE ) );
       }
 
       /**
@@ -214,7 +214,7 @@ namespace Dark
       bool isAllSet() const
       {
         for( int i = 0; i < size; i++ ) {
-          if( data[i] != LONG_ALLBITS ) {
+          if( data[i] != ULONG_ALLBITS ) {
             return false;
           }
         }
@@ -241,16 +241,16 @@ namespace Dark
        */
       void set( int start, int end )
       {
-        assert( 0 <= start && start <= end && end <= ( size * LONG_BITSIZE ) );
+        assert( 0 <= start && start <= end && end <= ( size * ULONG_BITSIZE ) );
 
-        int startUnit   = start / LONG_BITSIZE;
-        int startOffset = start % LONG_BITSIZE;
+        int startUnit   = start / ULONG_BITSIZE;
+        int startOffset = start % ULONG_BITSIZE;
 
-        int endUnit     = end / LONG_BITSIZE;
-        int endOffset   = end % LONG_BITSIZE;
+        int endUnit     = end / ULONG_BITSIZE;
+        int endOffset   = end % ULONG_BITSIZE;
 
-        long startMask = LONG_ALLBITS << startOffset;
-        long endMask   = ~( LONG_ALLBITS << endOffset );
+        ulong startMask = ULONG_ALLBITS << startOffset;
+        ulong endMask   = ~( ULONG_ALLBITS << endOffset );
 
         if( startUnit == endUnit ) {
           data[startUnit] |= startMask & endMask;
@@ -260,7 +260,7 @@ namespace Dark
           data[endUnit]   |= endMask;
 
           for( int i = startUnit + 1; i < endUnit; i++ ) {
-            data[i] = LONG_ALLBITS;
+            data[i] = ULONG_ALLBITS;
           }
         }
       }
@@ -272,16 +272,16 @@ namespace Dark
        */
       void clear( int start, int end )
       {
-        assert( 0 <= start && start <= end && end <= ( size * LONG_BITSIZE ) );
+        assert( 0 <= start && start <= end && end <= ( size * ULONG_BITSIZE ) );
 
-        int startUnit   = start / LONG_BITSIZE;
-        int startOffset = start % LONG_BITSIZE;
+        int startUnit   = start / ULONG_BITSIZE;
+        int startOffset = start % ULONG_BITSIZE;
 
-        int endUnit     = end / LONG_BITSIZE;
-        int endOffset   = end % LONG_BITSIZE;
+        int endUnit     = end / ULONG_BITSIZE;
+        int endOffset   = end % ULONG_BITSIZE;
 
-        long startMask = ~( LONG_ALLBITS << startOffset );
-        long endMask   = LONG_ALLBITS << endOffset;
+        ulong startMask = ~( ULONG_ALLBITS << startOffset );
+        ulong endMask   = ULONG_ALLBITS << endOffset;
 
         if( startUnit == endUnit ) {
           data[startUnit] &= startMask | endMask;
@@ -301,7 +301,7 @@ namespace Dark
        */
       void setAll()
       {
-        aSet( data, LONG_ALLBITS, size );
+        aSet( data, ULONG_ALLBITS, size );
       }
 
       /**

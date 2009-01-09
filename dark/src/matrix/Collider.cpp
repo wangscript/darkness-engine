@@ -301,7 +301,7 @@ namespace Dark
         }
         else if( startDist > endDist ) {
           float ratio = max( startDist - EPSILON, 0.0f ) / ( startDist - endDist );
-          assert( !Math::isNAN( ratio ) );
+          assert( !Math::isNaN( ratio ) );
 
           if( ratio > minRatio ) {
             minRatio  = ratio;
