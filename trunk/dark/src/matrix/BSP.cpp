@@ -108,7 +108,7 @@ namespace Dark
     float texCoord[2];
     float lightmapCoord[2];
     Vec3  normal;
-    uchar color[4];
+    ubyte color[4];
   };
 
   struct QBSPFace

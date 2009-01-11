@@ -17,7 +17,7 @@
  *
  * It also defines null macro as
  * <pre>##define null 0</pre>
- * It is used instead of NULL macro thru the engine.
+ * It is used instead of NULL macro through the engine.
  *
  * There are also unsigned integer types defined in here:
  * <pre>

@@ -20,14 +20,7 @@ namespace Client
   {
     private:
 
-      struct Entry
-      {
-        Vector<List*>    lists;
-        Vector<Texture*> textures;
-        Vector<Sound*>   sounds;
-      };
-
-      struct List
+      struct Lists
       {
         uint base;
         uint count;
@@ -42,6 +35,13 @@ namespace Client
       struct Sound
       {
         uint id;
+      };
+
+      struct Entry
+      {
+        Vector<List*>    lists;
+        Vector<Texture*> textures;
+        Vector<Sound*>   sounds;
       };
 
       Vector<List>      lists;
