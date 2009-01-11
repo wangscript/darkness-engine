@@ -44,7 +44,7 @@ namespace Dark
       float     heightMap[MAX + 1][MAX + 1];
       TerraQuad terra[MAX][MAX];
 
-      void  load( uchar *data );
+      void  load( ubyte *data );
       void  loadRAW( const char *heightMapFile );
       void  loadIMG( const char *heightMapFile );
 

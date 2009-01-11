@@ -14,7 +14,7 @@ ADD_EXECUTABLE( dark
     Shape.h Shape.cpp
     Water.h Water.cpp
     BSP.h BSP.cpp
-    OBJ.h OBJ.cpp
+#OBJ.h OBJ.cpp
     MD2.h MD2.cpp
     MD3.h MD3.cpp
     Model.h Model.cpp
