@@ -1,3 +1,5 @@
+=Visual C++ 2008 Express Build=
+
 Let's say we are building all the things in D:\Devel.
 
 1. Visual C++ 2008 Express (http://www.microsoft.com/Express/)
