@@ -89,7 +89,7 @@ to compile project. Then run the engine with `src/client/dark`. First time it wi
 
  * Use Dev-C++: install devpaks for all libraries and create a project (if you are familiar with Dev-C++ you should probably know what to do).
 
- * [Visual C++ 2008]
+ * [BuildVC2008 Visual C++ 2008]
 
 = TODO =
 
