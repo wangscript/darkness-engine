@@ -49,7 +49,8 @@ namespace Dark
       {
         private:
 
-          typedef Dark::Iterator<Type> IT;
+          // base class
+          typedef Dark::Iterator<Type> B;
 
         public:
 
@@ -57,7 +58,7 @@ namespace Dark
            * Make iterator for given vector. After creation it points to first element.
            * @param v
            */
-          explicit Iterator( Vector &v ) : IT( v.data, v.data + v.count )
+          explicit Iterator( Vector &v ) : B( v.data, v.data + v.count )
           {}
 
       };
@@ -129,6 +130,14 @@ namespace Dark
       bool operator != ( const Vector &v ) const
       {
         return count != v.count || !aEqual( data, v.data, count );
+      }
+
+      /**
+       * @return iterator for this vector
+       */
+      Iterator iterator()
+      {
+        return Iterator( *this );
       }
 
       /**

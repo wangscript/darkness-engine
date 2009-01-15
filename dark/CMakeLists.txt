@@ -36,13 +36,13 @@ IF( WIN32 )
       alut.lib
       vorbisfile.lib )
   # lowercase so that precompile.sh script doesn't screw up
-  add_definitions( /W4 /fp:strict )
+  add_definitions( /W4 )
 
 ELSE( WIN32 )
 
   INCLUDE_DIRECTORIES( /usr/include/libxml2 )
   LINK_LIBRARIES( xml2 SDL SDL_image SDL_mixer GL GLU openal alut vorbisfile )
-  ADD_DEFINITIONS( -g -Wall -Wextra -Winvalid-pch -pipe -I/usr/include -I/usr/include/SDL  )
+  ADD_DEFINITIONS( -g3 -Wall -Wextra -Winvalid-pch -pipe -I/usr/include -I/usr/include/SDL  )
 
 ENDIF( WIN32 )
 

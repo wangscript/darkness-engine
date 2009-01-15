@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Client_Frustum_h_
-#define _Client_Frustum_h_
+#pragma once
 
 #include "matrix/bv.h"
 #include "Camera.h"
@@ -108,5 +107,3 @@ namespace Client
 
 }
 }
-
-#endif // _Client_Frustum_h_

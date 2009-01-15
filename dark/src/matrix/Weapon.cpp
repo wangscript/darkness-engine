@@ -12,8 +12,6 @@
 
 #include "Weapon.h"
 
-#include "Translator.h"
-
 namespace Dark
 {
 

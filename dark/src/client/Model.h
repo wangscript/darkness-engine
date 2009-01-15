@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Client_Model_h_
-#define _Client_Model_h_
+#pragma once
 
 #include "MD2.h"
 
@@ -37,5 +36,3 @@ namespace Client
 
 }
 }
-
-#endif // _Client_Model_h_

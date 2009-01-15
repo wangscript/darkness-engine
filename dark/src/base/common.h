@@ -1,7 +1,12 @@
-/*
- *  common.h
+/**
+ *  \file common.h
  *
- *  Common types and function templates
+ *  \brief Common types and function templates
+ *
+ *  You may add <code>null</code> and the types to your
+ *  <code>~/.kde/share/apps/katepart/syntax/cpp.xml</code> or global file
+ *  <code>$KDEDIR/share/apps/katepart/syntax/cpp.xml</code> to look like reserved words in
+ *  Katepart (Kate/KWrite/KDevelop).
  *
  *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
@@ -10,40 +15,42 @@
 
 #pragma once
 
-/**
- * Dark namespace.
- *
- * That namespace contains everything that is part of the engine.
- *
- * It also defines null macro as
- * <pre>##define null 0</pre>
- * It is used instead of NULL macro through the engine.
- *
- * There are also unsigned integer types defined in here:
- * <pre>
- * typedef signed   char  byte;
- * typedef unsigned char  ubyte;
- * typedef unsigned short ushort;
- * typedef unsigned int   uint;
- * typedef unsigned long  ulong;</pre>
- *
- * Be careful about use of char, byte and ubyte; char may be either signed or unsigned depending
- * on the platform.
- *
- * You may add <code>null</code> and those types to your ~/.kde/share/apps/katepart/syntax/cpp.xml
- * or global file $KDEDIR/share/apps/katepart/syntax/cpp.xml to look like reserved words in
- * Kate/KWrite/KDevelop.
- */
-
 namespace Dark
 {
 
+  /**
+   * \def null
+   * It is equvalent to NULL macro but it looks prettier.
+   */
 # define null 0
 
+  /**
+   * signed char
+   * It should be used where char must be signed (otherwise char may be either signed or unsigned
+   * depenedin on the platform).
+   */
   typedef signed   char  byte;
+
+  /**
+   * unsigned char
+   * It should be used where char must be unsigned (otherwise char may be either signed or unsigned
+   * depenedin on the platform).
+   */
   typedef unsigned char  ubyte;
+
+  /**
+   * unsigned short integer
+   */
   typedef unsigned short ushort;
+
+  /**
+   * unsigned integer
+   */
   typedef unsigned int   uint;
+
+  /**
+   * unsigned long integer
+   */
   typedef unsigned long  ulong;
 
   /*
@@ -116,218 +123,6 @@ namespace Dark
     }
     else {
       return b < c ? b : c;
-    }
-  }
-
-  /**
-   * Pointer iterator
-   */
-  template <class Type>
-  class Iterator
-  {
-    protected:
-
-      Type *elem;
-      const Type *past;
-
-      /**
-       * @param start first element
-       */
-      Iterator( Type *start ) : elem( start )
-      {}
-
-    public:
-
-      /**
-       * @param start first element for forward iterator or successor of last element for backward
-       * iterator
-       * @param past_ successor of last element for forward iterator or first element for backward
-       * iterator
-       */
-      Iterator( Type *start, const Type *past_ ) : elem( start ), past( past_ )
-      {}
-
-      /**
-       * Returns true if iterator is on specified element.
-       * @param e
-       * @return
-       */
-      bool operator == ( const Type *e ) const
-      {
-        return elem == e;
-      }
-
-      /**
-       * Returns true if iterator is not on specified element.
-       * @param e
-       * @return
-       */
-      bool operator != ( const Type *e ) const
-      {
-        return elem != e;
-      }
-
-      /**
-       * When iterator advances beyond last element, it becomes passed. It points to an invalid
-       * location.
-       * @return true if iterator is passed
-       */
-      bool isPassed() const
-      {
-        return elem == past;
-      }
-
-      /**
-       * Advance to next element.
-       */
-      void operator ++ ( int )
-      {
-        assert( elem != past );
-
-        elem++;
-      }
-
-      /**
-       * Advance to previous element.
-       */
-      void operator -- ( int )
-      {
-        assert( elem != past );
-
-        elem--;
-      }
-
-      /**
-       * @return reference to current element in the list
-       */
-      Type &operator * ()
-      {
-        return *elem;
-      }
-
-      /**
-       * @return constant reference to current element in the list
-       */
-      const Type &operator * () const
-      {
-        return *elem;
-      }
-
-  };
-
-  /*
-   * ITERABLE CONTAINER UTILITY TEMPLATES
-   */
-
-  /**
-   * Compare all elements. (Like STL equal)
-   * @param iA
-   * @param iB
-   * @return true if all elements are equal
-   */
-  template <class IteratorA, class IteratorB>
-  inline bool iEquals( IteratorA iA, IteratorB iB )
-  {
-    while( !iA.isPassed() ) {
-      if( *iA != *iB ) {
-        return false;
-      }
-      iA++;
-      iB++;
-    }
-    return true;
-  }
-
-  /**
-   * Set all elements. (Like STL fill)
-   * @param i
-   * @param value
-   */
-  template <class Iterator, class Value>
-  inline void iSet( Iterator i, Value value )
-  {
-    while( !i.isPassed() ) {
-      *i = value;
-      i++;
-    }
-  }
-
-  /**
-   * Copy elements from first to last. (Like STL copy)
-   * @param iA
-   * @param iB
-   */
-  template <class IteratorA, class IteratorB>
-  inline void iCopy( IteratorA iA, IteratorB iB )
-  {
-    while( !iA.isPassed() ) {
-      *iB = *iA;
-      iA++;
-      iB++;
-    }
-  }
-
-  /**
-   * Copy elements from first to last. (Like STL copy)
-   * @param iA
-   * @param iB
-   */
-  template <class BackwardIteratorA, class BackwardIteratorB>
-  inline void iReverseCopy( BackwardIteratorA iA, BackwardIteratorB iB )
-  {
-    while( !iA.isPassed() ) {
-      iA--;
-      iB--;
-      *iB = *iA;
-    }
-  }
-
-  /**
-   * Find first occurence of given element. (Like STL find)
-   * @param begin
-   * @param value
-   * @return iterator at the elements found, passed iterator if not found
-   */
-  template <class Iterator, class Value>
-  inline Iterator iIndex( Iterator i, Value value )
-  {
-    while( !i.isPassed() ) {
-      if( *i == value ) {
-        break;
-      }
-      i++;
-    }
-    return i;
-  }
-
-  /**
-   * Find last occurence of given element.
-   * @param begin
-   * @param value
-   * @return iterator at the elements found, passed iterator if not found
-   */
-  template <class BackwardIterator, class Value>
-  inline BackwardIterator iLastIndex( BackwardIterator i, Value value )
-  {
-    while( !i.isPassed() ) {
-      i--;
-      if( *i == value ) {
-        break;
-      }
-    }
-    return i;
-  }
-
-  /**
-   * Delete elements that have been previously allocated with new operator.
-   */
-  template <class Iterator, class Type>
-  inline void iFree( Iterator i )
-  {
-    while( !i.isPassed() ) {
-      Type *p = *i;
-      i++;
-      delete p;
     }
   }
 
@@ -536,6 +331,263 @@ namespace Dark
     assert( count > 1 );
 
     aQuicksort( array, array + count - 1 );
+  }
+
+  /**
+   * Generalized iterator.
+   * It should only be used as a base class. Following functions need to be implemented:<br>
+   * <code>bool isPassed()</code><br>
+   * <code>void operator ++ ( int )</code><br>
+   * <code>void operator -- ( int )</code> (optional)<br>
+   * and, of course, a sensible constructor.
+   */
+  template <class Type>
+  class IteratorBase
+  {
+    protected:
+
+      /**
+       * Element which iterator is currently positioned at.
+       */
+      Type *elem;
+
+      /**
+       * @param start first element
+       */
+      IteratorBase( Type *start ) : elem( start )
+      {}
+
+    public:
+
+      /**
+       * Returns true if iterator is on specified element.
+       * @param e
+       * @return
+       */
+      bool operator == ( const Type *e ) const
+      {
+        return elem == e;
+      }
+
+      /**
+       * Returns true if iterator is not on specified element.
+       * @param e
+       * @return
+       */
+      bool operator != ( const Type *e ) const
+      {
+        return elem != e;
+      }
+
+      /**
+       * @return reference to current element
+       */
+      Type &operator * ()
+      {
+        return *elem;
+      }
+
+      /**
+       * @return constant reference to current element
+       */
+      const Type &operator * () const
+      {
+        return *elem;
+      }
+
+  };
+
+  /**
+   * Pointer iterator
+   */
+  template <class Type>
+  class Iterator : public IteratorBase<Type>
+  {
+    private:
+
+      // base class
+      typedef Dark::IteratorBase<Type> B;
+
+    protected:
+
+      /**
+       * Successor of last element.
+       * Is is used to determine when iterator becomes invalid.
+       */
+      const Type *past;
+
+    public:
+
+      /**
+       * @param start first element for forward iterator or successor of last element for backward
+       * iterator
+       * @param past_ successor of last element for forward iterator or first element for backward
+       * iterator
+       */
+      Iterator( Type *start, const Type *past_ ) : B( start ), past( past_ )
+      {}
+
+      /**
+       * When iterator advances beyond last element, it becomes passed. It points to an invalid
+       * location.
+       * @return true if iterator is passed
+       */
+      bool isPassed() const
+      {
+        return B::elem == past;
+      }
+
+      /**
+       * Advance to next element.
+       */
+      void operator ++ ( int )
+      {
+        assert( B::elem != past );
+
+        B::elem++;
+      }
+
+      /**
+       * Advance to previous element.
+       */
+      void operator -- ( int )
+      {
+        assert( B::elem != past );
+
+        B::elem--;
+      }
+
+  };
+
+  /*
+   * ITERABLE CONTAINER UTILITY TEMPLATES
+   */
+
+
+  /**
+   * \def foreach
+   * Foreach macro can be used as in following example:
+   * <pre>
+   * Vector&lt;int&gt; v;
+   * foreach( i, v.iterator() ) {
+   *   printf( "%d ", *i );
+   * }</pre>
+   * There's no need to add it to Katepart syntax highlighting as it is already there.
+   */
+# define foreach( _i, _startIterator ) \
+    for( typeof( _startIterator ) _i( _startIterator ); !_i.isPassed(); _i++ )
+
+  /**
+   * Compare all elements. (Like STL equal)
+   * @param iA
+   * @param iB
+   * @return true if all elements are equal
+   */
+  template <class IteratorA, class IteratorB>
+  inline bool iEquals( IteratorA iA, IteratorB iB )
+  {
+    while( !iA.isPassed() ) {
+      if( *iA != *iB ) {
+        return false;
+      }
+      iA++;
+      iB++;
+    }
+    return true;
+  }
+
+  /**
+   * Set all elements. (Like STL fill)
+   * @param i
+   * @param value
+   */
+  template <class Iterator, class Value>
+  inline void iSet( Iterator i, Value value )
+  {
+    while( !i.isPassed() ) {
+      *i = value;
+      i++;
+    }
+  }
+
+  /**
+   * Copy elements from first to last.
+   * @param iA
+   * @param iB
+   */
+  template <class IteratorA, class IteratorB>
+  inline void iCopy( IteratorA iA, IteratorB iB )
+  {
+    while( !iA.isPassed() ) {
+      *iA = *iB;
+      iA++;
+      iB++;
+    }
+  }
+
+  /**
+   * Copy elements from last to first.
+   * @param iA
+   * @param iB
+   */
+  template <class BackwardIteratorA, class BackwardIteratorB>
+  inline void iReverseCopy( BackwardIteratorA iA, BackwardIteratorB iB )
+  {
+    while( !iA.isPassed() ) {
+      iA--;
+      iB--;
+      *iA = *iB;
+    }
+  }
+
+  /**
+   * Find first occurence of given element. (Like STL find)
+   * @param i
+   * @param value
+   * @return iterator at the elements found, passed iterator if not found
+   */
+  template <class Iterator, class Value>
+  inline Iterator iIndex( Iterator i, Value value )
+  {
+    while( !i.isPassed() ) {
+      if( *i == value ) {
+        break;
+      }
+      i++;
+    }
+    return i;
+  }
+
+  /**
+   * Find last occurence of given element.
+   * @param i
+   * @param value
+   * @return iterator at the elements found, passed iterator if not found
+   */
+  template <class BackwardIterator, class Value>
+  inline BackwardIterator iLastIndex( BackwardIterator i, Value value )
+  {
+    while( !i.isPassed() ) {
+      i--;
+      if( *i == value ) {
+        break;
+      }
+    }
+    return i;
+  }
+
+  /**
+   * Delete elements that have been previously allocated with new operator.
+   * @param i
+   */
+  template <class Iterator, class Type>
+  inline void iFree( Iterator i )
+  {
+    while( !i.isPassed() ) {
+      Type *p = *i;
+      i++;
+      delete p;
+    }
   }
 
 }

@@ -11,7 +11,6 @@
 #pragma once
 
 #include "DynObject.h"
-#include "Translator.h"
 
 namespace Dark
 {

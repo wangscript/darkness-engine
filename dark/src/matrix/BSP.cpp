@@ -12,10 +12,8 @@
 
 #include "BSP.h"
 
-#include "Translator.h"
-
-#define fourC( a, b, c, d ) \
-  ( ( a ) | ( ( b ) << 8 ) | ( ( c ) <<16 ) | ( ( d ) << 24 ) )
+#define fourCC( a, b, c, d ) \
+  ( ( a ) | ( ( b ) << 8 ) | ( ( c ) << 16 ) | ( ( d ) << 24 ) )
 
 namespace Dark
 {
@@ -151,7 +149,8 @@ namespace Dark
   }
 
   BSP::BSP() : textures( null ), planes( null ), nodes( null ), leafs( null ), leafFaces( null ),
-    simplices( null ), simplexSides( null ), vertices( null ), indices( null ), faces( null ), lightmaps( null )
+    simplices( null ), simplexSides( null ), vertices( null ), indices( null ), faces( null ),
+    lightmaps( null )
   {
   }
 
@@ -175,7 +174,7 @@ namespace Dark
     Header header;
     fread( &header, sizeof( Header ), 1, f );
 
-    if( header.id != fourC( 'I', 'B', 'S', 'P' ) || header.version != 46 ) {
+    if( header.id != fourCC( 'I', 'B', 'S', 'P' ) || header.version != 46 ) {
       logFile.printRaw( " Wrong format\n" );
       return;
     }
@@ -184,7 +183,7 @@ namespace Dark
     fread( lumps, sizeof( Lump ), QBSP_LUMPS_NUM, f );
 
     nTextures = lumps[QBSP_LUMP_TEXTURES].length / sizeof( QBSPTexture );
-    textures = new int[nTextures];
+    textures = new const char*[nTextures];
     fseek( f, lumps[QBSP_LUMP_TEXTURES].offset, SEEK_SET );
 
     for( int i = 0; i < nTextures; i++ ) {
@@ -192,15 +191,16 @@ namespace Dark
 
       fread( &texture, sizeof( QBSPTexture ), 1, f );
 
-      if( String::length( texture.name ) > 8 ) {
+      if( texture.flags == 0 && String::length( texture.name ) > 8 ) {
         String name = String( "tex/" ) + String( texture.name ).substring( 9 ) + ".jpg";
-        textures[i] = max( translator.getTexture( name ), 0 );
+
+        char *path = new char[name.length() + 1];
+        strcpy( path, name.cstr() );
+
+        textures[i] = path;
       }
       else {
-        textures[i] = -1;
-      }
-      if( texture.flags ) {
-        textures[i] = ~textures[i];
+        textures[i] = null;
       }
     }
 
@@ -369,12 +369,6 @@ namespace Dark
     }
 
     fclose( f );
-
-    for( int i = 0; i < nTextures; i++ ) {
-      if( textures[i] < 0 ) {
-        textures[i] = ~textures[i];
-      }
-    }
 
     logFile.printRaw( " OK\n" );
   }

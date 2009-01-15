@@ -244,6 +244,15 @@ namespace Dark
         return x * ( _1_PI * 180.0f );
       }
 
+      /**
+       * Is power of two?
+       */
+      template <class Value>
+      static bool isPow2( const Value &v )
+      {
+        return v & ( v - 1 ) == 0;
+      }
+
       // random integer from 0 to RAND_MAX == INT_MAX
       // (pointer to rand() function in stdlib.h)
       static int ( *const rand )();

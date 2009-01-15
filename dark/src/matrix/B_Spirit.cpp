@@ -38,7 +38,6 @@ namespace Dark
 
     damage  = Math::INF;
 
-    model   = ~0;
     anim    = ANIM_STAND;
 
     newVelocity.setZero();

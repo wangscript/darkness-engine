@@ -11,7 +11,6 @@
 #pragma once
 
 #include "Object.h"
-#include "Translator.h"
 
 namespace Dark
 {

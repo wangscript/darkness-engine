@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Client_Camera_h_
-#define _Client_Camera_h_
+#pragma once
 
 #include "matrix/Matrix.h"
 
@@ -52,5 +51,3 @@ namespace Client
 
 }
 }
-
-#endif // _Client_Camera_h_

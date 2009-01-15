@@ -30,12 +30,10 @@ namespace Dark
     p = p_,
     dim = Vec3( 0.4032f, 0.4032f, 0.5922f );
 
-    flags = Object::DYNAMIC_BIT | Object::CLIP_BIT | Object::FRICT_FUNC_BIT;
+    flags = Object::DYNAMIC_BIT | Object::CLIP_BIT;
     type = TYPE;
 
     damage = Math::INF;
-
-    model = LIST_METAL_BARREL;
 
     velocity = Vec3::zero();
     mass = 50.0f;
@@ -43,20 +41,10 @@ namespace Dark
 
   void D_MetalBarrel::onDestroy()
   {
-    world.genParticles( 10, p, velocity, 1.2f, 1.2f, 0.0f, 20.0f, LIST_SPARK,
+    world.genParticles( 10, p, velocity, 1.2f, 1.2f, 0.0f, 20.0f, 0.1f,
                         Vec3( 0.5f, 0.5f, 0.5f ), 0.2f );
 
     world.remove( this );
-  }
-
-  void D_MetalBarrel::onFrictBegin()
-  {
-    addContSound( SND_FRICTION_HARD );
-  }
-
-  void D_MetalBarrel::onFrictEnd()
-  {
-    removeContSound( SND_FRICTION_HARD );
   }
 
 }

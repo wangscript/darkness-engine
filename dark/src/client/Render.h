@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Client_Render_h_
-#define _Client_Render_h_
+#pragma once
 
 #include "matrix/World.h"
 
@@ -96,5 +95,3 @@ namespace Client
 
 }
 }
-
-#endif // _Render_h_

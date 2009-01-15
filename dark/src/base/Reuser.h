@@ -36,10 +36,10 @@ namespace Dark
 
     public:
 
-#ifdef DARK_USE_REUSER
       Reuser() : next( null )
       {}
 
+#ifdef DARK_USE_REUSER
       // If the list of freed blocks isn't empty, reuse the last freed block (at the beginning of
       // the list), otherwise allocate new block. (Constructor is called automatically.)
       void *operator new ( uint size )

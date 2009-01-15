@@ -101,16 +101,14 @@ namespace Dark
       /**
        * HashIndex iterator.
        */
-      class Iterator : public Dark::Iterator<Elem>
+      class Iterator : public Dark::IteratorBase<Elem>
       {
         private:
 
-          typedef Dark::Iterator<Elem> IT;
+          typedef Dark::IteratorBase<Elem> B;
 
           Elem **data;
           int  index;
-
-          void operator -- ( int );
 
         public:
 
@@ -118,11 +116,11 @@ namespace Dark
            * Make iterator for given HastIndex. After creation it points to first element.
            * @param t
            */
-          explicit Iterator( HashIndex &t ) : IT( t.data[0] ), data( t.data ), index( 0 )
+          explicit Iterator( HashIndex &t ) : B( t.data[0] ), data( t.data ), index( 0 )
           {
-            while( IT::elem == null && index < SIZE - 1 ) {
+            while( B::elem == null && index < SIZE - 1 ) {
               index++;
-              IT::elem = data[index];
+              B::elem = data[index];
             }
           }
 
@@ -133,7 +131,7 @@ namespace Dark
            */
           bool isPassed()
           {
-            return IT::elem == null;
+            return B::elem == null;
           }
 
           /**
@@ -142,20 +140,20 @@ namespace Dark
            */
           void operator ++ ( int )
           {
-            assert( IT::elem != null );
+            assert( B::elem != null );
 
-            if( IT::elem->next != null ) {
-              IT::elem = IT::elem->next;
+            if( B::elem->next != null ) {
+              B::elem = B::elem->next;
             }
             else if( index < SIZE - 1 ) {
               do {
                 index++;
-                IT::elem = data[index];
+                B::elem = data[index];
               }
-              while( IT::elem == null && index < SIZE - 1 );
+              while( B::elem == null && index < SIZE - 1 );
             }
             else {
-              IT::elem = null;
+              B::elem = null;
             }
           }
 
@@ -164,7 +162,7 @@ namespace Dark
            */
           uint key() const
           {
-            return IT::elem->key;
+            return B::elem->key;
           }
 
           /**
@@ -172,7 +170,7 @@ namespace Dark
            */
           Type *value()
           {
-            return &IT::elem->value;
+            return &B::elem->value;
           }
 
           /**
@@ -188,7 +186,7 @@ namespace Dark
            */
           Type &operator * ()
           {
-            return IT::elem->value;
+            return B::elem->value;
           }
 
           /**
@@ -196,7 +194,7 @@ namespace Dark
            */
           const Type &operator * () const
           {
-            return IT::elem->value;
+            return B::elem->value;
           }
 
       };
@@ -273,6 +271,14 @@ namespace Dark
           }
         }
         return false;
+      }
+
+      /**
+       * @return iterator for this HashIndex
+       */
+      Iterator iterator()
+      {
+        return Iterator( *this );
       }
 
       /**

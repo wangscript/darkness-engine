@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Client_Skybox_h_
-#define _Client_Skybox_h_
+#pragma once
 
 #include "Context.h"
 
@@ -35,5 +34,3 @@ namespace Client
 
 }
 }
-
-#endif // _Client_Skybox_h_

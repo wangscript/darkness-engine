@@ -19,7 +19,7 @@ namespace Client
 
   Shape shape;
 
-  uint Shape::genRandomTetrahedicParticle( float size )
+  void Shape::genRandomTetrahedicParticle( uint list, float size )
   {
     static const float SQRT_3_THIRDS = Math::sqrt( 3.0f ) / 3.0f;
 
@@ -29,8 +29,6 @@ namespace Client
     Vec3 v1 = Math::frand() * dim * Vec3( 0.0f,            2.0f / 3.0f, 0.0f );
     Vec3 v2 = Math::frand() * dim * Vec3( -SQRT_3_THIRDS, -1.0f / 3.0f, 0.0f );
     Vec3 v3 = Math::frand() * dim * Vec3(  SQRT_3_THIRDS, -1.0f / 3.0f, 0.0f );
-
-    uint list = context.genList();
 
     glNewList( list, GL_COMPILE );
 
@@ -61,11 +59,9 @@ namespace Client
     glEnd();
 
     glEndList();
-
-    return list;
   }
 
-  uint Shape::genRandomCubicParticle( float size )
+  void Shape::genRandomCubicParticle( uint list, float size )
   {
     float dim = size / 2.0f;
 
@@ -78,8 +74,6 @@ namespace Client
     Vec3 v5( v1.x, v1.y,  dim );
     Vec3 v6( v2.x, v2.y,  dim );
     Vec3 v7( v3.x, v3.y,  dim );
-
-    uint list = context.genList();
 
     glNewList( list, GL_COMPILE );
 
@@ -128,16 +122,12 @@ namespace Client
     glEnd();
 
     glEndList();
-
-    return list;
   }
 
-  uint Shape::genBox( const AABB &bb, uint texture )
+  void Shape::genBox( uint list, const AABB &bb, uint texture )
   {
     Vec3 v0 = -bb.dim;
     Vec3 v1 = +bb.dim;
-
-    uint list = context.genList();
 
     glNewList( list, GL_COMPILE );
 
@@ -211,8 +201,6 @@ namespace Client
     glEnd();
 
     glEndList();
-
-    return list;
   }
 
   void Shape::drawBox( const AABB &bb )
@@ -290,6 +278,16 @@ namespace Client
 
     glEndList();
   }
+
+  void Shape::init()
+  {
+    uint spark = context.genList();
+
+    genRandomTetrahedicParticle( spark, 0.5f );
+  }
+
+  void free()
+  {}
 
 }
 }

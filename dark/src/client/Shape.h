@@ -8,32 +8,26 @@
  *  $Id$
  */
 
-#ifndef _Client_Shape_h_
-#define _Client_Shape_h_
+#pragma once
 
 #include "matrix/bv.h"
 #include "Context.h"
 
 namespace Dark
 {
-namespace Client
-{
-
-  class Shape
+  struct Shape
   {
-    public:
+    uint spark;
 
-      uint genRandomTetrahedicParticle( float size );
-      uint genRandomCubicParticle( float size );
+    void genRandomTetrahedicParticle( uint list, float size );
+    void genRandomCubicParticle( uint list, float size );
+    void genBox( uint list, const AABB &bb, uint texture );
+    void drawBox( const AABB &bb );
 
-      uint genBox( const AABB &bb, uint texture );
-
-      void drawBox( const AABB &bb );
+    void init();
+    void free();
   };
 
   extern Shape shape;
 
 }
-}
-
-#endif // _Client_Shape_h_

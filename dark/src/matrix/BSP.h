@@ -106,7 +106,7 @@ namespace Dark
     int           nFaces;
     int           nLightmaps;
 
-    int           *textures;
+    const char    **textures;
     Plane         *planes;
 
     Node          *nodes;

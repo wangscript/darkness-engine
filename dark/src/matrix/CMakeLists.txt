@@ -6,7 +6,6 @@ ADD_LIBRARY( matrix STATIC
     AABB.h AABB.cpp
     Sphere.h
     Timer.h Timer.cpp
-    Translator.h Translator.cpp
     BSP.h BSP.cpp
     Structure.h Structure.cpp
     Sky.h Sky.cpp

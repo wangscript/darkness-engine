@@ -12,7 +12,6 @@
 
 #include "B_Human.h"
 
-#include "Translator.h"
 #include "Physics.h"
 
 namespace Dark
@@ -50,7 +49,6 @@ namespace Dark
 
     damage  = 2.0f;
 
-    model   = ~0;
     anim    = ANIM_STAND;
 
     newVelocity.setZero();
@@ -146,7 +144,7 @@ namespace Dark
       flags &= ~DISABLED_BIT;
 
       newVelocity.z = JUMP_VELOCITY;
-      addSound( SND_JUMP );
+      addEffect( SND_JUMP );
       return;
     }
     if( ( keys & KEY_CROUCH ) && !( oldKeys & KEY_CROUCH ) ) {
@@ -277,7 +275,7 @@ namespace Dark
     }
 
     if( !( state & GROUNDED_BIT ) && hit->normal.z >= Physics::FLOOR_NORMAL_Z && deltaVel > 4.0f ) {
-      addSound( SND_LAND );
+      addEffect( SND_LAND );
     }
   }
 
