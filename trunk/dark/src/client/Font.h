@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Client_Font_h_
-#define _Client_Font_h_
+#pragma once
 
 #define FONT_BIAS_X     0.01f
 #define FONT_BIAS_Y     0
@@ -18,8 +17,6 @@
 #define FONT_DEPTH      -50.0f
 
 namespace Dark
-{
-namespace Client
 {
 
   class Font
@@ -40,6 +37,3 @@ namespace Client
   };
 
 }
-}
-
-#endif // _Client_Font_h_

@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Client_MD2_h_
-#define _Client_MD2_h_
+#pragma once
 
 #include "matrix/Timer.h"
 #include "Context.h"
@@ -87,5 +86,3 @@ namespace Client
 
 }
 }
-
-#endif // _Client_MD2_h_

@@ -57,13 +57,12 @@ namespace Dark
       /**
        * List iterator.
        */
-      class Iterator : public Dark::Iterator<Type>
+      class Iterator : public Dark::IteratorBase<Type>
       {
         private:
 
-          typedef Dark::Iterator<Type> IT;
-
-          void operator -- ( int );
+          // base class
+          typedef Dark::IteratorBase<Type> B;
 
         public:
 
@@ -71,7 +70,7 @@ namespace Dark
            * Make iterator for given list. After creation it points to first element.
            * @param l
            */
-          explicit Iterator( List &l ) : IT( l.firstElem )
+          explicit Iterator( const List &l ) : B( l.firstElem )
           {}
 
           /**
@@ -81,7 +80,7 @@ namespace Dark
            */
           bool isPassed()
           {
-            return IT::elem == null;
+            return B::elem == null;
           }
 
           /**
@@ -89,9 +88,9 @@ namespace Dark
            */
           void operator ++ ( int )
           {
-            assert( IT::elem != null );
+            assert( B::elem != null );
 
-            IT::elem = IT::elem->next[INDEX];
+            B::elem = B::elem->next[INDEX];
           }
 
       };
@@ -109,6 +108,14 @@ namespace Dark
       explicit List( const Type *e ) : firstElem( e )
       {
         e->next[INDEX] = null;
+      }
+
+      /**
+       * @return iterator for this list
+       */
+      Iterator iterator() const
+      {
+        return Iterator( *this );
       }
 
       /**

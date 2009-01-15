@@ -185,13 +185,12 @@ namespace Dark
     int size = vars.length();
     Elem sortedVars[size];
 
-    HashString<String, SIZE>::Iterator j( vars );
-    for( int i = 0; !j.isPassed(); i++, j++ ) {
+    int i = 0;
+    foreach( j, vars.iterator() ) {
       sortedVars[i].key = j.key()->cstr();
       sortedVars[i].value = j.value()->cstr();
-      size = i;
+      size = ++i;
     }
-    size++;
     aSort( sortedVars, size );
 
     for( int i = 0; i < size; i++ ) {

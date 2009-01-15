@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _M_Walker_h_
-#define _M_Walker_h_
+#pragma once
 
 #include "Mind.h"
 
@@ -28,5 +27,3 @@ namespace Dark
   };
 
 }
-
-#endif // _M_Walker_h_

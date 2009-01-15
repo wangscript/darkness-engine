@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _$MODULE$_h_
-#define _$MODULE$_h_
+#pragma once
 
 namespace Dark
 {
@@ -21,5 +20,3 @@ namespace Dark
   };
 
 }
-
-#endif // _$MODULE$_h_

@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Main_h_
-#define _Main_h_
+#pragma once
 
 #define DARK_APP_NAME            "Darkness server"
 #define DARK_RC_DIR              ".dark/"
@@ -44,5 +43,3 @@ namespace Server
 }
 
 int main( int argc, char *argv[] );
-
-#endif // _Main_h_

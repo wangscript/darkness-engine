@@ -12,8 +12,6 @@
 
 #include "Context.h"
 
-#include "matrix/Translator.h"
-
 namespace Dark
 {
 namespace Client
@@ -29,27 +27,14 @@ namespace Client
   void Context::init()
   {
     logFile.println( "Context created" );
-
-    loadedTextures = new uint[translator.nTextures];
-    aSet( loadedTextures, 0, translator.nTextures );
   }
 
-  uint Context::createTexture( char *data, int width, int height, int bpp,
-                               bool wrap, int magFilter, int minFilter )
+  uint Context::buildTexture( const ubyte *data, int width, int height, int bytesPerPixel,
+                              bool wrap, int magFilter, int minFilter )
   {
-    logFile.print( "Loading texture into context ..." );
+    assert( glGetError() == GL_NO_ERROR );
 
-    GLenum format;
-    if( bpp == 3 ) {
-      format = GL_RGB;
-    }
-    else if( bpp == 4 ) {
-      format = GL_RGBA;
-    }
-    else {
-      logFile.printRaw( " Invalid bpp\n" );
-      return 0;
-    }
+    GLenum format = bytesPerPixel == 4 ? GL_RGBA : GL_RGB;
 
     uint texNum;
     glGenTextures( 1, &texNum );
@@ -57,10 +42,12 @@ namespace Client
     glBindTexture( GL_TEXTURE_2D, texNum );
 
     if( minFilter >= GL_NEAREST_MIPMAP_NEAREST ) {
-      gluBuild2DMipmaps( GL_TEXTURE_2D, bpp, width, height, format, GL_UNSIGNED_BYTE, data );
+      gluBuild2DMipmaps( GL_TEXTURE_2D, bytesPerPixel, width, height, format,
+                         GL_UNSIGNED_BYTE, data );
     }
     else {
-      glTexImage2D( GL_TEXTURE_2D, 0, bpp, width, height, 0, format, GL_UNSIGNED_BYTE, data );
+      glTexImage2D( GL_TEXTURE_2D, 0, bytesPerPixel, width, height, 0, format,
+                    GL_UNSIGNED_BYTE, data );
     }
 
     if( !wrap ) {
@@ -73,42 +60,38 @@ namespace Client
 
     glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 
-    textures << texNum;
+    if( glGetError() != GL_NO_ERROR ) {
+      glDeleteTextures( 1, &texNum );
+      texNum = 0;
 
-    logFile.printRaw( " OK\n" );
+      do {
+      }
+      while( glGetError() != GL_NO_ERROR );
+    }
     return texNum;
   }
 
-  uint Context::createNormalmap( char *data, int width, int height, int bpp,
-                                 const Vec3 &lightNormal, bool wrap, int magFilter, int minFilter )
+  uint Context::buildNormalmap( ubyte *data, const Vec3 &lightNormal, int width, int height,
+                                int bytesPerPixel, bool wrap, int magFilter, int minFilter )
   {
-    logFile.print( "Loading texture into context ..." );
+    assert( glGetError() == GL_NO_ERROR );
 
-    uchar *dataEnd = (uchar*) data + width * height * bpp;
-    for( uchar *p = (uchar*) data; p < dataEnd; p += bpp ) {
+    ubyte *dataEnd = data + width * height * bytesPerPixel;
+
+    for( ubyte *p = data; p < dataEnd; p += bytesPerPixel ) {
       float x = ( (float) p[0] - 128.0f ) / 128.0f;
       float y = ( (float) p[1] - 128.0f ) / 128.0f;
       float z = ( (float) p[2] - 128.0f ) / 128.0f;
 
       float dot = x * lightNormal.x + y * lightNormal.y + z * lightNormal.z;
-      uchar color = (uchar) bound( dot * 256.0f, 0.0f, 255.0f );
+      ubyte color = (ubyte) bound( dot * 256.0f, 0.0f, 255.0f );
 
       p[0] = color;
       p[1] = color;
       p[2] = color;
     }
 
-    GLenum format;
-    if( bpp == 3 ) {
-      format = GL_RGB;
-    }
-    else if( bpp == 4 ) {
-      format = GL_RGBA;
-    }
-    else {
-      logFile.printRaw( " Invalid bpp\n" );
-      return 0;
-    }
+    GLenum format = bytesPerPixel == 4 ? GL_RGBA : GL_RGB;
 
     uint texNum;
     glGenTextures( 1, &texNum );
@@ -116,10 +99,12 @@ namespace Client
     glBindTexture( GL_TEXTURE_2D, texNum );
 
     if( minFilter >= GL_NEAREST_MIPMAP_NEAREST ) {
-      gluBuild2DMipmaps( GL_TEXTURE_2D, bpp, width, height, format, GL_UNSIGNED_BYTE, data );
+      gluBuild2DMipmaps( GL_TEXTURE_2D, bytesPerPixel, width, height, format,
+                         GL_UNSIGNED_BYTE, data );
     }
     else {
-      glTexImage2D( GL_TEXTURE_2D, 0, bpp, width, height, 0, format, GL_UNSIGNED_BYTE, data );
+      glTexImage2D( GL_TEXTURE_2D, 0, bytesPerPixel, width, height, 0, format,
+                    GL_UNSIGNED_BYTE, data );
     }
 
     if( !wrap ) {
@@ -132,14 +117,61 @@ namespace Client
 
     glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 
-    textures << texNum;
+    if( glGetError() != GL_NO_ERROR ) {
+      glDeleteTextures( 1, &texNum );
+      texNum = 0;
 
-    logFile.printRaw( " OK\n" );
+      do {
+      }
+      while( glGetError() != GL_NO_ERROR );
+    }
     return texNum;
   }
 
-  uint Context::loadTexture( const char *fileName, bool wrap, int magFilter, int minFilter )
+  uint Context::createTexture( int context, const ubyte *data, int width, int height,
+                               int bytesPerPixel, bool wrap, int magFilter, int minFilter )
   {
+    assert( context < entries.length() && entries.contains( );
+
+    logFile.print( "Creating texture from buffer ..." );
+
+    int texNum = buildTexture( data, width, height, bpp, wrap, magFilter, minFilter );
+
+    if( texNum == 0 ) {
+      logFile.printRaw( " Error\n" );
+    }
+    else {
+      entries[context].textures << new Texture( texNum, 0 );
+      logFile.printRaw( " OK" );
+    }
+    return texNum;
+  }
+
+  uint Context::createNormalmap( int context, ubyte *data, int width, int height,
+                                 const Vec3 &lightNormal, int bytesPerPixel,
+                                 bool wrap, int magFilter, int minFilter )
+  {
+    assert( entries.contains( context ) );
+
+    logFile.print( "Creating normalmap texture from buffer ..." );
+
+    int texNum = buildTexture( data, width, height, bpp, lightNormal, wrap, magFilter, minFilter );
+
+    if( texNum == 0 ) {
+      logFile.printRaw( " Error\n" );
+    }
+    else {
+      entries[context].textures << new Texture( texNum, 0 );
+      logFile.printRaw( " OK" );
+    }
+    return texNum;
+  }
+
+  uint Context::loadTexture( int context, const char *fileName,
+                             bool wrap, int magFilter, int minFilter )
+  {
+    assert( entries.contains( context ) );
+
     logFile.print( "Reading texture from file '%s' ...", fileName );
 
     int textureIndex = translator.getTexture( fileName );
@@ -154,13 +186,16 @@ namespace Client
       logFile.printRaw( " No such file\n" );
       return 0;
     }
+    if( image->w != image->h ) {
+      logFileprintRaw( " Dimensions are not equal" );
+    }
 
     logFile.printRaw( " OK\n" );
 
-    int bpp = image->format->BitsPerPixel >> 3;   // bytes per pixel
+    int bytesPerPixel = image->format->BitsPerPixel / 8;
 
-    int texNum = createTexture( (char*) image->pixels, image->w, image->h, bpp,
-                                 wrap, magFilter, minFilter );
+    int texNum = createTexture( (ubyte*) image->pixels, image->w, image->h, bytesPerPixel,
+                                wrap, magFilter, minFilter );
 
     SDL_FreeSurface( image );
 
@@ -171,7 +206,7 @@ namespace Client
     return texNum;
   }
 
-  uint Context::loadNormalmap( const char *fileName, const Vec3 &lightNormal,
+  uint Context::loadNormalmap( int context, const char *fileName, const Vec3 &lightNormal,
                                bool wrap, int magFilter, int minFilter )
   {
     logFile.print( "Reading texture from file '%s' ...", fileName );
@@ -184,11 +219,11 @@ namespace Client
 
     logFile.printRaw( " OK\n" );
 
-    int bpp = image->format->BitsPerPixel >> 3;   // bytes per pixel
+    int bytesPerPixel = image->format->BitsPerPixel / 8;
 
     assert( image->w == image->h );
 
-    int texNum = createNormalmap( (char*) image->pixels, image->w, image->h, bpp,
+    int texNum = createNormalmap( (ubyte*) image->pixels, image->w, image->h, bytesPerPixel,
                                   lightNormal, wrap, magFilter, minFilter );
 
     SDL_FreeSurface( image );

@@ -30,8 +30,6 @@ namespace Dark
     type = TYPE;
 
     damage = Math::INF;
-
-    model = -1;
   }
 
   void Ladder::onUpdate()

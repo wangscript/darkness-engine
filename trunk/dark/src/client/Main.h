@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Client_Main_h_
-#define _Client_Main_h_
+#pragma once
 
 #define DARK_APP_NAME            "Darkness"
 #define DARK_WM_TITLE            DARK_APP_NAME
@@ -51,5 +50,3 @@ namespace Client
 }
 
 int main( int argc, char *argv[] );
-
-#endif // _Client_Main_h_

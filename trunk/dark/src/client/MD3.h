@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Client_MD3_h_
-#define _Client_MD3_h_
+#pragma once
 
 #include "matrix/bv.h"
 #include "matrix/Timer.h"
@@ -71,7 +70,7 @@ namespace Client
   struct MD3Triangle
   {
     short vertex[3];
-    uchar normal[2];
+    ubyte normal[2];
   };
 
   struct MD3Face
@@ -113,5 +112,3 @@ namespace Client
 
 }
 }
-
-#endif // _Client_MD3_h_

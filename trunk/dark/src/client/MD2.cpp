@@ -49,8 +49,8 @@ namespace Client
 
   struct MD2Vertex
   {
-    uchar v[3];
-    uchar iLightNormal;
+    ubyte v[3];
+    ubyte iLightNormal;
   };
 
   struct MD2TexCoord

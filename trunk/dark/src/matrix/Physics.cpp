@@ -96,6 +96,9 @@ namespace Dark
 
   bool Physics::handleObjFriction()
   {
+    obj->flags &= ~Object::ON_WATER_BIT;
+
+    // in air
     if( obj->flags & Object::HOVER_BIT ) {
       if( obj->newVelocity.sqL() <= STICK_VELOCITY ) {
         obj->newVelocity.setZero();
@@ -104,7 +107,8 @@ namespace Dark
         obj->newVelocity *= 1.0f - AIR_FRICTION;
       }
     }
-    else if( obj->flags & Object::CLIMBING_LADDER_BIT ) {
+    // on ladder
+    else if( obj->flags & Object::ON_LADDER_BIT ) {
       if( obj->newVelocity.sqL() <= STICK_VELOCITY ) {
         obj->newVelocity.setZero();
       }
@@ -112,51 +116,17 @@ namespace Dark
         obj->newVelocity *= 1.0f - FLOOR_FRICTION;
       }
     }
+    // swimming
+    else if( obj->flags & Object::UNDER_WATER_BIT ) {
+      obj->flags &= ~Object::UNDER_WATER_BIT;
+
+      obj->newVelocity *= 1.0f - WATER_FRICTION;
+      obj->newVelocity.z += obj->lift;
+      return true;
+    }
     else {
-      if( obj->flags & Object::ON_WATER_BIT ) {
-        obj->flags &= ~Object::ON_WATER_BIT;
-
-        if( obj->flags & Object::UNDER_WATER_BIT ) {
-          obj->flags &= ~Object::UNDER_WATER_BIT;
-
-          obj->newVelocity *= 1.0f - WATER_FRICTION;
-          obj->newVelocity.z += obj->lift;
-          return true;
-        }
-      }
-      else {
-        obj->flags &= ~Object::IN_WATER_BIT;
-      }
-
-      if( obj->flags & Object::ON_FLOOR_BIT ) {
-        float xyDot = obj->newVelocity.x * obj->newVelocity.x +
-            obj->newVelocity.y * obj->newVelocity.y;
-
-        if( xyDot > STICK_VELOCITY ) {
-          obj->newVelocity.x *= 1.0f - FLOOR_FRICTION;
-          obj->newVelocity.y *= 1.0f - FLOOR_FRICTION;
-
-          obj->newVelocity += ( gVelocity * obj->floor.z ) * obj->floor;
-          obj->flags &= ~Object::ON_FLOOR_BIT;
-
-          obj->frictBegin();
-        }
-        else {
-          obj->newVelocity.x = 0.0f;
-          obj->newVelocity.y = 0.0f;
-
-          obj->frictEnd();
-
-          if( obj->newVelocity.z <= STICK_VELOCITY ) {
-            obj->newVelocity.z = 0.0f;
-            return false;
-          }
-          else {
-            obj->flags &= ~Object::ON_FLOOR_BIT;
-          }
-        }
-      }
-      else if( obj->lower >= 0 ) {
+      // on another object
+      if( obj->lower >= 0 ) {
         DynObject *sObj = (DynObject*) world.objects[obj->lower];
 
         if( obj->newVelocity.x != 0.0f || obj->newVelocity.y != 0.0f ||
@@ -171,25 +141,43 @@ namespace Dark
           if( ( dx*dx + dy*dy ) > STICK_VELOCITY ) {
             obj->newVelocity.x += dx * OBJ_FRICTION;
             obj->newVelocity.y += dy * OBJ_FRICTION;
-
-            obj->frictBegin();
           }
           else {
             obj->newVelocity.x = sObj->velocity.x;
             obj->newVelocity.y = sObj->velocity.y;
-
-            obj->frictEnd();
           }
         }
         else {
-          obj->frictEnd();
-
           if( obj->newVelocity.z == 0.0f && sObj->velocity.z == 0.0f ) {
             return false;
           }
           else {
             obj->newVelocity.z += gVelocity;
             obj->lower = -1;
+          }
+        }
+      }
+      else if( obj->flags & Object::ON_FLOOR_BIT ) {
+        float xyDot = obj->newVelocity.x * obj->newVelocity.x +
+            obj->newVelocity.y * obj->newVelocity.y;
+
+        if( xyDot > STICK_VELOCITY ) {
+          obj->newVelocity.x *= 1.0f - FLOOR_FRICTION;
+          obj->newVelocity.y *= 1.0f - FLOOR_FRICTION;
+
+          obj->newVelocity += ( gVelocity * obj->floor.z ) * obj->floor;
+          obj->flags &= ~Object::ON_FLOOR_BIT;
+        }
+        else {
+          obj->newVelocity.x = 0.0f;
+          obj->newVelocity.y = 0.0f;
+
+          if( obj->newVelocity.z <= STICK_VELOCITY ) {
+            obj->newVelocity.z = 0.0f;
+            return false;
+          }
+          else {
+            obj->flags &= ~Object::ON_FLOOR_BIT;
           }
         }
       }
@@ -254,9 +242,9 @@ namespace Dark
         obj->flags &= ~Object::ON_FLOOR_BIT;
         obj->lower = sDynObj->index;
       }
-      if( sDynObj != null ) {
-        sDynObj->hit( &collider.hit );
-      }
+
+      obj->hit( &collider.hit );
+      sDynObj->hit( &collider.hit );
     }
     else {
       obj->newVelocity -= ( obj->newVelocity * collider.hit.normal ) * collider.hit.normal;
@@ -392,7 +380,6 @@ namespace Dark
 
         if( isStill && ( isOnFloor || isOnStillObject ) ) {
           obj->flags |= Object::DISABLED_BIT;
-          obj->frictEnd();
         }
       }
       // handle physics

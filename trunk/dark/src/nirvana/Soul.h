@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Soul_h_
-#define _Soul_h_
+#pragma once
 
 #include "Mind.h"
 
@@ -23,5 +22,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Soul_h_

@@ -14,12 +14,9 @@
 
 namespace Dark
 {
-namespace Client
-{
 
   Font::Font() : texture( null ), baseList( null )
-  {
-  }
+  {}
 
   Font::~Font()
   {
@@ -34,8 +31,8 @@ namespace Client
       return 0;
     }
 
-    int bpp = image->format->BitsPerPixel >> 3;   // bytes per pixel
-    int format = ( bpp == 4 ? GL_RGBA : GL_RGB );
+    GLint bytesPerPixel = image->format->BitsPerPixel / 8;
+    GLenum format = bytesPerPixel == 4 ? GL_RGBA : GL_RGB;
 
     uint texNum;
     glGenTextures( 1, &texNum );
@@ -44,8 +41,8 @@ namespace Client
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
 
-    glTexImage2D( GL_TEXTURE_2D, 0, bpp, image->w, image->h, 0, format,
-      GL_UNSIGNED_BYTE, image->pixels );
+    glTexImage2D( GL_TEXTURE_2D, 0, bytesPerPixel, image->w, image->h, 0, format,
+                  GL_UNSIGNED_BYTE, image->pixels );
 
     SDL_FreeSurface( image );
 
@@ -120,5 +117,4 @@ namespace Client
     }
   }
 
-}
 }

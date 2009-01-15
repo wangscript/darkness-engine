@@ -469,7 +469,7 @@ namespace Client
 
       if( ( !obj->sounds.isEmpty() || !obj->contSounds.isEmpty() ) && relPos.sqL() < DMAX_SQ ) {
         short angle;
-        uchar distance;
+        ubyte distance;
 
         if( obj == camera.player ) {
           angle = 0;
@@ -477,7 +477,7 @@ namespace Client
         }
         else {
           angle = (short) Math::round( Math::deg( Math::atan2( relPos.x, relPos.y ) ) - camera.h );
-          distance = (uchar) ( Math::sqrt( Math::sqrt( relPos.sqL() / DMAX_SQ ) ) * 256.0f );
+          distance = (ubyte) ( Math::sqrt( Math::sqrt( relPos.sqL() / DMAX_SQ ) ) * 256.0f );
         }
 
         // non-continous

@@ -1,51 +1,96 @@
 /*
  *  Context.h
  *
- *  Evidenca nalaganja tekstur in listov ter nalagalnik tekstur
+ *  Evidenca in nalaganja in nalagalnik tekstur, zvokov in listov
  *
  *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
  *  $Id$
  */
 
-#ifndef _Client_Context_h_
-#define _Client_Context_h_
+#pragma once
 
 namespace Dark
 {
-namespace Client
-{
 
-  class Context
+  class ResourceManager
   {
     private:
 
-      struct Lists
-      {
-        uint base;
-        uint count;
-      };
+      static const int TEXTURE_HASHSTRING_SIZE = 4096;
+      static const int SOUND_HASHSTRING_SIZE = 1024;
 
       struct Texture
       {
         uint id;
-        int  nUsers;
+        int  nContexts;
+
+        Texture()
+        {}
+
+        Texture( uint id_, int nContexts_ ) : id( id_ ), nContexts( nContexts_ )
+        {}
       };
 
       struct Sound
       {
-        uint id;
+        uint buffer;
+        int  nContexts;
+
+        Sound()
+        {}
+
+        Sound( uint buffer_, int nContexts_ ) : buffer( buffer_ ), nContexts( nContexts_ )
+        {}
       };
 
-      struct Entry
+      struct Lists
       {
-        Vector<List*>    lists;
+        uint base;
+        int  count;
+
+        Lists()
+        {}
+
+        Lists( uint base_, int count_ ) : base( base_ ), count( count_ )
+        {}
+      };
+
+      struct Context
+      {
         Vector<Texture*> textures;
         Vector<Sound*>   sounds;
+        Vector<Lists>    lists;
+        Context          *next[1];
+
+        Context()
+        {
+          next[0] = null;
+        }
       };
 
-      Vector<List>      lists;
-      Vector<Texture>   textures;
+      HashString<Texture, TEXTURE_HASHSTRING_SIZE> textures;
+      HashString<Sound, SOUND_HASHSTRING_SIZE> sounds;
+
+      Vector<Context>       contexts;
+      List<Context, 0>      freeContexts;
+
+      uint buildTexture( const ubyte *data,
+                         int width,
+                         int height,
+                         int bytesPerPixel,
+                         bool wrap,
+                         int magFilter,
+                         int minFilter );
+
+      uint buildNormalmap( ubyte *data,
+                           const Vec3 &lightNormal,
+                           int width,
+                           int height,
+                           int bytesPerPixel,
+                           bool wrap,
+                           int magFilter,
+                           int minFilter );
 
     public:
 
@@ -53,8 +98,8 @@ namespace Client
 
       void init();
 
-      uint createTexture( const String &context,
-                          char *data,
+      uint createTexture( int context,
+                          const ubyte *data,
                           int width,
                           int height,
                           int bytesPerPixel,
@@ -62,8 +107,8 @@ namespace Client
                           int magFilter = GL_LINEAR,
                           int minFilter = GL_LINEAR_MIPMAP_NEAREST );
 
-      uint createNormalmap( const String &context,
-                            char *data,
+      uint createNormalmap( int context,
+                            ubyte *data,
                             int width,
                             int height,
                             int bytesPerPixel,
@@ -72,33 +117,34 @@ namespace Client
                             int magFilter = GL_LINEAR,
                             int minFilter = GL_LINEAR_MIPMAP_LINEAR );
 
-      uint loadTexture( const String &context,
+      uint loadTexture( int context,
                         const char *fileName,
                         bool wrap = true,
                         int magFilter = GL_LINEAR,
                         int minFilter = GL_LINEAR_MIPMAP_NEAREST );
 
-      uint loadNormalmap( const String &context,
+      uint loadNormalmap( int context,
                           const char *fileName,
                           const Vec3 &lightNormal,
                           bool wrap = true,
                           int magFilter = GL_LINEAR,
                           int minFilter = GL_LINEAR_MIPMAP_NEAREST );
 
-      void freeTextures();
+      uint loadSound( int context, const char *fileName );
 
       uint genList();
       uint genLists( int count );
-      void freeLists();
+
+      int createContext();
+      void freeContext( int context );
+
       void free();
 
       uint getLastTexture();
+      uint getLastSound();
       uint getLastList();
   };
 
   extern Context context;
 
 }
-}
-
-#endif // _Client_Context_h_

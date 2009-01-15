@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Client_Client_h_
-#define _Client_Client_h_
+#pragma once
 
 namespace Dark
 {
@@ -30,8 +29,8 @@ namespace Client
 
   struct Input
   {
-    uchar *currKeys;
-    uchar keys[SDLK_LAST];
+    ubyte *currKeys;
+    ubyte keys[SDLK_LAST];
 
     struct Mouse
     {
@@ -44,7 +43,7 @@ namespace Client
 
   class Client
   {
-    protected:
+    private:
 
       Settings settings;
 
@@ -64,5 +63,3 @@ namespace Client
 
 }
 }
-
-#endif // _Client_Client_h_

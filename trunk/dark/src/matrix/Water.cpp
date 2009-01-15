@@ -30,8 +30,6 @@ namespace Dark
     type = TYPE;
 
     damage = Math::INF;
-
-    model = LIST_WATER;
   }
 
   void Water::onUpdate()

@@ -32,8 +32,6 @@ namespace Dark
 
     flags = Object::CLIP_BIT | Object::RELEASED_CULL_BIT;
     type = TYPE;
-
-    model = LIST_TREE2;
   }
 
   O_Tree2::O_Tree2( float x, float y )
@@ -43,13 +41,11 @@ namespace Dark
 
     flags = Object::CLIP_BIT | Object::RELEASED_CULL_BIT;
     type = TYPE;
-
-    model = LIST_TREE2;
   }
 
   void O_Tree2::onDestroy()
   {
-    world.genParticles( 10, p, Vec3::zero(), 1.2f, 1.2f, 0.0f, 20.0f, LIST_SPARK,
+    world.genParticles( 10, p, Vec3::zero(), 1.2f, 1.2f, 0.0f, 20.0f, 0.1f,
                         Vec3( 0.5f, 0.5f, 0.5f ), 0.2f );
     world.remove( this );
   }

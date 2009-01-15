@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Client_SparkGenRender_h_
-#define _Client_SparkGenRender_h_
+#pragma once
 
 #include "matrix/World.h"
 
@@ -60,5 +59,3 @@ namespace Client
 
 }
 }
-
-#endif // _Client_SparkGenRender_h_
