@@ -1,27 +1,22 @@
 /*
- *  Terrain.h
+ *  Terrain_Dual.h
  *
  *  [description]
  *
  *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
- *  $Id$
+ *  $Id: Terrain.h 30 2008-11-01 16:58:09Z Davorin.Ucakar $
  */
 
-#ifndef _Client_Terrain_h_
-#define _Client_Terrain_h_
+#pragma once
 
-#include "matrix/Terrain.h"
-#include "Context.h"
-#include "Frustum.h"
+#include "bv.h"
 
 #define TERRA_DEPTH            2
 #define TERRA_DETAILTEX_SCALE  4
 #define TERRA_GROUNDTEX_SCALE  1
 
 namespace Dark
-{
-namespace Client
 {
 
   struct Quadtree : Sphere
@@ -51,7 +46,7 @@ namespace Client
 
     public:
 
-      ~Terrain();
+      ~Terrain_Dual();
 
       void init( uint terraMap, uint terraDetail );
       void free();
@@ -60,6 +55,3 @@ namespace Client
   };
 
 }
-}
-
-#endif // _Client_Terrain_h_
