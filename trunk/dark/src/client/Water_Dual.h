@@ -1,24 +1,21 @@
 /*
- *  Water.h
+ *  Water_Dual.h
  *
  *  [description]
  *
  *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
- *  $Id$
+ *  $Id: Water.h 30 2008-11-01 16:58:09Z Davorin.Ucakar $
  */
 
-#ifndef _Client_Water_h_
-#define _Client_Water_h_
+#pragma once
 
 #include "matrix/Object.h"
 
 namespace Dark
 {
-namespace Client
-{
 
-  class Water
+  class Water_Dual
   {
     protected:
 
@@ -45,9 +42,6 @@ namespace Client
       void draw( const Object *obj, bool isInside );
   };
 
-  extern Water water;
+  extern Water_Dual water_dual;
 
 }
-}
-
-#endif // _Client_Water_h_

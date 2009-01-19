@@ -1,15 +1,14 @@
 /*
- *  BSP.h
+ *  BSP_Dual.h
  *
  *  BSP level rendering class
  *
  *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
- *  $Id$
+ *  $Id: BSP.h 30 2008-11-01 16:58:09Z Davorin.Ucakar $
  */
 
-#ifndef _Client_BSP_h_
-#define _Client_BSP_h_
+#pragma once
 
 #include "matrix/BSP.h"
 #include "Context.h"
@@ -18,18 +17,16 @@
 
 namespace Dark
 {
-namespace Client
-{
 
-  class BSP
+  class BSP_Dual
   {
     protected:
 
-      Dark::BSP *bsp;
+      BSP  *bsp;
 
-      uint   baseList;
-      uint   *textures;
-      uint   *lightMaps;
+      uint baseList;
+      uint *textures;
+      uint *lightMaps;
 
       Bitset drawnFaces;
       Bitset visibleLeafs;
@@ -42,12 +39,12 @@ namespace Client
 
     public:
 
-      BSP();
-      ~BSP();
+      BSP_Dual();
+      ~BSP_Dual();
 
-      explicit BSP( Dark::BSP *bsp );
+      explicit BSP( BSP *bsp );
 
-      void init( Dark::BSP *bsp );
+      void init( BSP *bsp );
       void draw( const Vec3 &p );
       uint genList();
 
@@ -58,6 +55,3 @@ namespace Client
   };
 
 }
-}
-
-#endif // _Client_BSP_h_

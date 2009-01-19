@@ -1,22 +1,19 @@
 /*
- *  Sky.h
+ *  Sky_Dual.h
  *
  *  [description]
  *
  *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
- *  $Id$
+ *  $Id: Sky.h 39 2008-11-26 18:29:57Z Davorin.Ucakar $
  */
 
-#ifndef _Client_Sky_h_
-#define _Client_Sky_h_
+#pragma once
 
 namespace Dark
 {
-namespace Client
-{
 
-  class Sky
+  class Sky_Dual
   {
     protected:
 
@@ -47,9 +44,6 @@ namespace Client
       void set( float time );
   };
 
-  extern Sky sky;
+  extern Sky_Dual sky_dual;
 
 }
-}
-
-#endif // _Client_Sky_h_

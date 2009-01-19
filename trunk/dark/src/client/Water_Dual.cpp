@@ -1,28 +1,25 @@
 /*
- *  Water.cpp
+ *  Water_Dual.cpp
  *
  *  [description]
  *
  *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
- *  $Id$
+ *  $Id: Water.cpp 52 2009-01-07 23:17:53Z Davorin.Ucakar $
  */
 
 #include "precompiled.h"
 
-#include "Water.h"
+#include "Water_Dual.h"
 
 #include "matrix/Water.h"
-#include "matrix/Translator.h"
 
 #include "Context.h"
 
 namespace Dark
 {
-namespace Client
-{
 
-  Water water;
+  Water_Dual water_dual;
 
   const float Water::TEX_STRETCH = 8.0f;
   const float Water::TEX_BIAS = 0.5f;
@@ -32,12 +29,12 @@ namespace Client
   const float Water::COLOR[] = { 0.0f, 0.05f, 0.25f, 1.0f };
   const float Water::VISIBILITY = 8.0f;
 
-  void Water::init()
+  void Water_Dual::init()
   {
     texture = context.loadTexture( "tex/water1.jpg", true );
   }
 
-  void Water::update()
+  void Water_Dual::update()
   {
     phi = Math::mod( phi + 0.04f, 2.0f * Math::PI );
     ratio = ( 1.0f + Math::sin( phi ) ) / 2.0f;
@@ -46,7 +43,7 @@ namespace Client
     alpha1 = ( alpha2 * ( 1 - ratio ) ) / ( ratio * ( 1 - alpha2 ) );
   }
 
-  void Water::draw( const Object *obj, bool isInside )
+  void Water_Dual::draw( const Object *obj, bool isInside )
   {
     assert( obj->flags & Object::WATER_BIT );
 
@@ -132,5 +129,4 @@ namespace Client
     }
   }
 
-}
 }
