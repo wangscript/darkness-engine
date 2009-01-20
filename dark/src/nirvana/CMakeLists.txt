@@ -1,7 +1,13 @@
 INCLUDE_DIRECTORIES( .. )
 
 ADD_LIBRARY( nirvana STATIC
-    Mind.h Mind.cpp 
-    Soul.h Soul.cpp
-    Nirvana.h Nirvana.cpp
-    M_Walker.h M_Walker.cpp )
+  M_Walker.cpp
+  M_Walker.h
+  Mind.cpp
+  Mind.h
+  Nirvana.cpp
+  Nirvana.h
+  Soul.cpp
+  Soul.h )
+
+ADD_DEPENDENCIES( nirvana precompile )

@@ -40,9 +40,35 @@ IF( WIN32 )
 
 ELSE( WIN32 )
 
+  FIND_FILE( xml2_h libxml2/libxml )
+  FIND_LIBRARY( xml2_so xml2 )
+  FIND_FILE( SDL_h SDL/SDL.h )
+  FIND_LIBRARY( SDL_so SDL )
+  FIND_FILE( SDL_image_h SDL/SDL_image.h )
+  FIND_LIBRARY( SDL_image_so SDL_image )
+  FIND_FILE( GL_h GL/gl.h )
+  FIND_LIBRARY( GL_so GL )
+  FIND_FILE( GLU_h GL/glu.h )
+  FIND_LIBRARY( GLU_so GLU )
+  FIND_FILE( AL_h AL/al.h )
+  FIND_LIBRARY( AL_so openal )
+  FIND_FILE( ALUT_h AL/alut.h )
+  FIND_LIBRARY( ALUT_so alut )
+  FIND_FILE( OGG_h ogg/ogg.h )
+  FIND_LIBRARY( OGG_so ogg )
+  FIND_FILE( VORBIS_h vorbis/vorbisfile.h )
+  FIND_LIBRARY( VORBIS_so vorbisfile )
+
+  SET( CXX_FLAGS -g3 -Wall -Wextra -Winvalid-pch -pipe -I/usr/include -I/usr/include/SDL )
   INCLUDE_DIRECTORIES( /usr/include/libxml2 )
-  LINK_LIBRARIES( xml2 SDL SDL_image SDL_mixer GL GLU openal alut vorbisfile )
-  ADD_DEFINITIONS( -g3 -Wall -Wextra -Winvalid-pch -pipe -I/usr/include -I/usr/include/SDL  )
+  ADD_DEFINITIONS( ${CXX_FLAGS} )
+  LINK_LIBRARIES( xml2 SDL SDL_image GL GLU openal alut vorbisfile )
+
+  INSTALL( FILES src/client/dark
+           DESTINATION bin/dark
+           PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
+                       GROUP_READ GROUP_EXECUTE
+                       WORLD_READ WORLD_EXECUTE )
 
 ENDIF( WIN32 )
 

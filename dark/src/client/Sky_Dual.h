@@ -5,7 +5,7 @@
  *
  *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
- *  $Id: Sky.h 39 2008-11-26 18:29:57Z Davorin.Ucakar $
+ *  $Id$
  */
 
 #pragma once

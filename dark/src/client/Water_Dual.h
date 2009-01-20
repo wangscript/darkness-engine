@@ -5,7 +5,7 @@
  *
  *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
- *  $Id: Water.h 30 2008-11-01 16:58:09Z Davorin.Ucakar $
+ *  $Id$
  */
 
 #pragma once
