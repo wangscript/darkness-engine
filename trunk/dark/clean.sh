@@ -4,7 +4,7 @@ if [ -f Makefile ]; then
   echo 'make clean'
   make clean
 fi
-sh precompile.sh clean
+
 echo 'rm -rf CMakeCache.txt'
 rm -rf CMakeCache.txt
 echo 'rm -rf CMakeFiles cmake_install.cmake Makefile'

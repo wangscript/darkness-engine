@@ -3,23 +3,47 @@ LINK_DIRECTORIES( ../base ../matrix ../nirvana )
 LINK_LIBRARIES( base matrix nirvana )
 
 ADD_EXECUTABLE( dark
-    Camera.h Camera.cpp
-    Sky_Dual.h Sky_Dual.cpp
-    Frustum.h Frustum.cpp
-    Font.h Font.cpp
-    Context.h Context.cpp
-    Skybox.h Skybox.cpp
-    Terrain_Dual.h Terrain_Dual.cpp
-    SparkGenRender.h SparkGenRender.cpp
-    Shape.h Shape.cpp
-    Water_Dual.h Water_Dual.cpp
-    BSP_Dual.h BSP_Dual.cpp
-    OBJ.h OBJ.cpp
-    MD2.h MD2.cpp
-    MD3.h MD3.cpp
-    Model.h Model.cpp
-    SimpleObjectDual.h SimpleObjectDual.cpp
-    Render.h Render.cpp
-    SoundManager.h SoundManager.cpp
-    Client.h Client.cpp
-    Main.h Main.cpp )
+  BSP_Dual.cpp
+  BSP_Dual.h
+  Camera.cpp
+  Camera.h
+  Client.cpp
+  Client.h
+  Context.cpp
+  Context.h
+  Font.cpp
+  Font.h
+  Frustum.cpp
+  Frustum.h
+  MD2.cpp
+  MD2.h
+  MD3.cpp
+  MD3.h
+  Main.cpp
+  Main.h
+  Model.cpp
+  Model.h
+  OBJ.cpp
+  OBJ.h
+  Particles.cpp
+  Particles.h
+  Render.cpp
+  Render.h
+  Shape.cpp
+  Shape.h
+  SimpleObjectDual.cpp
+  SimpleObjectDual.h
+  Sky_Dual.cpp
+  Sky_Dual.h
+  Skybox.cpp
+  Skybox.h
+  SoundManager.cpp
+  SoundManager.h
+  SparkGenRender.cpp
+  SparkGenRender.h
+  Terrain_Dual.cpp
+  Terrain_Dual.h
+  Water_Dual.cpp
+  Water_Dual.h )
+
+ADD_DEPENDENCIES( dark precompile )

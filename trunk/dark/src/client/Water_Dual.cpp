@@ -5,7 +5,7 @@
  *
  *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
- *  $Id: Water.cpp 52 2009-01-07 23:17:53Z Davorin.Ucakar $
+ *  $Id$
  */
 
 #include "precompiled.h"

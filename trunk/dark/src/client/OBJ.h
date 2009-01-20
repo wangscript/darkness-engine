@@ -5,7 +5,7 @@
  *
  *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  *
- *  $Id: h 31 2008-11-02 11:45:37Z Davorin.Ucakar $
+ *  $Id$
  */
 
 #pragma once

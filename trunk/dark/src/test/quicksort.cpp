@@ -5,7 +5,7 @@
  *
  *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
- *  $Id: test.cpp 54 2009-01-09 23:00:09Z Davorin.Ucakar $
+ *  $Id$
  */
 
 #include "../base/base.h"
