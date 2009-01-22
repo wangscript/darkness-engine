@@ -19,4 +19,4 @@ nFields = nFields * nFields;
 % size
 size = nFields * sectorSize / 1024 / 1024;
 
-printf( '%.2f MiB\n', size );
+printf( '%.3f MiB\n', size );

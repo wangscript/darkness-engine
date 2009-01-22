@@ -94,12 +94,12 @@ int main()
   printf( "\n" );
 
   foreach( i, l.iterator() ) {
-    printf( "%d ", ( *i ).value );
+    printf( "%d ", i->value );
   }
   printf( "\n" );
 
   foreach( i, dl.iterator() ) {
-    printf( "%d ", ( *i ).value );
+    printf( "%d ", i->value );
   }
   printf( "\n" );
 

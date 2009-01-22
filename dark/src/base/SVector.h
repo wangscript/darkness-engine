@@ -16,13 +16,6 @@ namespace Dark
   template <class Type, int SIZE>
   class SVector
   {
-    private:
-
-      // Pointer to data array
-      Type data[SIZE];
-      // Number of elements in vector
-      int count;
-
     public:
 
       /**
@@ -45,6 +38,15 @@ namespace Dark
           {}
 
       };
+
+    private:
+
+      // Pointer to data array
+      Type data[SIZE];
+      // Number of elements in vector
+      int count;
+
+    public:
 
       /**
        * Create empty vector with capacity SIZE.
@@ -478,14 +480,6 @@ namespace Dark
       void sort()
       {
         aSort( data, count );
-      }
-
-      /**
-       * Sort elements with quicksort algorithm (middle element as pivot).
-       */
-      void sort2()
-      {
-        aSort2( data, count );
       }
 
       // remove all elements

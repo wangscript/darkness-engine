@@ -49,17 +49,6 @@ namespace Dark
   template <class Type, int INDEX>
   class DList
   {
-    private:
-
-      // First element in list.
-      Type *firstElem;
-      // Last element in list.
-      Type *lastElem;
-
-      // No copying.
-      DList( const DList& );
-      DList &operator = ( const DList& );
-
     public:
 
       /**
@@ -102,6 +91,19 @@ namespace Dark
           }
 
       };
+
+    private:
+
+      // First element in list.
+      Type *firstElem;
+      // Last element in list.
+      Type *lastElem;
+
+      // No copying.
+      DList( const DList& );
+      DList &operator = ( const DList& );
+
+    public:
 
       /**
        * Create an empty list.

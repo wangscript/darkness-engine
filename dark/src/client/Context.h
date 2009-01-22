@@ -13,7 +13,7 @@
 namespace Dark
 {
 
-  class ResourceManager
+  class Context
   {
     private:
 
@@ -23,24 +23,24 @@ namespace Dark
       struct Texture
       {
         uint id;
-        int  nContexts;
+        int  nEntries;
 
         Texture()
         {}
 
-        Texture( uint id_, int nContexts_ ) : id( id_ ), nContexts( nContexts_ )
+        Texture( uint id_, int nEntries_ ) : id( id_ ), nEntries( nEntries_ )
         {}
       };
 
       struct Sound
       {
         uint buffer;
-        int  nContexts;
+        int  nEntries;
 
         Sound()
         {}
 
-        Sound( uint buffer_, int nContexts_ ) : buffer( buffer_ ), nContexts( nContexts_ )
+        Sound( uint buffer_, int nEntries_ ) : buffer( buffer_ ), nEntries( nEntries_ )
         {}
       };
 
@@ -56,14 +56,14 @@ namespace Dark
         {}
       };
 
-      struct Context
+      struct Entry
       {
         Vector<Texture*> textures;
         Vector<Sound*>   sounds;
         Vector<Lists>    lists;
-        Context          *next[1];
+        Entry            *next[1];
 
-        Context()
+        Entry()
         {
           next[0] = null;
         }
@@ -72,8 +72,8 @@ namespace Dark
       HashString<Texture, TEXTURE_HASHSTRING_SIZE> textures;
       HashString<Sound, SOUND_HASHSTRING_SIZE> sounds;
 
-      Vector<Context>       contexts;
-      List<Context, 0>      freeContexts;
+      Vector<Entry>      entries;
+      List<Entry, 0>     freeEntries;
 
       uint buildTexture( const ubyte *data,
                          int width,
@@ -98,7 +98,7 @@ namespace Dark
 
       void init();
 
-      uint createTexture( int context,
+      uint createTexture( int contextId,
                           const ubyte *data,
                           int width,
                           int height,
@@ -107,12 +107,12 @@ namespace Dark
                           int magFilter = GL_LINEAR,
                           int minFilter = GL_LINEAR_MIPMAP_NEAREST );
 
-      uint createNormalmap( int context,
+      uint createNormalmap( int contextId,
                             ubyte *data,
+                            const Vec3 &lightNormal,
                             int width,
                             int height,
                             int bytesPerPixel,
-                            const Vec3 &lightNormal,
                             bool wrap = true,
                             int magFilter = GL_LINEAR,
                             int minFilter = GL_LINEAR_MIPMAP_LINEAR );

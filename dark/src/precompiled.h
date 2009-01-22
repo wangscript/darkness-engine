@@ -19,17 +19,21 @@
 
 // include SDL, OpenGL and OpenAL since they are commonly used
 #ifdef WIN32
-#  include <SDL.h>
-#  include <SDL_image.h>
-#  include <SDL_opengl.h>
-#  include <al.h>
-#  include <alc.h>
-#  include <AL/alut.h>
+
+# include <SDL.h>
+# include <SDL_image.h>
+# include <SDL_opengl.h>
+# include <al.h>
+# include <alc.h>
+# include <AL/alut.h>
+
 #else
-#  include <SDL/SDL.h>
-#  include <SDL/SDL_image.h>
-#  include <SDL/SDL_opengl.h>
-#  include <AL/al.h>
-#  include <AL/alc.h>
-#  include <AL/alut.h>
+
+# include <SDL/SDL.h>
+# include <SDL/SDL_image.h>
+# include <SDL/SDL_opengl.h>
+# include <AL/al.h>
+# include <AL/alc.h>
+# include <AL/alut.h>
+
 #endif

@@ -33,69 +33,6 @@ namespace Dark
         {}
       };
 
-      Elem *data[SIZE];
-      // we cache found element since we often want its value after a search
-      Elem *cached;
-
-      /**
-       * @param chainA
-       * @param chainB
-       * @return true if chains are equal length and all elements are equal
-       */
-      bool areChainsEqual( const Elem *chainA, const Elem *chainB ) const
-      {
-        if( chainA != null && chainB != null ) {
-          return
-              chainA->key == chainB->key &&
-              chainA->value == chainB->value &&
-              areChainsEqual( chainA->next, chainB->next );
-        }
-        else {
-          // at least one is null, so (chainA == chainB) <=> (chainA == null && chainB == null)
-          return chainA == chainB;
-        }
-      }
-
-      /**
-       * Allocate space and make a copy of a given chain.
-       * @param chain
-       * @return pointer to first element of newly allocated chain
-       */
-      Elem *copyChain( const Elem *chain ) const
-      {
-        if( chain != null ) {
-          return new Elem( chain->key, chain->value, copyChain( chain->next ) );
-        }
-        else {
-          return null;
-        }
-      }
-
-      /**
-       * Delete all elements in given chain.
-       * @param chain
-       */
-      void freeChain( const Elem *chain ) const
-      {
-        if( chain->next != null ) {
-          freeChain( chain->next );
-        }
-        delete chain;
-      }
-
-      /**
-       * Delete all elements and their values in given chain.
-       * @param chain
-       */
-      void freeChainAndValues( const Elem *chain ) const
-      {
-        if( chain->next != null ) {
-          freeChain( chain->next );
-        }
-        delete chain->value;
-        delete chain;
-      }
-
     public:
 
       /**
@@ -199,6 +136,73 @@ namespace Dark
           }
 
       };
+
+    private:
+
+      Elem *data[SIZE];
+      // we cache found element since we often want its value after a search
+      Elem *cached;
+
+      /**
+       * @param chainA
+       * @param chainB
+       * @return true if chains are equal length and all elements are equal
+       */
+      bool areChainsEqual( const Elem *chainA, const Elem *chainB ) const
+      {
+        if( chainA != null && chainB != null ) {
+          return
+              chainA->key == chainB->key &&
+              chainA->value == chainB->value &&
+              areChainsEqual( chainA->next, chainB->next );
+        }
+        else {
+          // at least one is null, so (chainA == chainB) <=> (chainA == null && chainB == null)
+          return chainA == chainB;
+        }
+      }
+
+      /**
+       * Allocate space and make a copy of a given chain.
+       * @param chain
+       * @return pointer to first element of newly allocated chain
+       */
+      Elem *copyChain( const Elem *chain ) const
+      {
+        if( chain != null ) {
+          return new Elem( chain->key, chain->value, copyChain( chain->next ) );
+        }
+        else {
+          return null;
+        }
+      }
+
+      /**
+       * Delete all elements in given chain.
+       * @param chain
+       */
+      void freeChain( const Elem *chain ) const
+      {
+        if( chain->next != null ) {
+          freeChain( chain->next );
+        }
+        delete chain;
+      }
+
+      /**
+       * Delete all elements and their values in given chain.
+       * @param chain
+       */
+      void freeChainAndValues( const Elem *chain ) const
+      {
+        if( chain->next != null ) {
+          freeChain( chain->next );
+        }
+        delete chain->value;
+        delete chain;
+      }
+
+    public:
 
       /**
        * Constructor.

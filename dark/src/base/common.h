@@ -1,3 +1,15 @@
+/*
+ *  common.h
+ *
+ *  Common types and function templates
+ *
+ *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
+ *
+ *  $Id$
+ */
+
+#pragma once
+
 /**
  *  \file common.h
  *
@@ -7,34 +19,28 @@
  *  <code>~/.kde/share/apps/katepart/syntax/cpp.xml</code> or global file
  *  <code>$KDEDIR/share/apps/katepart/syntax/cpp.xml</code> to look like reserved words in
  *  Katepart (Kate/KWrite/KDevelop).
- *
- *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
- *
- *  $Id$
  */
-
-#pragma once
 
 namespace Dark
 {
 
   /**
    * \def null
-   * It is equvalent to NULL macro but it looks prettier.
+   * It is equivalent to NULL macro but it looks prettier.
    */
 # define null 0
 
   /**
    * signed char
    * It should be used where char must be signed (otherwise char may be either signed or unsigned
-   * depenedin on the platform).
+   * depeneding on the platform).
    */
   typedef signed   char  byte;
 
   /**
    * unsigned char
    * It should be used where char must be unsigned (otherwise char may be either signed or unsigned
-   * depenedin on the platform).
+   * depeneding on the platform).
    */
   typedef unsigned char  ubyte;
 
@@ -121,8 +127,11 @@ namespace Dark
     if( a > c ) {
       return a;
     }
+    else if( b < c ) {
+      return b;
+    }
     else {
-      return b < c ? b : c;
+      return c;
     }
   }
 
@@ -233,7 +242,7 @@ namespace Dark
   }
 
   /**
-   * Delete array elements.
+   * Call delete on array elements (that have been previously allocated with the new call).
    * @param array pointer to the first element in the array
    * @param count number of elements
    */
@@ -274,7 +283,7 @@ namespace Dark
    * @param last pointer to last element in the array
    */
   template <class Type>
-  static void aQuicksort( Type *first, Type *last )
+  static void quicksort( Type *first, Type *last )
   {
     // 8-14 seem as optimal tresholds for switching to selection sort
     if( last - first > 10 ) {
@@ -298,8 +307,8 @@ namespace Dark
 
       swap( *top, *last );
 
-      aQuicksort( first, top - 1 );
-      aQuicksort( top + 1, last );
+      quicksort( first, top - 1 );
+      quicksort( top + 1, last );
     }
     else {
       // selection sort
@@ -330,7 +339,7 @@ namespace Dark
   {
     assert( count > 1 );
 
-    aQuicksort( array, array + count - 1 );
+    quicksort( array, array + count - 1 );
   }
 
   /**
@@ -380,6 +389,22 @@ namespace Dark
       }
 
       /**
+       * @return pointer to current element
+       */
+      Type *get()
+      {
+        return *elem;
+      }
+
+      /**
+       * @return constant pointer to current element
+       */
+      const Type *get() const
+      {
+        return *elem;
+      }
+
+      /**
        * @return reference to current element
        */
       Type &operator * ()
@@ -393,6 +418,22 @@ namespace Dark
       const Type &operator * () const
       {
         return *elem;
+      }
+
+      /**
+       * @return non-constant access to member
+       */
+      Type *operator -> ()
+      {
+        return elem;
+      }
+
+      /**
+       * @return constant access to member
+       */
+      const Type *operator -> () const
+      {
+        return elem;
       }
 
   };
@@ -421,8 +462,8 @@ namespace Dark
       /**
        * @param start first element for forward iterator or successor of last element for backward
        * iterator
-       * @param past_ successor of last element for forward iterator or first element for backward
-       * iterator
+       * @param past_ successor of last element for forward iterator or predecessor of first element
+       * for backward iterator
        */
       Iterator( Type *start, const Type *past_ ) : B( start ), past( past_ )
       {}
@@ -511,17 +552,17 @@ namespace Dark
   }
 
   /**
-   * Copy elements from first to last.
+   * Copy elements from first to last. (Like STL copy)
    * @param iA
    * @param iB
    */
   template <class IteratorA, class IteratorB>
-  inline void iCopy( IteratorA iA, IteratorB iB )
+  inline void iCopy( IteratorA iDest, IteratorB iSrc )
   {
-    while( !iA.isPassed() ) {
-      *iA = *iB;
-      iA++;
-      iB++;
+    while( !iDest.isPassed() ) {
+      *iDest = *iSrc;
+      iDest++;
+      iSrc++;
     }
   }
 
@@ -531,12 +572,12 @@ namespace Dark
    * @param iB
    */
   template <class BackwardIteratorA, class BackwardIteratorB>
-  inline void iReverseCopy( BackwardIteratorA iA, BackwardIteratorB iB )
+  inline void iReverseCopy( BackwardIteratorA iDest, BackwardIteratorB iSrc )
   {
-    while( !iA.isPassed() ) {
-      iA--;
-      iB--;
-      *iA = *iB;
+    while( !iDest.isPassed() ) {
+      iDest--;
+      iSrc--;
+      *iDest = *iSrc;
     }
   }
 
@@ -577,7 +618,7 @@ namespace Dark
   }
 
   /**
-   * Delete elements that have been previously allocated with new operator.
+   * Call delete on all elements (that have been previously allocated with the new call).
    * @param i
    */
   template <class Iterator, class Type>

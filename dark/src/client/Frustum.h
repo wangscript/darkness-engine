@@ -15,8 +15,6 @@
 
 namespace Dark
 {
-namespace Client
-{
 
   class Frustum
   {
@@ -105,5 +103,4 @@ namespace Client
 
   extern Frustum frustum;
 
-}
 }

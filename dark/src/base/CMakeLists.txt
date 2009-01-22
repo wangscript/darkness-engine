@@ -22,5 +22,3 @@ ADD_LIBRARY( base STATIC
   Vector.h
   base.h
   common.h )
-
-ADD_DEPENDENCIES( base precompile )
