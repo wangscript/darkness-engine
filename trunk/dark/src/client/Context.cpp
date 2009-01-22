@@ -14,8 +14,6 @@
 
 namespace Dark
 {
-namespace Client
-{
 
   Context context;
 
@@ -128,57 +126,59 @@ namespace Client
     return texNum;
   }
 
-  uint Context::createTexture( int context, const ubyte *data, int width, int height,
+  uint Context::createTexture( int contextId, const ubyte *data, int width, int height,
                                int bytesPerPixel, bool wrap, int magFilter, int minFilter )
   {
-    assert( context < entries.length() && entries.contains( );
+    assert( contextId < entries.length() &&
+        !freeEntries.contains( entries.dataPtr() + contextId ) );
 
     logFile.print( "Creating texture from buffer ..." );
 
-    int texNum = buildTexture( data, width, height, bpp, wrap, magFilter, minFilter );
+    int texNum = buildTexture( data, width, height, bytesPerPixel, wrap, magFilter, minFilter );
 
     if( texNum == 0 ) {
       logFile.printRaw( " Error\n" );
     }
     else {
-      entries[context].textures << new Texture( texNum, 0 );
+      entries[contextId].textures << new Texture( texNum, 0 );
       logFile.printRaw( " OK" );
     }
     return texNum;
   }
 
-  uint Context::createNormalmap( int context, ubyte *data, int width, int height,
-                                 const Vec3 &lightNormal, int bytesPerPixel,
+  uint Context::createNormalmap( int contextId, ubyte *data, const Vec3 &lightNormal,
+                                 int width, int height, int bytesPerPixel,
                                  bool wrap, int magFilter, int minFilter )
   {
-    assert( entries.contains( context ) );
+    assert( contextId < entries.length() &&
+        !freeEntries.contains( entries.dataPtr() + contextId ) );
 
     logFile.print( "Creating normalmap texture from buffer ..." );
 
-    int texNum = buildTexture( data, width, height, bpp, lightNormal, wrap, magFilter, minFilter );
+    int texNum = buildNormalmap( data, lightNormal, width, height, bytesPerPixel, wrap,
+                                 magFilter, minFilter );
 
     if( texNum == 0 ) {
       logFile.printRaw( " Error\n" );
     }
     else {
-      entries[context].textures << new Texture( texNum, 0 );
+      entries[contextId].textures << new Texture( texNum, 0 );
       logFile.printRaw( " OK" );
     }
     return texNum;
   }
 
-  uint Context::loadTexture( int context, const char *fileName,
+  uint Context::loadTexture( int contextId, const char *fileName,
                              bool wrap, int magFilter, int minFilter )
   {
-    assert( entries.contains( context ) );
+    assert( contextId < entries.length() &&
+        !freeEntries.contains( &entries[contextId] ) );
 
-    logFile.print( "Reading texture from file '%s' ...", fileName );
+    logFile.print( "Loading texture from file '%s' ...", fileName );
 
-    int textureIndex = translator.getTexture( fileName );
-
-    if( textureIndex >= 0 && loadedTextures[textureIndex] != 0 ) {
+    if( textures.contains( fileName ) ) {
       logFile.printRaw( " Already loaded\n" );
-      return loadedTextures[textureIndex];
+      return textures.cachedValue().id;
     }
 
     SDL_Surface *image = IMG_Load( fileName );
@@ -187,73 +187,62 @@ namespace Client
       return 0;
     }
     if( image->w != image->h ) {
-      logFileprintRaw( " Dimensions are not equal" );
+      logFile.printRaw( " Dimensions are not equal" );
     }
-
     logFile.printRaw( " OK\n" );
 
-    int bytesPerPixel = image->format->BitsPerPixel / 8;
+    assert( image->w == image->h );
 
-    int texNum = createTexture( (ubyte*) image->pixels, image->w, image->h, bytesPerPixel,
-                                wrap, magFilter, minFilter );
+    int bytesPerPixel = image->format->BitsPerPixel / 8;
+    int texNum = createTexture( contextId, (const ubyte*) image->pixels, image->w, image->h,
+                                bytesPerPixel, wrap, magFilter, minFilter );
 
     SDL_FreeSurface( image );
 
-    if( textureIndex >= 0 ) {
-      loadedTextures[textureIndex] = texNum;
-    }
-
+    textures[fileName] = Texture( texNum, 1 );
+    entries[contextId].textures << &textures.cachedValue();
     return texNum;
   }
 
-  uint Context::loadNormalmap( int context, const char *fileName, const Vec3 &lightNormal,
+  uint Context::loadNormalmap( int contextId, const char *fileName, const Vec3 &lightNormal,
                                bool wrap, int magFilter, int minFilter )
   {
-    logFile.print( "Reading texture from file '%s' ...", fileName );
+    assert( contextId < entries.length() &&
+        !freeEntries.contains( &entries[contextId] ) );
+
+    logFile.print( "Loading normalmap texture from file '%s' ...", fileName );
+
+    if( textures.contains( fileName ) ) {
+      logFile.printRaw( " Already loaded\n" );
+      return textures.cachedValue().id;
+    }
 
     SDL_Surface *image = IMG_Load( fileName );
     if( image == null ) {
       logFile.printRaw( " No such file\n" );
       return 0;
     }
-
+    if( image->w != image->h ) {
+      logFile.printRaw( " Dimensions are not equal" );
+    }
     logFile.printRaw( " OK\n" );
-
-    int bytesPerPixel = image->format->BitsPerPixel / 8;
 
     assert( image->w == image->h );
 
-    int texNum = createNormalmap( (ubyte*) image->pixels, image->w, image->h, bytesPerPixel,
-                                  lightNormal, wrap, magFilter, minFilter );
+    int bytesPerPixel = image->format->BitsPerPixel / 8;
+    int texNum = createNormalmap( contextId, (ubyte*) image->pixels, lightNormal,
+                                  image->w, image->h, bytesPerPixel, wrap, magFilter, minFilter );
 
     SDL_FreeSurface( image );
 
+    entries[contextId].textures << new Texture( texNum, 0 );
     return texNum;
   }
 
-  void Context::freeTextures()
+  uint Context::genList( int contextId )
   {
-    if( !textures.isEmpty() ) {
-      glDeleteTextures( textures.length(), textures.dataPtr() );
-    }
-    textures.clear();
-
-    if( loadedTextures != null ) {
-      delete[] loadedTextures;
-      loadedTextures = null;
-    }
-  }
-
-  uint Context::genList()
-  {
-    ContextList list;
-
-    list.base = glGenLists( 1 );
-    list.count = 1;
-
-    lists << list;
-
-    return list.base;
+    entries[contextId].lists << Lists( glGenLists( 1 ), 1 );
+    return entries[contextId].lists.last().base;
   }
 
   uint Context::genLists( int count )
@@ -268,19 +257,8 @@ namespace Client
     return list.base;
   }
 
-  void Context::freeLists()
-  {
-    for( int i = 0; i < lists.length(); i++ ) {
-      glDeleteLists( lists[i].base, lists[i].count );
-    }
-    lists.clear();
-  }
-
   void Context::free()
   {
-    freeLists();
-    freeTextures();
   }
 
-}
 }

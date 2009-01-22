@@ -86,6 +86,7 @@ namespace Dark
   void BSP_Dual::init( BSP *bsp_ )
   {
     bsp = bsp_;
+    contextId = context.createContext();
 
 #ifdef __WIN32__
     if( glActiveTexture == null ) {
@@ -101,20 +102,20 @@ namespace Dark
     textures = new uint[bsp->nTextures];
     for( int i = 0; i < bsp->nTextures; i++ ) {
       if( bsp->textures[i] != null ) {
-        textures[i] = context.loadTexture( bsp->textures[i],
-                                           true );
+        textures[i] = context.loadTexture( contextId, bsp->textures[i], true );
       }
     }
 
     lightMaps = new uint[bsp->nLightmaps];
     for( int i = 0; i < bsp->nLightmaps; i++ ) {
 
-      char *bits = bsp->lightmaps[i].bits;
+      ubyte *bits = (ubyte*) bsp->lightmaps[i].bits;
       for( int j = 0; j < Dark::BSP::LIGHTMAP_SIZE; j++ ) {
-        bits[j] += (char) ( ( 255 - bits[j] ) * BSP_GAMMA_CORR );
+        bits[j] += (ubyte) ( ( 255 - bits[j] ) * BSP_GAMMA_CORR );
       }
 
-      lightMaps[i] = context.createTexture( bits,
+      lightMaps[i] = context.createTexture( contextId,
+                                            bits,
                                             Dark::BSP::LIGHTMAP_DIM,
                                             Dark::BSP::LIGHTMAP_DIM,
                                             Dark::BSP::LIGHTMAP_BPP,

@@ -1,10 +1,14 @@
 /*
- *  Vector.h
+ *  CVector.h
  *
- *  Vector
- *  It can be also used as stack or small set
+ *  Compact Vector
  *
- *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
+ *  It doesn't allow shifting of elements so inserting in the middle is not allowed and when an
+ *  element is removed a free slot remains there. When adding an element it first tries to occupy
+ *  all the free slots and when there's no any, it adds element to the end.
+ *  Type should provide next[INDEX] member similar as for List and DList.
+ *
+ *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  *
  *  $Id$
  */
@@ -14,8 +18,8 @@
 namespace Dark
 {
 
-  template <class Type>
-  class Vector
+  template <class Type, int INDEX>
+  class CVector
   {
     public:
 
@@ -35,8 +39,21 @@ namespace Dark
            * Make iterator for given vector. After creation it points to first element.
            * @param v
            */
-          explicit Iterator( Vector &v ) : B( v.data, v.data + v.count )
+          explicit Iterator( CVector &v ) : B( v.data, v.data + v.count )
           {}
+
+          /**
+           * Advance to next element.
+           */
+          void operator ++ ( int )
+          {
+            assert( B::elem != B::past );
+
+            do {
+              B::elem++;
+            }
+            while( B::elem != B::past && B::elem->next[INDEX] != null );
+          }
 
       };
 
@@ -48,6 +65,11 @@ namespace Dark
       int  size;
       // Number of elements in vector
       int  count;
+      // list of free slots
+      Type *freeElements;
+
+      CVector( const CVector& );
+      CVector &operator = ( const CVector& );
 
       /**
        * Enlarge capacity by two times if there's not enough space to add another element.
@@ -66,23 +88,14 @@ namespace Dark
       /**
        * Create empty vector with initial capacity 8.
        */
-      Vector() : data( new Type[8] ), size( 8 ), count( 0 )
+      CVector() : data( new Type[8] ), size( 8 ), count( 0 )
       {}
-
-      /**
-       * Copy constructor.
-       * @param v
-       */
-      Vector( const Vector &v ) : data( new Type[8] ), size( v.size ), count( v.count )
-      {
-        aCopy( data, v.data, count );
-      }
 
       /**
        * Create empty vector with given initial capacity.
        * @param initSize
        */
-      explicit Vector( int initSize ) : size( initSize ), count( 0 )
+      explicit CVector( int initSize ) : size( initSize ), count( 0 )
       {
         data = new Type[size];
       }
@@ -90,46 +103,9 @@ namespace Dark
       /**
        * Destructor.
        */
-      ~Vector()
+      ~CVector()
       {
         delete[] data;
-      }
-
-      /**
-       * Copy operator.
-       * @param v
-       * @return
-       */
-      Vector &operator = ( const Vector &v )
-      {
-        // create new data array of the new data doesn't fit, keep the old one otherwise
-        if( size < v.count ) {
-          delete[] data;
-          data = new Type[v.size];
-        }
-        count = v.count;
-        aCopy( data, v.data, count );
-        return *this;
-      }
-
-      /**
-       * Equality operator. Capacity of vectors doesn't matter.
-       * @param v
-       * @return true if all elements in both vectors are equal
-       */
-      bool operator == ( const Vector &v ) const
-      {
-        return count == v.count && aEqual( data, v.data, count );
-      }
-
-      /**
-       * Inequality operator. Capacity of vectors doesn't matter.
-       * @param v
-       * @return false if all elements in both vectors are equal
-       */
-      bool operator != ( const Vector &v ) const
-      {
-        return count != v.count || !aEqual( data, v.data, count );
       }
 
       /**
@@ -161,7 +137,7 @@ namespace Dark
       }
 
       /**
-       * @return number of elements in the vector
+       * @return number of elements in the vector (including free ones)
        */
       int length() const
       {
@@ -177,7 +153,7 @@ namespace Dark
       }
 
       /**
-       * @return true if vector has no elements
+       * @return true if vector has no elements (and no free elements)
        */
       bool isEmpty() const
       {
@@ -205,11 +181,16 @@ namespace Dark
       bool contains( const Type &e )
       {
         for( int i = 0; i < count; i++ ) {
-          if( data[i] == e ) {
+          if( data[i].next[INDEX] == null && data[i] == e ) {
             return true;
           }
         }
         return false;
+      }
+
+      bool isFree( int i ) const
+      {
+        return data[i] != null;
       }
 
       /**
@@ -336,7 +317,7 @@ namespace Dark
        * Add all elements from a vector to the end.
        * @param v
        */
-      void addAll( const Vector &v )
+      void addAll( const Vector<Type> &v )
       {
         addAll( v.data, v.count );
       }
@@ -385,7 +366,7 @@ namespace Dark
        * @param v
        * @return number of elements that have been added
        */
-      int includeAll( const Vector &v )
+      int includeAll( const Vector<Type> &v )
       {
         return includeAll( v.data, v.count );
       }
@@ -406,27 +387,11 @@ namespace Dark
       }
 
       /**
-       * Insert an element at given position. All later elements are shifted to make a gap
-       * for the new element.
-       * @param e
-       * @param index
-       */
-      void insert( const Type &e, int index )
-      {
-        assert( 0 <= index && index < count );
-
-        ensureCapacity();
-        aRCopy( data + index + 1, data + index, count - index );
-        data[index] = e;
-        count++;
-      }
-
-      /**
        * Remove last element.
        * @param
        * @return
        */
-      Vector &operator -- ( int )
+      CVector &operator -- ( int )
       {
         assert( count != 0 );
 
@@ -470,7 +435,7 @@ namespace Dark
        * @param v
        * @return
        */
-      int excludeAll( const Vector &v )
+      int excludeAll( const Vector<Type> &v )
       {
         return excludeAll( v.data, v.count );
       }

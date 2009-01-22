@@ -14,8 +14,6 @@
 
 namespace Dark
 {
-namespace Client
-{
 
   class Camera
   {
@@ -49,5 +47,4 @@ namespace Client
 
   extern Camera camera;
 
-}
 }

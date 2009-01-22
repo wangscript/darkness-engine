@@ -13,7 +13,7 @@
 #pragma once
 
 #ifdef WIN32
-#define _CRT_SECURE_NO_WARNINGS
+# define _CRT_SECURE_NO_WARNINGS
 #endif
 
 #include <cassert>
@@ -26,11 +26,12 @@
 /*
  * Containers
  */
-#include "Vector.h"
-#include "SVector.h"
-
 #include "List.h"
 #include "DList.h"
+
+#include "Vector.h"
+#include "SVector.h"
+#include "CVector.h"
 
 /*
  * String

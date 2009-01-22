@@ -24,6 +24,8 @@ namespace Dark
 
       BSP  *bsp;
 
+      int  contextId;
+
       uint baseList;
       uint *textures;
       uint *lightMaps;
@@ -42,7 +44,7 @@ namespace Dark
       BSP_Dual();
       ~BSP_Dual();
 
-      explicit BSP( BSP *bsp );
+      explicit BSP_Dual( BSP *bsp );
 
       void init( BSP *bsp );
       void draw( const Vec3 &p );

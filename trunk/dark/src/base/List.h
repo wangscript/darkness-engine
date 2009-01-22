@@ -43,15 +43,6 @@ namespace Dark
   template <class Type, int INDEX>
   class List
   {
-    private:
-
-      // First element in list.
-      Type *firstElem;
-
-      // No copying.
-      List( const List& );
-      List &operator = ( const List& );
-
     public:
 
       /**
@@ -94,6 +85,17 @@ namespace Dark
           }
 
       };
+
+    private:
+
+      // First element in list.
+      Type *firstElem;
+
+      // No copying.
+      List( const List& );
+      List &operator = ( const List& );
+
+    public:
 
       /**
        * Create an empty list.
