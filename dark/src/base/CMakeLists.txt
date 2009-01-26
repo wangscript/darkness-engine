@@ -14,6 +14,7 @@ ADD_LIBRARY( base STATIC
   Mat44.h
   Math.cpp
   Math.h
+  Pool.h
   Quat.h
   Reuser.h
   SVector.h

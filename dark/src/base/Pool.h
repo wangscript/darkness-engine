@@ -1,12 +1,13 @@
 /*
- *  CVector.h
+ *  Pool.h
  *
- *  Compact Vector
+ *  Pool of same-sized elements
  *
+ *  Vector-like structure for allocation of same-sized elements.
  *  It doesn't allow shifting of elements so inserting in the middle is not allowed and when an
  *  element is removed a free slot remains there. When adding an element it first tries to occupy
- *  all the free slots and when there's no any, it adds element to the end.
- *  Type should provide next[INDEX] member similar as for List and DList.
+ *  all the free slots and when there's no any, it adds the element to the end.
+ *  Type should provide next[INDEX] as in List and DList to point to next free slot.
  *
  *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  *
@@ -19,12 +20,12 @@ namespace Dark
 {
 
   template <class Type, int INDEX>
-  class CVector
+  class Pool
   {
     public:
 
       /**
-       * Vector iterator.
+       * Pool iterator.
        */
       class Iterator : public Dark::Iterator<Type>
       {
@@ -36,10 +37,10 @@ namespace Dark
         public:
 
           /**
-           * Make iterator for given vector. After creation it points to first element.
+           * Make iterator for given pool. After creation it points to first element.
            * @param v
            */
-          explicit Iterator( CVector &v ) : B( v.data, v.data + v.count )
+          explicit Iterator( Pool &v ) : B( v.data, v.data + v.count )
           {}
 
           /**
@@ -63,13 +64,13 @@ namespace Dark
       Type *data;
       // Size of data array
       int  size;
-      // Number of elements in vector
+      // Number of elements in pool
       int  count;
       // list of free slots
-      Type *freeElements;
+      Type *freeSlots;
 
-      CVector( const CVector& );
-      CVector &operator = ( const CVector& );
+      Pool( const Pool& );
+      Pool &operator = ( const Pool& );
 
       /**
        * Enlarge capacity by two times if there's not enough space to add another element.
@@ -86,16 +87,16 @@ namespace Dark
     public:
 
       /**
-       * Create empty vector with initial capacity 8.
+       * Create empty pool with initial capacity 8.
        */
-      CVector() : data( new Type[8] ), size( 8 ), count( 0 )
+      Pool() : data( new Type[8] ), size( 8 ), count( 0 )
       {}
 
       /**
-       * Create empty vector with given initial capacity.
+       * Create empty pool with given initial capacity.
        * @param initSize
        */
-      explicit CVector( int initSize ) : size( initSize ), count( 0 )
+      explicit Pool( int initSize ) : size( initSize ), count( 0 )
       {
         data = new Type[size];
       }
@@ -103,13 +104,13 @@ namespace Dark
       /**
        * Destructor.
        */
-      ~CVector()
+      ~Pool()
       {
         delete[] data;
       }
 
       /**
-       * @return iterator for this vector
+       * @return iterator for this pool
        */
       Iterator iterator()
       {
@@ -236,46 +237,6 @@ namespace Dark
       }
 
       /**
-       * @return reference to first element
-       */
-      Type &first()
-      {
-        assert( count != 0 );
-
-        return data[0];
-      }
-
-      /**
-       * @return constant reference to first element
-       */
-      const Type &first() const
-      {
-        assert( count != 0 );
-
-        return data[0];
-      }
-
-      /**
-       * @return reference to last element
-       */
-      Type &last()
-      {
-        assert( count != 0 );
-
-        return data[count - 1];
-      }
-
-      /**
-       * @return constant reference to last element
-       */
-      const Type &last() const
-      {
-        assert( count != 0 );
-
-        return data[count - 1];
-      }
-
-      /**
        * Add an element to the end.
        * @param e
        */
@@ -291,15 +252,6 @@ namespace Dark
       void add( const Type &e )
       {
         pushLast( e );
-      }
-
-      /**
-       * Add an element to the beginning.
-       * @param e
-       */
-      void pushFirst( const Type &e )
-      {
-        return insert( e, 0 );
       }
 
       /**
