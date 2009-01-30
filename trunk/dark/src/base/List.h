@@ -21,7 +21,7 @@ namespace Dark
    * Example:
    * <pre>class C
    * {
-   *   C next[2];
+   *   C *next[2];
    *   int value;
    * };
    * ...

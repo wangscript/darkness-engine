@@ -7,7 +7,7 @@
  *  It doesn't allow shifting of elements so inserting in the middle is not allowed and when an
  *  element is removed a free slot remains there. When adding an element it first tries to occupy
  *  all the free slots and when there's no any, it adds the element to the end.
- *  Type should provide next[INDEX] as in List and DList to point to next free slot.
+ *  Type should provide int nextSlot field to hold index of next free slot.
  *
  *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  *
@@ -53,7 +53,7 @@ namespace Dark
             do {
               B::elem++;
             }
-            while( B::elem != B::past && B::elem->next[INDEX] != null );
+            while( B::elem != B::past && B::elem->nextSlot != -1 );
           }
 
       };
@@ -64,10 +64,10 @@ namespace Dark
       Type *data;
       // Size of data array
       int  size;
-      // Number of elements in pool
+      // Number of used slots in the pool
       int  count;
-      // list of free slots
-      Type *freeSlots;
+      // List of free slots (by indices in data array, not by pointers)
+      int  freeSlot;
 
       Pool( const Pool& );
       Pool &operator = ( const Pool& );
@@ -77,7 +77,7 @@ namespace Dark
        */
       void ensureCapacity()
       {
-        if( size == count ) {
+        if( freeSlot == -1 ) {
           size *= 2;
           assert( size <= 1024*1024*10 );
           data = aRealloc( data, count, size );
@@ -89,16 +89,24 @@ namespace Dark
       /**
        * Create empty pool with initial capacity 8.
        */
-      Pool() : data( new Type[8] ), size( 8 ), count( 0 )
-      {}
+      Pool() : data( new Type[8] ), size( 8 ), count( 0 ), freeSlot( 0 )
+      {
+        for( int i = 0; i < size; ) {
+          data[i].nextSlot = ++i;
+        }
+      }
 
       /**
        * Create empty pool with given initial capacity.
        * @param initSize
        */
-      explicit Pool( int initSize ) : size( initSize ), count( 0 )
+      explicit Pool( int initSize ) : size( initSize ), count( 0 ), freeSlot( 0 )
       {
         data = new Type[size];
+
+        for( int i = 0; i < size; ) {
+          data[i].nextSlot = ++i;
+        }
       }
 
       /**
@@ -118,27 +126,7 @@ namespace Dark
       }
 
       /**
-       * Get pointer to <code>data</code> array. Use with caution, since you can easily make buffer
-       * overflows if you don't check the size of <code>data</code> array.
-       * @return non-constant pointer to data array
-       */
-      Type *dataPtr()
-      {
-        return data;
-      }
-
-      /**
-       * Get pointer to <code>data</code> array. Use with caution, since you can easily make buffer
-       * overflows if you don't check the size of <code>data</code> array.
-       * @return constant pointer to data array
-       */
-      const Type *dataPtr() const
-      {
-        return data;
-      }
-
-      /**
-       * @return number of elements in the vector (including free ones)
+       * @return number of used slots in the pool
        */
       int length() const
       {
@@ -146,7 +134,7 @@ namespace Dark
       }
 
       /**
-       * @return capacity of the vector
+       * @return capacity of the pool
        */
       int capacity() const
       {
@@ -154,7 +142,7 @@ namespace Dark
       }
 
       /**
-       * @return true if vector has no elements (and no free elements)
+       * @return true if pool has no used slots
        */
       bool isEmpty() const
       {
@@ -162,22 +150,8 @@ namespace Dark
       }
 
       /**
-       * Trim vector, leave at most <code>left</code> elements/capacity.
-       * @param left
-       */
-      void trim( int left )
-      {
-        int newCapacity = count + left;
-
-        if( newCapacity < size ) {
-          size = newCapacity;
-          data = aRealloc( data, count, size );
-        }
-      }
-
-      /**
        * @param e
-       * @return true if the element is found in the vector
+       * @return true if the element is found in the pool
        */
       bool contains( const Type &e )
       {
@@ -343,7 +317,7 @@ namespace Dark
        * @param
        * @return
        */
-      CVector &operator -- ( int )
+      Pool &operator -- ( int )
       {
         assert( count != 0 );
 
