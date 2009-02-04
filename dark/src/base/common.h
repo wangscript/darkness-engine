@@ -452,7 +452,7 @@ namespace Dark
     protected:
 
       /**
-       * Successor of last element.
+       * Successor of the last element.
        * Is is used to determine when iterator becomes invalid.
        */
       const Type *past;
@@ -504,7 +504,6 @@ namespace Dark
    * ITERABLE CONTAINER UTILITY TEMPLATES
    */
 
-
   /**
    * \def foreach
    * Foreach macro can be used as in following example:
@@ -525,14 +524,14 @@ namespace Dark
    * @return true if all elements are equal
    */
   template <class IteratorA, class IteratorB>
-  inline bool iEquals( IteratorA iA, IteratorB iB )
+  inline bool iEquals( IteratorA &iDest, IteratorB &iSrc )
   {
-    while( !iA.isPassed() ) {
-      if( *iA != *iB ) {
+    while( !iDest.isPassed() ) {
+      if( *iDest != *iSrc ) {
         return false;
       }
-      iA++;
-      iB++;
+      iDest++;
+      iSrc++;
     }
     return true;
   }
@@ -543,7 +542,7 @@ namespace Dark
    * @param value
    */
   template <class Iterator, class Value>
-  inline void iSet( Iterator i, Value value )
+  inline void iSet( Iterator &i, Value value )
   {
     while( !i.isPassed() ) {
       *i = value;
@@ -557,7 +556,7 @@ namespace Dark
    * @param iB
    */
   template <class IteratorA, class IteratorB>
-  inline void iCopy( IteratorA iDest, IteratorB iSrc )
+  inline void iCopy( IteratorA &iDest, IteratorB &iSrc )
   {
     while( !iDest.isPassed() ) {
       *iDest = *iSrc;
@@ -572,7 +571,7 @@ namespace Dark
    * @param iB
    */
   template <class BackwardIteratorA, class BackwardIteratorB>
-  inline void iReverseCopy( BackwardIteratorA iDest, BackwardIteratorB iSrc )
+  inline void iReverseCopy( BackwardIteratorA &iDest, BackwardIteratorB &iSrc )
   {
     while( !iDest.isPassed() ) {
       iDest--;
@@ -588,7 +587,7 @@ namespace Dark
    * @return iterator at the elements found, passed iterator if not found
    */
   template <class Iterator, class Value>
-  inline Iterator iIndex( Iterator i, Value value )
+  inline Iterator iIndex( Iterator &i, Value value )
   {
     while( !i.isPassed() ) {
       if( *i == value ) {
@@ -606,7 +605,7 @@ namespace Dark
    * @return iterator at the elements found, passed iterator if not found
    */
   template <class BackwardIterator, class Value>
-  inline BackwardIterator iLastIndex( BackwardIterator i, Value value )
+  inline BackwardIterator iLastIndex( BackwardIterator &i, Value value )
   {
     while( !i.isPassed() ) {
       i--;
@@ -622,7 +621,7 @@ namespace Dark
    * @param i
    */
   template <class Iterator, class Type>
-  inline void iFree( Iterator i )
+  inline void iFree( Iterator &i )
   {
     while( !i.isPassed() ) {
       Type *p = *i;
