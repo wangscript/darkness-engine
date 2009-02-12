@@ -18,7 +18,7 @@ namespace Dark
   {
     private:
 
-      struct Elem : Reuser<HashString>
+      struct Elem : ReuseAlloc<Elem>
       {
         String key;
         Type   value;

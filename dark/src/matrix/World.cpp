@@ -249,7 +249,7 @@ namespace Dark
     }
     particles.clear();
 
-    Reuser<Effect>::deallocate();
+    ReuseAlloc<Effect>::deallocate();
 
     bsps.free();
     bsps.clear();

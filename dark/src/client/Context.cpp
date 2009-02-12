@@ -129,8 +129,7 @@ namespace Dark
   uint Context::createTexture( int contextId, const ubyte *data, int width, int height,
                                int bytesPerPixel, bool wrap, int magFilter, int minFilter )
   {
-    assert( contextId < entries.length() &&
-        !freeEntries.contains( entries.dataPtr() + contextId ) );
+    assert( entries.hasIndex( contextId ) );
 
     logFile.print( "Creating texture from buffer ..." );
 
@@ -150,8 +149,7 @@ namespace Dark
                                  int width, int height, int bytesPerPixel,
                                  bool wrap, int magFilter, int minFilter )
   {
-    assert( contextId < entries.length() &&
-        !freeEntries.contains( entries.dataPtr() + contextId ) );
+    assert( entries.hasIndex( contextId ) );
 
     logFile.print( "Creating normalmap texture from buffer ..." );
 
@@ -171,8 +169,7 @@ namespace Dark
   uint Context::loadTexture( int contextId, const char *fileName,
                              bool wrap, int magFilter, int minFilter )
   {
-    assert( contextId < entries.length() &&
-        !freeEntries.contains( &entries[contextId] ) );
+    assert( entries.hasIndex( contextId ) );
 
     logFile.print( "Loading texture from file '%s' ...", fileName );
 
@@ -207,8 +204,7 @@ namespace Dark
   uint Context::loadNormalmap( int contextId, const char *fileName, const Vec3 &lightNormal,
                                bool wrap, int magFilter, int minFilter )
   {
-    assert( contextId < entries.length() &&
-        !freeEntries.contains( &entries[contextId] ) );
+    assert( entries.hasIndex( contextId ) );
 
     logFile.print( "Loading normalmap texture from file '%s' ...", fileName );
 

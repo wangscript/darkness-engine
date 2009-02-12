@@ -18,7 +18,7 @@ namespace Dark
   {
     private:
 
-      struct Elem : Reuser<HashIndex>
+      struct Elem : ReuseAlloc<Elem>
       {
         uint  key;
         Type  value;

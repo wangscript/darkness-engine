@@ -3,6 +3,8 @@
 - register of objects: create( String className )
 - static registration?
 
+- rotateable structures
+
 - foreach where possible
 
 - Object isUpdated, onUpdateSelf, thread-safe update
