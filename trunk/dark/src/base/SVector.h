@@ -316,11 +316,8 @@ namespace Dark
        */
       bool include( const Type &e )
       {
-        if( aIndex( data, count, e ) == -1 ) {
-          assert( count < SIZE );
-
-          data[count] = e;
-          count++;
+        if( !contains( e ) ) {
+          add( e );
           return true;
         }
         else {
@@ -348,7 +345,7 @@ namespace Dark
       {
         int n = 0;
         for( int i = 0; i < count; i++ ) {
-          n += include( array[i] );
+          n += (int) include( array[i] );
         }
         return n;
       }
@@ -433,7 +430,7 @@ namespace Dark
       {
         int n = 0;
         for( int i = 0; i < count; i++ ) {
-          n += exclude( array[i] );
+          n += (int) exclude( array[i] );
         }
         return n;
       }
@@ -497,7 +494,7 @@ namespace Dark
         for( int i = 0; i < count; i++ ) {
           delete data[i];
         }
-        count = 0;
+        clear();
       }
 
   };

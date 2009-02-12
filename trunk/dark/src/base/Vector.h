@@ -46,7 +46,7 @@ namespace Dark
       Type *data;
       // Size of data array
       int  size;
-      // Number of elements in vector
+      // Number of elements in the vector
       int  count;
 
       /**
@@ -73,7 +73,7 @@ namespace Dark
        * Copy constructor.
        * @param v
        */
-      Vector( const Vector &v ) : data( new Type[8] ), size( v.size ), count( v.count )
+      Vector( const Vector &v ) : data( new Type[v.size] ), size( v.size ), count( v.count )
       {
         aCopy( data, v.data, count );
       }
@@ -82,10 +82,8 @@ namespace Dark
        * Create empty vector with given initial capacity.
        * @param initSize
        */
-      explicit Vector( int initSize ) : size( initSize ), count( 0 )
-      {
-        data = new Type[size];
-      }
+      explicit Vector( int initSize ) : data( new Type[initSize] ), size( initSize ), count( 0 )
+      {}
 
       /**
        * Destructor.
@@ -368,11 +366,8 @@ namespace Dark
        */
       bool include( const Type &e )
       {
-        if( aIndex( data, count, e ) == -1 ) {
-          ensureCapacity();
-
-          data[count] = e;
-          count++;
+        if( !contains( e ) ) {
+          pushLast( e );
           return true;
         }
         else {
@@ -400,7 +395,7 @@ namespace Dark
       {
         int n = 0;
         for( int i = 0; i < count; i++ ) {
-          n += include( array[i] );
+          n += (int) include( array[i] );
         }
         return n;
       }
@@ -484,7 +479,7 @@ namespace Dark
       {
         int n = 0;
         for( int i = 0; i < count; i++ ) {
-          n += exclude( array[i] );
+          n += (int) exclude( array[i] );
         }
         return n;
       }
@@ -550,7 +545,7 @@ namespace Dark
         for( int i = 0; i < count; i++ ) {
           delete data[i];
         }
-        count = 0;
+        clear();
       }
 
   };

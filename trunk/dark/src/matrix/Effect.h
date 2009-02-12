@@ -13,7 +13,7 @@
 namespace Dark
 {
 
-  struct Effect : Reuser<Effect>
+  struct Effect : ReuseAlloc<Effect>
   {
     static const int SPLASH_SOFT = 1;
     static const int SPLASH_HARD = 2;

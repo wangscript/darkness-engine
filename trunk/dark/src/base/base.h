@@ -31,17 +31,18 @@
 
 #include "Vector.h"
 #include "SVector.h"
-#include "Pool.h"
+#include "Sparse.h"
+
+/*
+ * Memory managment
+ */
+#include "ReuseAlloc.h"
+#include "PoolAlloc.h"
 
 /*
  * String
  */
 #include "String.h"
-
-/*
- * Reuser base class for improved memory management (reusing freed blocks)
- */
-#include "Reuser.h"
 
 /*
  * Containers 2

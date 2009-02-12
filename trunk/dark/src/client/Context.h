@@ -58,22 +58,17 @@ namespace Dark
 
       struct Entry
       {
+        int nextSlot;
+
         Vector<Texture*> textures;
         Vector<Sound*>   sounds;
         Vector<Lists>    lists;
-        Entry            *next[1];
-
-        Entry()
-        {
-          next[0] = null;
-        }
       };
 
       HashString<Texture, TEXTURE_HASHSTRING_SIZE> textures;
       HashString<Sound, SOUND_HASHSTRING_SIZE> sounds;
 
-      Vector<Entry>      entries;
-      List<Entry, 0>     freeEntries;
+      Sparse<Entry> entries;
 
       uint buildTexture( const ubyte *data,
                          int width,
