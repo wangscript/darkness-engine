@@ -18,6 +18,7 @@ ADD_LIBRARY( base STATIC
   Quat.h
   ReuseAlloc.h
   SVector.h
+  Sparse.h
   String.h
   Vec3.h
   Vector.h

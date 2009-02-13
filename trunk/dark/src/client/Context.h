@@ -127,8 +127,8 @@ namespace Dark
 
       uint loadSound( int context, const char *fileName );
 
-      uint genList();
-      uint genLists( int count );
+      uint genList( int contextId );
+      uint genLists( int contextId, int count );
 
       int createContext();
       void freeContext( int context );
