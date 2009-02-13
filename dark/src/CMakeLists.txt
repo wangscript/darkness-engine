@@ -1,9 +1,9 @@
-INCLUDE_DIRECTORIES( base . )
+INCLUDE_DIRECTORIES( . )
 
 # precompiled header
 IF( WIN32 )
 
-  # TODO: precompiled headers for VC++
+# TODO: precompiled headers for VC++
   ADD_CUSTOM_TARGET( precompile ALL )
 
 ELSE( WIN32 )
