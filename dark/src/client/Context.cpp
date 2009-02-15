@@ -241,20 +241,13 @@ namespace Dark
     return entries[contextId].lists.last().base;
   }
 
-  uint Context::genLists( int count )
+  uint Context::genLists( int contextId, int count )
   {
-    ContextList list;
-
-    list.base = glGenLists( count );
-    list.count = count;
-
-    lists << list;
-
-    return list.base;
+    entries[contextId].lists << Lists( glGenLists( count ), count );
+    return entries[contextId].lists.last().base;
   }
 
   void Context::free()
-  {
-  }
+  {}
 
 }

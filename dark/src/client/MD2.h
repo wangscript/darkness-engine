@@ -43,9 +43,11 @@ namespace Client
 
   class MD2
   {
-    protected:
+    private:
 
       static float anorms[][3];
+
+      int contextId;
 
       int   nFrames;
       int   nVerts;
@@ -70,7 +72,7 @@ namespace Client
       MD2();
       ~MD2();
 
-      bool load( const char *path );
+      bool load( int contextId, const char *path );
 
       void drawFrame( int frame );
       void draw( MD2AnimState *anim );
@@ -79,7 +81,8 @@ namespace Client
       void translate( const Vec3 &t );
       void translate( int animType, const Vec3 &t );
 
-      static uint genList( const char *path, float scale = 1.0f, const Vec3 &t = Vec3::zero() );
+      static uint genList( int contextId, const char *path, float scale = 1.0f,
+                           const Vec3 &t = Vec3::zero() );
 
       void free();
   };

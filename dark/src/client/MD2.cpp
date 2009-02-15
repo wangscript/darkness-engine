@@ -275,7 +275,7 @@ namespace Client
     free();
   }
 
-  bool MD2::load( const char *path )
+  bool MD2::load( int contextId_, const char *path )
   {
     FILE      *file;
     MD2Header header;
@@ -283,6 +283,8 @@ namespace Client
     MD2Frame  *pFrame;
     Vec3      *pVerts;
     int       *pNormals;
+
+    contextId = contextId_;
 
     String modelFile = String( path ) + "/tris.md2";
     String skinFile = String( path ) + "/skin.jpg";
@@ -336,7 +338,7 @@ namespace Client
 
     logFile.printRaw( "OK\n" );
 
-    texId = context.loadTexture( skinFile.cstr(), true );
+    texId = context.loadTexture( contextId, skinFile.cstr(), true );
 
     if( texId == 0 ) {
       return false;
@@ -461,15 +463,15 @@ namespace Client
     glFrontFace( GL_CCW );
   }
 
-  uint MD2::genList( const char *path, float scale, const Vec3 &t )
+  uint MD2::genList( int contextId, const char *path, float scale, const Vec3 &t )
   {
     MD2 md2;
 
-    md2.load( path );
+    md2.load( contextId, path );
     md2.scale( scale );
     md2.translate( t );
 
-    uint list = context.genList();
+    uint list = context.genList( contextId );
 
     glNewList( list, GL_COMPILE );
       md2.drawFrame( 0 );

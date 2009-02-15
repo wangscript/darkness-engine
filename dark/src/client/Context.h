@@ -135,9 +135,6 @@ namespace Dark
 
       void free();
 
-      uint getLastTexture();
-      uint getLastSound();
-      uint getLastList();
   };
 
   extern Context context;

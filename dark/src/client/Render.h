@@ -13,8 +13,8 @@
 #include "matrix/World.h"
 
 #include "Font.h"
-#include "BSP.h"
-#include "Terrain.h"
+#include "BSP_Dual.h"
+#include "Terrain_Dual.h"
 #include "OBJ.h"
 #include "MD2.h"
 #include "Model.h"

@@ -223,7 +223,9 @@ namespace Client
             end = readWord( pos );
             *end = '\0';
 
-            textureId = context.loadTexture( String( path ) + "/" + String( pos ), true );
+            textureId = context.loadTexture( contextId,
+                                             String( path ) + "/" + String( pos ),
+                                             true );
           }
           break;
         }
@@ -248,10 +250,12 @@ namespace Client
     free();
   }
 
-  bool OBJ::load( const char *path )
+  bool OBJ::load( int contextId_, const char *path )
   {
     FILE *file;
     char buffer[LINE_BUFFER_SIZE];
+
+    contextId = contextId_;
 
     file = fopen( String( path ) + "/data.obj", "r" );
     if( file == null ) {
@@ -403,15 +407,15 @@ namespace Client
     }
   }
 
-  uint OBJ::genList( const char *file, float scale, const Vec3 &t )
+  uint OBJ::genList( int contextId, const char *file, float scale, const Vec3 &t )
   {
     OBJ obj;
 
-    obj.load( file );
+    obj.load( contextId, file );
     obj.scale( scale );
     obj.translate( t );
 
-    uint list = context.genList();
+    uint list = context.genList( contextId );
 
     glNewList( list, GL_COMPILE );
       obj.draw();

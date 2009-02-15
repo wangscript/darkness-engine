@@ -273,7 +273,7 @@ namespace Dark
     int traceSplits = 0;
     do {
       collider.translate( *obj, move, obj );
-      // FIXME: debug collision for VS2008!!!
+      // FIXME debug collision for VS2008!!!
 //       collider.hit.ratio = 1.0f;
       obj->p += collider.hit.ratio * move;
       leftRatio -= leftRatio * collider.hit.ratio;

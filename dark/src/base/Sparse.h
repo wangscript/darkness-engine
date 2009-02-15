@@ -9,7 +9,7 @@
  *
  *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  *
- *  $Id: Pool.h 67 2009-02-04 17:19:20Z Davorin.Ucakar $
+ *  $Id$
  */
 
 #pragma once

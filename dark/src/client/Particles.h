@@ -17,7 +17,7 @@ namespace Dark
   {
     uint spark;
 
-    void init();
+    void init( int contextId );
     void free();
   };
 
