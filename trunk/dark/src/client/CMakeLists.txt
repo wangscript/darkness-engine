@@ -1,4 +1,4 @@
-INCLUDE_DIRECTORIES( .. )
+INCLUDE_DIRECTORIES( ../matrix ../nirvana )
 LINK_DIRECTORIES( ../base ../matrix ../nirvana )
 LINK_LIBRARIES( base matrix nirvana )
 

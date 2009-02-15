@@ -127,7 +127,7 @@ namespace Dark
     drawnFaces.setSize( bsp->nFaces );
     hiddenFaces.clearAll();
 
-    baseList = context.genLists( bsp->nFaces );
+    baseList = context.genLists( contextId, bsp->nFaces );
     for( int i = 0; i < bsp->nFaces; i++ ) {
       BSP::Vertex *verts = &bsp->vertices[ bsp->faces[i].firstVertex ];
 
@@ -176,7 +176,7 @@ namespace Dark
 
   uint BSP_Dual::genList()
   {
-    uint list = context.genList();
+    uint list = context.genList( contextId );
 
     glNewList( list, GL_COMPILE );
 

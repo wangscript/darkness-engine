@@ -19,11 +19,9 @@ namespace Dark
 
   Particles particles;
 
-  void Particles::init()
+  void Particles::init( int contextId )
   {
-    uint first = context.genLists( 1 );
-
-
+    uint first = context.genList( contextId );
   }
 
   void Particles::free()

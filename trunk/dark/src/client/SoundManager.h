@@ -11,7 +11,7 @@
 #pragma once
 
 #include "matrix/World.h"
-#include "matrix/Sound.h"
+#include "matrix/Effect.h"
 
 #ifdef WIN32
 #  include <al.h>
@@ -40,7 +40,7 @@ namespace Client
       // release continous sound if not used for 60 s
       static const int RELEASE_COUNT = 3000;
 
-      struct Source : Reuser<Source>
+      struct Source : ReuseAlloc<Source>
       {
         Source *prev[1];
         Source *next[1];
@@ -48,7 +48,7 @@ namespace Client
         ALuint source;
       };
 
-      struct ContSource : Reuser<ContSource>
+      struct ContSource : ReuseAlloc<ContSource>
       {
         enum State
         {

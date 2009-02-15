@@ -14,8 +14,6 @@
 
 namespace Dark
 {
-namespace Client
-{
 
   Frustum frustum;
 
@@ -53,5 +51,4 @@ namespace Client
     dFront = camera.p * nFront + maxDistance;
   }
 
-}
 }
