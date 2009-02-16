@@ -13,17 +13,7 @@
 #include "matrix/World.h"
 #include "matrix/Effect.h"
 
-#ifdef WIN32
-#  include <al.h>
-#  include <alc.h>
-#  include <AL/alut.h>
-#  include <vorbis/vorbisfile.h>
-#else
-#  include <AL/al.h>
-#  include <AL/alc.h>
-#  include <AL/alut.h>
-#  include <vorbis/vorbisfile.h>
-#endif
+#include <vorbis/vorbisfile.h>
 
 namespace Dark
 {
@@ -32,7 +22,7 @@ namespace Client
 
   class SoundManager
   {
-    protected:
+    private:
 
       // only play sounds within 100 m range
       static const float DMAX;
@@ -66,7 +56,8 @@ namespace Client
       // clear stopped sources each second
       static const int CLEAR_INTERVAL = 1000;
 
-      static const int MAX_BUFFERS = SND_MAX;
+      // FIXME
+      static const int MAX_BUFFERS = /*SND_MAX (from Translator)*/ 1024;
 
       /*
        * Sound effects

@@ -1,5 +1,3 @@
-INCLUDE_DIRECTORIES( .. )
-
 ADD_LIBRARY( matrix STATIC
   AABB.cpp
   AABB.h

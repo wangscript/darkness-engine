@@ -13,8 +13,8 @@
 #include "matrix/World.h"
 
 #include "Font.h"
-#include "BSP_Dual.h"
-#include "Terrain_Dual.h"
+#include "BSP.h"
+#include "Terrain.h"
 #include "OBJ.h"
 #include "MD2.h"
 #include "Model.h"
@@ -27,7 +27,7 @@ namespace Client
 
   class Render
   {
-    protected:
+    private:
 
       static const int MODEL_HT_SIZE = 4096;
       static const int SPARKGENRENDER_HT_SIZE = 4096;

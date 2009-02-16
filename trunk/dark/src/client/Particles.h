@@ -12,6 +12,8 @@
 
 namespace Dark
 {
+namespace Client
+{
 
   struct Particles
   {
@@ -23,4 +25,5 @@ namespace Dark
 
   extern Particles particles;
 
+}
 }

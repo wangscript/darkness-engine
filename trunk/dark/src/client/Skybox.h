@@ -19,17 +19,21 @@ namespace Dark
 namespace Client
 {
 
-  class Skybox {
-    protected:
+  class Skybox
+  {
+    private:
+
       uint list;
 
       void drawUpper( uint top, uint front, uint left, uint back, uint right );
 
     public:
+
       void init( Context *context, uint top, uint front, uint left, uint back, uint right );
       void init( Context *context, uint top, uint front, uint left, uint back, uint right,
                  uint bottom );
       void draw();
+
   };
 
 }

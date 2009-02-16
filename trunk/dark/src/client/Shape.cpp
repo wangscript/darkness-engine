@@ -279,9 +279,9 @@ namespace Client
     glEndList();
   }
 
-  void Shape::init()
+  void Shape::init( int contextId )
   {
-    uint spark = context.genList();
+    uint spark = context.genList( contextId );
 
     genRandomTetrahedicParticle( spark, 0.5f );
   }
