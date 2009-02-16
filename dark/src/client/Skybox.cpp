@@ -17,7 +17,8 @@ namespace Dark
 namespace Client
 {
 
-  void Skybox::drawUpper( uint top, uint front, uint left, uint back, uint right ) {
+  void Skybox::drawUpper( uint top, uint front, uint left, uint back, uint right )
+  {
     //  top
     glBindTexture( GL_TEXTURE_2D, top );
     glBegin( GL_QUADS );
@@ -60,7 +61,8 @@ namespace Client
     glEnd();
   }
 
-  void Skybox::init( Context *context, uint top, uint front, uint left, uint back, uint right ) {
+  void Skybox::init( Context *context, uint top, uint front, uint left, uint back, uint right )
+  {
     list = context->genList();
     glNewList( list, GL_COMPILE );
       drawUpper( top, front, left, back, right );
@@ -84,7 +86,8 @@ namespace Client
     glEndList();
   }
 
-  void Skybox::draw() {
+  void Skybox::draw()
+  {
     glCallList( list );
   }
 

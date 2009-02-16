@@ -12,6 +12,8 @@
 
 namespace Dark
 {
+namespace Client
+{
 
   class Context
   {
@@ -139,4 +141,5 @@ namespace Dark
 
   extern Context context;
 
+}
 }

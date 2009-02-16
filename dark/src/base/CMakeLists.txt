@@ -1,5 +1,3 @@
-INCLUDE_DIRECTORIES( .. )
-
 ADD_LIBRARY( base STATIC
   Bitset.h
   Config.cpp

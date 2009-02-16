@@ -1,4 +1,4 @@
-INCLUDE_DIRECTORIES( ../matrix )
+INCLUDE_DIRECTORIES( .. )
 
 ADD_LIBRARY( nirvana STATIC
   M_Walker.cpp

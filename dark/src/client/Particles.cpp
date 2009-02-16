@@ -16,6 +16,8 @@
 
 namespace Dark
 {
+namespace Client
+{
 
   Particles particles;
 
@@ -28,4 +30,5 @@ namespace Dark
   {
   }
 
+}
 }

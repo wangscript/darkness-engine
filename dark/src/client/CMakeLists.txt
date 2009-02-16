@@ -1,10 +1,9 @@
-INCLUDE_DIRECTORIES( ../matrix ../nirvana )
 LINK_DIRECTORIES( ../base ../matrix ../nirvana )
 LINK_LIBRARIES( base matrix nirvana )
 
 ADD_EXECUTABLE( dark
-  BSP_Dual.cpp
-  BSP_Dual.h
+  BSP.cpp
+  BSP.h
   Camera.cpp
   Camera.h
   Client.cpp
@@ -31,19 +30,19 @@ ADD_EXECUTABLE( dark
   Render.h
   Shape.cpp
   Shape.h
-  SimpleObjectDual.cpp
-  SimpleObjectDual.h
-  Sky_Dual.cpp
-  Sky_Dual.h
+  SimpleObject.cpp
+  SimpleObject.h
+  Sky.cpp
+  Sky.h
   Skybox.cpp
   Skybox.h
   SoundManager.cpp
   SoundManager.h
   SparkGenRender.cpp
   SparkGenRender.h
-  Terrain_Dual.cpp
-  Terrain_Dual.h
-  Water_Dual.cpp
-  Water_Dual.h )
+  Terrain.cpp
+  Terrain.h
+  Water.cpp
+  Water.h )
 
 ADD_DEPENDENCIES( dark precompile )

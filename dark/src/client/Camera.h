@@ -14,10 +14,12 @@
 
 namespace Dark
 {
+namespace Client
+{
 
   class Camera
   {
-    protected:
+    private:
 
       float smoothCoef;
       float smoothCoef_1;
@@ -47,4 +49,5 @@ namespace Dark
 
   extern Camera camera;
 
+}
 }

@@ -14,6 +14,8 @@
 
 namespace Dark
 {
+namespace Client
+{
 
   Font::Font() : texture( null ), baseList( null )
   {}
@@ -117,4 +119,5 @@ namespace Dark
     }
   }
 
+}
 }

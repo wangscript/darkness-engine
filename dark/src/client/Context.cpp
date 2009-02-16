@@ -14,6 +14,8 @@
 
 namespace Dark
 {
+namespace Client
+{
 
   Context context;
 
@@ -250,4 +252,5 @@ namespace Dark
   void Context::free()
   {}
 
+}
 }

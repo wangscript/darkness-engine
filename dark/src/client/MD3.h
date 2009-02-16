@@ -90,7 +90,7 @@ namespace Client
 
   class MD3
   {
-    protected:
+    private:
 
       MD3Skin     *skins;
       MD3TexCoord *texCoords;

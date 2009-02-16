@@ -18,22 +18,28 @@
 
 namespace Dark
 {
+namespace Client
+{
 
   class Font
   {
-    protected:
+    private:
+
       uint texture;
       uint baseList;
 
       uint loadTexture( const char *fileName );
 
     public:
+
       Font();
       ~Font();
 
       void init( const char *fileName, float scale );
       void print( float x, float y, const char *string, ... ) const;
       void free();
+
   };
 
+}
 }

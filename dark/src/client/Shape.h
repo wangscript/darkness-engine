@@ -15,6 +15,9 @@
 
 namespace Dark
 {
+namespace Client
+{
+
   struct Shape
   {
     uint spark;
@@ -24,10 +27,11 @@ namespace Dark
     void genBox( uint list, const AABB &bb, uint texture );
     void drawBox( const AABB &bb );
 
-    void init();
+    void init( int contextId );
     void free();
   };
 
   extern Shape shape;
 
+}
 }

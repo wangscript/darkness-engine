@@ -15,10 +15,12 @@
 
 namespace Dark
 {
+namespace Client
+{
 
   class Frustum
   {
-    protected:
+    private:
 
       Vec3  nLeft0, nRight0, nDown0, nUp0;
       Vec3  nLeft, nRight, nDown, nUp, nFront;
@@ -99,8 +101,10 @@ namespace Dark
         maxX = min( World::MAX - 1,  (int) ( ( p.x + radius + World::DIM ) / Sector::DIM ) );
         maxY = min( World::MAX - 1,  (int) ( ( p.y + radius + World::DIM ) / Sector::DIM ) );
       }
+
   };
 
   extern Frustum frustum;
 
+}
 }

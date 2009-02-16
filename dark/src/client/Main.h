@@ -23,7 +23,7 @@ namespace Client
 
   class Main
   {
-    protected:
+    private:
 
       static const int INIT_SDL = 0x01;
       static const int INIT_SDL_VIDEO = 0x02;
