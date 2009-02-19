@@ -43,8 +43,9 @@ namespace Client
       static const float NIGHT_FOG_COEFF;
       static const float NIGHT_FOG_DIST;
 
-      Font          font;
+      int           envContext;
 
+      Font          font;
       Terrain       terra;
 
       Vector<BSP*>  bsps;

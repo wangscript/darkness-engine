@@ -20,5 +20,5 @@ ELSE( WIN32 )
 
 ENDIF( WIN32 )
 
-SUBDIRS( base matrix nirvana server client test )
-# SUBDIRS( base test )
+# SUBDIRS( base matrix nirvana server client test )
+SUBDIRS( base test )

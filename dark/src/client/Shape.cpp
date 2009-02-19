@@ -19,7 +19,7 @@ namespace Client
 
   Shape shape;
 
-  void Shape::genRandomTetrahedicParticle( uint list, float size )
+  uint Shape::genRandomTetrahedicParticle( uint list, float size )
   {
     static const float SQRT_3_THIRDS = Math::sqrt( 3.0f ) / 3.0f;
 
@@ -59,9 +59,11 @@ namespace Client
     glEnd();
 
     glEndList();
+
+    return list;
   }
 
-  void Shape::genRandomCubicParticle( uint list, float size )
+  uint Shape::genRandomCubicParticle( uint list, float size )
   {
     float dim = size / 2.0f;
 
@@ -122,9 +124,11 @@ namespace Client
     glEnd();
 
     glEndList();
+
+    return list;
   }
 
-  void Shape::genBox( uint list, const AABB &bb, uint texture )
+  uint Shape::genBox( uint list, const AABB &bb, uint texture )
   {
     Vec3 v0 = -bb.dim;
     Vec3 v1 = +bb.dim;
@@ -201,6 +205,8 @@ namespace Client
     glEnd();
 
     glEndList();
+
+    return list;
   }
 
   void Shape::drawBox( const AABB &bb )

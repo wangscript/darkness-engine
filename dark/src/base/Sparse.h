@@ -465,20 +465,6 @@ namespace Dark
         }
       }
 
-      /**
-       * Empty the list and delete all elements - take care of memory managment. Use this function
-       * only with sparse vector of pointer that you want to be deleted.
-       */
-      void free()
-      {
-        for( int i = 0; i < count; i++ ) {
-          if( data[i].nextSlot == -1 ) {
-            delete data[i];
-          }
-        }
-        clear();
-      }
-
   };
 
 }

@@ -18,31 +18,58 @@ namespace Dark
 namespace Client
 {
 
-  struct MD2Anim
-  {
-    int firstFrame;
-    int lastFrame;
-    int fps;
-  };
-
-  struct MD2AnimState
-  {
-    int   startFrame;
-    int   endFrame;
-
-    int   fps;
-    float frameTime;
-    float currTime;
-    float oldTime;
-
-    int   type;
-
-    int   currFrame;
-    int   nextFrame;
-  };
-
   class MD2
   {
+    public:
+
+      enum AnimEnum
+      {
+        ANIM_STAND,
+        ANIM_RUN,
+        ANIM_ATTACK,
+        ANIM_PAIN_A,
+        ANIM_PAIN_B,
+        ANIM_PAIN_C,
+        ANIM_JUMP,
+        ANIM_FLIP,
+        ANIM_SALUTE,
+        ANIM_FALLBACK,
+        ANIM_WAVE,
+        ANIM_POINT,
+        ANIM_CROUCH_STAND,
+        ANIM_CROUCH_WALK,
+        ANIM_CROUCH_ATTACK,
+        ANIM_CROUCH_PAIN,
+        ANIM_CROUCH_DEATH,
+        ANIM_DEATH_FALLBACK,
+        ANIM_DEATH_FALLFORWARD,
+        ANIM_DEATH_FALLBACKSLOW,
+        ANIM_MAX
+      };
+
+      struct Anim
+      {
+        int firstFrame;
+        int lastFrame;
+        int fps;
+      };
+
+      struct AnimState
+      {
+        int   startFrame;
+        int   endFrame;
+
+        int   fps;
+        float frameTime;
+        float currTime;
+        float oldTime;
+
+        int   type;
+
+        int   currFrame;
+        int   nextFrame;
+      };
+
     private:
 
       static float anorms[][3];
@@ -61,13 +88,13 @@ namespace Client
 
       float animInterpol;
 
-      void animate( MD2AnimState *anim, float time );
-      void interpolate( MD2AnimState *anim, Vec3 *vertList );
+      void animate( AnimState *anim, float time );
+      void interpolate( AnimState *anim, Vec3 *vertList );
       void renderFrame();
 
     public:
 
-      static MD2Anim animList[];
+      static Anim animList[];
 
       MD2();
       ~MD2();
@@ -75,7 +102,7 @@ namespace Client
       bool load( int contextId, const char *path );
 
       void drawFrame( int frame );
-      void draw( MD2AnimState *anim );
+      void draw( AnimState *anim );
 
       void scale( float scale );
       void translate( const Vec3 &t );

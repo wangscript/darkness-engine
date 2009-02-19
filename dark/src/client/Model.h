@@ -25,9 +25,9 @@ namespace Client
       UPDATED
     };
 
-    State        state;
-    int          model;
-    MD2AnimState anim;
+    State           state;
+    int             model;
+    MD2::AnimState  anim;
 
     explicit Model( int model );
 

@@ -95,11 +95,14 @@ namespace Dark
       // released frustum culling: object is represented some times larger to frustum culling
       // system than it really is;
       // how larger it is, is specified by Client::Render::RELEASED_CULL_FACTOR
-      static const int RELEASED_CULL_BIT = 0x00001000;
+      static const int RELEASED_CULL_BIT = 0x00000800;
 
       // determines visibility of the object for rendering
       // (e.g. ghosts are visible by other spirits, but not by alive units)
-      static const int SPIRIT_BIT = 0x00000800;
+      static const int SPIRIT_BIT = 0x00000400;
+
+      // if object is blended (then it should be rendered at the end)
+      static const int BLEND_BIT = 0x00000200;
 
     public:
 
@@ -131,13 +134,10 @@ namespace Dark
       // effects are used for sounds etc. They are cleared at the beginning of next update
       List<Effect, 0> effects;
 
-      // frontend proxy
-      ObjectDual *dual;
-
     public:
 
       Object() : index( -1 ), sector( null ), flags( 0 ), type( -1 ),
-          damage( Math::INF ), rotZ( 0.0f ), dual( null )
+          damage( Math::INF ), rotZ( 0.0f )
       {}
 
       virtual ~Object()
@@ -215,13 +215,13 @@ namespace Dark
       virtual void onUpdate()
       {}
 
-      virtual void onHit( const Hit * )
+      virtual void onHit( const Hit* )
       {}
 
       virtual void onDestroy()
       {}
 
-      virtual void onUse( Object * )
+      virtual void onUse( Object* )
       {}
 
       virtual void onPut()

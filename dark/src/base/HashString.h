@@ -183,10 +183,11 @@ namespace Dark
        */
       void freeChain( const Elem *chain ) const
       {
-        if( chain->next != null ) {
+        if( chain != null ) {
           freeChain( chain->next );
+
+          delete chain;
         }
-        delete chain;
       }
 
       /**
@@ -195,11 +196,12 @@ namespace Dark
        */
       void freeChainAndValues( const Elem *chain ) const
       {
-        if( chain->next != null ) {
+        if( chain != null ) {
           freeChain( chain->next );
+
+          delete chain->value;
+          delete chain;
         }
-        delete chain->value;
-        delete chain;
       }
 
     public:
@@ -419,10 +421,8 @@ namespace Dark
       void clear()
       {
         for( int i = 0; i < SIZE; i++ ) {
-          if( data[i] != null ) {
-            freeChain( data[i] );
-            data[i] = null;
-          }
+          freeChain( data[i] );
+          data[i] = null;
         }
       }
 
@@ -432,10 +432,8 @@ namespace Dark
       void free()
       {
         for( int i = 0; i < SIZE; i++ ) {
-          if( data[i] != null ) {
-            freeChainAndValues( data[i] );
-            data[i] = null;
-          }
+          freeChainAndValues( data[i] );
+          data[i] = null;
         }
       }
 

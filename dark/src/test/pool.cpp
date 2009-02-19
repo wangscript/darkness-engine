@@ -17,18 +17,24 @@ class A : public PoolAlloc<A>
   public:
 
     int value;
+
 };
 
 int main()
 {
-  Pool<A> pool( 100 );
+  Pool<A> pool;
   A::setPool( &pool );
 
-  A *a = new A();
-  a->value = 10;
-  delete a;
+  int max = 10000;
 
-  printf( "%d\n", a->value );
+  A *array[max];
+  for( int i = 0; i < max; i++ ) {
+    array[i] = new A();
+    array[i]->value = 10;
+  }
+  for( int i = 0; i < max; i++ ) {
+    delete array[i];
+  }
 
   return 0;
 }

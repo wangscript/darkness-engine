@@ -61,18 +61,18 @@ namespace Client
     glEnd();
   }
 
-  void Skybox::init( Context *context, uint top, uint front, uint left, uint back, uint right )
+  void Skybox::init( int contextId, uint top, uint front, uint left, uint back, uint right )
   {
-    list = context->genList();
+    list = context.genList( contextId );
     glNewList( list, GL_COMPILE );
       drawUpper( top, front, left, back, right );
     glEndList();
   }
 
-  void Skybox::init( Context *context, uint top, uint front, uint left, uint back, uint right,
+  void Skybox::init( int contextId, uint top, uint front, uint left, uint back, uint right,
     uint bottom )
   {
-    list = context->genList();
+    list = context.genList( contextId );
     glNewList( list, GL_COMPILE );
       drawUpper( top, front, left, back, right );
       //  bottom

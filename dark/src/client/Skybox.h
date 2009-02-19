@@ -29,8 +29,8 @@ namespace Client
 
     public:
 
-      void init( Context *context, uint top, uint front, uint left, uint back, uint right );
-      void init( Context *context, uint top, uint front, uint left, uint back, uint right,
+      void init( int contextId, uint top, uint front, uint left, uint back, uint right );
+      void init( int contextId, uint top, uint front, uint left, uint back, uint right,
                  uint bottom );
       void draw();
 

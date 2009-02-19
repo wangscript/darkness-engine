@@ -3,6 +3,6 @@ LINK_DIRECTORIES( ../base ../matrix ../nirvana )
 LINK_LIBRARIES( base )
 
 ADD_EXECUTABLE( test
-  sparse.cpp )
+  pool.cpp )
 
 ADD_DEPENDENCIES( test precompile )

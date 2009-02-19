@@ -56,7 +56,7 @@ namespace Client
       // clear stopped sources each second
       static const int CLEAR_INTERVAL = 1000;
 
-      // FIXME
+      // FIXME MAX_BUFFERS
       static const int MAX_BUFFERS = /*SND_MAX (from Translator)*/ 1024;
 
       /*
@@ -64,6 +64,8 @@ namespace Client
        */
       ALCdevice  *device;
       ALCcontext *context;
+
+      ALuint     buffers[MAX_BUFFERS];
 
       DList<Source, 0>                      sources;
       HashIndex<ContSource, HASHTABLE_SIZE> contSources;

@@ -82,6 +82,8 @@ namespace Client
   {
     context.init();
 
+    envContext = context.createContext();
+
     glDepthFunc( GL_LEQUAL );
     glEnable( GL_CULL_FACE );
 
@@ -109,42 +111,36 @@ namespace Client
     sky.init();
     water.init();
 
-    terra.init( context.loadTexture( "terra/map.png", false ),
-                context.loadTexture( "terra/detail.jpg", true ) );
+    terra.init( context.loadTexture( envContext, "terra/map.png", false ),
+                context.loadTexture( envContext, "terra/detail.jpg", true ) );
 
     for( int i = 0; i < world.bsps.length(); i++ ) {
       bsps << new BSP( world.bsps[i] );
     }
 
-    lists << shape.genBox( AABB( Vec3::zero(), Vec3( 0.01f, 0.01f, 0.01f ) ), 0 );
-    lists << shape.genBox( AABB( Vec3::zero(), Vec3( 10, 10, 10 ) ), 0 );
-
-    lists << shape.genRandomTetrahedicParticle( 0.5f );
-
-    lists << shape.genBox( AABB( Vec3::zero(), Vec3( 0.3f, 0.3f, 0.3f ) ),
-                           context.loadTexture( "tex/crate1.jpg", false ) );
-    lists << shape.genBox( AABB( Vec3::zero(), Vec3( 0.6f, 0.6f, 0.6f ) ),
-                           context.loadTexture( "tex/crate2.jpg", false ) );
-
-    lists << MD2::genList( "md2/woodBarrel", INCH, Vec3( 0.0f, 0.0f, -0.482f ) );
-    lists << MD2::genList( "md2/metalBarrel", INCH, Vec3( 0.0f, 0.0f, -0.5922f ) );
-
-//     lists << MD2::genList( "md2/tree2", 0.1f, Vec3( 0.0f, 0.0f, -3.8f ) );
-//     lists << MD2::genList( "md2/tree3", 0.2f, Vec3( 0.0f, 0.0f, -2.2f ) );
+    lists << shape.genBox( context.genList( envContext ), AABB( Vec3::zero(), Vec3( 0.01f, 0.01f, 0.01f ) ), 0 );
+    lists << shape.genBox( context.genList( envContext ), AABB( Vec3::zero(), Vec3( 10, 10, 10 ) ), 0 );
+    lists << shape.genRandomTetrahedicParticle( context.genList( envContext ), 0.5f );
+    shape.genBox( context.genList( envContext ), AABB( Vec3::zero(), Vec3( 0.3f, 0.3f, 0.3f ) ),
+                  context.loadTexture( envContext, "tex/crate1.jpg", false ) );
+    lists << shape.genBox( context.genList( envContext ), AABB( Vec3::zero(), Vec3( 0.6f, 0.6f, 0.6f ) ),
+                           context.loadTexture( envContext, "tex/crate2.jpg", false ) );
+    lists << MD2::genList( envContext, "md2/woodBarrel", INCH, Vec3( 0.0f, 0.0f, -0.482f ) );
+    lists << MD2::genList( envContext, "md2/metalBarrel", INCH, Vec3( 0.0f, 0.0f, -0.5922f ) );
 
     md2s << new MD2();
-    md2s.last()->load( "md2/goblin" );
+    md2s.last()->load( envContext, "md2/goblin" );
     md2s.last()->scale( 0.03f );
     md2s.last()->translate( Vec3( 0.0f, 0.0f, 0.1f ) );
-    md2s.last()->translate( ANIM_CROUCH_STAND, Vec3( 0.0f, 0.0f, 0.15f ) );
-    md2s.last()->translate( ANIM_CROUCH_WALK, Vec3( 0.0f, 0.0f, 0.15f ) );
+    md2s.last()->translate( MD2::ANIM_CROUCH_STAND, Vec3( 0.0f, 0.0f, 0.15f ) );
+    md2s.last()->translate( MD2::ANIM_CROUCH_WALK, Vec3( 0.0f, 0.0f, 0.15f ) );
 
     md2s << new MD2();
-    md2s.last()->load( "md2/knight" );
+    md2s.last()->load( envContext, "md2/knight" );
     md2s.last()->scale( 0.04f );
 
-    lists << OBJ::genList( "obj/monkey" );
-    lists << OBJ::genList( "obj/monkey" );
+    lists << OBJ::genList( envContext, "obj/monkey" );
+    lists << OBJ::genList( envContext, "obj/monkey" );
 
     // prepare for first frame
     glEnable( GL_DEPTH_TEST );
@@ -167,21 +163,16 @@ namespace Client
     if( obj->flags & Object::WATER_BIT ) {
       waterObjects << obj;
     }
-    else if( obj->alpha != 1.0f ) {
+    else if( obj->flags | Object::BLEND_BIT ) {
       blendedObjects << obj;
-    }
-    else if( obj->model >= 0 ) {
-      glCallList( lists[obj->model] );
     }
     else {
       if( models.contains( (uint) obj ) ) {
         Model &model = models.cachedValue();
 
-        model.state = Model::UPDATED;
-
         // draw model
-        model.setAnim( obj->anim );
-        md2s[model.model]->draw( &model.anim );
+        model.draw();
+        model.state = Model::UPDATED;
       }
       else {
         models.add( (uint) obj, Model( ~obj->model ) );
