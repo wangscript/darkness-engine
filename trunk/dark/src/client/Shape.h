@@ -22,9 +22,9 @@ namespace Client
   {
     uint spark;
 
-    void genRandomTetrahedicParticle( uint list, float size );
-    void genRandomCubicParticle( uint list, float size );
-    void genBox( uint list, const AABB &bb, uint texture );
+    uint genRandomTetrahedicParticle( uint list, float size );
+    uint genRandomCubicParticle( uint list, float size );
+    uint genBox( uint list, const AABB &bb, uint texture );
     void drawBox( const AABB &bb );
 
     void init( int contextId );

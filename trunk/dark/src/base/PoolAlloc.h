@@ -23,9 +23,26 @@ namespace Dark
   {
     private:
 
-      // Pointer to data array
-      Type *data;
-      // Size of data array
+      static const int BLOCK_SIZE = 1024;
+
+      struct Block
+      {
+        Type  data[BLOCK_SIZE];
+        Block *next;
+
+        Block() : next( null )
+        {
+          for( int i = 0; i < BLOCK_SIZE - 1; i++ ) {
+            data[i].PoolAlloc<Type>::next = &data[i + 1];
+          }
+          data[BLOCK_SIZE - 1].PoolAlloc<Type>::next = null;
+        }
+      };
+
+      // pointer to first and last blocks
+      Block *firstBlock;
+      Block *lastBlock;
+      // Size of data blocks
       int  size;
       // Number of used slots in the pool
       int  count;
@@ -35,34 +52,24 @@ namespace Dark
       Pool( const Pool& );
       Pool &operator = ( const Pool& );
 
+      void freeChain( const Block *block ) const
+      {
+        if( block != null ) {
+          freeChain( block->next );
+
+          delete block;
+        }
+      }
+
     public:
 
       /**
-       * Create empty pool with initial capacity 8.
+       * Create empty pool with initial capacity BLOCK_SIZE.
        * @param initSize
        */
-      explicit Pool() : data( new Type[8] ), size( 8 ), count( 0 ), freeSlot( &data[0] )
-      {
-        int last = size - 1;
-        for( int i = 1; i < last; i++ ) {
-          data[i].PoolAlloc<Type>::next = &data[i + 1];
-        }
-        data[last].PoolAlloc<Type>::next = null;
-      }
-
-      /**
-       * Create empty pool with given initial capacity.
-       * @param initSize
-       */
-      explicit Pool( int initSize ) : data( new Type[initSize] ), size( initSize ),
-          count( 0 ), freeSlot( &data[0] )
-      {
-        int last = size - 1;
-        for( int i = 1; i < last; i++ ) {
-          data[i].PoolAlloc<Type>::next = &data[i + 1];
-        }
-        data[last].PoolAlloc<Type>::next = null;
-      }
+      explicit Pool() : firstBlock( new Block() ), lastBlock( firstBlock ), size( BLOCK_SIZE ),
+          count( 0 ), freeSlot( &firstBlock->data[0] )
+      {}
 
       /**
        * Destructor.
@@ -71,7 +78,7 @@ namespace Dark
       {
         assert( count == 0 );
 
-        delete[] data;
+        freeChain( firstBlock );
       }
 
       /**
@@ -107,11 +114,16 @@ namespace Dark
        */
       void *alloc()
       {
-        assert( freeSlot != null );
+        if( freeSlot == null ) {
+          lastBlock->next = new Block();
+          lastBlock = lastBlock->next;
+          freeSlot = &lastBlock->data[0];
+        }
 
         Type *slot = freeSlot;
         freeSlot = slot->PoolAlloc<Type>::next;
         slot->PoolAlloc<Type>::next = (Type*) this;
+
         count++;
         return slot;
       }

@@ -240,7 +240,7 @@ namespace Client
     { -0.688191f, -0.587785f, -0.425325f }
   };
 
-  MD2Anim MD2::animList[] =
+  MD2::Anim MD2::animList[] =
   {
     // first, last, fps
     {   0,  39,  9 },   // STAND
@@ -374,7 +374,7 @@ namespace Client
     }
   }
 
-  void MD2::animate( MD2AnimState *anim, float time )
+  void MD2::animate( AnimState *anim, float time )
   {
     anim->currTime += time;
 
@@ -393,7 +393,7 @@ namespace Client
     animInterpol = anim->fps * ( anim->currTime - anim->oldTime );
   }
 
-  void MD2::interpolate( MD2AnimState *anim, Vec3 *vertList )
+  void MD2::interpolate( AnimState *anim, Vec3 *vertList )
   {
     Vec3 *currFrame;
     Vec3 *nextFrame;
@@ -433,7 +433,7 @@ namespace Client
     glFrontFace( GL_CCW );
   }
 
-  void MD2::draw( MD2AnimState *anim )
+  void MD2::draw( AnimState *anim )
   {
     static Vec3 vertList[MD2_MAX_VERTS];
     int *pCmd = glCmds;

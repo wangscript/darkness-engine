@@ -15,11 +15,13 @@ namespace Dark
 
   struct Effect : ReuseAlloc<Effect>
   {
-    static const int SPLASH_SOFT = 1;
-    static const int SPLASH_HARD = 2;
+    static const int HIT          = 0;
+    static const int SPLASH_SOFT  = 1;
+    static const int SPLASH_HARD  = 2;
 
-    Effect *next[1];
     int    id;
+    void   *dual;
+    Effect *next[1];
 
     explicit Effect( int id_ ) : id( id_ )
     {}
