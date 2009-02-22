@@ -1,5 +1,5 @@
 /*
- *  Sky_Dual.h
+ *  Sky.h
  *
  *  [description]
  *
@@ -12,10 +12,12 @@
 
 namespace Dark
 {
+namespace Client
+{
 
-  class Sky_Dual
+  class Sky
   {
-    protected:
+    private:
 
       static const float AMBIENT_COEF;
 
@@ -44,6 +46,7 @@ namespace Dark
       void set( float time );
   };
 
-  extern Sky_Dual sky_dual;
+  extern Sky sky;
 
+}
 }

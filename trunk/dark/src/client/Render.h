@@ -55,7 +55,7 @@ namespace Client
 
       Vector<MD2*>  md2s;
 
-      HashIndex<Model, MODEL_HT_SIZE> models;
+      DList<Model*, 0> models;
       HashIndex<SparkGenRender, SPARKGENRENDER_HT_SIZE> sparkGenRenders;
 
       Vector<Structure*> structures;

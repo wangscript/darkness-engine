@@ -1,5 +1,5 @@
 /*
- *  Water_Dual.h
+ *  Water.h
  *
  *  [description]
  *
@@ -14,10 +14,12 @@
 
 namespace Dark
 {
+namespace Client
+{
 
-  class Water_Dual
+  class Water
   {
-    protected:
+    private:
 
       static const float TEX_STRETCH;
       static const float TEX_BIAS;
@@ -42,6 +44,7 @@ namespace Dark
       void draw( const Object *obj, bool isInside );
   };
 
-  extern Water_Dual water_dual;
+  extern Water water;
 
+}
 }

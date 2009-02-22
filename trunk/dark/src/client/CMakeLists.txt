@@ -20,7 +20,6 @@ ADD_EXECUTABLE( dark
   MD3.h
   Main.cpp
   Main.h
-  Model.cpp
   Model.h
   OBJ.cpp
   OBJ.h

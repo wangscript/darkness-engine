@@ -24,7 +24,7 @@ namespace Dark
 
     public:
       /**
-       * First parameter is file name (if NULL, it writes to stdout), the other tells us
+       * First parameter is file name (if NULL or "", it writes to stdout), the other tells us
        * if we want to clear its content if the file already exists.
        * @param fileName
        * @param clearFile

@@ -1,5 +1,5 @@
 /*
- *  SimpleObjectDual.cpp
+ *  SimpleObject.h
  *
  *  [description]
  *
@@ -8,13 +8,15 @@
  *  $Id$
  */
 
-#include "precompiled.h"
-
-#include "SimpleObjectDual.h"
+#pragma once
 
 namespace Dark
 {
 
+  class SimpleObject
+  {
+    public:
 
+  };
 
 }

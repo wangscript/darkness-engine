@@ -25,13 +25,12 @@ namespace Client
       UPDATED
     };
 
-    State           state;
-    int             model;
-    MD2::AnimState  anim;
+    State state;
+    Model *prev[1];
+    Model *next[1];
 
-    explicit Model( int model );
-
-    void setAnim( int type );
+    virtual void load() = 0;
+    virtual void draw() = 0;
   };
 
 }

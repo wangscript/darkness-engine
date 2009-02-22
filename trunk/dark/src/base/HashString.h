@@ -2,6 +2,7 @@
  *  HashString.h
  *
  *  Chaining hashtable implementation with String key type
+ *  A prime number is recommended as hashtable size.
  *
  *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *

@@ -167,24 +167,12 @@ namespace Client
       blendedObjects << obj;
     }
     else {
-      if( models.contains( (uint) obj ) ) {
-        Model &model = models.cachedValue();
-
-        // draw model
-        model.draw();
-        model.state = Model::UPDATED;
+      if( obj->model == null ) {
+        obj->createModel();
       }
-      else {
-        models.add( (uint) obj, Model( ~obj->model ) );
-
-        Model &model = models.cachedValue();
-
-        model.state = Model::UPDATED;
-
-        // generate & draw model
-        model.setAnim( obj->anim );
-        md2s[model.model]->draw( &model.anim );
-      }
+      // draw model
+      obj->model->draw();
+      obj->model->state = Model::UPDATED;
     }
     if( drawAABBs ) {
       glRotatef( -obj->rotZ, 0.0f, 0.0f, 1.0f );
@@ -254,7 +242,7 @@ namespace Client
 
           waterObjects << obj;
         }
-        else if( obj->alpha != 1.0f ) {
+        else if( obj->flags & Object::BLEND_BIT ) {
           blendedObjects << obj;
         }
         else {
@@ -267,13 +255,6 @@ namespace Client
       if( frustum.isVisible( part->p, particleRadius ) ) {
         particles << part;
       }
-    }
-
-    for( SparkGen *sparkGen = sector.sparkGens.first();
-         sparkGen != null;
-         sparkGen = sparkGen->next[0] )
-    {
-      sparkGens << sparkGen;
     }
   }
 
@@ -450,18 +431,12 @@ namespace Client
     glEnable( GL_LIGHTING );
 
     // remove droped models
-    for( HashIndex<Model, MODEL_HT_SIZE>::Iterator i( models ); !i.isPassed(); ) {
-      Model &model = *i;
-      uint key = i.key();
-
-      // we should advance now, so that we don't remove the element the iterator is pointing at
-      i++;
-
-      if( model.state == Model::NOT_UPDATED ) {
-        models.remove( key );
+    foreach( model, models.iterator() ) {
+      if( model->state == Model::NOT_UPDATED ) {
+        models.remove( model );
       }
       else {
-        model.state = Model::NOT_UPDATED;
+        model->state = Model::NOT_UPDATED;
       }
     }
 

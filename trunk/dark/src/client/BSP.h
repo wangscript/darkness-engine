@@ -1,5 +1,5 @@
 /*
- *  BSP_Dual.h
+ *  BSP.h
  *
  *  BSP level rendering class
  *
@@ -17,12 +17,14 @@
 
 namespace Dark
 {
+namespace Client
+{
 
-  class BSP_Dual
+  class BSP
   {
-    protected:
+    private:
 
-      BSP  *bsp;
+      Dark::BSP  *bsp;
 
       int  contextId;
 
@@ -41,12 +43,12 @@ namespace Dark
 
     public:
 
-      BSP_Dual();
-      ~BSP_Dual();
+      BSP();
+      ~BSP();
 
-      explicit BSP_Dual( BSP *bsp );
+      explicit BSP( Dark::BSP *bsp );
 
-      void init( BSP *bsp );
+      void init( Dark::BSP *bsp );
       void draw( const Vec3 &p );
       uint genList();
 
@@ -54,6 +56,8 @@ namespace Dark
       static void endRender();
 
       void free();
+
   };
 
+}
 }

@@ -33,6 +33,8 @@ namespace Dark
 
       void load( FILE *stream );
       void save( FILE *stream );
+
+      void createModel();
   };
 
 }

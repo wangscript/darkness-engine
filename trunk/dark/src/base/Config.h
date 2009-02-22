@@ -22,8 +22,8 @@ namespace Dark
   {
     private:
 
-      // Hasttable size.
-      static const int SIZE = 1024;
+      // Hashtable size.
+      static const int SIZE = 1023;
       // Size of buffer used when loading from file (maximum key/value length).
       static const int BUFFER_SIZE = 1024;
 

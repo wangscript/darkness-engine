@@ -31,6 +31,8 @@ namespace Dark
       static Object *build( const Vec3 &p );
 
       explicit D_MetalBarrel( const Vec3 &p = Vec3::zero() );
+
+      void createModel();
   };
 
 }

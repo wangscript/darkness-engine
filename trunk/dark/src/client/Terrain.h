@@ -1,5 +1,5 @@
 /*
- *  Terrain_Dual.h
+ *  Terrain.h
  *
  *  [description]
  *
@@ -10,13 +10,15 @@
 
 #pragma once
 
-#include "bv.h"
+#include "matrix/bv.h"
 
 #define TERRA_DEPTH            2
 #define TERRA_DETAILTEX_SCALE  4
 #define TERRA_GROUNDTEX_SCALE  1
 
 namespace Dark
+{
+namespace Client
 {
 
   struct Quadtree : Sphere
@@ -32,7 +34,7 @@ namespace Dark
 
   class Terrain
   {
-    protected:
+    private:
 
       uint tTerraDetail;
       uint tTerraMap;
@@ -46,7 +48,7 @@ namespace Dark
 
     public:
 
-      ~Terrain_Dual();
+      ~Terrain();
 
       void init( uint terraMap, uint terraDetail );
       void free();
@@ -54,4 +56,5 @@ namespace Dark
       void draw();
   };
 
+}
 }

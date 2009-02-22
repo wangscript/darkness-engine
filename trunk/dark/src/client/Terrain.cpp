@@ -1,5 +1,5 @@
 /*
- *  Terrain_Dual.cpp
+ *  Terrain.cpp
  *
  *  [description]
  *
@@ -10,7 +10,7 @@
 
 #include "precompiled.h"
 
-#include "Terrain_Dual.h"
+#include "Terrain.h"
 
 #include "matrix/World.h"
 
@@ -25,6 +25,8 @@ static PFNGLACTIVETEXTUREPROC glActiveTexture = null;
 
 namespace Dark
 {
+namespace Client
+{
 
   Quadtree::~Quadtree()
   {
@@ -36,12 +38,12 @@ namespace Dark
     }
   }
 
-  Terrain_Dual::~Terrain_Dual()
+  Terrain::~Terrain()
   {
     free();
   }
 
-  uint Terrain_Dual::makeQuad( int minX,
+  uint Terrain::makeQuad( int minX,
                                int minY,
                                int maxX,
                                int maxY,
@@ -131,7 +133,7 @@ namespace Dark
     return list;
   }
 
-  void Terrain_Dual::buildQuadtree( Quadtree *qTree, int minX, int minY, int maxX, int maxY,
+  void Terrain::buildQuadtree( Quadtree *qTree, int minX, int minY, int maxX, int maxY,
                                     float *minHeight, float *maxHeight )
   {
     static int depth = 0;
@@ -202,7 +204,7 @@ namespace Dark
     depth--;
   }
 
-  void Terrain_Dual::init( uint terraMap, uint terraDetail )
+  void Terrain::init( uint terraMap, uint terraDetail )
   {
     tTerraDetail = terraDetail;
     tTerraMap = terraMap;
@@ -219,7 +221,7 @@ namespace Dark
     buildQuadtree( qTerra, 0, 0, Dark::Terrain::MAX, Dark::Terrain::MAX, &dummy0, &dummy1 );
   }
 
-  void Terrain_Dual::drawQuadtree( const Quadtree *qTree )
+  void Terrain::drawQuadtree( const Quadtree *qTree )
   {
     static int depth = 0;
 
@@ -240,7 +242,7 @@ namespace Dark
     depth--;
   }
 
-  void Terrain_Dual::draw()
+  void Terrain::draw()
   {
     glBindTexture( GL_TEXTURE_2D, tTerraDetail );
     glActiveTexture( GL_TEXTURE1_ARB );
@@ -253,8 +255,9 @@ namespace Dark
     glActiveTexture( GL_TEXTURE0_ARB );
   }
 
-  void Terrain_Dual::free() {
+  void Terrain::free() {
     delete qTerra;
   }
 
+}
 }
