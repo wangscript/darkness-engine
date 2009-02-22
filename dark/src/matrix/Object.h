@@ -19,7 +19,11 @@ namespace Dark
 
   struct Sector;
   class Matrix;
-  class ObjectDual;
+
+  namespace Client
+  {
+    class Model;
+  }
 
   // static object abstract class
   class Object : public AABB
@@ -134,6 +138,9 @@ namespace Dark
       // effects are used for sounds etc. They are cleared at the beginning of next update
       List<Effect, 0> effects;
 
+      // graphics model
+      Client::Model *model;
+
     public:
 
       Object() : index( -1 ), sector( null ), flags( 0 ), type( -1 ),
@@ -201,11 +208,11 @@ namespace Dark
       }
 
       /**
-       * Create a proxy object that handles graphic and sound rendering of this object.
+       * Create a proxy object that handles graphic rendering of this object.
        * This function should be implemented in proxy class implementation in client part of code.
        * @return
        */
-      virtual ObjectDual *createDual()
+      virtual void createModel()
       {
         assert( false );
       }

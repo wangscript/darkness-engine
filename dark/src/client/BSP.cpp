@@ -1,5 +1,5 @@
 /*
- *  BSP_Dual.cpp
+ *  BSP.cpp
  *
  *  BSP level rendering class
  *
@@ -10,7 +10,7 @@
 
 #include "precompiled.h"
 
-#include "BSP_Dual.h"
+#include "BSP.h"
 
 #include "Frustum.h"
 
@@ -21,11 +21,13 @@ static PFNGLCLIENTACTIVETEXTUREPROC glClientActiveTexture = null;
 
 namespace Dark
 {
+namespace Client
+{
 
-  BSP_Dual::BSP_Dual()
+  BSP::BSP()
   {}
 
-  BSP_Dual::BSP_Dual( BSP *bsp )
+  BSP::BSP( Dark::BSP *bsp )
   {
     textures = null;
     lightMaps = null;
@@ -33,18 +35,18 @@ namespace Dark
     init( bsp );
   }
 
-  BSP_Dual::~BSP_Dual()
+  BSP::~BSP()
   {
     free();
   }
 
-  int BSP_Dual::getLeafIndex( const Vec3 &p ) const
+  int BSP::getLeafIndex( const Vec3 &p ) const
   {
     int nodeIndex = 0;
 
     do {
-      const BSP::Node  &node  = bsp->nodes[nodeIndex];
-      const BSP::Plane &plane = bsp->planes[node.plane];
+      const Dark::BSP::Node  &node  = bsp->nodes[nodeIndex];
+      const Dark::BSP::Plane &plane = bsp->planes[node.plane];
 
       if( ( p * plane.normal - plane.distance ) < 0.0f ) {
         nodeIndex = node.back;
@@ -58,32 +60,32 @@ namespace Dark
     return ~nodeIndex;
   }
 
-  void BSP_Dual::drawFace( int faceIndex ) const
+  void BSP::drawFace( int faceIndex ) const
   {
-    BSP::Face &face = bsp->faces[faceIndex];
+    Dark::BSP::Face &face = bsp->faces[faceIndex];
 
-    glVertexPointer( 3, GL_FLOAT, sizeof( BSP::Vertex ),
+    glVertexPointer( 3, GL_FLOAT, sizeof( Dark::BSP::Vertex ),
                      (float*) bsp->vertices[face.firstVertex].p );
 
     glActiveTexture( GL_TEXTURE0 );
     glClientActiveTexture( GL_TEXTURE0 );
 
     glBindTexture( GL_TEXTURE_2D, textures[face.texture] );
-    glTexCoordPointer( 2, GL_FLOAT, sizeof( BSP::Vertex ),
+    glTexCoordPointer( 2, GL_FLOAT, sizeof( Dark::BSP::Vertex ),
                        bsp->vertices[face.firstVertex].texCoord );
 
     glActiveTexture( GL_TEXTURE1 );
     glClientActiveTexture( GL_TEXTURE1 );
 
     glBindTexture( GL_TEXTURE_2D, lightMaps[face.lightmap] );
-    glTexCoordPointer( 2, GL_FLOAT, sizeof( BSP::Vertex ),
+    glTexCoordPointer( 2, GL_FLOAT, sizeof( Dark::BSP::Vertex ),
                        bsp->vertices[face.firstVertex].lightmapCoord );
 
     glNormal3fv( face.normal );
     glDrawElements( GL_TRIANGLES, face.nIndices, GL_UNSIGNED_INT, &bsp->indices[face.firstIndex] );
   }
 
-  void BSP_Dual::init( BSP *bsp_ )
+  void BSP::init( Dark::BSP *bsp_ )
   {
     bsp = bsp_;
     contextId = context.createContext();
@@ -129,7 +131,7 @@ namespace Dark
 
     baseList = context.genLists( contextId, bsp->nFaces );
     for( int i = 0; i < bsp->nFaces; i++ ) {
-      BSP::Vertex *verts = &bsp->vertices[ bsp->faces[i].firstVertex ];
+      Dark::BSP::Vertex *verts = &bsp->vertices[ bsp->faces[i].firstVertex ];
 
       for( int j = 0; j < bsp->faces[i].nVertices; j++ ) {
         if( verts[j].p.x < -bsp->maxDim || verts[j].p.x > bsp->maxDim ||
@@ -146,7 +148,7 @@ namespace Dark
     logFile.println( "}" );
   }
 
-  void BSP_Dual::draw( const Vec3 &p )
+  void BSP::draw( const Vec3 &p )
   {
     glPushMatrix();
     glTranslatef( p.x, p.y, p.z );
@@ -158,7 +160,7 @@ namespace Dark
     Bitset &bitset = bsp->visual.bitsets[cluster];
 
     for( int i = 0; i < bsp->nLeafs; i++ ) {
-      BSP::Leaf &leaf = bsp->leafs[i];
+      Dark::BSP::Leaf &leaf = bsp->leafs[i];
 
       if( ( cluster < 0 || bitset.get( leaf.cluster ) ) && frustum.isVisible( leaf + p ) ) {
         for( int j = 0; j < leaf.nFaces; j++ ) {
@@ -174,7 +176,7 @@ namespace Dark
     glPopMatrix();
   }
 
-  uint BSP_Dual::genList()
+  uint BSP::genList()
   {
     uint list = context.genList( contextId );
 
@@ -183,7 +185,7 @@ namespace Dark
     drawnFaces = hiddenFaces;
 
     for( int i = 0; i < bsp->nLeafs; i++ ) {
-      BSP::Leaf &leaf = bsp->leafs[i];
+      Dark::BSP::Leaf &leaf = bsp->leafs[i];
 
       for( int j = 0; j < leaf.nFaces; j++ ) {
         int faceIndex = bsp->leafFaces[leaf.firstFace + j];
@@ -199,7 +201,7 @@ namespace Dark
     return list;
   }
 
-  void BSP_Dual::beginRender()
+  void BSP::beginRender()
   {
     glFrontFace( GL_CW );
     glActiveTexture( GL_TEXTURE1 );
@@ -209,7 +211,7 @@ namespace Dark
     glEnableClientState( GL_TEXTURE_COORD_ARRAY );
   }
 
-  void BSP_Dual::endRender()
+  void BSP::endRender()
   {
     glDisableClientState( GL_VERTEX_ARRAY );
     glDisableClientState( GL_TEXTURE_COORD_ARRAY );
@@ -219,7 +221,7 @@ namespace Dark
     glFrontFace( GL_CCW );
   }
 
-  void BSP_Dual::free()
+  void BSP::free()
   {
     if( textures != null ) {
       delete[] textures;
@@ -229,4 +231,5 @@ namespace Dark
     }
   }
 
+}
 }

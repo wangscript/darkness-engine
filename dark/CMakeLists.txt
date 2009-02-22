@@ -59,8 +59,7 @@ ELSE( WIN32 )
   FIND_FILE( VORBIS_h vorbis/vorbisfile.h )
   FIND_LIBRARY( VORBIS_so vorbisfile )
 
-  SET( CXX_FLAGS -g -Wall -Wextra -Winvalid-pch -pipe -I/usr/include -I/usr/include/SDL )
-  INCLUDE_DIRECTORIES( /usr/include/libxml2 )
+  SET( CXX_FLAGS -g3 -Wall -Wextra -Winvalid-pch -pipe -I/usr/include/libxml2 -I/usr/include/SDL )
   ADD_DEFINITIONS( ${CXX_FLAGS} )
   LINK_LIBRARIES( xml2 SDL SDL_image GL GLU openal alut vorbisfile )
 

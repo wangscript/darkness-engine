@@ -34,6 +34,8 @@ namespace Dark
 
       explicit D_BigCrate( const Vec3 &p = Vec3::zero(), Object *content = null );
       ~D_BigCrate();
+
+      void createModel();
   };
 
 }

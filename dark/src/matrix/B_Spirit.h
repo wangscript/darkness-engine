@@ -37,6 +37,8 @@ namespace Dark
 
       explicit B_Spirit( const Vec3 &p, float h = 0.0f, float v = 0.0f, Mind *mind = null );
 
+      void createModel();
+
       void load( FILE *stream );
       void save( FILE *stream );
 

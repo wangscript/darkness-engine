@@ -391,21 +391,21 @@ namespace Dark
         return r;
       }
 
-      Vector<String> split( char ch ) const
-      {
-        Vector<String> v;
-
-        int p0 = 0;
-        int p1 = index( ch );
-
-        while( p1 >= 0 ) {
-          v << substring( p0, p1 );
-          p0 = p1 + 1;
-          p1 = index( ch, p0 );
-        }
-        v << substring( p0 );
-        return v;
-      }
+//       Vector<String> split( char ch ) const
+//       {
+//         Vector<String> v;
+//
+//         int p0 = 0;
+//         int p1 = index( ch );
+//
+//         while( p1 >= 0 ) {
+//           v << substring( p0, p1 );
+//           p0 = p1 + 1;
+//           p1 = index( ch, p0 );
+//         }
+//         v << substring( p0 );
+//         return v;
+//       }
 
   };
 

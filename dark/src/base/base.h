@@ -13,10 +13,12 @@
 #pragma once
 
 #ifdef WIN32
+# include <boost/typeof/typeof.hpp>
+# define typeof( x ) BOOST_TYPEOF( x )
 # define _CRT_SECURE_NO_WARNINGS
 #endif
 
-#include <cassert>
+#include <assert.h>
 
 /*
  * Basic definitons and template functions
@@ -24,7 +26,13 @@
 #include "common.h"
 
 /*
- * Containers
+ * Memory managment
+ */
+#include "ReuseAlloc.h"
+#include "PoolAlloc.h"
+
+/*
+ * Containers 1
  */
 #include "List.h"
 #include "DList.h"
@@ -32,12 +40,6 @@
 #include "Vector.h"
 #include "SVector.h"
 #include "Sparse.h"
-
-/*
- * Memory managment
- */
-#include "ReuseAlloc.h"
-#include "PoolAlloc.h"
 
 /*
  * String

@@ -514,8 +514,8 @@ namespace Dark
    * }</pre>
    * There's no need to add it to Katepart syntax highlighting as it is already there.
    */
-# define foreach( _i, _startIterator ) \
-    for( typeof( _startIterator ) _i( _startIterator ); !_i.isPassed(); _i++ )
+# define foreach( i, startIterator ) \
+  for( typeof( startIterator ) i( startIterator ); !i.isPassed(); i++ )
 
   /**
    * Compare all elements. (Like STL equal)

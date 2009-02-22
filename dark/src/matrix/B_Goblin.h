@@ -50,6 +50,8 @@ namespace Dark
       static const float GRAB_DIST;
 
       explicit B_Goblin( const Vec3 &p, float h = 0.0f, float v = 0.0f, Mind *mind = null );
+
+      void createModel();
   };
 
 }

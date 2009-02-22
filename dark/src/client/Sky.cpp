@@ -1,5 +1,5 @@
 /*
- *  Sky_Dual.cpp
+ *  Sky.cpp
  *
  *  [description]
  *
@@ -10,26 +10,28 @@
 
 #include "precompiled.h"
 
-#include "Sky_Dual.h"
+#include "Sky.h"
 
 #include "matrix/Timer.h"
 #include "matrix/World.h"
 
 namespace Dark
 {
+namespace Client
+{
 
-  Sky_Dual sky_dual;
+  Sky sky;
 
-  const float Sky_Dual::AMBIENT_COEF = 0.40f;
+  const float Sky::AMBIENT_COEF = 0.40f;
 
-  const float Sky_Dual::RED_COEF = +0.05f;
-  const float Sky_Dual::GREEN_COEF = -0.05f;
-  const float Sky_Dual::BLUE_COEF = -0.10f;
+  const float Sky::RED_COEF = +0.05f;
+  const float Sky::GREEN_COEF = -0.05f;
+  const float Sky::BLUE_COEF = -0.10f;
 
-  const float Sky_Dual::DAY_COLOR[] = { 0.45f, 0.60f, 0.90f };
-  const float Sky_Dual::NIGHT_COLOR[] = { 0.02f, 0.03f, 0.06f };
+  const float Sky::DAY_COLOR[] = { 0.45f, 0.60f, 0.90f };
+  const float Sky::NIGHT_COLOR[] = { 0.02f, 0.03f, 0.06f };
 
-  void Sky_Dual::init()
+  void Sky::init()
   {
     float heading = Math::rad( world.sky.heading );
 
@@ -39,7 +41,7 @@ namespace Dark
     update();
   }
 
-  void Sky_Dual::update()
+  void Sky::update()
   {
     float angle = 2.0f * Math::PI * ( world.sky.time / world.sky.period );
     Vec3  dir = Quat::rotAxis( axis, angle ).rotate( originalLightDir );
@@ -69,4 +71,5 @@ namespace Dark
     ambientColor[3] = 1.0f;
   }
 
+}
 }
