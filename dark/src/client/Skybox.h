@@ -14,7 +14,7 @@
 
 #define SKY_DIST   1.0f
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {

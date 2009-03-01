@@ -15,7 +15,7 @@
 #define fourCC( a, b, c, d ) \
   ( ( a ) | ( ( b ) << 8 ) | ( ( c ) << 16 ) | ( ( d ) << 24 ) )
 
-namespace Dark
+namespace oz
 {
 
   struct Header

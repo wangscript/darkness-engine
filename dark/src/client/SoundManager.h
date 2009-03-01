@@ -15,7 +15,7 @@
 
 #include <vorbis/vorbisfile.h>
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {

@@ -25,7 +25,7 @@
 #  include <sys/stat.h>
 #endif
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {
@@ -426,6 +426,6 @@ namespace Client
 
 int main( int, char *[] )
 {
-  Dark::Client::main.main();
+  oz::Client::main.main();
   return 0;
 }

@@ -12,7 +12,7 @@
 
 #include "Weapon.h"
 
-namespace Dark
+namespace oz
 {
 
   Weapon::Weapon( const Vec3 &p_ )

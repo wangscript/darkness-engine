@@ -1,5 +1,5 @@
 /*
- *  SimpleObject.h
+ *  MD2StaticModel.h
  *
  *  [description]
  *
@@ -13,9 +13,11 @@
 namespace oz
 {
 
-  class SimpleObject
+  class MD2StaticModel : public Model
   {
     public:
+
+
 
   };
 

@@ -13,7 +13,7 @@
 #include "Bot.h"
 #include "B_Spirit.h"
 
-namespace Dark
+namespace oz
 {
 
   class B_Human : public Bot

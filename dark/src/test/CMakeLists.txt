@@ -3,6 +3,6 @@ LINK_DIRECTORIES( ../base ../matrix ../nirvana )
 LINK_LIBRARIES( base )
 
 ADD_EXECUTABLE( test
-  foreach.cpp )
+  register.cpp )
 
 ADD_DEPENDENCIES( test precompile )

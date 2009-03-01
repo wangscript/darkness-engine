@@ -15,7 +15,7 @@
 #define DARK_LOG_FILE            "server.log"
 #define DARK_CONFIG_FILE         "server.conf"
 
-namespace Dark
+namespace oz
 {
 namespace Server
 {

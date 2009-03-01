@@ -14,7 +14,7 @@
 
 #include "World.h"
 
-namespace Dark
+namespace oz
 {
 
   const char *D_MetalBarrel::NAME = "D_MetalBarrel";

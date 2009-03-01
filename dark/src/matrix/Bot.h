@@ -15,7 +15,7 @@
 
 #define BOT_GRAB_DIST         1.0
 
-namespace Dark
+namespace oz
 {
 
   class Mind;

@@ -16,7 +16,7 @@
 #define TERRA_DETAILTEX_SCALE  4
 #define TERRA_GROUNDTEX_SCALE  1
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {

@@ -16,7 +16,7 @@
 #define DARK_LOG_FILE            "client.log"
 #define DARK_CONFIG_FILE         "client.xml"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {

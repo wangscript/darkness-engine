@@ -11,7 +11,7 @@
 
 #pragma once
 
-namespace Dark
+namespace oz
 {
 
   /**
@@ -54,12 +54,12 @@ namespace Dark
       /**
        * DList iterator.
        */
-      class Iterator : public Dark::IteratorBase<Type>
+      class Iterator : public IteratorBase<Type>
       {
         private:
 
           // base class
-          typedef Dark::IteratorBase<Type> B;
+          typedef IteratorBase<Type> B;
 
         public:
 

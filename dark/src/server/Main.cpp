@@ -17,7 +17,7 @@
 #include <sys/stat.h>
 #endif
 
-namespace Dark
+namespace oz
 {
 namespace Server
 {
@@ -162,6 +162,6 @@ namespace Server
 
 int main( int, char *[] )
 {
-  Dark::Server::main.main();
+  oz::Server::main.main();
   return 0;
 }

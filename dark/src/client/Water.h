@@ -12,7 +12,7 @@
 
 #include "matrix/Object.h"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {

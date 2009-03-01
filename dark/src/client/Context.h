@@ -10,7 +10,7 @@
 
 #pragma once
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {
@@ -91,9 +91,13 @@ namespace Client
 
     public:
 
+      static const int DEFAULT = 0;
+
+      Context();
       ~Context();
 
       void init();
+      void free();
 
       uint createTexture( int contextId,
                           const ubyte *data,
@@ -134,8 +138,6 @@ namespace Client
 
       int createContext();
       void freeContext( int context );
-
-      void free();
 
   };
 

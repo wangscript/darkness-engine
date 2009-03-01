@@ -18,7 +18,7 @@
 #define MD2_SHADEDOT_QUANT      16
 #define MD2_MAX_VERTS           2048
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {

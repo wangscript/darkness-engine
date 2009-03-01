@@ -12,7 +12,7 @@
 
 #include "Physics.h"
 
-namespace Dark
+namespace oz
 {
 
   Physics physics;

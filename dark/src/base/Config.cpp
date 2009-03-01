@@ -13,7 +13,7 @@
 #include <libxml/xmlreader.h>
 #include <libxml/xmlwriter.h>
 
-namespace Dark
+namespace oz
 {
 
   struct Elem

@@ -12,7 +12,7 @@
 
 #include "Skybox.h"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {

@@ -14,7 +14,7 @@
 
 #pragma once
 
-namespace Dark
+namespace oz
 {
   template <class Type>
   class Sparse
@@ -24,12 +24,12 @@ namespace Dark
       /**
        * Sparse iterator.
        */
-      class Iterator : public Dark::Iterator<Type>
+      class Iterator : public oz::Iterator<Type>
       {
         private:
 
           // base class
-          typedef Dark::Iterator<Type> B;
+          typedef oz::Iterator<Type> B;
 
         public:
 
@@ -312,88 +312,28 @@ namespace Dark
        * Add an element to the end.
        * @param e
        */
-      void operator << ( const Type &e )
+      int operator << ( const Type &e )
       {
-        add( e );
+        return add( e );
       }
 
       /**
-       * Add an element to the end.
+       * Add an element.
        * @param e
+       * @return index at which the element was inserted
        */
-      void add( const Type &e )
+      int add( const Type &e )
       {
         ensureCapacity();
 
-        Type &slot = data[freeSlot];
+        int index = freeSlot;
 
-        freeSlot = slot.nextSlot;
-        slot = e;
-        slot.nextSlot = -1;
+        freeSlot = data[index].nextSlot;
+        data[index] = e;
+        data[index].nextSlot = -1;
         count++;
-      }
 
-      /**
-       * Add all elements from a sparse vector to the end.
-       * @param s
-       */
-      void addAll( const Sparse &s )
-      {
-        addAll( s.data, s.count );
-      }
-
-      /**
-       * Add all elements from an array to the end.
-       * @param array
-       * @param arrayCount
-       */
-      void addAll( const Type *array, int arrayCount )
-      {
-        for( int i = 0; i < arrayCount; i++ ) {
-          add( array[i] );
-        }
-      }
-
-      /**
-       * Add an element to the end, but only if there's no any equal element in the sparse vector.
-       * This function is useful if you plan to use sparse vector as a set.
-       * @param e
-       * @return true if element has been added
-       */
-      bool include( const Type &e )
-      {
-        if( !contains( e ) ) {
-          add( e );
-          return true;
-        }
-        else {
-          return false;
-        }
-      }
-
-      /**
-       * Add all elements from given sparse vector which are not yet included in this sparse vector.
-       * @param s
-       * @return number of elements that have been added
-       */
-      int includeAll( const Sparse &s )
-      {
-        return includeAll( s.data, s.count );
-      }
-
-      /**
-       * Add all elements from given array which are not yet included in this sparse vector.
-       * @param array
-       * @param count
-       * @return number of elements that have been added
-       */
-      int includeAll( const Type *array, int count )
-      {
-        int n = 0;
-        for( int i = 0; i < count; i++ ) {
-          n += include( array[i] );
-        }
-        return n;
+        return index;
       }
 
       /**
@@ -407,49 +347,6 @@ namespace Dark
         data[index].nextSlot = freeSlot;
         freeSlot = index;
         count--;
-      }
-
-      /**
-       * Find and remove the given element.
-       * @param e
-       * @return
-       */
-      bool exclude( const Type &e )
-      {
-        int index = aIndex( data, count, e );
-
-        if( index != -1 ) {
-          remove( index );
-
-          return true;
-        }
-        else {
-          return false;
-        }
-      }
-
-      /**
-       * Remove intersection of sparse vectors from this sparse vector.
-       * @param s
-       * @return
-       */
-      int excludeAll( const Sparse &s )
-      {
-        return excludeAll( s.data, s.count );
-      }
-
-      /**
-       * Remove intersection of this sparse vector and given array from this sparse vector.
-       * @param s
-       * @return
-       */
-      int excludeAll( const Type *array, int count )
-      {
-        int n = 0;
-        for( int i = 0; i < count; i++ ) {
-          n += (int) exclude( array[i] );
-        }
-        return n;
       }
 
       /**

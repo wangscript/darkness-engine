@@ -17,7 +17,7 @@
 
 #include "M_Walker.h"
 
-namespace Dark
+namespace oz
 {
 
   class Nirvana

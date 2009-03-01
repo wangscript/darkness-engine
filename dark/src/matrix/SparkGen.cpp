@@ -12,7 +12,7 @@
 
 #include "SparkGen.h"
 
-namespace Dark
+namespace oz
 {
 
   SparkGen::SparkGen( const Vec3 &p_, int number_,

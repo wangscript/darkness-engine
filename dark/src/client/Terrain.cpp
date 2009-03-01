@@ -23,7 +23,7 @@ static PFNGLMULTITEXCOORD2FPROC glMultiTexCoord2f = null;
 static PFNGLACTIVETEXTUREPROC glActiveTexture = null;
 #endif
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {
@@ -50,15 +50,15 @@ namespace Client
                                float *minHeight,
                                float *maxHeight )
   {
-    assert( 0 <= minX && minX <= Dark::Terrain::MAX );
-    assert( 0 <= minY && minY <= Dark::Terrain::MAX );
-    assert( 0 <= maxX && maxX <= Dark::Terrain::MAX );
-    assert( 0 <= maxY && maxY <= Dark::Terrain::MAX );
+    assert( 0 <= minX && minX <= oz::Terrain::MAX );
+    assert( 0 <= minY && minY <= oz::Terrain::MAX );
+    assert( 0 <= maxX && maxX <= oz::Terrain::MAX );
+    assert( 0 <= maxY && maxY <= oz::Terrain::MAX );
 
-    float (&heightMap)[Dark::Terrain::MAX + 1][Dark::Terrain::MAX + 1] = world.terrain.heightMap;
+    float (&heightMap)[oz::Terrain::MAX + 1][oz::Terrain::MAX + 1] = world.terrain.heightMap;
     TerraQuad (&terraQuad)[128][128] = world.terrain.terra;
 
-    uint list = context.genList();
+    uint list = context.genList( Context::DEFAULT );
     glNewList( list, GL_COMPILE );
 
     *minHeight = Math::INF;
@@ -69,11 +69,11 @@ namespace Client
 
       for( int x = minX; x <= maxX; x ++ ) {
 
-        Vec3 v0(   x       * Dark::TerraQuad::SIZE - Dark::Terrain::DIM,
-                 ( y + 1 ) * Dark::TerraQuad::SIZE - Dark::Terrain::DIM,
+        Vec3 v0(   x       * oz::TerraQuad::SIZE - oz::Terrain::DIM,
+                 ( y + 1 ) * oz::TerraQuad::SIZE - oz::Terrain::DIM,
                    heightMap[x][y + 1] );
-        Vec3 v1(   x       * Dark::TerraQuad::SIZE - Dark::Terrain::DIM,
-                   y       * Dark::TerraQuad::SIZE - Dark::Terrain::DIM,
+        Vec3 v1(   x       * oz::TerraQuad::SIZE - oz::Terrain::DIM,
+                   y       * oz::TerraQuad::SIZE - oz::Terrain::DIM,
                    heightMap[x][y] );
 
         Vec3 n0 = terraQuad[x][y].normal[0];
@@ -89,10 +89,10 @@ namespace Client
         if( x > 0 && y > 0 ) {
           n1 += terraQuad[x - 1][y - 1].normal[0] + terraQuad[x - 1][y - 1].normal[1];
         }
-        if( y < Dark::Terrain::MAX ) {
+        if( y < oz::Terrain::MAX ) {
           n0 += terraQuad[x][y + 1].normal[0] + terraQuad[x][y + 1].normal[1];
         }
-        if( x > 0 && y < Dark::Terrain::MAX ) {
+        if( x > 0 && y < oz::Terrain::MAX ) {
           n0 += terraQuad[x - 1][y + 1].normal[1];
         }
 
@@ -103,8 +103,8 @@ namespace Client
                            x * TERRA_DETAILTEX_SCALE,
                            ( y + 1 ) * TERRA_DETAILTEX_SCALE );
         glMultiTexCoord2f( GL_TEXTURE1_ARB,
-                           (float) x / Dark::Terrain::MAX,
-                           (float) ( y + 1 ) / Dark::Terrain::MAX );
+                           (float) x / oz::Terrain::MAX,
+                           (float) ( y + 1 ) / oz::Terrain::MAX );
         glNormal3fv( n0 );
         glVertex3fv( v0 );
 
@@ -112,8 +112,8 @@ namespace Client
                            x * TERRA_DETAILTEX_SCALE,
                            y * TERRA_DETAILTEX_SCALE );
         glMultiTexCoord2f( GL_TEXTURE1_ARB,
-                           (float) x / Dark::Terrain::MAX,
-                           (float) y / Dark::Terrain::MAX );
+                           (float) x / oz::Terrain::MAX,
+                           (float) y / oz::Terrain::MAX );
         glNormal3fv( n1 );
         glVertex3fv( v1 );
 
@@ -180,7 +180,7 @@ namespace Client
 
       // pitagora
       float a  = ( *maxHeight - *minHeight ) * 0.5f;
-      float b  = ( maxX - minX ) * Dark::TerraQuad::DIM;
+      float b  = ( maxX - minX ) * oz::TerraQuad::DIM;
       float b2 = b*b;
 
       qTree->r = Math::sqrt( a*a + b2 + b2 );
@@ -189,13 +189,13 @@ namespace Client
       qTree->list = makeQuad( minX, minY, maxX, maxY, minHeight, maxHeight );
       qTree->next[1] = null;
 
-      qTree->p = Vec3( ( minX + maxX ) * Dark::TerraQuad::DIM - Dark::Terrain::DIM,
-                       ( minY + maxY ) * Dark::TerraQuad::DIM - Dark::Terrain::DIM,
+      qTree->p = Vec3( ( minX + maxX ) * oz::TerraQuad::DIM - oz::Terrain::DIM,
+                       ( minY + maxY ) * oz::TerraQuad::DIM - oz::Terrain::DIM,
                        ( *minHeight + *maxHeight ) * 0.5f );
 
       // pitagora
       float a  = ( *maxHeight - *minHeight ) * 0.5f;
-      float b  = ( maxX - minX ) * Dark::TerraQuad::DIM;
+      float b  = ( maxX - minX ) * oz::TerraQuad::DIM;
       float b2 = b*b;
 
       qTree->r = Math::sqrt( a*a + b2 + b2 );
@@ -218,7 +218,7 @@ namespace Client
     float dummy0, dummy1;
 
     qTerra = new Quadtree();
-    buildQuadtree( qTerra, 0, 0, Dark::Terrain::MAX, Dark::Terrain::MAX, &dummy0, &dummy1 );
+    buildQuadtree( qTerra, 0, 0, oz::Terrain::MAX, oz::Terrain::MAX, &dummy0, &dummy1 );
   }
 
   void Terrain::drawQuadtree( const Quadtree *qTree )

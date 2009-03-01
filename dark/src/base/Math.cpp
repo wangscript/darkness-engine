@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-namespace Dark
+namespace oz
 {
 
   const float Math::FLOAT_EPS  = 1.1920928955078125e-7f;

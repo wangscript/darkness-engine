@@ -14,7 +14,7 @@
 #include <cstdio>
 #include <ctime>
 
-namespace Dark
+namespace oz
 {
 
   LogFile logFile;

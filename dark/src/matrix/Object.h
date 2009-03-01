@@ -14,7 +14,7 @@
 #include "Effect.h"
 #include "Hit.h"
 
-namespace Dark
+namespace oz
 {
 
   struct Sector;
