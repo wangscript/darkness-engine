@@ -12,7 +12,7 @@
 
 #include "matrix/Bot.h"
 
-namespace Dark
+namespace oz
 {
 
   class Mind

@@ -12,7 +12,7 @@
 
 #include "Nirvana.h"
 
-namespace Dark
+namespace oz
 {
 
   Nirvana nirvana;

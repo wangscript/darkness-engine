@@ -20,7 +20,7 @@
 #include "Model.h"
 #include "SparkGenRender.h"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {
@@ -55,7 +55,7 @@ namespace Client
 
       Vector<MD2*>  md2s;
 
-      DList<Model*, 0> models;
+      DList<Model, 0> models;
       HashIndex<SparkGenRender, SPARKGENRENDER_HT_SIZE> sparkGenRenders;
 
       Vector<Structure*> structures;

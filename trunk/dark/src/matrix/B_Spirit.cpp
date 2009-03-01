@@ -14,7 +14,7 @@
 
 #include "Collider.h"
 
-namespace Dark
+namespace oz
 {
 
   const char *B_Spirit::NAME = "B_Spirit";

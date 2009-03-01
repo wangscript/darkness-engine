@@ -12,7 +12,7 @@
 
 #include "Timer.h"
 
-namespace Dark
+namespace oz
 {
 
   struct Sky

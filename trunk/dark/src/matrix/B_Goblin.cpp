@@ -14,7 +14,7 @@
 
 #include "Physics.h"
 
-namespace Dark
+namespace oz
 {
 
   const char *B_Goblin::NAME = "B_Goblin";

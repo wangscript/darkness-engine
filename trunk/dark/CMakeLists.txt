@@ -13,6 +13,7 @@ IF( WIN32 )
       ../vorbis/include
       ../OpenAL/include
       ../freealut/include )
+
   LINK_DIRECTORIES(
       ../../../iconv/lib
       ../../../libxml2/lib
@@ -23,6 +24,7 @@ IF( WIN32 )
       ../../../vorbis/lib
       ../../../OpenAL/libs/Win32
       ../../../freealut/lib )
+
   LINK_LIBRARIES(
       iconv.lib
       libxml2.lib
@@ -35,11 +37,15 @@ IF( WIN32 )
       openal32.lib
       alut.lib
       vorbisfile.lib )
-  # lowercase so that precompile.sh script doesn't screw up
-  add_definitions( /W4 )
+
+  ADD_DEFINITIONS( /W4 )
+
+  # TODO: precompiled headers for VC++
+  ADD_CUSTOM_TARGET( precompile ALL )
 
 ELSE( WIN32 )
 
+  # required libraries
   FIND_FILE( xml2_h libxml2/libxml )
   FIND_LIBRARY( xml2_so xml2 )
   FIND_FILE( SDL_h SDL/SDL.h )
@@ -59,7 +65,7 @@ ELSE( WIN32 )
   FIND_FILE( VORBIS_h vorbis/vorbisfile.h )
   FIND_LIBRARY( VORBIS_so vorbisfile )
 
-  SET( CXX_FLAGS -g3 -Wall -Wextra -Winvalid-pch -pipe -I/usr/include/libxml2 -I/usr/include/SDL )
+  SET( CXX_FLAGS -g3 -Wall -Wextra -Winvalid-pch -pipe -I/usr/include/libxml2 )
   ADD_DEFINITIONS( ${CXX_FLAGS} )
   LINK_LIBRARIES( xml2 SDL SDL_image GL GLU openal alut vorbisfile )
 
@@ -68,6 +74,19 @@ ELSE( WIN32 )
            PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
                        GROUP_READ GROUP_EXECUTE
                        WORLD_READ WORLD_EXECUTE )
+
+  # precompiled header
+  INCLUDE_DIRECTORIES( . )
+
+  ADD_CUSTOM_TARGET( precompile ALL
+    DEPENDS precompiled.h.gch )
+
+  ADD_CUSTOM_COMMAND(
+    OUTPUT precompiled.h.gch
+    DEPENDS base
+    COMMAND
+      rm -f precompiled.h.gch &&
+      ${CMAKE_CXX_COMPILER} ${CXX_FLAGS} precompiled.h )
 
 ENDIF( WIN32 )
 

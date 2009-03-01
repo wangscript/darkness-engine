@@ -10,7 +10,7 @@
 
 #pragma once
 
-namespace Dark
+namespace oz
 {
 
   struct Mat33;

@@ -12,7 +12,7 @@
 
 #include "Object.h"
 
-namespace Dark
+namespace oz
 {
 
   void Object::load( FILE *stream )

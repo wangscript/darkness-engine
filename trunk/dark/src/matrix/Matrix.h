@@ -13,7 +13,7 @@
 #include "World.h"
 #include "Bot.h"
 
-namespace Dark
+namespace oz
 {
 
   class Matrix

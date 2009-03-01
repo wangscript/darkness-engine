@@ -12,7 +12,7 @@
 
 #include "M_Walker.h"
 
-namespace Dark
+namespace oz
 {
 
   M_Walker::M_Walker( Bot *body_ )

@@ -12,7 +12,7 @@
 
 #include "Object.h"
 
-namespace Dark
+namespace oz
 {
 
   class Ladder : public Object

@@ -12,7 +12,7 @@
 
 #include "Shape.h"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {

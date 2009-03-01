@@ -21,7 +21,7 @@
  *  Katepart (Kate/KWrite/KDevelop).
  */
 
-namespace Dark
+namespace oz
 {
 
   /**
@@ -58,6 +58,13 @@ namespace Dark
    * unsigned long integer
    */
   typedef unsigned long  ulong;
+
+  /**
+   * \def $
+   * Embed identifier as string
+   * E.g. if we have a variable named var return a string "var".
+   */
+# define $( s ) #s
 
   /*
    * MISCELLANEOUS TEMPLATES
@@ -391,17 +398,17 @@ namespace Dark
       /**
        * @return pointer to current element
        */
-      Type *get()
+      operator Type* ()
       {
-        return *elem;
+        return elem;
       }
 
       /**
        * @return constant pointer to current element
        */
-      const Type *get() const
+      operator const Type* () const
       {
-        return *elem;
+        return elem;
       }
 
       /**
@@ -447,7 +454,7 @@ namespace Dark
     private:
 
       // base class
-      typedef Dark::IteratorBase<Type> B;
+      typedef IteratorBase<Type> B;
 
     protected:
 

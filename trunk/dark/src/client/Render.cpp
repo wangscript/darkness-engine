@@ -24,7 +24,7 @@
 #include "Terrain.h"
 #include "BSP.h"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {
@@ -352,7 +352,8 @@ namespace Client
         glRotatef( part->rot.z, 0.0f, 0.0f, 1.0f );
 
         glColor4f( part->color.x, part->color.y, part->color.z, part->lifeTime );
-        glCallList( lists[part->model] );
+        // TODO particle render
+        //glCallList( lists[part->model] );
       glPopMatrix();
     }
     particles.clear();
@@ -380,20 +381,21 @@ namespace Client
     glColor4fv( WHITE );
     glDisable( GL_BLEND );
 
-    if( showAim ) {
-      Vec3 move = camera.at * 1.0f;
-      collider.translate( camera.p, move );
-      move *= collider.hit.ratio;
-
-      glTranslatef( camera.p.x + move.x, camera.p.y + move.y, camera.p.z + move.z );
-
-      glDisable( GL_TEXTURE_2D );
-      glDisable( GL_LIGHTING );
-      glColor3f( 0.0f, 1.0f, 0.0f );
-      glCallList( lists[LIST_AIM] );
-      glColor3fv( WHITE );
-      glEnable( GL_TEXTURE_2D );
-    }
+    // TODO reenable aim dot
+//     if( showAim ) {
+//       Vec3 move = camera.at * 1.0f;
+//       collider.translate( camera.p, move );
+//       move *= collider.hit.ratio;
+//
+//       glTranslatef( camera.p.x + move.x, camera.p.y + move.y, camera.p.z + move.z );
+//
+//       glDisable( GL_TEXTURE_2D );
+//       glDisable( GL_LIGHTING );
+//       glColor3f( 0.0f, 1.0f, 0.0f );
+//       glCallList( lists[LIST_AIM] );
+//       glColor3fv( WHITE );
+//       glEnable( GL_TEXTURE_2D );
+//     }
 
     glLoadIdentity();
     glRotatef( -90.0f, 1.0f, 0.0f, 0.0f );
@@ -468,7 +470,6 @@ namespace Client
     context.free();
 
     sparkGenRenders.deallocate();
-    models.deallocate();
   }
 
 }

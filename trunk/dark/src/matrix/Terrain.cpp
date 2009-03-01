@@ -12,7 +12,7 @@
 
 #include "Terrain.h"
 
-namespace Dark
+namespace oz
 {
 
   const float TerraQuad::SIZE = (float) TerraQuad::SIZEI;

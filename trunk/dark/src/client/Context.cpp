@@ -12,22 +12,12 @@
 
 #include "Context.h"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {
 
   Context context;
-
-  Context::~Context()
-  {
-    free();
-  }
-
-  void Context::init()
-  {
-    logFile.println( "Context created" );
-  }
 
   uint Context::buildTexture( const ubyte *data, int width, int height, int bytesPerPixel,
                               bool wrap, int magFilter, int minFilter )
@@ -127,6 +117,26 @@ namespace Client
     }
     return texNum;
   }
+
+  Context::Context()
+  {
+    init();
+  }
+
+  Context::~Context()
+  {
+    free();
+  }
+
+  void Context::init()
+  {
+    logFile.println( "Context created" );
+
+    entries.add( Entry() );
+  }
+
+  void Context::free()
+  {}
 
   uint Context::createTexture( int contextId, const ubyte *data, int width, int height,
                                int bytesPerPixel, bool wrap, int magFilter, int minFilter )
@@ -249,8 +259,14 @@ namespace Client
     return entries[contextId].lists.last().base;
   }
 
-  void Context::free()
-  {}
+  int Context::createContext()
+  {
+    return entries << Entry();
+  }
+
+  void Context::freeContext( int context )
+  {
+  }
 
 }
 }

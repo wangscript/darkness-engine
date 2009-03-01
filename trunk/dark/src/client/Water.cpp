@@ -16,7 +16,7 @@
 
 #include "Context.h"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {
@@ -33,7 +33,7 @@ namespace Client
 
   void Water::init()
   {
-    texture = context.loadTexture( "tex/water1.jpg", true );
+    texture = context.loadTexture( Context::DEFAULT, "tex/water1.jpg", true );
   }
 
   void Water::update()

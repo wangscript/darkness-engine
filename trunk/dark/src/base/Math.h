@@ -14,7 +14,7 @@
 #include <cmath>
 #endif
 
-namespace Dark
+namespace oz
 {
 
   class Math
@@ -46,8 +46,8 @@ namespace Dark
       static const float NaN;
       static const float INF;
 
-      static const int  INT_MAX  = ~0U >> 1;
-      static const long LONG_MAX = ~0UL >> 1;
+      static const int  INT_MAX  = ~0u >> 1;
+      static const long LONG_MAX = ~0ul >> 1;
 
       /*
        * Standard math functions

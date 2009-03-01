@@ -11,7 +11,7 @@
 
 #pragma once
 
-namespace Dark
+namespace oz
 {
 
   template <class Type>
@@ -22,12 +22,12 @@ namespace Dark
       /**
        * Vector iterator.
        */
-      class Iterator : public Dark::Iterator<Type>
+      class Iterator : public oz::Iterator<Type>
       {
         private:
 
           // base class
-          typedef Dark::Iterator<Type> B;
+          typedef oz::Iterator<Type> B;
 
         public:
 

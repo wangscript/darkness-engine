@@ -12,7 +12,7 @@
 
 #include "MD2.h"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {
@@ -30,6 +30,7 @@ namespace Client
     Model *next[1];
 
     virtual void load() = 0;
+
     virtual void draw() = 0;
   };
 

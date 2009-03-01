@@ -15,7 +15,7 @@
 #include "Collider.h"
 #include "DynObject.h"
 
-namespace Dark
+namespace oz
 {
 
   const char *Water::NAME = "Water";

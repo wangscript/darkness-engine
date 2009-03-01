@@ -12,7 +12,7 @@
 
 #include "Mind.h"
 
-namespace Dark
+namespace oz
 {
 
   void Mind::onUpdate()

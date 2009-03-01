@@ -14,7 +14,7 @@
 
 #include "World.h"
 
-namespace Dark
+namespace oz
 {
 
   const char *O_Tree1::NAME = "O_Tree1";

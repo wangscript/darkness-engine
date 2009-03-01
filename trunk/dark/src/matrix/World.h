@@ -21,7 +21,7 @@
 #include "SparkGen.h"
 #include "Particle.h"
 
-namespace Dark
+namespace oz
 {
 
   struct Sector

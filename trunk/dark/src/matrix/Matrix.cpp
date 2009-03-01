@@ -28,7 +28,7 @@
 #include "B_Human.h"
 #include "B_Goblin.h"
 
-namespace Dark
+namespace oz
 {
 
   Matrix matrix;

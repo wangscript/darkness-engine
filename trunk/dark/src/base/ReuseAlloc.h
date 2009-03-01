@@ -14,7 +14,7 @@
 
 #pragma once
 
-namespace Dark
+namespace oz
 {
 
   template <class Type>

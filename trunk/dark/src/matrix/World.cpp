@@ -12,7 +12,7 @@
 
 #include "World.h"
 
-namespace Dark
+namespace oz
 {
 
   World world;

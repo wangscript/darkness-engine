@@ -19,7 +19,7 @@ static PFNGLACTIVETEXTUREPROC glActiveTexture = null;
 static PFNGLCLIENTACTIVETEXTUREPROC glClientActiveTexture = null;
 #endif
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {
@@ -27,7 +27,7 @@ namespace Client
   BSP::BSP()
   {}
 
-  BSP::BSP( Dark::BSP *bsp )
+  BSP::BSP( oz::BSP *bsp )
   {
     textures = null;
     lightMaps = null;
@@ -45,8 +45,8 @@ namespace Client
     int nodeIndex = 0;
 
     do {
-      const Dark::BSP::Node  &node  = bsp->nodes[nodeIndex];
-      const Dark::BSP::Plane &plane = bsp->planes[node.plane];
+      const oz::BSP::Node  &node  = bsp->nodes[nodeIndex];
+      const oz::BSP::Plane &plane = bsp->planes[node.plane];
 
       if( ( p * plane.normal - plane.distance ) < 0.0f ) {
         nodeIndex = node.back;
@@ -62,30 +62,30 @@ namespace Client
 
   void BSP::drawFace( int faceIndex ) const
   {
-    Dark::BSP::Face &face = bsp->faces[faceIndex];
+    oz::BSP::Face &face = bsp->faces[faceIndex];
 
-    glVertexPointer( 3, GL_FLOAT, sizeof( Dark::BSP::Vertex ),
+    glVertexPointer( 3, GL_FLOAT, sizeof( oz::BSP::Vertex ),
                      (float*) bsp->vertices[face.firstVertex].p );
 
     glActiveTexture( GL_TEXTURE0 );
     glClientActiveTexture( GL_TEXTURE0 );
 
     glBindTexture( GL_TEXTURE_2D, textures[face.texture] );
-    glTexCoordPointer( 2, GL_FLOAT, sizeof( Dark::BSP::Vertex ),
+    glTexCoordPointer( 2, GL_FLOAT, sizeof( oz::BSP::Vertex ),
                        bsp->vertices[face.firstVertex].texCoord );
 
     glActiveTexture( GL_TEXTURE1 );
     glClientActiveTexture( GL_TEXTURE1 );
 
     glBindTexture( GL_TEXTURE_2D, lightMaps[face.lightmap] );
-    glTexCoordPointer( 2, GL_FLOAT, sizeof( Dark::BSP::Vertex ),
+    glTexCoordPointer( 2, GL_FLOAT, sizeof( oz::BSP::Vertex ),
                        bsp->vertices[face.firstVertex].lightmapCoord );
 
     glNormal3fv( face.normal );
     glDrawElements( GL_TRIANGLES, face.nIndices, GL_UNSIGNED_INT, &bsp->indices[face.firstIndex] );
   }
 
-  void BSP::init( Dark::BSP *bsp_ )
+  void BSP::init( oz::BSP *bsp_ )
   {
     bsp = bsp_;
     contextId = context.createContext();
@@ -112,15 +112,15 @@ namespace Client
     for( int i = 0; i < bsp->nLightmaps; i++ ) {
 
       ubyte *bits = (ubyte*) bsp->lightmaps[i].bits;
-      for( int j = 0; j < Dark::BSP::LIGHTMAP_SIZE; j++ ) {
+      for( int j = 0; j < oz::BSP::LIGHTMAP_SIZE; j++ ) {
         bits[j] += (ubyte) ( ( 255 - bits[j] ) * BSP_GAMMA_CORR );
       }
 
       lightMaps[i] = context.createTexture( contextId,
                                             bits,
-                                            Dark::BSP::LIGHTMAP_DIM,
-                                            Dark::BSP::LIGHTMAP_DIM,
-                                            Dark::BSP::LIGHTMAP_BPP,
+                                            oz::BSP::LIGHTMAP_DIM,
+                                            oz::BSP::LIGHTMAP_DIM,
+                                            oz::BSP::LIGHTMAP_BPP,
                                             true );
     }
 
@@ -131,7 +131,7 @@ namespace Client
 
     baseList = context.genLists( contextId, bsp->nFaces );
     for( int i = 0; i < bsp->nFaces; i++ ) {
-      Dark::BSP::Vertex *verts = &bsp->vertices[ bsp->faces[i].firstVertex ];
+      oz::BSP::Vertex *verts = &bsp->vertices[ bsp->faces[i].firstVertex ];
 
       for( int j = 0; j < bsp->faces[i].nVertices; j++ ) {
         if( verts[j].p.x < -bsp->maxDim || verts[j].p.x > bsp->maxDim ||
@@ -160,7 +160,7 @@ namespace Client
     Bitset &bitset = bsp->visual.bitsets[cluster];
 
     for( int i = 0; i < bsp->nLeafs; i++ ) {
-      Dark::BSP::Leaf &leaf = bsp->leafs[i];
+      oz::BSP::Leaf &leaf = bsp->leafs[i];
 
       if( ( cluster < 0 || bitset.get( leaf.cluster ) ) && frustum.isVisible( leaf + p ) ) {
         for( int j = 0; j < leaf.nFaces; j++ ) {
@@ -185,7 +185,7 @@ namespace Client
     drawnFaces = hiddenFaces;
 
     for( int i = 0; i < bsp->nLeafs; i++ ) {
-      Dark::BSP::Leaf &leaf = bsp->leafs[i];
+      oz::BSP::Leaf &leaf = bsp->leafs[i];
 
       for( int j = 0; j < leaf.nFaces; j++ ) {
         int faceIndex = bsp->leafFaces[leaf.firstFace + j];

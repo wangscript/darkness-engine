@@ -12,7 +12,7 @@
 
 #include "Frustum.h"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {

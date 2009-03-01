@@ -12,7 +12,7 @@
 
 #include "SimpleObject.h"
 
-namespace Dark
+namespace oz
 {
 
 

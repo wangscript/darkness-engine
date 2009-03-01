@@ -12,7 +12,7 @@
 
 #include "Collider.h"
 
-namespace Dark
+namespace oz
 {
 
   Collider collider;

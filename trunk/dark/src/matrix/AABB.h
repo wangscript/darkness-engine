@@ -12,7 +12,7 @@
 
 #include "BSP.h"
 
-namespace Dark
+namespace oz
 {
 
   struct AABB

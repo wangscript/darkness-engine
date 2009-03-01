@@ -11,7 +11,7 @@
 
 #pragma once
 
-namespace Dark
+namespace oz
 {
 
   template <class Type, int SIZE>
@@ -39,11 +39,11 @@ namespace Dark
       /**
        * HashIndex iterator.
        */
-      class Iterator : public Dark::IteratorBase<Elem>
+      class Iterator : public IteratorBase<Elem>
       {
         private:
 
-          typedef Dark::IteratorBase<Elem> B;
+          typedef IteratorBase<Elem> B;
 
           Elem **data;
           int  index;

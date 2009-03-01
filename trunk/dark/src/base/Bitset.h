@@ -10,7 +10,7 @@
 
 #pragma once
 
-namespace Dark
+namespace oz
 {
 
   /**
@@ -26,7 +26,7 @@ namespace Dark
       static const int ULONG_BITSIZE = sizeof( ulong ) * 8;
 
       // 0xfff...f
-      static const ulong ULONG_ALLBITS = ~0UL;
+      static const ulong ULONG_ALLBITS = ~0ul;
 
       // Pointer to unit[] that holds the data.
       ulong *data;

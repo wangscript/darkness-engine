@@ -12,7 +12,7 @@
 
 #include "Object.h"
 
-namespace Dark
+namespace oz
 {
 
   struct O_Tree2 : Object

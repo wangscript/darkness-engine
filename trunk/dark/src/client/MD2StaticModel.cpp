@@ -1,5 +1,5 @@
 /*
- *  SimpleObject.h
+ *  MD2StaticModel.cpp
  *
  *  [description]
  *
@@ -8,15 +8,13 @@
  *  $Id$
  */
 
-#pragma once
+#include "precompiled.h"
+
+#include "MD2StaticModel.h"
 
 namespace oz
 {
 
-  class SimpleObject
-  {
-    public:
 
-  };
 
 }

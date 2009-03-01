@@ -15,7 +15,7 @@
 #include "matrix/Timer.h"
 #include "matrix/World.h"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {
