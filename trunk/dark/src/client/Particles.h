@@ -10,6 +10,8 @@
 
 #pragma once
 
+// TODO particle renderer
+
 namespace oz
 {
 namespace Client
