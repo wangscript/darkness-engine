@@ -1,0 +1,25 @@
+/*
+ *  $MODULE$.h
+ *
+ *  [description]
+ *
+ *  Copyright (C) 2002-$YEAR$, Davorin Učakar <davorin.ucakar@gmail.com>
+ *
+ *  $Id$
+ */
+
+#ifndef _$MODULE$_h_
+#define _$MODULE$_h_
+
+namespace Dark
+{
+
+  class $MODULE$
+  {
+    public:
+
+  };
+
+}
+
+#endif // _$MODULE$_h_
