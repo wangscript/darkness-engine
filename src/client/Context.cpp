@@ -14,7 +14,7 @@
 
 #include "matrix/Translator.h"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {
@@ -85,14 +85,14 @@ namespace Client
   {
     logFile.print( "Loading texture into context ..." );
 
-    uchar *dataEnd = (uchar*) data + width * height * bpp;
-    for( uchar *p = (uchar*) data; p < dataEnd; p += bpp ) {
+    ubyte *dataEnd = (ubyte*) data + width * height * bpp;
+    for( ubyte *p = (ubyte*) data; p < dataEnd; p += bpp ) {
       float x = ( (float) p[0] - 128.0f ) / 128.0f;
       float y = ( (float) p[1] - 128.0f ) / 128.0f;
       float z = ( (float) p[2] - 128.0f ) / 128.0f;
 
       float dot = x * lightNormal.x + y * lightNormal.y + z * lightNormal.z;
-      uchar color = (uchar) bound( dot * 256.0f, 0.0f, 255.0f );
+      ubyte color = (ubyte) bound( dot * 256.0f, 0.0f, 255.0f );
 
       p[0] = color;
       p[1] = color;

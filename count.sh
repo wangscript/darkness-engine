@@ -2,10 +2,9 @@
 
 FILES="src/*/*.h src/*/*.cpp *.sh CMakeLists.txt src/CMakeLists.txt src/*/CMakeLists.txt"
 
-wc -l -c $FILES
+wc -cl $FILES
 
 (( nFiles = 0 ))
-
 for file in $FILES; do
   (( nFiles++ ));
 done

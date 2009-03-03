@@ -12,7 +12,7 @@
 
 #include "World.h"
 
-namespace Dark
+namespace oz
 {
 
   World world;
@@ -90,25 +90,6 @@ namespace Dark
     return obj->index;
   }
 
-  int World::add( SparkGen *sparkGen )
-  {
-    if( sparkGenFreeQueue[freedQueue].isEmpty() ) {
-      sparkGen->index = sparkGens.length();
-      sparkGens << sparkGen;
-    }
-    else {
-      sparkGenFreeQueue[freedQueue] >> sparkGen->index;
-      sparkGens[sparkGen->index] = sparkGen;
-    }
-
-    Sector *sector = getSector( sparkGen->p );
-
-    sparkGen->sector = sector;
-    sector->sparkGens << sparkGen;
-
-    return sparkGen->index;
-  }
-
   int World::add( Particle *part )
   {
     if( partFreeQueue[freedQueue].isEmpty() ) {
@@ -156,16 +137,6 @@ namespace Dark
     delete obj;
   }
 
-  void World::remove( SparkGen *sparkGen )
-  {
-    sparkGen->sector->sparkGens.remove( sparkGen );
-
-    sparkGenFreeQueue[addingQueue] << sparkGen->index;
-
-    sparkGens[sparkGen->index] = null;
-    delete sparkGen;
-  }
-
   void World::remove( Particle *part )
   {
     part->sector->particles.remove( part );
@@ -179,7 +150,7 @@ namespace Dark
   void World::genParticles( int number, const Vec3 &p,
                             const Vec3 &velocity, float velocitySpread,
                             float rejection, float mass, float lifeTime,
-                            int model, const Vec3 &color, float colorSpread )
+                            float size, const Vec3 &color, float colorSpread )
   {
     float velocitySpread2 = velocitySpread / 2.0f;
     float colorSpread2 = colorSpread / 2.0f;
@@ -194,7 +165,7 @@ namespace Dark
       float timeDisturb = lifeTime * Math::frand();
 
       add( new Particle( p, velocity + velDisturb, rejection, mass, 0.5f * lifeTime + timeDisturb,
-                         model, color + colorDisturb ) );
+                         size, color + colorDisturb ) );
     }
   }
 
@@ -278,7 +249,7 @@ namespace Dark
     }
     particles.clear();
 
-    Reuser<Sound>::deallocate();
+    PoolAlloc<Effect, 0>::pool.free();
 
     bsps.free();
     bsps.clear();

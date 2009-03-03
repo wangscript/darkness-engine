@@ -20,7 +20,7 @@
 #include "Model.h"
 #include "SparkGenRender.h"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {

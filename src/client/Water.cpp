@@ -17,7 +17,7 @@
 
 #include "Context.h"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {

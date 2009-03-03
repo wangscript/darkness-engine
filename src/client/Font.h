@@ -17,7 +17,7 @@
 #define FONT_HEIGHT     1.0f
 #define FONT_DEPTH      -50.0f
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {

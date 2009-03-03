@@ -11,7 +11,7 @@
 #ifndef _Client_Sky_h_
 #define _Client_Sky_h_
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {

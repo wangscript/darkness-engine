@@ -14,7 +14,7 @@
 
 #include "Physics.h"
 
-namespace Dark
+namespace oz
 {
 
   const char *B_Goblin::NAME = "B_Goblin";
@@ -49,7 +49,6 @@ namespace Dark
 
     damage  = 2.0f;
 
-    model   = ~0;
     anim    = ANIM_STAND;
 
     newVelocity.setZero();
@@ -67,6 +66,8 @@ namespace Dark
     oldKeys = 0;
 
     mind    = mind_;
+
+    model = MODEL_GOBLIN;
   }
 
   void B_Goblin::onUpdate()
@@ -86,7 +87,7 @@ namespace Dark
     hvsc[5] = hvsc[3] * hvsc[1];
 
     bool isGrounded = lower >= 0 || ( flags & Object::ON_FLOOR_BIT );
-    bool isSwimming = !isGrounded && ( flags & Object::IN_WATER_BIT );
+    bool isSwimming = !isGrounded && ( flags & Object::ON_WATER_BIT );
 
     if( ( keys & KEY_RUN ) && !( oldKeys & KEY_RUN ) ) {
       state ^= RUNNING_BIT;
@@ -114,7 +115,7 @@ namespace Dark
       isGrounded = false;
 
       newVelocity.z = JUMP_VELOCITY;
-      addSound( SND_JUMP );
+      addEffect( SND_JUMP );
     }
     if( ( keys & KEY_CROUCH ) && !( oldKeys & KEY_CROUCH ) ) {
       if( state & CROUCHING_BIT ) {
@@ -278,8 +279,8 @@ namespace Dark
       damage += deltaVel;
     }
 
-    if( !( state & GROUNDED_BIT ) && hit->normal.z >= Physics::FLOOR_NORMAL_Z && deltaVel > 8.0f ) {
-      addSound( SND_LAND );
+    if( hit->normal.z >= Physics::FLOOR_NORMAL_Z && deltaVel > 8.0f ) {
+      addEffect( SND_LAND );
     }
   }
 

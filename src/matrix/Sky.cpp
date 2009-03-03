@@ -12,7 +12,7 @@
 
 #include "Sky.h"
 
-namespace Dark
+namespace oz
 {
 
   void Sky::init( float heading_, float period_ )

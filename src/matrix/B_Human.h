@@ -13,7 +13,7 @@
 #include "Bot.h"
 #include "B_Spirit.h"
 
-namespace Dark
+namespace oz
 {
 
   class B_Human : public Bot
@@ -49,6 +49,8 @@ namespace Dark
       static const int TYPE;
 
       explicit B_Human( const Vec3 &p, float h = 0.0f, float v = 0.0f, Mind *mind = null );
+
+//       void createModel();
   };
 
 }

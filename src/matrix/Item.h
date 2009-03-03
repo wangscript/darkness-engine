@@ -12,7 +12,7 @@
 
 #include "DynObject.h"
 
-namespace Dark
+namespace oz
 {
 
   class Item : public DynObject

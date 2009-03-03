@@ -13,7 +13,7 @@
 #include "Bot.h"
 #include "B_Spirit.h"
 
-namespace Dark
+namespace oz
 {
 
   class B_Goblin : public Bot
@@ -50,6 +50,8 @@ namespace Dark
       static const float GRAB_DIST;
 
       explicit B_Goblin( const Vec3 &p, float h = 0.0f, float v = 0.0f, Mind *mind = null );
+
+//       void createModel();
   };
 
 }

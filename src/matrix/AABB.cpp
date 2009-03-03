@@ -12,7 +12,7 @@
 
 #include "AABB.h"
 
-namespace Dark
+namespace oz
 {
 
   const float AABB::MAX_DIMXY = 3.01f;

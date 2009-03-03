@@ -10,7 +10,7 @@
 
 #pragma once
 
-namespace Dark
+namespace oz
 {
 
   enum ListEnum
@@ -110,8 +110,8 @@ namespace Dark
       int nTextures;
       int getTexture( const char *name );
 
-      Translator();
-      ~Translator();
+      void init();
+      void free();
   };
 
   extern Translator translator;

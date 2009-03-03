@@ -12,7 +12,7 @@
 
 #include "Soul.h"
 
-namespace Dark
+namespace oz
 {
 
 

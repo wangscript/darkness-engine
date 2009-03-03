@@ -28,7 +28,7 @@
 #include "B_Human.h"
 #include "B_Goblin.h"
 
-namespace Dark
+namespace oz
 {
 
   Matrix matrix;
@@ -38,6 +38,8 @@ namespace Dark
   void Matrix::load()
   {
     semaphore = SDL_CreateSemaphore( 0 );
+
+    translator.init();
 
     physics.init( G_ACCEL );
 
@@ -67,7 +69,7 @@ namespace Dark
     world.add( new B_Goblin( Vec3( 41, -35, 85 ) ) );
 
     world.genParticles( 1000, Vec3( 40, -42, 74 ), Vec3( 0, 0, 10 ), 15.0f, 1.95f, 0.1f, 5.0f,
-                       LIST_SPARK, Vec3( 0.4f, 0.4f, 0.4f ), 0.2f );
+                       0.1f, Vec3( 0.4f, 0.4f, 0.4f ), 0.2f );
     world.add( new D_MetalBarrel( Vec3( 51.0f, -42.0f, 80.0f ) ) );
     world.add( new D_MetalBarrel( Vec3( 51.0f, -42.0f, 82.0f ) ) );
     world.add( new D_MetalBarrel( Vec3( 51.0f, -42.0f, 84.0f ) ) );
@@ -109,9 +111,6 @@ namespace Dark
     world.add( new D_SmallCrate( Vec3( 42.0f, -61.0f, 81.0f ) ) );
     world.add( new D_SmallCrate( Vec3( 42.0f, -61.0f, 82.0f ) ) );
     world.add( new D_SmallCrate( Vec3( 42.0f, -61.0f, 83.0f ) ) );
-
-    world.add( new SparkGen( Vec3( 40.0f, -50.0f, 80.0f ), 100, Vec3( 0.0f, 0.0f, 1.0f ), 0.5f,
-               Vec3( 0.5f, 0.5f, 0.5f ), Vec3( 0.5f, 0.5f, 0.5f ), Vec3( 0.0f, 0.0f, -0.5f ), 0.1f, 10.0f ) );
   }
 
   void Matrix::update()
@@ -163,6 +162,10 @@ namespace Dark
   void Matrix::free()
   {
     world.free();
+    PoolAlloc<Effect, 0>::pool.free();
+    PoolAlloc<Event, 0>::pool.free();
+    translator.free();
+
     SDL_DestroySemaphore( semaphore );
   }
 

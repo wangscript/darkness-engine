@@ -1,23 +1,24 @@
-INCLUDE_DIRECTORIES( .. )
-
-ADD_LIBRARY( base STATIC
-    common.h
-    Vector.h
-    SVector.h
-    List.h
-    DList.h
-    String.h
-    Reuser.h
-    Bitset.h
-    HashIndex.h
-    HashString.h
-    Math.h
-    Math.cpp
-    Vec3.h
-    Quat.h
-    Mat33.h
-    Mat44.h
-    LogFile.h
-    LogFile.cpp
-    Config.h
-    Config.cpp )
+add_library( base STATIC
+  Bitset.h
+  Config.cpp
+  Config.h
+  DList.h
+  HashIndex.h
+  HashString.h
+  List.h
+  LogFile.cpp
+  LogFile.h
+  Mat33.h
+  Mat44.h
+  Math.cpp
+  Math.h
+  PoolAlloc.h
+  Quat.h
+  ReuseAlloc.h
+  SVector.h
+  Sparse.h
+  String.h
+  Vec3.h
+  Vector.h
+  base.h
+  common.h )

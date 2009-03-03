@@ -10,7 +10,7 @@
 
 #pragma once
 
-namespace Dark
+namespace oz
 {
 
   template <class Type, int SIZE>
@@ -18,27 +18,15 @@ namespace Dark
   {
     public:
 
-      static const int CAPACITY = SIZE;
-
-    private:
-
-			// Pointer to data array
-      Type data[SIZE];
-			// Number of elements in vector
-      int count;
-
-    public:
-
       /**
        * Vector iterator.
        */
-      class Iterator
+      class Iterator : public oz::Iterator<Type>
       {
-        protected:
+        private:
 
-          Type *data;
-          int  count;
-          int  index;
+          // base class
+          typedef oz::Iterator<Type> B;
 
         public:
 
@@ -46,111 +34,123 @@ namespace Dark
            * Make iterator for given vector. After creation it points to first element.
            * @param v
            */
-          explicit Iterator( SVector &v ) : data( v.data ), count( v.count ), index( 0 )
+          explicit Iterator( SVector &v ) : B( v.data, v.data + v.count )
           {}
-
-          /**
-					 * Returns true if iterator is on specified index.
-					 * @param e
-					 * @return
-					 */
-					bool operator == ( int index_ )
-					{
-						return index == index_;
-					}
-
-          /**
-           * When iterator advances beyond last element, it's become passed. It points to an invalid
-           * location.
-           * @return true if iterator is passed
-           */
-          bool isPassed() const
-          {
-            return index >= count;
-          }
-
-					/**
-           * Advance to next element.
-           */
-          void operator ++ ( int )
-          {
-            assert( index < count );
-
-            index++;
-          }
-
-          /**
-           * @return pointer to current element in the vector
-           */
-          Type *get()
-          {
-            return &data[index];
-          }
-
-          /**
-           * @return constant pointer to current element in the vector
-           */
-          const Type *get() const
-          {
-            return &data[index];
-          }
-
-          /**
-           * @return reference to current element in the vector
-           */
-          Type &operator * ()
-          {
-            return data[index];
-          }
-
-          /**
-           * @return constant reference to current element in the vector
-           */
-          const Type &operator * () const
-          {
-            return data[index];
-          }
 
       };
 
+    private:
+
+      // Pointer to data array
+      Type data[SIZE];
+      // Number of elements in vector
+      int count;
+
+    public:
+
+      /**
+       * Create empty vector with capacity SIZE.
+       */
       SVector() : count( 0 )
       {}
 
+      /**
+       * Copy constructor.
+       * @param v
+       */
+      SVector( const SVector &v ) : count( v.count )
+      {
+        aCopy( data, v.data, count );
+      }
+
+      /**
+       * Copy operator.
+       * @param v
+       * @return
+       */
+      SVector &operator = ( const SVector &v )
+      {
+        count = v.count;
+        aCopy( data, v.data, count );
+        return *this;
+      }
+
+      /**
+       * Equality operator.
+       * @param v
+       * @return true if all elements in both vectors are equal
+       */
       bool operator == ( const SVector &v ) const
       {
         return count == v.count && aEqual( data, v.data, count );
       }
 
+      /**
+       * Inequality operator.
+       * @param v
+       * @return false if all elements in both vectors are equal
+       */
       bool operator != ( const SVector &v ) const
       {
         return count != v.count || !aEqual( data, v.data, count );
       }
 
+      /**
+       * @return iterator for this vector
+       */
+      Iterator iterator()
+      {
+        return Iterator( *this );
+      }
+
+      /**
+       * Get pointer to <code>data</code> array. Use with caution, since you can easily make buffer
+       * overflows if you don't check the size of <code>data</code> array.
+       * @return non-constant pointer to data array
+       */
       Type *dataPtr()
       {
         return data;
       }
 
+      /**
+       * Get pointer to <code>data</code> array. Use with caution, since you can easily make buffer
+       * overflows if you don't check the size of <code>data</code> array.
+       * @return constant pointer to data array
+       */
       const Type *dataPtr() const
       {
         return data;
       }
 
+      /**
+       * @return number of elements in the vector
+       */
       int length() const
       {
         return count;
       }
 
+      /**
+       * @return capacity of the vector
+       */
       int capacity() const
       {
         return SIZE;
       }
 
+      /**
+       * @return true if vector has no elements
+       */
       bool isEmpty() const
       {
         return count == 0;
       }
 
+      /**
+       * @param e
+       * @return true if the element is found in the vector
+       */
       bool contains( const Type &e )
       {
         for( int i = 0; i < count; i++ ) {
@@ -161,6 +161,10 @@ namespace Dark
         return false;
       }
 
+      /**
+       * @param i
+       * @return reference i-th element
+       */
       Type &operator [] ( int i )
       {
         assert( 0 <= i && i < count );
@@ -168,6 +172,10 @@ namespace Dark
         return data[i];
       }
 
+      /**
+       * @param i
+       * @return constant reference i-th element
+       */
       const Type &operator [] ( int i ) const
       {
         assert( 0 <= i && i < count );
@@ -175,49 +183,119 @@ namespace Dark
         return data[i];
       }
 
+      /**
+       * Find the first occurence of an element.
+       * @param e
+       * @return index of first occurence, -1 if not found
+       */
       int index( const Type &e ) const
       {
         return aIndex( data, count, e );
       }
 
+      /**
+       * Find the last occurence of an element.
+       * @param e
+       * @return index of last occurence, -1 if not found
+       */
       int lastIndex( const Type &e ) const
       {
         return aLastIndex( data, count, e );
       }
 
-      // first element
-      Type first() const
+      /**
+       * @return reference to first element
+       */
+      Type &first()
       {
         assert( count != 0 );
 
         return data[0];
       }
 
-      // last element
-      Type last() const
+      /**
+       * @return constant reference to first element
+       */
+      const Type &first() const
+      {
+        assert( count != 0 );
+
+        return data[0];
+      }
+
+      /**
+       * @return reference to last element
+       */
+      Type &last()
       {
         assert( count != 0 );
 
         return data[count - 1];
       }
 
-      // add to the end
+      /**
+       * @return constant reference to last element
+       */
+      const Type &last() const
+      {
+        assert( count != 0 );
+
+        return data[count - 1];
+      }
+
+      /**
+       * Add an element to the end.
+       * @param e
+       */
       void operator << ( const Type &e )
       {
         pushLast( e );
       }
 
-      // add to the end
+      /**
+       * Add an element to the end.
+       * @param e element to be added
+       */
       void add( const Type &e )
       {
         pushLast( e );
       }
 
+      /**
+       * Add an element to the beginning.
+       * @param e
+       */
+      void pushFirst( const Type &e )
+      {
+        return insert( e, 0 );
+      }
+
+      /**
+       * Add an element to the end.
+       * @param e
+       */
+      void pushLast( const Type &e )
+      {
+        assert( count < SIZE );
+
+        data[count] = e;
+        count++;
+      }
+
+      /**
+       * Add all elements from a vector to the end.
+       * @param v
+       */
       void addAll( const SVector &v )
       {
         addAll( v.data, v.count );
       }
 
+      /**
+       * Add all elements from an array to the end.
+       * @param array
+       * @param arrayCount
+       */
       void addAll( const Type *array, int arrayCount )
       {
         int newCount = count + arrayCount;
@@ -230,7 +308,54 @@ namespace Dark
         count = newCount;
       }
 
-      // insert to given position
+      /**
+       * Add an element to the end, but only if there's no any equal element in the vector.
+       * This function is useful if you plan to use vector as a set.
+       * @param e
+       * @return true if element has been added
+       */
+      bool include( const Type &e )
+      {
+        if( !contains( e ) ) {
+          add( e );
+          return true;
+        }
+        else {
+          return false;
+        }
+      }
+
+      /**
+       * Add all elements from given vector which are not yet included in this vector.
+       * @param v
+       * @return number of elements that have been added
+       */
+      int includeAll( const SVector &v )
+      {
+        return includeAll( v.data, v.count );
+      }
+
+      /**
+       * Add all elements from given array which are not yet included in this vector.
+       * @param array
+       * @param count
+       * @return number of elements that have been added
+       */
+      int includeAll( const Type *array, int count )
+      {
+        int n = 0;
+        for( int i = 0; i < count; i++ ) {
+          n += (int) include( array[i] );
+        }
+        return n;
+      }
+
+      /**
+       * Insert an element at given position. All later elements are shifted to make a gap
+       * for the new element.
+       * @param e
+       * @param index
+       */
       void insert( int index, const Type &e )
       {
         assert( 0 <= index && index <= count );
@@ -241,49 +366,12 @@ namespace Dark
         count++;
       }
 
-      // add element to the end, if it doesn't exist yet
-      bool include( const Type &e )
-      {
-        if( aIndex( data, count, e ) == -1 ) {
-          assert( count < SIZE );
-
-          data[count] = e;
-          count++;
-          return true;
-        }
-        else {
-          return false;
-        }
-      }
-
-      int includeAll( const SVector &v )
-      {
-        return includeAll( v.data, v.count );
-      }
-
-      int includeAll( const Type *array, int count )
-      {
-        int n = 0;
-        for( int i = 0; i < count; i++ ) {
-          n += include( array[i] );
-        }
-        return n;
-      }
-
-      void pushFirst( const Type &e )
-      {
-        return insert( e, 0 );
-      }
-
-      void pushLast( const Type &e )
-      {
-        assert( count < SIZE );
-
-        data[count] = e;
-        count++;
-      }
-
-      SVector operator -- ( int )
+      /**
+       * Remove last element.
+       * @param
+       * @return
+       */
+      SVector &operator -- ( int )
       {
         assert( count != 0 );
 
@@ -291,7 +379,10 @@ namespace Dark
         return *this;
       }
 
-      // remove element by index
+      /**
+       * Remove the element at given position. All later element are shifted to fill the gap.
+       * @param index
+       */
       void remove( int index )
       {
         assert( 0 <= index && index < count );
@@ -300,7 +391,11 @@ namespace Dark
         aCopy( data + index, data + index + 1, count - index );
       }
 
-      // find and remove given element
+      /**
+       * Find and remove the given element.
+       * @param e
+       * @return
+       */
       bool exclude( const Type &e )
       {
         int i = aIndex( data, count, e );
@@ -316,20 +411,34 @@ namespace Dark
         }
       }
 
+      /**
+       * Remove intersection of vectors from this vector.
+       * @param v
+       * @return
+       */
       int excludeAll( const SVector &v )
       {
         return excludeAll( v.data, v.count );
       }
 
+      /**
+       * Remove intersection of this vector and given array from this vector.
+       * @param v
+       * @return
+       */
       int excludeAll( const Type *array, int count )
       {
         int n = 0;
         for( int i = 0; i < count; i++ ) {
-          n += exclude( array[i] );
+          n += (int) exclude( array[i] );
         }
         return n;
       }
 
+      /**
+       * Remove first element
+       * @return value of removed element
+       */
       Type popFirst()
       {
         Type e = data[0];
@@ -340,12 +449,19 @@ namespace Dark
         return e;
       }
 
-      // pop
+      /**
+       * Remove last element
+       * @param e reference to variable to be overwritten with value of removed element
+       */
       void operator >> ( Type &e )
       {
         e = popLast();
       }
 
+      /**
+       * Remove last element
+       * @return value of removed element
+       */
       Type popLast()
       {
         assert( count != 0 );
@@ -363,14 +479,6 @@ namespace Dark
         aSort( data, count );
       }
 
-      /**
-       * Sort elements with quicksort algorithm (middle element as pivot).
-       */
-      void sort2()
-      {
-        aSort2( data, count );
-      }
-
       // remove all elements
       void clear()
       {
@@ -386,7 +494,7 @@ namespace Dark
         for( int i = 0; i < count; i++ ) {
           delete data[i];
         }
-        count = 0;
+        clear();
       }
 
   };

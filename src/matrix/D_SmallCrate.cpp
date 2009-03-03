@@ -14,7 +14,7 @@
 
 #include "World.h"
 
-namespace Dark
+namespace oz
 {
 
   const char *D_SmallCrate::NAME = "D_SmallCrate";
@@ -30,17 +30,17 @@ namespace Dark
     p = p_,
     dim = Vec3( 0.3f, 0.3f, 0.3f );
 
-    flags = Object::DYNAMIC_BIT | Object::CLIP_BIT | Object::FRICT_FUNC_BIT;
+    flags = Object::DYNAMIC_BIT | Object::CLIP_BIT;
     type = TYPE;
 
     damage = Math::INF;
-
-    model = LIST_SMALL_CRATE;
 
     velocity = Vec3::zero();
     mass = 20.0f;
 
     content = content_;
+
+    model = LIST_SMALL_CRATE;
   }
 
   D_SmallCrate::~D_SmallCrate()
@@ -52,7 +52,7 @@ namespace Dark
 
   void D_SmallCrate::onDestroy()
   {
-    world.genParticles( 10, p, velocity, 1.2f, 1.2f, 0.0f, 20.0f, LIST_SPARK,
+    world.genParticles( 10, p, velocity, 1.2f, 1.2f, 0.0f, 20.0f, 0.1f,
                         Vec3( 0.5f, 0.5f, 0.5f ), 0.2f );
 
     if( content != null ) {
@@ -61,16 +61,6 @@ namespace Dark
       content = null;
     }
     world.remove( this );
-  }
-
-  void D_SmallCrate::onFrictBegin()
-  {
-    addContSound( SND_FRICTION_SOFT );
-  }
-
-  void D_SmallCrate::onFrictEnd()
-  {
-    removeContSound( SND_FRICTION_SOFT );
   }
 
 }

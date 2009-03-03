@@ -12,7 +12,7 @@
 
 #include "Terrain.h"
 
-namespace Dark
+namespace oz
 {
 
   const float TerraQuad::SIZE = (float) TerraQuad::SIZEI;
@@ -62,7 +62,7 @@ namespace Dark
     }
   }
 
-  void Terrain::load( uchar *data ) {
+  void Terrain::load( ubyte *data ) {
     for( int x = 0; x < Terrain::MAX; x++ ) {
       for( int y = 0; y < Terrain::MAX; y++ ) {
         heightMap[x][y] = (float) data[y * ( Terrain::MAX + 0 ) + x] * TerraQuad::STEP + Terrain::HEIGHT_BIAS;
@@ -79,7 +79,7 @@ namespace Dark
   void Terrain::loadRAW( const char *heightMapFile ) {
     logFile.print( "Loading raw terrain heightmap '%s' ...", heightMapFile );
 
-    uchar data[ ( Terrain::MAX + 1 ) * ( Terrain::MAX + 1 ) ];
+    ubyte data[ ( Terrain::MAX + 1 ) * ( Terrain::MAX + 1 ) ];
     FILE *f = fopen( heightMapFile, "rb" );
 
     if( f == null ) {
@@ -104,7 +104,7 @@ namespace Dark
       return;
     }
 
-    load( (uchar*) image->pixels );
+    load( (ubyte*) image->pixels );
 
     SDL_FreeSurface( image );
 

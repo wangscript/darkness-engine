@@ -11,9 +11,8 @@
 #pragma once
 
 #include "DynObject.h"
-#include "Translator.h"
 
-namespace Dark
+namespace oz
 {
 
   class  D_SmallCrate : public DynObject
@@ -35,6 +34,8 @@ namespace Dark
 
       explicit D_SmallCrate( const Vec3 &p = Vec3::zero(), Object *content = null );
       ~D_SmallCrate();
+
+//       void createModel();
   };
 
 }

@@ -12,7 +12,7 @@
 
 #include "Bot.h"
 
-namespace Dark
+namespace oz
 {
 
   class Vehicle : Bot

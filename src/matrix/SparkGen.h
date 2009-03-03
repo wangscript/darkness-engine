@@ -10,7 +10,7 @@
 
 #pragma once
 
-namespace Dark
+namespace oz
 {
 
   struct Sector;
@@ -41,6 +41,8 @@ namespace Dark
               const Vec3 &velocity, float velocitySpread,
               const Vec3 &color, const Vec3 &colorSpread,
               const Vec3 &gravity, float sparkDim, float lifeTime );
+
+    void createModel();
   };
 
 }

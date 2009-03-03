@@ -11,9 +11,8 @@
 #pragma once
 
 #include "Object.h"
-#include "Translator.h"
 
-namespace Dark
+namespace oz
 {
 
   struct O_Tree1 : Object
@@ -34,6 +33,8 @@ namespace Dark
 
       void load( FILE *stream );
       void save( FILE *stream );
+
+//       void createModel();
   };
 
 }

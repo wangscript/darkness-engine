@@ -5,13 +5,12 @@
  *
  *  Copyright (C) 2002-$YEAR$, Davorin Učakar <davorin.ucakar@gmail.com>
  *
- *  $Id$
+ *  $Id: h 31 2008-11-02 11:45:37Z Davorin.Ucakar $
  */
 
-#ifndef _$MODULE$_h_
-#define _$MODULE$_h_
+#pragma once
 
-namespace Dark
+namespace oz
 {
 
   class $MODULE$
@@ -21,5 +20,3 @@ namespace Dark
   };
 
 }
-
-#endif // _$MODULE$_h_

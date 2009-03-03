@@ -12,7 +12,7 @@
 
 #include "Structure.h"
 
-namespace Dark
+namespace oz
 {
 
   Structure::Structure() {

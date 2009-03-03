@@ -14,7 +14,7 @@
 
 #include "Collider.h"
 
-namespace Dark
+namespace oz
 {
 
   const char *B_Spirit::NAME = "B_Spirit";
@@ -38,7 +38,6 @@ namespace Dark
 
     damage  = Math::INF;
 
-    model   = ~0;
     anim    = ANIM_STAND;
 
     newVelocity.setZero();

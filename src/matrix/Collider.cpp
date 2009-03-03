@@ -12,7 +12,7 @@
 
 #include "Collider.h"
 
-namespace Dark
+namespace oz
 {
 
   Collider collider;
@@ -95,11 +95,10 @@ namespace Dark
     for( int x = world.minSectX; x <= world.maxSectX; x++ ) {
       for( int y = world.minSectY; y <= world.maxSectY; y++ ) {
 
-        const Sector &sector = world.sectors[x][y];
-        const int iMax = sector.structures.length();
+        Sector &sector = world.sectors[x][y];
 
-        for( int i = 0; i < iMax; i++ ) {
-          Structure *str = world.structures[ sector.structures[i] ];
+        foreach( strIndex, sector.structures.iterator() ) {
+          Structure *str = world.structures[*strIndex];
 
           if( str != oldStr ) {
             bsp = world.bsps[str->bsp];
@@ -113,7 +112,7 @@ namespace Dark
           }
         }
 
-        for( Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
+        foreach( sObj, sector.objects.iterator() ) {
           if( ( sObj->flags & Object::CLIP_BIT ) && sObj->includes( point, EPSILON ) ) {
             return false;
           }
@@ -134,7 +133,7 @@ namespace Dark
 
         const Sector &sector = world.sectors[x][y];
 
-        for( Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
+        foreach( sObj, sector.objects.iterator() ) {
           if( ( sObj->flags & Object::CLIP_BIT ) && sObj->includes( point, EPSILON ) ) {
             return false;
           }
@@ -156,11 +155,10 @@ namespace Dark
     for( int x = world.minSectX; x <= world.maxSectX; x++ ) {
       for( int y = world.minSectY; y <= world.maxSectY; y++ ) {
 
-        const Sector &sector = world.sectors[x][y];
-        const int iMax = sector.structures.length();
+        Sector &sector = world.sectors[x][y];
 
-        for( int i = 0; i < iMax; i++ ) {
-          Structure *str = world.structures[ sector.structures[i] ];
+        foreach( strIndex, sector.structures.iterator() ) {
+          Structure *str = world.structures[*strIndex];
 
           if( str != oldStr ) {
             bsp = world.bsps[str->bsp];
@@ -174,7 +172,7 @@ namespace Dark
           }
         }
 
-        for( Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
+        foreach( sObj, sector.objects.iterator() ) {
           if( ( sObj->flags & Object::CLIP_BIT ) && sObj->includes( point, EPSILON ) ) {
             return false;
           }
@@ -301,7 +299,7 @@ namespace Dark
         }
         else if( startDist > endDist ) {
           float ratio = max( startDist - EPSILON, 0.0f ) / ( startDist - endDist );
-          assert( !Math::isNAN( ratio ) );
+          assert( !Math::isNaN( ratio ) );
 
           if( ratio > minRatio ) {
             minRatio  = ratio;
@@ -509,11 +507,10 @@ namespace Dark
     for( int x = world.minSectX; x <= world.maxSectX; x++ ) {
       for( int y = world.minSectY; y <= world.maxSectY; y++ ) {
 
-        const Sector &sector = world.sectors[x][y];
-        const int iMax = sector.structures.length();
+        Sector &sector = world.sectors[x][y];
 
-        for( int i = 0; i < iMax; i++ ) {
-          Structure *str = world.structures[ sector.structures[i] ];
+        foreach( strIndex, sector.structures.iterator() ) {
+          Structure *str = world.structures[*strIndex];
 
           if( str != oldStr ) {
             bsp = world.bsps[str->bsp];
@@ -525,9 +522,9 @@ namespace Dark
           }
         }
 
-        for( Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
+        foreach( sObj, sector.objects.iterator() ) {
           if( ( sObj->flags & Object::CLIP_BIT ) && sObj->overlaps( trace, EPSILON ) ) {
-            trimPointObj( sObj );
+            trimPointObj( &*sObj );
           }
         }
       }
@@ -599,7 +596,7 @@ namespace Dark
     }
   }
 
-  // check for AABB-AABB and AABB-Simplex overlapping in the world
+  // check for AABB-AABB, AABB-Simplex and AABB-Terrain overlapping in the world
   bool Collider::testAABBWorld()
   {
     if( !world.includes( aabb, EPSILON ) ) {
@@ -615,11 +612,10 @@ namespace Dark
     for( int x = world.minSectX; x <= world.maxSectX; x++ ) {
       for( int y = world.minSectY; y <= world.maxSectY; y++ ) {
 
-        const Sector &sector = world.sectors[x][y];
-        const int iMax = sector.structures.length();
+        Sector &sector = world.sectors[x][y];
 
-        for( int i = 0; i < iMax; i++ ) {
-          Structure *str = world.structures[ sector.structures[i] ];
+        foreach( strIndex, sector.structures.iterator() ) {
+          Structure *str = world.structures[*strIndex];
 
           if( str != oldStr ) {
             bsp = world.bsps[str->bsp];
@@ -633,7 +629,7 @@ namespace Dark
           }
         }
 
-        for( Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
+        foreach( sObj, sector.objects.iterator() ) {
           if( sObj != exclObj && ( sObj->flags & Object::CLIP_BIT ) &&
               sObj->overlaps( aabb, EPSILON ) )
           {
@@ -645,6 +641,7 @@ namespace Dark
     return true;
   }
 
+  // check for AABB-AABB overlapping in the world
   bool Collider::testAABBWorldOO()
   {
     if( !world.includes( aabb, EPSILON ) ) {
@@ -654,9 +651,9 @@ namespace Dark
     for( int x = world.minSectX; x <= world.maxSectX; x++ ) {
       for( int y = world.minSectY; y <= world.maxSectY; y++ ) {
 
-        const Sector &sector = world.sectors[x][y];
+        Sector &sector = world.sectors[x][y];
 
-        for( Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
+        foreach( sObj, sector.objects.iterator() ) {
           if( sObj != exclObj && ( sObj->flags & Object::CLIP_BIT ) &&
               sObj->overlaps( aabb, EPSILON ) )
           {
@@ -680,11 +677,10 @@ namespace Dark
     for( int x = world.minSectX; x <= world.maxSectX; x++ ) {
       for( int y = world.minSectY; y <= world.maxSectY; y++ ) {
 
-        const Sector &sector = world.sectors[x][y];
-        const int iMax = sector.structures.length();
+        Sector &sector = world.sectors[x][y];
 
-        for( int i = 0; i < iMax; i++ ) {
-          Structure *str = world.structures[ sector.structures[i] ];
+        foreach( strIndex, sector.structures.iterator() ) {
+          Structure *str = world.structures[*strIndex];
 
           if( str != oldStr ) {
             bsp = world.bsps[str->bsp];
@@ -698,7 +694,7 @@ namespace Dark
           }
         }
 
-        for( Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
+        foreach( sObj, sector.objects.iterator() ) {
           if( sObj != exclObj && ( sObj->flags & Object::CLIP_BIT ) &&
               sObj->overlaps( aabb, EPSILON ) )
           {
@@ -930,11 +926,10 @@ namespace Dark
     for( int x = world.minSectX; x <= world.maxSectX; x++ ) {
       for( int y = world.minSectY; y <= world.maxSectY; y++ ) {
 
-        const Sector &sector = world.sectors[x][y];
-        const int iMax = sector.structures.length();
+        Sector &sector = world.sectors[x][y];
 
-        for( int i = 0; i < iMax; i++ ) {
-          Structure *str = world.structures[ sector.structures[i] ];
+        foreach( strIndex, sector.structures.iterator() ) {
+          Structure *str = world.structures[*strIndex];
 
           // to prevent some of duplicated structure tests
           if( str != oldStr ) {
@@ -947,11 +942,11 @@ namespace Dark
           }
         }
 
-        for( Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
+        foreach( sObj, sector.objects.iterator() ) {
           if( sObj != exclObj && ( sObj->flags & Object::CLIP_BIT ) &&
               sObj->overlaps( trace, EPSILON ) )
           {
-            trimAABBObj( sObj );
+            trimAABBObj( &*sObj );
           }
         }
       }
@@ -970,16 +965,16 @@ namespace Dark
   // get all objects and structures that overlap with our trace
   void Collider::getWorldOverlaps( Vector<Object*> *objects, Vector<Structure*> *structs )
   {
+    assert( objects != null || structs != null );
+
     for( int x = world.minSectX; x <= world.maxSectX; x++ ) {
       for( int y = world.minSectY; y <= world.maxSectY; y++ ) {
 
-        const Sector &sector = world.sectors[x][y];
+        Sector &sector = world.sectors[x][y];
 
         if( structs != null ) {
-          const int iMax = sector.structures.length();
-
-          for( int i = 0; i < iMax; i++ ) {
-            Structure *str = world.structures[ sector.structures[i] ];
+          foreach( strIndex, sector.structures.iterator() ) {
+            Structure *str = world.structures[*strIndex];
 
             if( !structs->contains( str ) ) {
               bsp = world.bsps[str->bsp];
@@ -994,9 +989,9 @@ namespace Dark
         }
 
         if( objects != null ) {
-          for( Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {
+          foreach( sObj, sector.objects.iterator() ) {
             if( ( sObj->flags & Object::CLIP_BIT ) && sObj->overlaps( aabb ) ) {
-              *objects << sObj;
+              *objects << &*sObj;
             }
           }
         }
@@ -1007,10 +1002,12 @@ namespace Dark
   // get all objects which centres are included in our trace
   void Collider::getWorldIncludes( Vector<Object*> *objects )
   {
+    assert( objects != null );
+
     for( int x = world.minSectX; x <= world.maxSectX; x++ ) {
       for( int y = world.minSectY; y <= world.maxSectY; y++ ) {
 
-        const Sector &sector = world.sectors[x][y];
+        Sector &sector = world.sectors[x][y];
 
         if( objects != null ) {
           for( Object *sObj = sector.objects.first(); sObj != null; sObj = sObj->next[0] ) {

@@ -10,7 +10,7 @@
 
 #pragma once
 
-namespace Dark
+namespace oz
 {
 
   /**
@@ -22,8 +22,8 @@ namespace Dark
   {
     private:
 
-      // Hasttable size.
-      static const int SIZE = 1024;
+      // Hashtable size.
+      static const int SIZE = 1023;
       // Size of buffer used when loading from file (maximum key/value length).
       static const int BUFFER_SIZE = 1024;
 
@@ -38,12 +38,8 @@ namespace Dark
       /**
        * Default constructor.
        */
-      Config();
-
-      /**
-       * Deallocate space the variables use.
-       */
-      ~Config();
+      Config()
+      {}
 
       /**
        * Add variable.
@@ -63,12 +59,6 @@ namespace Dark
        * @return true if config contains the variable
        */
       bool contains( const String &key );
-
-      /**
-       * @param key variable name
-       * @return variable value
-       */
-      String get( const String &key );
 
       /**
        * @param key variable name
@@ -101,15 +91,19 @@ namespace Dark
       bool save( const char *file );
 
       /**
+       * Clear variables.
+       */
+      void clear();
+
+      /**
        * Print variables to a formatted String. It's formatted like
        * <pre>
        * key1 = "value1"
        * key2 = "value2"</pre>
        * @return formatted String
        */
-      String toString();
+      String toString( const String &indentString = "" );
 
-      void free();
   };
 
   extern Config config;

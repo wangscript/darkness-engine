@@ -25,7 +25,7 @@
 #  include <sys/stat.h>
 #endif
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {
@@ -110,6 +110,7 @@ namespace Client
       SDL_Quit();
       logFile.printRaw( " OK\n" );
     }
+    config.clear();
     logFile.printlnETD( "%s finished on", DARK_APP_NAME );
   }
 
@@ -422,6 +423,6 @@ namespace Client
 
 int main( int, char *[] )
 {
-  Dark::Client::main.main();
+  oz::Client::main.main();
   return 0;
 }

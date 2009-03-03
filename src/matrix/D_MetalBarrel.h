@@ -11,9 +11,8 @@
 #pragma once
 
 #include "DynObject.h"
-#include "Translator.h"
 
-namespace Dark
+namespace oz
 {
 
   class D_MetalBarrel : public DynObject
@@ -32,6 +31,8 @@ namespace Dark
       static Object *build( const Vec3 &p );
 
       explicit D_MetalBarrel( const Vec3 &p = Vec3::zero() );
+
+//       void createModel();
   };
 
 }

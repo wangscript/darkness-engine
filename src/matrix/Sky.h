@@ -12,7 +12,7 @@
 
 #include "Timer.h"
 
-namespace Dark
+namespace oz
 {
 
   struct Sky
@@ -22,7 +22,7 @@ namespace Dark
 
     float heading;
 
-		// heading of sun in degrees and day time in seconds
+    // heading of sun in degrees and day time in seconds
     void init( float heading, float period );
 
     void update()

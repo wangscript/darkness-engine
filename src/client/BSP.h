@@ -16,7 +16,7 @@
 
 #define BSP_GAMMA_CORR        0.5
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {
@@ -25,7 +25,7 @@ namespace Client
   {
     protected:
 
-      Dark::BSP *bsp;
+      oz::BSP *bsp;
 
       uint   baseList;
       uint   *textures;
@@ -45,9 +45,9 @@ namespace Client
       BSP();
       ~BSP();
 
-      explicit BSP( Dark::BSP *bsp );
+      explicit BSP( oz::BSP *bsp );
 
-      void init( Dark::BSP *bsp );
+      void init( oz::BSP *bsp );
       void draw( const Vec3 &p );
       uint genList();
 

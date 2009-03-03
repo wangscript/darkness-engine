@@ -12,7 +12,7 @@
 
 #include "Server.h"
 
-namespace Dark
+namespace oz
 {
 namespace Server
 {

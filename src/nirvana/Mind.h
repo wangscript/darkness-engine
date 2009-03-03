@@ -8,12 +8,11 @@
  *  $Id$
  */
 
-#ifndef _Mind_h_
-#define _Mind_h_
+#pragma once
 
 #include "matrix/Bot.h"
 
-namespace Dark
+namespace oz
 {
 
   class Mind
@@ -41,5 +40,3 @@ namespace Dark
   };
 
 }
-
-#endif // _Mind_h_

@@ -15,7 +15,7 @@
 #include "matrix/Timer.h"
 #include "Context.h"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {
@@ -71,7 +71,7 @@ namespace Client
   struct MD3Triangle
   {
     short vertex[3];
-    uchar normal[2];
+    ubyte normal[2];
   };
 
   struct MD3Face

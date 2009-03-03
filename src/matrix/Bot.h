@@ -15,7 +15,7 @@
 
 #define BOT_GRAB_DIST         1.0
 
-namespace Dark
+namespace oz
 {
 
   class Mind;
@@ -49,9 +49,40 @@ namespace Dark
       static const int STEPPING_BIT    = 0x00000080;
       static const int DEATH_BIT       = 0x00000100;
 
+      // effects
+      static const int SND_LAND        = 8;
+      static const int SND_JUMP        = 9;
+
+      enum AnimEnum
+      {
+        ANIM_STAND,
+        ANIM_RUN,
+        ANIM_ATTACK,
+        ANIM_PAIN_A,
+        ANIM_PAIN_B,
+        ANIM_PAIN_C,
+        ANIM_JUMP,
+        ANIM_FLIP,
+        ANIM_SALUTE,
+        ANIM_FALLBACK,
+        ANIM_WAVE,
+        ANIM_POINT,
+        ANIM_CROUCH_STAND,
+        ANIM_CROUCH_WALK,
+        ANIM_CROUCH_ATTACK,
+        ANIM_CROUCH_PAIN,
+        ANIM_CROUCH_DEATH,
+        ANIM_DEATH_FALLBACK,
+        ANIM_DEATH_FALLFORWARD,
+        ANIM_DEATH_FALLBACKSLOW,
+        ANIM_MAX
+      };
+
+
       Mind    *mind;
 
       int     state;
+      int     anim;
 
       int     keys, oldKeys;
 

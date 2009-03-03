@@ -1,6 +1,6 @@
-INCLUDE_DIRECTORIES( .. )
-LINK_DIRECTORIES( ../base ../matrix ../nirvana )
-LINK_LIBRARIES( base matrix nirvana )
+link_libraries( base )
 
-ADD_EXECUTABLE( test 
-    test.cpp )
+add_executable( test
+  pool.cpp )
+
+add_dependencies( test precompile )

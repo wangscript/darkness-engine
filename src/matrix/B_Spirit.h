@@ -12,7 +12,7 @@
 
 #include "Bot.h"
 
-namespace Dark
+namespace oz
 {
 
   class B_Spirit : public Bot
@@ -36,6 +36,8 @@ namespace Dark
       static const int TYPE;
 
       explicit B_Spirit( const Vec3 &p, float h = 0.0f, float v = 0.0f, Mind *mind = null );
+
+//       void createModel();
 
       void load( FILE *stream );
       void save( FILE *stream );

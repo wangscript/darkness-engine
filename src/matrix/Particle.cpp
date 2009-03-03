@@ -12,7 +12,7 @@
 
 #include "Particle.h"
 
-namespace Dark
+namespace oz
 {
 
   const float Particle::MAX_ROTVELOCITY = 1000.0f;

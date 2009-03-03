@@ -12,7 +12,7 @@
 
 #include "DynObject.h"
 
-namespace Dark
+namespace oz
 {
 
   const float DynObject::DEFAULT_MASS = 10.0f;
