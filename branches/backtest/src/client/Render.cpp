@@ -15,6 +15,7 @@
 #include "matrix/Matrix.h"
 #include "matrix/Physics.h"
 #include "matrix/B_Goblin.h"
+#include "matrix/Translator.h"
 
 #include "Frustum.h"
 #include "Shape.h"
@@ -24,7 +25,7 @@
 #include "Terrain.h"
 #include "BSP.h"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {
@@ -275,13 +276,6 @@ namespace Client
         particles << part;
       }
     }
-
-    for( SparkGen *sparkGen = sector.sparkGens.first();
-         sparkGen != null;
-         sparkGen = sparkGen->next[0] )
-    {
-      sparkGens << sparkGen;
-    }
   }
 
   void Render::draw()
@@ -378,7 +372,7 @@ namespace Client
         glRotatef( part->rot.z, 0.0f, 0.0f, 1.0f );
 
         glColor4f( part->color.x, part->color.y, part->color.z, part->lifeTime );
-        glCallList( lists[part->model] );
+        glCallList( LIST_SPARK );
       glPopMatrix();
     }
     particles.clear();
@@ -493,14 +487,15 @@ namespace Client
 
   void Render::free()
   {
-    sparkGenRenders.free();
-    models.free();
+    models.clear();
+    sparkGenRenders.clear();
+
+    models.clear();
     md2s.free();
     bsps.free();
     context.free();
 
-    sparkGenRenders.deallocate();
-    models.deallocate();
+//     models.deallocate();
   }
 
 }

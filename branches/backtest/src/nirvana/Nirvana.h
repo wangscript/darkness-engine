@@ -8,8 +8,7 @@
  *  $Id$
  */
 
-#ifndef _Nirvana_h_
-#define _Nirvana_h_
+#pragma once
 
 #include "Soul.h"
 #include "Mind.h"
@@ -18,7 +17,7 @@
 
 #include "M_Walker.h"
 
-namespace Dark
+namespace oz
 {
 
   class Nirvana
@@ -54,5 +53,3 @@ namespace Dark
   extern Nirvana nirvana;
 
 }
-
-#endif // _Nirvana_h_

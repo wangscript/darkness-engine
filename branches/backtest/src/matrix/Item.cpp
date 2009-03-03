@@ -12,7 +12,7 @@
 
 #include "Item.h"
 
-namespace Dark
+namespace oz
 {
 
 

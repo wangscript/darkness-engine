@@ -11,7 +11,7 @@
 
 #pragma once
 
-namespace Dark
+namespace oz
 {
 
   /**
@@ -22,8 +22,8 @@ namespace Dark
    * Example:
    * <pre>class C
    * {
-   *   C prev[2];
-   *   C next[2];
+   *   C *prev[2];
+   *   C *next[2];
    *   int value;
    * };
    * ...
@@ -44,9 +44,54 @@ namespace Dark
    * In general all operations are O(1) except <code>contains()</code>, <code>length()</code> and
    * <code>free()</code> are O(n).
    */
+
+
   template <class Type, int INDEX>
   class DList
   {
+    public:
+
+      /**
+       * DList iterator.
+       */
+      class Iterator : public IteratorBase<Type>
+      {
+        private:
+
+          // base class
+          typedef IteratorBase<Type> B;
+
+        public:
+
+          /**
+           * Make iterator for given list. After creation it points to first element.
+           * @param l
+           */
+          explicit Iterator( const DList &l ) : B( l.firstElem )
+          {}
+
+          /**
+           * When iterator advances beyond last element, it becomes passed. It points to an invalid
+           * location.
+           * @return true if iterator is passed
+           */
+          bool isPassed()
+          {
+            return B::elem == null;
+          }
+
+          /**
+           * Advance to next element.
+           */
+          void operator ++ ( int )
+          {
+            assert( B::elem != null );
+
+            B::elem = B::elem->next[INDEX];
+          }
+
+      };
+
     private:
 
       // First element in list.
@@ -56,89 +101,9 @@ namespace Dark
 
       // No copying.
       DList( const DList& );
+      DList &operator = ( const DList& );
 
     public:
-
-      /**
-       * DList iterator.
-       */
-      class Iterator
-      {
-        protected:
-
-          Type *elem;
-
-        public:
-
-          /**
-           * Make iterator for given list. After creation it points to first element.
-           * @param l
-           */
-          explicit Iterator( const DList &l ) : elem( l.firstElem )
-          {}
-
-					/**
-					 * Returns true if iterator is on specified element.
-					 * @param e
-					 * @return
-					 */
-					bool operator == ( const Type *e )
-					{
-						return elem == e;
-					}
-
-          /**
-           * When iterator advances beyond last element, it's become passed. It points to null.
-           * @return true if iterator is passed
-           */
-          bool isPassed()
-          {
-            return elem == null;
-          }
-
-          /**
-           * Advance to next element.
-           */
-          void operator ++ ( int )
-          {
-            assert( elem != null );
-
-            elem = elem->next[INDEX];
-          }
-
-          /**
-           * @return pointer to current element in the list
-           */
-          Type *get()
-          {
-            return elem;
-          }
-
-          /**
-           * @return constant pointer to current element in the list
-           */
-          const Type *get() const
-          {
-            return elem;
-          }
-
-          /**
-           * @return reference to current element in the list
-           */
-          Type &operator * ()
-          {
-            return *elem;
-          }
-
-          /**
-           * @return constant reference to current element in the list
-           */
-          const Type &operator * () const
-          {
-            return *elem;
-          }
-
-      };
 
       /**
        * Create an empty list.
@@ -150,10 +115,18 @@ namespace Dark
        * Create a list with only one element.
        * @param e the element
        */
-      explicit DList( const Type *e ) : firstElem( e ), lastElem( e )
+      explicit DList( Type *e ) : firstElem( e ), lastElem( e )
       {
         e->prev[INDEX] = null;
         e->next[INDEX] = null;
+      }
+
+      /**
+       * @return iterator for this list
+       */
+      Iterator iterator() const
+      {
+        return Iterator( *this );
       }
 
       /**
@@ -202,17 +175,33 @@ namespace Dark
       }
 
       /**
-       * @return first element in the list
+       * @return pointer to first element in the list
        */
-      Type *first() const
+      Type *first()
       {
         return firstElem;
       }
 
       /**
-       * @return last element in the list
+       * @return constant pointer to first element in the list
        */
-      Type *last() const
+      const Type *first() const
+      {
+        return firstElem;
+      }
+
+      /**
+       * @return pointer to last element in the list
+       */
+      Type *last()
+      {
+        return lastElem;
+      }
+
+      /**
+       * @return constant pointer to last element in the list
+       */
+      const Type *last() const
       {
         return lastElem;
       }

@@ -12,7 +12,7 @@
 
 #include "Font.h"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {

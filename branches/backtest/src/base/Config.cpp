@@ -13,19 +13,21 @@
 #include <libxml/xmlreader.h>
 #include <libxml/xmlwriter.h>
 
-namespace Dark
+namespace oz
 {
 
-  Config config;
-
-  Config::Config()
-  {}
-
-  Config::~Config()
+  struct Elem
   {
-    free();
-    vars.deallocate();
-  }
+    const char *key;
+    const char *value;
+
+    bool operator < ( const Elem &e ) const
+    {
+      return String::compare( key, e.key ) < 0;
+    }
+  };
+
+  Config config;
 
   void Config::add( const String &key, const String &value )
   {
@@ -45,11 +47,6 @@ namespace Dark
   bool Config::contains( const String &key )
   {
     return vars.contains( key );
-  }
-
-  String Config::get( const String &key )
-  {
-    return vars.get( key );
   }
 
   String &Config::operator [] ( const String &key )
@@ -86,7 +83,7 @@ namespace Dark
         String key = (const char*) pKey;
         String value = (const char*) pValue;
 
-        // msvc has problems with this WTF???
+        // FIXME VC++ has problems with this WTF???
 #ifndef WIN32
         ::free( pKey );
         ::free( pValue );
@@ -113,6 +110,19 @@ namespace Dark
   {
     logFile.print( "Writing configuration to '%s' ...", file );
 
+    // first we sort all the variables by key
+    int size = vars.length();
+    Elem sortedVars[size];
+
+    HashString<String, SIZE>::Iterator j( vars );
+    for( int i = 0; !j.isPassed(); i++, j++ ) {
+      sortedVars[i].key = j.key()->cstr();
+      sortedVars[i].value = j.value()->cstr();
+      size = i;
+    }
+    size++;
+    aSort( sortedVars, size );
+
     xmlTextWriter *writer = xmlNewTextWriterFilename( file, 0 );
 
     if( writer == null ) {
@@ -129,12 +139,12 @@ namespace Dark
       logFile.printRaw( " Write error\n" );
       return false;
     }
-    // Write the vars in the same order they are in HastString. I know, it's a mess.
-    for( HashString<String, SIZE>::Iterator i( vars ); !i.isPassed(); i++ ) {
+
+    for( int i = 0; i < size; i++ ) {
       if( xmlTextWriterWriteString( writer, BAD_CAST "\n  " ) < 0 ||
           xmlTextWriterStartElement( writer, BAD_CAST "var" ) < 0 ||
-          xmlTextWriterWriteAttribute( writer, BAD_CAST "name", BAD_CAST i.key()->cstr() ) < 0 ||
-          xmlTextWriterWriteAttribute( writer, BAD_CAST "value", BAD_CAST i.value()->cstr() ) < 0 ||
+          xmlTextWriterWriteAttribute( writer, BAD_CAST "name", BAD_CAST sortedVars[i].key ) < 0 ||
+          xmlTextWriterWriteAttribute( writer, BAD_CAST "value", BAD_CAST sortedVars[i].value ) < 0 ||
           xmlTextWriterEndElement( writer ) < 0 )
       {
         xmlFreeTextWriter( writer );
@@ -158,19 +168,31 @@ namespace Dark
     return true;
   }
 
-  String Config::toString()
+  void Config::clear()
+  {
+    vars.clear();
+  }
+
+  String Config::toString( const String &indentString )
   {
     String s = "";
 
-    for( HashString<String, SIZE>::Iterator i( vars ); i.value() != null; i++ ) {
-      s = s + *i.key() + " = \"" + *i.value() + "\"\n";
+    // first we sort all the variables by key
+    int size = vars.length();
+    Elem sortedVars[size];
+
+    int i = 0;
+    foreach( j, vars.iterator() ) {
+      sortedVars[i].key = j.key()->cstr();
+      sortedVars[i].value = j.value()->cstr();
+      size = ++i;
+    }
+    aSort( sortedVars, size );
+
+    for( int i = 0; i < size; i++ ) {
+      s = s + indentString + sortedVars[i].key + " = \"" + sortedVars[i].value + "\"\n";
     }
     return s;
-  }
-
-  void Config::free()
-  {
-    vars.free();
   }
 
 }

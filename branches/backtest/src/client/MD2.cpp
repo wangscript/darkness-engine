@@ -18,7 +18,7 @@
 #define MD2_SHADEDOT_QUANT      16
 #define MD2_MAX_VERTS           2048
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {
@@ -49,8 +49,8 @@ namespace Client
 
   struct MD2Vertex
   {
-    uchar v[3];
-    uchar iLightNormal;
+    ubyte v[3];
+    ubyte iLightNormal;
   };
 
   struct MD2TexCoord

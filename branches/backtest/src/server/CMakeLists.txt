@@ -1,7 +1,9 @@
-INCLUDE_DIRECTORIES( .. )
-LINK_DIRECTORIES( ../base ../matrix ../nirvana )
-LINK_LIBRARIES( base matrix nirvana )
+link_libraries( base matrix nirvana )
 
-ADD_EXECUTABLE( server
-    Server.h Server.cpp
-    Main.h Main.cpp )
+add_executable( server
+  Main.cpp
+  Main.h
+  Server.cpp
+  Server.h )
+
+add_dependencies( server precompile )

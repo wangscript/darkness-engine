@@ -15,7 +15,7 @@
 #include "Collider.h"
 #include "DynObject.h"
 
-namespace Dark
+namespace oz
 {
 
   const char *Ladder::NAME = "Ladder";
@@ -30,8 +30,6 @@ namespace Dark
     type = TYPE;
 
     damage = Math::INF;
-
-    model = -1;
   }
 
   void Ladder::onUpdate()

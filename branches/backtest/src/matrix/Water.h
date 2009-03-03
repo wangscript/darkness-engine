@@ -11,9 +11,8 @@
 #pragma once
 
 #include "Object.h"
-#include "Translator.h"
 
-namespace Dark
+namespace oz
 {
 
   class Water : public Object

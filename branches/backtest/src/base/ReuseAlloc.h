@@ -1,11 +1,11 @@
 /*
- *  Reuser.h
+ *  ReuseAlloc.h
  *
- *  Base class for memory reusing. All classes which inherit from Reuser must have "next" member
- *  and will have overloaded new and delete (BUT NOT new[] and delete[]) operators. The new operator
- *  will try to reuse memory from deleted objects form that class. At least the end of the program
- *  you should call Class::deallocate() for all Reuser-derived classes. Performance can increase up
- *  to 100%.
+ *  Reuse allocator
+ *  Base class for memory reusing. All classes which inherit from ReuseAlloc will have overloaded
+ *  new and delete (BUT NOT new[] and delete[]) operators. The new operator will try to reuse
+ *  memory from deleted objects form that class. At least the end of the program you should call
+ *  Class::deallocate() for all Reuser-derived classes. Performance can increase up to 100%.
  *
  *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
@@ -14,30 +14,29 @@
 
 #pragma once
 
-namespace Dark
+namespace oz
 {
 
   template <class Type>
-  class Reuser
+  class ReuseAlloc
   {
     private:
 
-      static Reuser *freeList;
+      static Type *freeList;
 
-      Reuser *next;
+      Type *next;
 
       void free()
       {
         if( next != null ) {
-          next->free();
+          next->ReuseAlloc::free();
         }
         ::delete this;
       }
 
     public:
 
-#ifdef DARK_USE_REUSER
-      Reuser() : next( null )
+      ReuseAlloc() : next( null )
       {}
 
       // If the list of freed blocks isn't empty, reuse the last freed block (at the beginning of
@@ -45,41 +44,38 @@ namespace Dark
       void *operator new ( uint size )
       {
         if( freeList != null ) {
-          Reuser *p = freeList;
-          freeList = freeList->next;
+          ReuseAlloc *p = freeList;
+          freeList = freeList->ReuseAlloc::next;
 
           return p;
         }
-        return ::new char[size];
+        return ::new byte[size];
       }
 
       // Do not really free memory, add it at the beginning of the list of freed blocks.
       // (Destructor is called automatically.)
       void operator delete ( void *ptr )
       {
-        Reuser *p = (Reuser*) ptr;
+        Type *p = (Type*) ptr;
 
         // note that space for destroyed object is still allocated
-        p->next = freeList;
+        p->ReuseAlloc::next = freeList;
         freeList = p;
       }
-#endif
 
       // It's good idea to call that function from time to time and at the end of the program to
       // free some memory and to prevent memory leaks.
       static void deallocate()
       {
-#ifdef DARK_USE_REUSER
         if( freeList != null ) {
-          freeList->free();
+          freeList->ReuseAlloc::free();
           freeList = null;
         }
-#endif
       }
 
   };
 
   template <class Type>
-  Reuser<Type> *Reuser<Type>::freeList = null;
+  Type *ReuseAlloc<Type>::freeList = null;
 
 }

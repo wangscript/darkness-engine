@@ -13,7 +13,7 @@
 
 #include "MD2.h"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {

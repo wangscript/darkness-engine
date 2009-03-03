@@ -14,7 +14,7 @@
 
 #include "Frustum.h"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {
@@ -36,7 +36,7 @@ namespace Client
     sparks[i].lifeTime = sparkGen->lifeTime;
   }
 
-  SparkGenRender::SparkGenRender( Dark::SparkGen *sparkGen_ ) : sparkGen( sparkGen_ )
+  SparkGenRender::SparkGenRender( oz::SparkGen *sparkGen_ ) : sparkGen( sparkGen_ )
   {
     sparks = new Spark[sparkGen->number];
     startMillis = (float) timer.millis;

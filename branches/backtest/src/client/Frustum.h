@@ -14,7 +14,7 @@
 #include "matrix/bv.h"
 #include "Camera.h"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {

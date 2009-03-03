@@ -1,13 +1,19 @@
-- Object: private (sectorm index, lower, ...), friends (World, Collider, ...)
-- Object::createRenderer implemented in client/O_XXX
+- Object: private (sector, index, lower, ...), friends (World, Collider, ...)
 - static Object::create()
 - register of objects: create( String className )
 - static registration?
 
+- rotateable structures
+
+- foreach where possible
+
+- Object isUpdated, onUpdateSelf, thread-safe update
+
+- Context, add Sounds?
+
 Matrix/World
   - networking support
   - SparkGen -> Object
-  - Bullet
 
 Render
   - weather

@@ -10,7 +10,7 @@
 
 #pragma once
 
-namespace Dark
+namespace oz
 {
 
   class String
@@ -21,7 +21,7 @@ namespace Dark
 
       char *buffer;
       int  count;
-      char baseBuffer[32];
+      char baseBuffer[BUFFER_SIZE];
 
       String( int count_, int ) : count( count_ )
       {
@@ -202,7 +202,7 @@ namespace Dark
         return b.operator != ( a );
       }
 
-      static bool areEqual( const char *a, const char *b )
+      static bool equals( const char *a, const char *b )
       {
         assert( a != null && b != null );
 
@@ -301,7 +301,11 @@ namespace Dark
         return i;
       }
 
-      // Bernstein's hash function
+      /**
+       * Bernstein's hash function.
+       * @param s
+       * @return absolute value of hash
+       */
       static int hash( const char *s )
       {
         int hash = 5381;
@@ -310,18 +314,17 @@ namespace Dark
         for( int i = 0; i < count; i++ ) {
           hash = hash * 33 + s[i];
         }
-        return hash;
+        // absolute value
+        return hash & ~( 1 << ( sizeof( int ) * 8 - 1 ) );
       }
 
-      // Bernstein's hash function
+      /**
+       * Bernstein's hash function.
+       * @return absolute value of hash
+       */
       int hash() const
       {
-        int hash = 5381;
-
-        for( int i = 0; i < count; i++ ) {
-          hash = hash * 33 + buffer[i];
-        }
-        return hash;
+        return hash( buffer );
       }
 
       String operator + ( const char *s ) const
@@ -388,21 +391,21 @@ namespace Dark
         return r;
       }
 
-      Vector<String> split( char ch ) const
-      {
-        Vector<String> v;
-
-        int p0 = 0;
-        int p1 = index( ch );
-
-        while( p1 >= 0 ) {
-          v << substring( p0, p1 );
-          p0 = p1 + 1;
-          p1 = index( ch, p0 );
-        }
-        v << substring( p0 );
-        return v;
-      }
+//       Vector<String> split( char ch ) const
+//       {
+//         Vector<String> v;
+//
+//         int p0 = 0;
+//         int p1 = index( ch );
+//
+//         while( p1 >= 0 ) {
+//           v << substring( p0, p1 );
+//           p0 = p1 + 1;
+//           p1 = index( ch, p0 );
+//         }
+//         v << substring( p0 );
+//         return v;
+//       }
 
   };
 

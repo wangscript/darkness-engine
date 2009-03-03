@@ -12,7 +12,7 @@
 
 #include "Translator.h"
 
-namespace Dark
+namespace oz
 {
 
   Translator translator;
@@ -44,7 +44,7 @@ namespace Dark
     null
   };
 
-  Translator::Translator()
+  void Translator::init()
   {
     for( nTextures = 0; textures[nTextures] != null; nTextures++ ) {
       textureIndices.add( textures[nTextures], nTextures );
@@ -61,10 +61,9 @@ namespace Dark
     }
   }
 
-  Translator::~Translator()
+  void Translator::free()
   {
-    textureIndices.free();
-    textureIndices.deallocate();
+    textureIndices.clear();
   }
 
 }

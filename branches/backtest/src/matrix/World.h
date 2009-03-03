@@ -11,19 +11,17 @@
 #pragma once
 
 #include "Timer.h"
-#include "Translator.h"
 
 #include "BSP.h"
 #include "Sky.h"
 #include "Terrain.h"
 
 #include "Structure.h"
-#include "Sound.h"
 #include "Object.h"
 #include "SparkGen.h"
 #include "Particle.h"
 
-namespace Dark
+namespace oz
 {
 
   struct Sector
@@ -34,7 +32,6 @@ namespace Dark
     Vector<int> structures;
 
     DList<Object, 0>    objects;
-    DList<SparkGen, 0>  sparkGens;
     DList<Particle, 0>  particles;
   };
 
@@ -47,7 +44,6 @@ namespace Dark
       // references).
       Vector<int> strFreeQueue[3];
       Vector<int> objFreeQueue[3];
-      Vector<int> sparkGenFreeQueue[3];
       Vector<int> partFreeQueue[3];
 
       int addingQueue;
@@ -65,7 +61,6 @@ namespace Dark
       Sector  sectors[World::MAX][World::MAX];
 
       Vector<Structure*>  structures;
-      Vector<SparkGen*>   sparkGens;
       Vector<Object*>     objects;
       Vector<Particle*>   particles;
 
@@ -99,18 +94,16 @@ namespace Dark
 
       int add( Structure *str );
       int add( Object *obj, bool doPut = true );
-      int add( SparkGen *sparkGen );
       int add( Particle *part );
 
       void remove( Structure *str );
       void remove( Object *obj );
-      void remove( SparkGen *sparkGen );
       void remove( Particle *part );
 
       void genParticles( int number, const Vec3 &p,
                          const Vec3 &velocity, float velocitySpread,
                          float rejection, float mass, float lifeTime,
-                         int model, const Vec3 &color, float colorSpread );
+                         float size, const Vec3 &color, float colorSpread );
 
       void beginUpdate();
       void endUpdate();

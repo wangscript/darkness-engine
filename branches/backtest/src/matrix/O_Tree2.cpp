@@ -14,7 +14,7 @@
 
 #include "World.h"
 
-namespace Dark
+namespace oz
 {
 
   const char *O_Tree2::NAME = "O_Tree2";
@@ -49,7 +49,7 @@ namespace Dark
 
   void O_Tree2::onDestroy()
   {
-    world.genParticles( 10, p, Vec3::zero(), 1.2f, 1.2f, 0.0f, 20.0f, LIST_SPARK,
+    world.genParticles( 10, p, Vec3::zero(), 1.2f, 1.2f, 0.0f, 20.0f, 0.1f,
                         Vec3( 0.5f, 0.5f, 0.5f ), 0.2f );
     world.remove( this );
   }

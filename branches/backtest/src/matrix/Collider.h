@@ -13,7 +13,7 @@
 #include "Hit.h"
 #include "World.h"
 
-namespace Dark
+namespace oz
 {
 
   class Collider

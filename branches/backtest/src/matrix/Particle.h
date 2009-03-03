@@ -12,7 +12,7 @@
 
 #include "Timer.h"
 
-namespace Dark
+namespace oz
 {
 
   struct Sector;
@@ -44,7 +44,7 @@ namespace Dark
       float     lifeTime;
 
       // graphics data
-      int       model;
+      float     size;
       Vec3      color;
       Vec3      rot;
       Vec3      rotVelocity;
@@ -53,11 +53,11 @@ namespace Dark
       {}
 
       Particle( const Vec3 &p_, const Vec3 &velocity_, float rejection_, float mass_,
-                float lifeTime_, int model_, const Vec3 &color_ ) :
+                float lifeTime_, float size_, const Vec3 &color_ ) :
           p( p_ ), velocity( velocity_ ),
           rejection( rejection_ ),
           mass( mass_ ), lifeTime( lifeTime_ ),
-          model( model_ ), color( color_ ),
+          size( size_ ), color( color_ ),
           rot( Vec3( Math::frand() * 360.0f, Math::frand() * 360.0f, Math::frand() * 360.0f ) ),
           rotVelocity( Vec3( Math::frand() * MAX_ROTVELOCITY,
                              Math::frand() * MAX_ROTVELOCITY,

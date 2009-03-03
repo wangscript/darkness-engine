@@ -10,11 +10,11 @@
 
 #include "base.h"
 
-#include <stdarg.h>
-#include <stdio.h>
-#include <time.h>
+#include <cstdarg>
+#include <cstdio>
+#include <ctime>
 
-namespace Dark
+namespace oz
 {
 
   LogFile logFile;

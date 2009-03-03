@@ -1,13 +1,11 @@
-INCLUDE_DIRECTORIES( .. )
-LINK_DIRECTORIES( ../base ../matrix ../nirvana )
-LINK_LIBRARIES( base matrix nirvana )
+link_libraries( base matrix nirvana )
 
-ADD_EXECUTABLE( dark
+add_executable( dark
     Camera.h Camera.cpp
     Sky.h Sky.cpp
     Frustum.h Frustum.cpp
-    Font.h Font.cpp 
-    Context.h Context.cpp 
+    Font.h Font.cpp
+    Context.h Context.cpp
     Skybox.h Skybox.cpp
     Terrain.h Terrain.cpp
     SparkGenRender.h SparkGenRender.cpp

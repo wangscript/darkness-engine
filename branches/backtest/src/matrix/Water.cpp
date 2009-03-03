@@ -15,7 +15,7 @@
 #include "Collider.h"
 #include "DynObject.h"
 
-namespace Dark
+namespace oz
 {
 
   const char *Water::NAME = "Water";
@@ -30,8 +30,6 @@ namespace Dark
     type = TYPE;
 
     damage = Math::INF;
-
-    model = LIST_WATER;
   }
 
   void Water::onUpdate()

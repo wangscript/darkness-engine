@@ -12,7 +12,7 @@
 
 #include "bv.h"
 
-namespace Dark
+namespace oz
 {
 
   struct Structure : Bounds

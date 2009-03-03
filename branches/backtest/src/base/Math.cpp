@@ -10,11 +10,11 @@
 
 #include "base.h"
 
-#include <math.h>
-#include <stdlib.h>
-#include <time.h>
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
 
-namespace Dark
+namespace oz
 {
 
   const float Math::FLOAT_EPS  = 1.1920928955078125e-7f;
@@ -39,7 +39,7 @@ namespace Dark
 
   Math::Math()
   {
-    ::srand( (uint) time( null ) );
+    srand( (uint) time( null ) );
   }
 
   int ( *const Math::rand )() = ::rand;

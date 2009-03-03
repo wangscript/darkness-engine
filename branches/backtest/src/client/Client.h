@@ -11,7 +11,7 @@
 #ifndef _Client_Client_h_
 #define _Client_Client_h_
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {
@@ -30,8 +30,8 @@ namespace Client
 
   struct Input
   {
-    uchar *currKeys;
-    uchar keys[SDLK_LAST];
+    ubyte *currKeys;
+    ubyte keys[SDLK_LAST];
 
     struct Mouse
     {

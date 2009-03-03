@@ -11,7 +11,7 @@
 #ifndef _Client_Context_h_
 #define _Client_Context_h_
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {

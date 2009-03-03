@@ -12,7 +12,8 @@
 #define _Client_SoundManager_h_
 
 #include "matrix/World.h"
-#include "matrix/Sound.h"
+#include "matrix/Effect.h"
+#include "matrix/Translator.h"
 
 #define DARK_OPENAL
 
@@ -40,7 +41,7 @@
 
 #endif
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {
@@ -61,7 +62,7 @@ namespace Client
        * OpenAL implementation
        */
 
-      struct Source : Reuser<Source>
+      struct Source : ReuseAlloc<Source>
       {
         Source *prev[1];
         Source *next[1];
@@ -69,7 +70,7 @@ namespace Client
         ALuint source;
       };
 
-      struct ContSource : Reuser<ContSource>
+      struct ContSource : ReuseAlloc<ContSource>
       {
         enum State
         {

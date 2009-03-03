@@ -13,7 +13,7 @@
 
 #include "matrix/World.h"
 
-namespace Dark
+namespace oz
 {
 namespace Client
 {
@@ -38,7 +38,7 @@ namespace Client
 
     protected:
 
-      Dark::SparkGen *sparkGen;
+      oz::SparkGen *sparkGen;
       Spark          *sparks;
       float          startMillis;
       float          sparksPerTick;
@@ -50,7 +50,7 @@ namespace Client
 
       State          state;
 
-      explicit SparkGenRender( Dark::SparkGen *sparkGen );
+      explicit SparkGenRender( oz::SparkGen *sparkGen );
       SparkGenRender( const SparkGenRender &sparkGenRender );
       ~SparkGenRender();
 

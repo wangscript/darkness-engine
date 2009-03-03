@@ -13,7 +13,7 @@
 #include "Collider.h"
 #include "DynObject.h"
 
-namespace Dark
+namespace oz
 {
 
   class Physics
