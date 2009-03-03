@@ -19,19 +19,21 @@ namespace oz
   {
     private:
 
-      struct Elem : ReuseAlloc<Elem>
+      struct Elem : PoolAlloc<Elem, 0>
       {
         uint  key;
         Type  value;
-        Elem  *next;
+        Elem  *next[1];
 
-        Elem( uint key_, const Type &value_, Elem *next_ ) :
-            key( key_ ), value( value_ ), next( next_ )
-        {}
+        Elem( uint key_, const Type &value_, Elem *next_ ) : key( key_ ), value( value_ )
+        {
+          next[0] = next_;
+        }
 
-        Elem( uint key_, Elem *next_ ) :
-            key( key_ ), next( next_ )
-        {}
+        Elem( uint key_, Elem *next_ ) : key( key_ )
+        {
+          next[0] = next_;
+        }
       };
 
     public:
@@ -80,8 +82,8 @@ namespace oz
           {
             assert( B::elem != null );
 
-            if( B::elem->next != null ) {
-              B::elem = B::elem->next;
+            if( B::elem->next[0] != null ) {
+              B::elem = B::elem->next[0];
             }
             else if( index < SIZE - 1 ) {
               do {
@@ -142,6 +144,7 @@ namespace oz
       Elem *data[SIZE];
       // we cache found element since we often want its value after a search
       Elem *cached;
+      int  count;
 
       /**
        * @param chainA
@@ -154,7 +157,7 @@ namespace oz
           return
               chainA->key == chainB->key &&
               chainA->value == chainB->value &&
-              areChainsEqual( chainA->next, chainB->next );
+              areChainsEqual( chainA->next[0], chainB->next[0] );
         }
         else {
           // at least one is null, so (chainA == chainB) <=> (chainA == null && chainB == null)
@@ -170,7 +173,7 @@ namespace oz
       Elem *copyChain( const Elem *chain ) const
       {
         if( chain != null ) {
-          return new Elem( chain->key, chain->value, copyChain( chain->next ) );
+          return new Elem( chain->key, chain->value, copyChain( chain->next[0] ) );
         }
         else {
           return null;
@@ -183,8 +186,8 @@ namespace oz
        */
       void freeChain( const Elem *chain ) const
       {
-        if( chain->next != null ) {
-          freeChain( chain->next );
+        if( chain->next[0] != null ) {
+          freeChain( chain->next[0] );
         }
         delete chain;
       }
@@ -195,8 +198,8 @@ namespace oz
        */
       void freeChainAndValues( const Elem *chain ) const
       {
-        if( chain->next != null ) {
-          freeChain( chain->next );
+        if( chain->next[0] != null ) {
+          freeChain( chain->next[0] );
         }
         delete chain->value;
         delete chain;
@@ -207,7 +210,7 @@ namespace oz
       /**
        * Constructor.
        */
-      HashIndex()
+      HashIndex() : cached( null ), count( 0 )
       {
         for( int i = 0; i < SIZE; i++ ) {
           data[i] = null;
@@ -218,7 +221,7 @@ namespace oz
        * Copy constructor.
        * @param t
        */
-      HashIndex( const HashIndex &t )
+      HashIndex( const HashIndex &t ) : cached( t.cached ), count( t.count )
       {
         for( int i = 0; i < SIZE; i++ ) {
           data[i] = copyChain( t.data[i] );
@@ -226,11 +229,11 @@ namespace oz
       }
 
       /**
-       * Destructor.
+       * Default destructor.
        */
       ~HashIndex()
       {
-        clear();
+        assert( count == 0 );
       }
 
       /**
@@ -246,6 +249,8 @@ namespace oz
           }
           data[i] = copyChain( t.data[i] );
         }
+        cached = t.cached;
+        count = t.count;
       }
 
       /**
@@ -255,6 +260,9 @@ namespace oz
        */
       bool operator == ( const HashIndex &t ) const
       {
+        if( count != t.count ) {
+          return false;
+        }
         for( int i = 0; i < SIZE; i++ ) {
           if( !qEqualChain( data[i], t.data[i] ) ) {
             return false;
@@ -270,6 +278,9 @@ namespace oz
        */
       bool operator != ( const HashIndex &t ) const
       {
+        if( count != t.count ) {
+          return true;
+        }
         for( int i = 0; i < SIZE; i++ ) {
           if( !qEqualChain( data[i], t.data[i] ) ) {
             return true;
@@ -291,7 +302,7 @@ namespace oz
        */
       int length() const
       {
-        return SIZE;
+        return count;
       }
 
       /**
@@ -307,12 +318,7 @@ namespace oz
        */
       bool isEmpty() const
       {
-        for( int i = 0; i < SIZE; i++ ) {
-          if( data[i] != null ) {
-            return false;
-          }
-        }
-        return true;
+        return count == 0;
       }
 
       /**
@@ -348,7 +354,7 @@ namespace oz
             return true;
           }
           else {
-            p = p->next;
+            p = p->next[0];
           }
         }
         return false;
@@ -369,6 +375,7 @@ namespace oz
 
           data[i] = elem;
           cached = elem;
+          count++;
         }
         return cached->value;
       }
@@ -387,6 +394,7 @@ namespace oz
 
         data[i] = elem;
         cached = elem;
+        count++;
       }
 
       /**
@@ -401,13 +409,14 @@ namespace oz
 
         while( p != null ) {
           if( p->key == key ) {
-            *prev = p->next;
+            *prev = p->next[0];
             delete p;
+            count--;
             return;
           }
           else {
-            prev = &p->next;
-            p = p->next;
+            prev = &p->next[0];
+            p = p->next[0];
           }
         }
       }
@@ -423,6 +432,8 @@ namespace oz
             data[i] = null;
           }
         }
+        cached = null;
+        count = 0;
       }
 
       /**
@@ -436,14 +447,16 @@ namespace oz
             data[i] = null;
           }
         }
+        cached = null;
+        count = 0;
       }
 
       /**
-       * Deallocate memory from Reuser.
+       * Deallocate memory from PoolAlloc.
        */
       static void deallocate()
       {
-        Elem::deallocate();
+        PoolAlloc<Elem, 0>::pool.free();
       }
 
   };

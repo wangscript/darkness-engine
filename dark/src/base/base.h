@@ -18,18 +18,13 @@
 # define _CRT_SECURE_NO_WARNINGS
 #endif
 
-#include <assert.h>
+#include <cassert>
+#include <typeinfo>
 
 /*
  * Basic definitons and template functions
  */
 #include "common.h"
-
-/*
- * Memory managment
- */
-#include "ReuseAlloc.h"
-#include "PoolAlloc.h"
 
 /*
  * Containers 1
@@ -40,6 +35,12 @@
 #include "Vector.h"
 #include "SVector.h"
 #include "Sparse.h"
+
+/*
+ * Memory managment
+ */
+#include "ReuseAlloc.h"
+#include "PoolAlloc.h"
 
 /*
  * String

@@ -29,15 +29,6 @@ namespace oz
 
   Config config;
 
-  Config::Config()
-  {}
-
-  Config::~Config()
-  {
-    free();
-    vars.deallocate();
-  }
-
   void Config::add( const String &key, const String &value )
   {
     if( vars.contains( key ) ) {
@@ -177,6 +168,11 @@ namespace oz
     return true;
   }
 
+  void Config::clear()
+  {
+    vars.clear();
+  }
+
   String Config::toString( const String &indentString )
   {
     String s = "";
@@ -197,11 +193,6 @@ namespace oz
       s = s + indentString + sortedVars[i].key + " = \"" + sortedVars[i].value + "\"\n";
     }
     return s;
-  }
-
-  void Config::free()
-  {
-    vars.clear();
   }
 
 }

@@ -107,7 +107,7 @@ namespace oz
        * Create a list with only one element.
        * @param e the element
        */
-      explicit List( const Type *e ) : firstElem( e )
+      explicit List( Type *e ) : firstElem( e )
       {
         e->next[INDEX] = null;
       }

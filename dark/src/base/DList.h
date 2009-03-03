@@ -115,7 +115,7 @@ namespace oz
        * Create a list with only one element.
        * @param e the element
        */
-      explicit DList( const Type *e ) : firstElem( e ), lastElem( e )
+      explicit DList( Type *e ) : firstElem( e ), lastElem( e )
       {
         e->prev[INDEX] = null;
         e->next[INDEX] = null;
