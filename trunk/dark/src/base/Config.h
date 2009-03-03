@@ -38,12 +38,8 @@ namespace oz
       /**
        * Default constructor.
        */
-      Config();
-
-      /**
-       * Deallocate space the variables use.
-       */
-      ~Config();
+      Config()
+      {}
 
       /**
        * Add variable.
@@ -95,6 +91,11 @@ namespace oz
       bool save( const char *file );
 
       /**
+       * Clear variables.
+       */
+      void clear();
+
+      /**
        * Print variables to a formatted String. It's formatted like
        * <pre>
        * key1 = "value1"
@@ -103,7 +104,6 @@ namespace oz
        */
       String toString( const String &indentString = "" );
 
-      void free();
   };
 
   extern Config config;

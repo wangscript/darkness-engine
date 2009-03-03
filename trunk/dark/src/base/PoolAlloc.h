@@ -15,183 +15,180 @@
 
 namespace oz
 {
-  template<class Type>
-  class PoolAlloc;
 
-  template <class Type>
-  class Pool
-  {
-    private:
-
-      static const int BLOCK_SIZE = 1024;
-
-      struct Block
-      {
-        Type  data[BLOCK_SIZE];
-        Block *next;
-
-        Block() : next( null )
-        {
-          for( int i = 0; i < BLOCK_SIZE - 1; i++ ) {
-            data[i].PoolAlloc<Type>::next = &data[i + 1];
-          }
-          data[BLOCK_SIZE - 1].PoolAlloc<Type>::next = null;
-        }
-      };
-
-      // pointer to first and last blocks
-      Block *firstBlock;
-      Block *lastBlock;
-      // Size of data blocks
-      int  size;
-      // Number of used slots in the pool
-      int  count;
-      // List of free slots (by indices in data array, not by pointers)
-      Type *freeSlot;
-
-      Pool( const Pool& );
-      Pool &operator = ( const Pool& );
-
-      void freeChain( const Block *block ) const
-      {
-        if( block != null ) {
-          freeChain( block->next );
-
-          delete block;
-        }
-      }
-
-    public:
-
-      /**
-       * Create empty pool with initial capacity BLOCK_SIZE.
-       * @param initSize
-       */
-      explicit Pool() : firstBlock( new Block() ), lastBlock( firstBlock ), size( BLOCK_SIZE ),
-          count( 0 ), freeSlot( &firstBlock->data[0] )
-      {}
-
-      /**
-       * Destructor.
-       */
-      ~Pool()
-      {
-        assert( count == 0 );
-
-        freeChain( firstBlock );
-      }
-
-      /**
-       * @return number of used slots in the pool
-       */
-      int length() const
-      {
-        return count;
-      }
-
-      /**
-       * @return capacity of the pool
-       */
-      int capacity() const
-      {
-        return size;
-      }
-
-      /**
-       * @return true if pool has no used slots
-       */
-      bool isEmpty() const
-      {
-        return count == 0;
-      }
-
-      /**
-       * Allocate a new element.
-       * We need to save pointer to this Pool to next field so we know from which Pool to remove
-       * when we call delete operator.
-       * Pool when calling delete operator.
-       * @param e
-       */
-      void *alloc()
-      {
-        if( freeSlot == null ) {
-          lastBlock->next = new Block();
-          lastBlock = lastBlock->next;
-          freeSlot = &lastBlock->data[0];
-        }
-
-        Type *slot = freeSlot;
-        freeSlot = slot->PoolAlloc<Type>::next;
-        slot->PoolAlloc<Type>::next = (Type*) this;
-
-        count++;
-        return slot;
-      }
-
-      /**
-       * Free given element.
-       * @param index
-       */
-      void free( Type *elem )
-      {
-        assert( count != 0 );
-
-        elem->PoolAlloc<Type>::next = freeSlot;
-        count--;
-      }
-
-  };
-
-  template <class Type>
+  template <class Type, int INDEX>
   class PoolAlloc
   {
-    friend class Pool<Type>;
-
-    private:
-
-      static Pool<Type> *pool;
-
-      Type *next;
-
     public:
 
-      PoolAlloc()
-      {}
-
       /**
-       * Set default pool for Type.
-       * @param pool_
+       * Internal class for memory management
+       * GCC wants that to be a template, otherwise it reports syntax error when defining static
+       * member storage (PoolAlloc::pool).
        */
-      static void setPool( Pool<Type> *pool_ )
+      template <class Dummy>
+      class Pool
       {
-        assert( pool == null );
+        friend class PoolAlloc;
 
-        pool = pool_;
-      }
+        private:
+
+          static const int BLOCK_SIZE = 1024;
+
+          /**
+           * Memory block.
+           * Block is an array that can hold up to BLOCK_SIZE elements. When we run out of space
+           * we simply allocate another block. Once a block is allocated in cannot be freed any
+           * more. Anyways, that would be rarely possible due to fragmentation.
+           */
+          struct Block
+          {
+            byte  data[BLOCK_SIZE * sizeof( Type )];
+            Block *next[1];
+
+            Block()
+            {
+              for( int i = 0; i < BLOCK_SIZE - 1; i++ ) {
+                get( i ).next[INDEX] = &get( i + 1 );
+              }
+              get( BLOCK_SIZE - 1 ).next[INDEX] = null;
+            }
+
+            Type &get( int i )
+            {
+              return ( (Type*) data )[i];
+            }
+
+            const Type &get( int i ) const
+            {
+              return ( (const Type*) data )[i];
+            }
+          };
+
+          // List of allocated blocks
+          List<Block, 0> blocks;
+          // Last freed block, null if none
+          Type *freeSlot;
+          // Size of data blocks
+          int  size;
+          // Number of used slots in the pool
+          int  count;
+
+          /**
+           * Create empty pool with initial capacity BLOCK_SIZE.
+           * @param initSize
+           */
+          Pool() : freeSlot( null ), size( 0 ), count( 0 )
+          {}
+
+          /**
+           * Destructor.
+           */
+          ~Pool()
+          {
+            assert( count == 0 );
+
+            blocks.free();
+          }
+
+          /**
+           * Allocate a new element.
+           * @param e
+           */
+          void *alloc()
+          {
+            count++;
+
+            if( freeSlot == null ) {
+              blocks << new Block();
+              freeSlot = &blocks.first()->get( 1 );
+              size += BLOCK_SIZE;
+              return &blocks.first()->get( 0 );
+            }
+            else {
+              Type *slot = freeSlot;
+              freeSlot = slot->next[INDEX];
+              return slot;
+            }
+          }
+
+          /**
+           * Free given element.
+           * @param index
+           */
+          void free( Type *elem )
+          {
+            assert( count != 0 );
+
+            elem->next[INDEX] = freeSlot;
+            freeSlot = elem;
+            count--;
+          }
+
+        public:
+
+          /**
+           * @return number of used slots in the pool
+           */
+          int length() const
+          {
+            return count;
+          }
+
+          /**
+           * @return capacity of the pool
+           */
+          int capacity() const
+          {
+            return size;
+          }
+
+          /**
+           * @return true if pool has no used slots
+           */
+          bool isEmpty() const
+          {
+            return count == 0;
+          }
+
+          /**
+           * Free the pool.
+           * Frees all blocks allocated. It won't end good if something still uses memory allocated
+           * by this pool.
+           */
+          void free()
+          {
+            assert( count == 0 );
+
+            blocks.free();
+            size = 0;
+            count = 0;
+            freeSlot = null;
+          }
+
+      };
+
+      static Pool<void> pool;
 
       /**
-       * Get an empty slot from default pool for Type.
+       * Get an empty slot from pool.
        * @param
        * @return
        */
       void *operator new ( uint )
       {
-        assert( pool != null );
-
-        return pool->alloc();
+        return pool.alloc();
       }
 
       /**
-       * Get an empty slot from specified pool.
+       * No placement.
        * @param
        * @param pool
        * @return
        */
-      void *operator new ( uint, Pool<Type> *pool )
+      void *operator new ( uint, void* )
       {
-        assert( pool != null );
-
-        return pool->alloc();
+        assert( false );
       }
 
       /**
@@ -200,14 +197,11 @@ namespace oz
        */
       void operator delete ( void *object )
       {
-        Type *slot = (Type*) object;
-        Pool<Type> *pool = (Pool<Type>*) slot->PoolAlloc<Type>::next;
-
-        pool->free( slot );
+        pool.free( (Type*) object );
       }
   };
 
-  template <class Type>
-  Pool<Type> *PoolAlloc<Type>::pool = null;
+  template <class Type, int INDEX>
+  PoolAlloc<Type, INDEX>::Pool<void> PoolAlloc<Type, INDEX>::pool;
 
 }

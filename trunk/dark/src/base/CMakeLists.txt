@@ -1,4 +1,4 @@
-ADD_LIBRARY( base STATIC
+add_library( base STATIC
   Bitset.h
   Config.cpp
   Config.h
