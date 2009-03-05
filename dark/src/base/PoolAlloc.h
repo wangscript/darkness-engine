@@ -170,6 +170,7 @@ namespace oz
 
       static Pool<void> pool;
 
+#ifdef OZ_USE_POOLALLOC
       /**
        * Get an empty slot from pool.
        * @param
@@ -181,14 +182,16 @@ namespace oz
       }
 
       /**
-       * No placement.
+       * No placement new.
        * @param
-       * @param pool
+       * @param
        * @return
        */
       void *operator new ( uint, void* )
       {
         assert( false );
+
+        return null;
       }
 
       /**
@@ -199,6 +202,8 @@ namespace oz
       {
         pool.free( (Type*) object );
       }
+#endif
+
   };
 
   template <class Type, int INDEX>

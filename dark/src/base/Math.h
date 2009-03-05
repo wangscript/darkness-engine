@@ -11,7 +11,7 @@
 #pragma once
 
 #ifdef WIN32
-#include <cmath>
+#include <math.h>
 #endif
 
 namespace oz

@@ -318,6 +318,23 @@ namespace oz
       }
 
       /**
+       * Create slot for a new element.
+       * @return index at which the slot was created
+       */
+      int add()
+      {
+        ensureCapacity();
+
+        int index = freeSlot;
+
+        freeSlot = data[index].nextSlot;
+        data[index].nextSlot = -1;
+        count++;
+
+        return index;
+      }
+
+      /**
        * Add an element.
        * @param e
        * @return index at which the element was inserted

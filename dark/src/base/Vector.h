@@ -2,7 +2,7 @@
  *  Vector.h
  *
  *  Vector
- *  It can be also used as stack or small set
+ *  It can be also used as stack or small set.
  *
  *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
  *
@@ -299,6 +299,15 @@ namespace oz
       void operator << ( const Type &e )
       {
         pushLast( e );
+      }
+
+      /**
+       * Create slot for a new element at the end.
+       */
+      void add()
+      {
+        ensureCapacity();
+        count++;
       }
 
       /**

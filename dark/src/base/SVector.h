@@ -244,6 +244,16 @@ namespace oz
       }
 
       /**
+       * Create slot for a new element at the end.
+       */
+      void add()
+      {
+        assert( count < SIZE );
+
+        count++;
+      }
+
+      /**
        * Add an element to the end.
        * @param e
        */
