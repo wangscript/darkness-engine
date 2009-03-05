@@ -10,9 +10,9 @@
 
 #include "base.h"
 
-#include <cmath>
-#include <cstdlib>
-#include <ctime>
+#include <math.h>
+#include <stdlib.h>
+#include <time.h>
 
 namespace oz
 {

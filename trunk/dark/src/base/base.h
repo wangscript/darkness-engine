@@ -18,8 +18,7 @@
 # define _CRT_SECURE_NO_WARNINGS
 #endif
 
-#include <cassert>
-#include <typeinfo>
+#include <assert.h>
 
 /*
  * Basic definitons and template functions

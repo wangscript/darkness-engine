@@ -39,6 +39,7 @@ namespace oz
       ReuseAlloc() : next( null )
       {}
 
+#ifdef OZ_REUSEALLOC
       // If the list of freed blocks isn't empty, reuse the last freed block (at the beginning of
       // the list), otherwise allocate new block. (Constructor is called automatically.)
       void *operator new ( uint size )
@@ -52,6 +53,19 @@ namespace oz
         return ::new byte[size];
       }
 
+      /**
+       * No placement new.
+       * @param
+       * @param
+       * @return
+       */
+      void *operator new ( uint, void* )
+      {
+        assert( false );
+
+        return null;
+      }
+
       // Do not really free memory, add it at the beginning of the list of freed blocks.
       // (Destructor is called automatically.)
       void operator delete ( void *ptr )
@@ -62,6 +76,7 @@ namespace oz
         p->ReuseAlloc::next = freeList;
         freeList = p;
       }
+#endif
 
       // It's good idea to call that function from time to time and at the end of the program to
       // free some memory and to prevent memory leaks.

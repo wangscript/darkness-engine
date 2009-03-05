@@ -10,9 +10,9 @@
 
 #include "base.h"
 
-#include <cstdarg>
-#include <cstdio>
-#include <ctime>
+#include <stdarg.h>
+#include <stdio.h>
+#include <time.h>
 
 namespace oz
 {
