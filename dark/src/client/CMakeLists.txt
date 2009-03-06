@@ -27,6 +27,8 @@ ADD_EXECUTABLE( dark
   Particles.h
   Render.cpp
   Render.h
+  ResourceManager.h
+  ResourceManager.cpp
   Shape.cpp
   Shape.h
   SimpleObject.cpp

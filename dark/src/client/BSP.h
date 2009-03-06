@@ -46,9 +46,9 @@ namespace Client
       BSP();
       ~BSP();
 
-      explicit BSP( oz::BSP *bsp );
+      explicit BSP( oz::BSP *bsp, Context *context );
 
-      void init( oz::BSP *bsp );
+      void init( oz::BSP *bsp, Context *context );
       void draw( const Vec3 &p );
       uint genList();
 

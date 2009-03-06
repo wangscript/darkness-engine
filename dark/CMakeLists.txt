@@ -1,6 +1,6 @@
 cmake_minimum_required( VERSION 2.6 )
 
-PROJECT( Dark CXX )
+PROJECT( openzone C CXX )
 
 IF( WIN32 )
 
@@ -46,24 +46,20 @@ IF( WIN32 )
 ELSE( WIN32 )
 
   # required libraries
-  FIND_FILE( xml2_h libxml2/libxml )
-  FIND_LIBRARY( xml2_so xml2 )
-  FIND_FILE( SDL_h SDL/SDL.h )
-  FIND_LIBRARY( SDL_so SDL )
-  FIND_FILE( SDL_image_h SDL/SDL_image.h )
-  FIND_LIBRARY( SDL_image_so SDL_image )
-  FIND_FILE( GL_h GL/gl.h )
-  FIND_LIBRARY( GL_so GL )
-  FIND_FILE( GLU_h GL/glu.h )
-  FIND_LIBRARY( GLU_so GLU )
-  FIND_FILE( AL_h AL/al.h )
-  FIND_LIBRARY( AL_so openal )
-  FIND_FILE( ALUT_h AL/alut.h )
-  FIND_LIBRARY( ALUT_so alut )
-  FIND_FILE( OGG_h ogg/ogg.h )
-  FIND_LIBRARY( OGG_so ogg )
-  FIND_FILE( VORBIS_h vorbis/vorbisfile.h )
-  FIND_LIBRARY( VORBIS_so vorbisfile )
+  find_package( LibXml2 REQUIRED )
+  find_package( PhysFS REQUIRED )
+  find_package( SDL REQUIRED )
+  find_package( SDL_image REQUIRED )
+  find_package( OpenGL REQUIRED )
+  find_package( GLU REQUIRED )
+  find_package( OpenAL REQUIRED )
+
+  find_file( ALUT_INCLUDE_DIR AL )
+  find_library( ALUT_LIBRARY alut )
+  find_file( OGG_INCLUDE_DIR ogg )
+  find_library( OGG_LIBRARY ogg )
+  find_file( VORBIS_INCLUDE_DIR vorbis )
+  find_library( VORBIS_LIBRARY vorbisfile )
 
   SET( CXX_FLAGS -g3 -Wall -Wextra -Winvalid-pch -pipe -I/usr/include/libxml2 )
   ADD_DEFINITIONS( ${CXX_FLAGS} )
@@ -83,7 +79,7 @@ ELSE( WIN32 )
 
   ADD_CUSTOM_COMMAND(
     OUTPUT precompiled.h.gch
-    DEPENDS base
+    DEPENDS base precompiled.h
     COMMAND
       rm -f precompiled.h.gch &&
       ${CMAKE_CXX_COMPILER} ${CXX_FLAGS} precompiled.h )

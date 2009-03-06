@@ -32,6 +32,8 @@ namespace oz
 
     flags = Object::CLIP_BIT | Object::RELEASED_CULL_BIT;
     type = TYPE;
+
+    model = translator.getModel( "tree3.md2" );
   }
 
   O_Tree2::O_Tree2( float x, float y )
@@ -41,6 +43,8 @@ namespace oz
 
     flags = Object::CLIP_BIT | Object::RELEASED_CULL_BIT;
     type = TYPE;
+
+    model = translator.getModel( "tree3.md2" );
   }
 
   void O_Tree2::onDestroy()

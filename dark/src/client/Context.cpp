@@ -12,6 +12,8 @@
 
 #include "Context.h"
 
+#include "ResourceManager.h"
+
 namespace oz
 {
 namespace Client
@@ -19,127 +21,11 @@ namespace Client
 
   Context context;
 
-  uint Context::buildTexture( const ubyte *data, int width, int height, int bytesPerPixel,
-                              bool wrap, int magFilter, int minFilter )
-  {
-    assert( glGetError() == GL_NO_ERROR );
-
-    GLenum format = bytesPerPixel == 4 ? GL_RGBA : GL_RGB;
-
-    uint texNum;
-    glGenTextures( 1, &texNum );
-    glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
-    glBindTexture( GL_TEXTURE_2D, texNum );
-
-    if( minFilter >= GL_NEAREST_MIPMAP_NEAREST ) {
-      gluBuild2DMipmaps( GL_TEXTURE_2D, bytesPerPixel, width, height, format,
-                         GL_UNSIGNED_BYTE, data );
-    }
-    else {
-      glTexImage2D( GL_TEXTURE_2D, 0, bytesPerPixel, width, height, 0, format,
-                    GL_UNSIGNED_BYTE, data );
-    }
-
-    if( !wrap ) {
-      glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
-      glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
-    }
-
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter );
-
-    glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-
-    if( glGetError() != GL_NO_ERROR ) {
-      glDeleteTextures( 1, &texNum );
-      texNum = 0;
-
-      do {
-      }
-      while( glGetError() != GL_NO_ERROR );
-    }
-    return texNum;
-  }
-
-  uint Context::buildNormalmap( ubyte *data, const Vec3 &lightNormal, int width, int height,
-                                int bytesPerPixel, bool wrap, int magFilter, int minFilter )
-  {
-    assert( glGetError() == GL_NO_ERROR );
-
-    ubyte *dataEnd = data + width * height * bytesPerPixel;
-
-    for( ubyte *p = data; p < dataEnd; p += bytesPerPixel ) {
-      float x = ( (float) p[0] - 128.0f ) / 128.0f;
-      float y = ( (float) p[1] - 128.0f ) / 128.0f;
-      float z = ( (float) p[2] - 128.0f ) / 128.0f;
-
-      float dot = x * lightNormal.x + y * lightNormal.y + z * lightNormal.z;
-      ubyte color = (ubyte) bound( dot * 256.0f, 0.0f, 255.0f );
-
-      p[0] = color;
-      p[1] = color;
-      p[2] = color;
-    }
-
-    GLenum format = bytesPerPixel == 4 ? GL_RGBA : GL_RGB;
-
-    uint texNum;
-    glGenTextures( 1, &texNum );
-    glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
-    glBindTexture( GL_TEXTURE_2D, texNum );
-
-    if( minFilter >= GL_NEAREST_MIPMAP_NEAREST ) {
-      gluBuild2DMipmaps( GL_TEXTURE_2D, bytesPerPixel, width, height, format,
-                         GL_UNSIGNED_BYTE, data );
-    }
-    else {
-      glTexImage2D( GL_TEXTURE_2D, 0, bytesPerPixel, width, height, 0, format,
-                    GL_UNSIGNED_BYTE, data );
-    }
-
-    if( !wrap ) {
-      glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
-      glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
-    }
-
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter );
-
-    glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-
-    if( glGetError() != GL_NO_ERROR ) {
-      glDeleteTextures( 1, &texNum );
-      texNum = 0;
-
-      do {
-      }
-      while( glGetError() != GL_NO_ERROR );
-    }
-    return texNum;
-  }
-
-  Context::Context()
-  {
-    init();
-  }
-
   Context::~Context()
-  {
-    free();
-  }
-
-  void Context::init()
-  {
-    logFile.println( "Context created" );
-
-    entries.add( Entry() );
-  }
-
-  void Context::free()
   {}
 
-  uint Context::createTexture( int contextId, const ubyte *data, int width, int height,
-                               int bytesPerPixel, bool wrap, int magFilter, int minFilter )
+  uint Context::createTexture( const ubyte *data, int width, int height, int bytesPerPixel,
+                               bool wrap, int magFilter, int minFilter )
   {
     assert( entries.hasIndex( contextId ) );
 
@@ -261,7 +147,6 @@ namespace Client
 
   int Context::createContext()
   {
-    return entries << Entry();
   }
 
   void Context::freeContext( int context )

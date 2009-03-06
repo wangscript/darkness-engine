@@ -249,7 +249,7 @@ namespace oz
     }
     particles.clear();
 
-    ReuseAlloc<Effect>::deallocate();
+    PoolAlloc<Effect, 0>::pool.free();
 
     bsps.free();
     bsps.clear();

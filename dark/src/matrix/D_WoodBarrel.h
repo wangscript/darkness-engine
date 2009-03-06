@@ -35,7 +35,7 @@ namespace oz
       explicit D_WoodBarrel( const Vec3 &p = Vec3::zero(), Object *content = null );
       ~D_WoodBarrel();
 
-      void createModel();
+//       void createModel();
   };
 
 }

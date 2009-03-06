@@ -27,12 +27,12 @@ namespace Client
   BSP::BSP()
   {}
 
-  BSP::BSP( oz::BSP *bsp )
+  BSP::BSP( oz::BSP *bsp, Context *context )
   {
     textures = null;
     lightMaps = null;
 
-    init( bsp );
+    init( bsp, context );
   }
 
   BSP::~BSP()
@@ -85,10 +85,9 @@ namespace Client
     glDrawElements( GL_TRIANGLES, face.nIndices, GL_UNSIGNED_INT, &bsp->indices[face.firstIndex] );
   }
 
-  void BSP::init( oz::BSP *bsp_ )
+  void BSP::init( oz::BSP *bsp_, Context *context )
   {
     bsp = bsp_;
-    contextId = context.createContext();
 
 #ifdef __WIN32__
     if( glActiveTexture == null ) {
@@ -104,7 +103,7 @@ namespace Client
     textures = new uint[bsp->nTextures];
     for( int i = 0; i < bsp->nTextures; i++ ) {
       if( bsp->textures[i] != null ) {
-        textures[i] = context.loadTexture( contextId, bsp->textures[i], true );
+        textures[i] = context->loadTexture( bsp->textures[i], true );
       }
     }
 
@@ -116,12 +115,11 @@ namespace Client
         bits[j] += (ubyte) ( ( 255 - bits[j] ) * BSP_GAMMA_CORR );
       }
 
-      lightMaps[i] = context.createTexture( contextId,
-                                            bits,
-                                            oz::BSP::LIGHTMAP_DIM,
-                                            oz::BSP::LIGHTMAP_DIM,
-                                            oz::BSP::LIGHTMAP_BPP,
-                                            true );
+      lightMaps[i] = context->createTexture( bits,
+                                             oz::BSP::LIGHTMAP_DIM,
+                                             oz::BSP::LIGHTMAP_DIM,
+                                             oz::BSP::LIGHTMAP_BPP,
+                                             true );
     }
 
     hiddenFaces.setSize( bsp->nFaces );
@@ -129,7 +127,6 @@ namespace Client
     drawnFaces.setSize( bsp->nFaces );
     hiddenFaces.clearAll();
 
-    baseList = context.genLists( contextId, bsp->nFaces );
     for( int i = 0; i < bsp->nFaces; i++ ) {
       oz::BSP::Vertex *verts = &bsp->vertices[ bsp->faces[i].firstVertex ];
 

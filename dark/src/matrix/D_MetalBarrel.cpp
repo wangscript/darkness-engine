@@ -37,6 +37,8 @@ namespace oz
 
     velocity = Vec3::zero();
     mass = 50.0f;
+
+    model = translator.getModel( "metalBarrel.md2" );
   }
 
   void D_MetalBarrel::onDestroy()

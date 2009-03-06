@@ -50,7 +50,7 @@ namespace oz
 
       explicit B_Human( const Vec3 &p, float h = 0.0f, float v = 0.0f, Mind *mind = null );
 
-      void createModel();
+//       void createModel();
   };
 
 }

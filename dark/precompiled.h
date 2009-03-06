@@ -11,8 +11,10 @@
  */
 
 // defining NDEBUG disables assert macro
+// #define NDEBUG
 
-#define DARK_USE_REUSER
+#define OZ_USE_REUSEALLOC
+#define OZ_USE_POOLALLOC
 
 #include "src/base/base.h"
 

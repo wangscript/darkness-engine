@@ -110,14 +110,14 @@ namespace Client
       SDL_Quit();
       logFile.printRaw( " OK\n" );
     }
-    logFile.printlnETD( "%s finished on", DARK_APP_NAME );
+    logFile.printlnETD( "%s finished on", OZ_APP_NAME );
   }
 
   void Main::main()
   {
 #ifdef WIN32
     const char *homeVar = getenv( "HOME" );
-    String home( homeVar == null ? DARK_RC_DIR : homeVar + String( "\\" DARK_RC_DIR ) );
+    String home( homeVar == null ? OZ_RC_DIR : homeVar + String( "\\" OZ_RC_DIR ) );
 
     struct _stat homeDirStat;
     if( _stat( home.cstr(), &homeDirStat ) ) {
@@ -133,7 +133,7 @@ namespace Client
     home = home + "\\";
 #else
     const char *homeVar = getenv( "HOME" );
-    String home( homeVar == null ? DARK_RC_DIR "/" : homeVar + String( "/" DARK_RC_DIR "/" ) );
+    String home( homeVar == null ? OZ_RC_DIR "/" : homeVar + String( "/" OZ_RC_DIR "/" ) );
 
     struct stat homeDirStat;
     if( stat( home.cstr(), &homeDirStat ) ) {
@@ -148,8 +148,8 @@ namespace Client
     }
 #endif
 
-#ifdef DARK_LOG_FILE
-    String logPath = home + DARK_LOG_FILE;
+#ifdef OZ_LOG_FILE
+    String logPath = home + OZ_LOG_FILE;
 
     if( !logFile.init( logPath, true, "  " ) ) {
       printf( "Can't create/open log file '%s' for writing\n", logPath.cstr() );
@@ -163,7 +163,7 @@ namespace Client
     logFile.println( "Log stream stdout ... OK" );
 #endif
 
-    logFile.printlnETD( "%s started on", DARK_APP_NAME );
+    logFile.printlnETD( "%s started on", OZ_APP_NAME );
 
     logFile.print( "Initializing SDL ..." );
     if( SDL_Init( SDL_INIT_VIDEO ) ) {
@@ -180,7 +180,7 @@ namespace Client
     defaultConfig();
     logFile.printRaw( " OK\n" );
 
-    const char *configPath = ( home + DARK_CONFIG_FILE ).cstr();
+    const char *configPath = ( home + OZ_CONFIG_FILE ).cstr();
 
     if( !config.load( configPath ) ) {
       logFile.println( "Config not found, creating default {", configPath );
@@ -243,7 +243,7 @@ namespace Client
       putenv( (char*) "__GL_SYNC_TO_VBLANK=1" );
     }
 #endif
-    SDL_WM_SetCaption( DARK_WM_TITLE, null );
+    SDL_WM_SetCaption( OZ_WM_TITLE, null );
     SDL_ShowCursor( false );
 
     int modeResult = SDL_VideoModeOK( screenX, screenY, screenBpp, SDL_OPENGL | screenFull );
