@@ -10,10 +10,10 @@
 
 #pragma once
 
-#define DARK_APP_NAME            "Darkness server"
-#define DARK_RC_DIR              ".dark/"
-#define DARK_LOG_FILE            "server.log"
-#define DARK_CONFIG_FILE         "server.conf"
+#define OZ_APP_NAME            "Darkness server"
+#define OZ_RC_DIR              ".dark/"
+#define OZ_LOG_FILE            "server.log"
+#define OZ_CONFIG_FILE         "server.conf"
 
 namespace oz
 {

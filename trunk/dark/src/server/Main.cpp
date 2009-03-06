@@ -37,13 +37,13 @@ namespace Server
       SDL_Quit();
       logFile.printRaw( " OK\n" );
     }
-    logFile.printlnETD( "%s finished on", DARK_APP_NAME );
+    logFile.printlnETD( "%s finished on", OZ_APP_NAME );
   }
 
   void Main::main()
   {
     const char *homeVar = getenv( "HOME" );
-    String home( homeVar == null ? "./" DARK_RC_DIR : homeVar + String( "/" DARK_RC_DIR ) );
+    String home( homeVar == null ? "./" OZ_RC_DIR : homeVar + String( "/" OZ_RC_DIR ) );
 
 #ifdef WIN32
 #else
@@ -60,8 +60,8 @@ namespace Server
     }
 #endif
 
-#ifdef DARK_LOG_FILE
-    String logPath = home + DARK_LOG_FILE;
+#ifdef OZ_LOG_FILE
+    String logPath = home + OZ_LOG_FILE;
 
     if( !logFile.init( logPath, true, "  " ) ) {
       printf( "Can't create/open log file '%s' for writing\n", logPath.cstr() );
@@ -75,7 +75,7 @@ namespace Server
     logFile.println( "Log stream stdout ... OK" );
 #endif
 
-    logFile.printlnETD( "%s started on", DARK_APP_NAME );
+    logFile.printlnETD( "%s started on", OZ_APP_NAME );
 
     logFile.print( "Initializing SDL ..." );
     if( SDL_Init( 0 ) ) {
@@ -91,7 +91,7 @@ namespace Server
     defaultConfig();
     logFile.printRaw( " OK\n" );
 
-    const char *configPath = ( home + DARK_CONFIG_FILE ).cstr();
+    const char *configPath = ( home + OZ_CONFIG_FILE ).cstr();
 
     if( !config.load( configPath ) ) {
       logFile.println( "Config not found, creating default {", configPath );

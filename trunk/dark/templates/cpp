@@ -12,7 +12,7 @@
 
 #include "$MODULE$.h"
 
-namespace Dark
+namespace oz
 {
 
 

@@ -46,10 +46,10 @@ namespace oz
 
         if( !( oldFlags & Object::ON_WATER_BIT ) ) {
           if( newVelocity.z < -4.0f ) {
-            addEffect( Effect::SPLASH_HARD );
+            events << new Event( Event::SPLASH_HARD );
           }
           else if( newVelocity.z < -2.0f ) {
-            addEffect( Effect::SPLASH_SOFT );
+            events << new Event( Event::SPLASH_SOFT );
           }
         }
         if( water.includes( p ) ) {

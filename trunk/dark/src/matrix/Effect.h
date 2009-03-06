@@ -13,15 +13,13 @@
 namespace oz
 {
 
-  struct Effect : ReuseAlloc<Effect>
+  struct Effect : PoolAlloc<Effect, 0>
   {
-    static const int HIT          = 0;
-    static const int SPLASH_SOFT  = 1;
-    static const int SPLASH_HARD  = 2;
-
     int    id;
-    void   *dual;
     Effect *next[1];
+
+    Effect()
+    {}
 
     explicit Effect( int id_ ) : id( id_ )
     {}

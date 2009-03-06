@@ -11,8 +11,10 @@
 #pragma once
 
 #include "bv.h"
+#include "Event.h"
 #include "Effect.h"
 #include "Hit.h"
+#include "Translator.h"
 
 namespace oz
 {
@@ -135,16 +137,20 @@ namespace oz
       // rotation around z axis
       float   rotZ;
 
-      // effects are used for sounds etc. They are cleared at the beginning of next update
+      // events are cleared at the beginning of next update (used for non-continuous sounds)
+      List<Event, 0> events;
+      // effects are similar to events, but must be manually creared (used for continuous sounds)
       List<Effect, 0> effects;
 
       // graphics model
-      Client::Model *model;
+      int model;
+      float alpha;
+      int anim;
 
     public:
 
       Object() : index( -1 ), sector( null ), flags( 0 ), type( -1 ),
-          damage( Math::INF ), rotZ( 0.0f )
+          damage( Math::INF ), rotZ( 0.0f ), alpha( 1.0f )
       {}
 
       virtual ~Object()
@@ -167,6 +173,8 @@ namespace oz
 
       void update()
       {
+        events.free();
+
         if( flags & UPDATE_FUNC_BIT ) {
           onUpdate();
         }

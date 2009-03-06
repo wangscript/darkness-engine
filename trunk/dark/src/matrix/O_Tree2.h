@@ -34,7 +34,7 @@ namespace oz
       void load( FILE *stream );
       void save( FILE *stream );
 
-      void createModel();
+//       void createModel();
   };
 
 }

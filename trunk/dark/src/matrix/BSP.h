@@ -106,7 +106,7 @@ namespace oz
     int           nFaces;
     int           nLightmaps;
 
-    const char    **textures;
+    int           *textures;
     Plane         *planes;
 
     Node          *nodes;

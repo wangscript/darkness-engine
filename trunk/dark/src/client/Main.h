@@ -10,11 +10,11 @@
 
 #pragma once
 
-#define DARK_APP_NAME            "Darkness"
-#define DARK_WM_TITLE            DARK_APP_NAME
-#define DARK_RC_DIR              ".dark"
-#define DARK_LOG_FILE            "client.log"
-#define DARK_CONFIG_FILE         "client.xml"
+#define OZ_APP_NAME            "OpenZone"
+#define OZ_WM_TITLE            OZ_APP_NAME
+#define OZ_RC_DIR              ".openzone"
+#define OZ_LOG_FILE            "client.log"
+#define OZ_CONFIG_FILE         "client.xml"
 
 namespace oz
 {

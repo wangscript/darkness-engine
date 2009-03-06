@@ -52,6 +52,8 @@ ADD_LIBRARY( matrix STATIC
   Terrain.h
   Timer.cpp
   Timer.h
+  Translator.h
+  Translator.cpp
   Vehicle.cpp
   Vehicle.h
   Water.cpp
