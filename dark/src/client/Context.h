@@ -1,14 +1,16 @@
 /*
  *  Context.h
  *
- *  Evidenca in nalaganja in nalagalnik tekstur, zvokov in listov
+ *  [description]
  *
- *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
+ *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  *
  *  $Id$
  */
 
 #pragma once
+
+#include "matrix/Translator.h"
 
 namespace oz
 {
@@ -19,21 +21,55 @@ namespace Client
   {
     private:
 
-      Vector<int> textures;
-      Vector<int> bufferTextures;
-      Vector<int> sounds;
-      Vector<int> lists;
+      struct Texture
+      {
+        uint id;
+
+        union {
+          int nUsers;
+          int nextSlot;
+        };
+      };
+
+      struct Sound
+      {
+        uint buffer;
+        int  nUsers;
+      };
+
+      struct Lists
+      {
+        uint base;
+
+        union {
+          int count;
+          int nextSlot;
+        };
+      };
+
+      Texture         *textures;
+      Sound           *sounds;
+      Sparse<Lists>   lists;
+      Sparse<Texture> bufferTextures;
+
+      static uint buildTexture( const ubyte *data, int width, int height, int bytesPerPixel,
+                                bool wrap, int magFilter, int minFilter );
+      static uint buildNormalmap( ubyte *data, const Vec3 &lightNormal, int width,int height,
+                                  int bytesPerPixel, bool wrap, int magFilter, int minFilter );
 
     public:
 
-      ~Context();
+      Context();
+
+      void init();
+      void free();
 
       uint createTexture( const ubyte *data,
                           int width,
                           int height,
                           int bytesPerPixel,
                           bool wrap = true,
-                          int magFilter = GL_LINEAR,
+                          int magFilter = GL_LINEAR_MIPMAP_NEAREST,
                           int minFilter = GL_LINEAR_MIPMAP_NEAREST );
 
       uint createNormalmap( ubyte *data,
@@ -42,28 +78,54 @@ namespace Client
                             int height,
                             int bytesPerPixel,
                             bool wrap = true,
-                            int magFilter = GL_LINEAR,
+                            int magFilter = GL_LINEAR_MIPMAP_NEAREST,
                             int minFilter = GL_LINEAR_MIPMAP_NEAREST );
 
       uint loadTexture( int resource,
                         bool wrap = true,
-                        int magFilter = GL_LINEAR,
+                        int magFilter = GL_LINEAR_MIPMAP_NEAREST,
                         int minFilter = GL_LINEAR_MIPMAP_NEAREST );
 
       uint loadNormalmap( int resource,
                           const Vec3 &lightNormal,
                           bool wrap = true,
-                          int magFilter = GL_LINEAR,
+                          int magFilter = GL_LINEAR_MIPMAP_NEAREST,
                           int minFilter = GL_LINEAR_MIPMAP_NEAREST );
 
-      uint loadSound( int context, int resource );
+      void freeTexture( uint texId );
 
-      uint genList( int contextId );
+      uint loadSound( int resource );
+      void freeSound( uint SoundId );
 
-      uint genLists( int contextId, int count );
+      uint genList();
+      uint genLists( int count );
+      void freeLists( uint listId );
 
-      int createContext();
-      void freeContext( int context );
+      /*
+       * Loading by file name
+       */
+      uint loadTexture( const char *file,
+                        bool wrap = true,
+                        int magFilter = GL_LINEAR_MIPMAP_NEAREST,
+                        int minFilter = GL_LINEAR_MIPMAP_NEAREST )
+      {
+        return loadTexture( translator.getTexture( file ), wrap, magFilter, minFilter );
+      }
+
+      uint loadNormalmap( const char *file,
+                          const Vec3 &lightNormal,
+                          bool wrap = true,
+                          int magFilter = GL_LINEAR_MIPMAP_NEAREST,
+                          int minFilter = GL_LINEAR_MIPMAP_NEAREST )
+      {
+        return loadNormalmap( translator.getTexture( file ), lightNormal, wrap,
+                              magFilter, minFilter );
+      }
+
+      uint loadSound( const char *file )
+      {
+        return loadSound( translator.getSound( file ) );
+      }
 
   };
 

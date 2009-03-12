@@ -13,7 +13,6 @@
 #include "Water.h"
 
 #include "matrix/Water.h"
-
 #include "Context.h"
 
 namespace oz
@@ -33,7 +32,7 @@ namespace Client
 
   void Water::init()
   {
-    texture = context.loadTexture( Context::DEFAULT, "tex/water1.jpg", true );
+    texture = context.loadTexture( "water1.jpg", true );
   }
 
   void Water::update()

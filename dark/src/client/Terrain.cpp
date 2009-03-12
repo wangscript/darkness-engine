@@ -58,7 +58,7 @@ namespace Client
     float (&heightMap)[oz::Terrain::MAX + 1][oz::Terrain::MAX + 1] = world.terrain.heightMap;
     TerraQuad (&terraQuad)[128][128] = world.terrain.terra;
 
-    uint list = context.genList( Context::DEFAULT );
+    uint list = context.genList();
     glNewList( list, GL_COMPILE );
 
     *minHeight = Math::INF;
@@ -134,7 +134,7 @@ namespace Client
   }
 
   void Terrain::buildQuadtree( Quadtree *qTree, int minX, int minY, int maxX, int maxY,
-                                    float *minHeight, float *maxHeight )
+                               float *minHeight, float *maxHeight )
   {
     static int depth = 0;
 
@@ -204,10 +204,10 @@ namespace Client
     depth--;
   }
 
-  void Terrain::init( uint terraMap, uint terraDetail )
+  void Terrain::init()
   {
-    tTerraDetail = terraDetail;
-    tTerraMap = terraMap;
+    tTerraDetail = context.loadTexture( "detail.jpg" );
+    tTerraMap = context.loadTexture( "map.png" );
 
 #ifdef __WIN32__
     glMultiTexCoord2i = (PFNGLMULTITEXCOORD2IPROC) SDL_GL_GetProcAddress( "glMultiTexCoord2i" );

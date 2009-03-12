@@ -192,14 +192,16 @@ namespace oz
 
       fread( &texture, sizeof( QBSPTexture ), 1, f );
 
-      if( String::length( texture.name ) > 8 ) {
-        String name = String( "tex/" ) + String( texture.name ).substring( 9 ) + ".jpg";
-        textures[i] = max( translator.getTexture( name ), 0 );
-      }
-      else {
+      if( String::length( texture.name ) <= 9 ||
+          String::equals( texture.name, "textures/NULL" ) )
+      {
         textures[i] = -1;
       }
-      if( texture.flags ) {
+      else {
+        String name = "tex/" + String( texture.name ).substring( 9 ) + ".jpg";
+        textures[i] = translator.getTexture( name );
+      }
+      if( texture.flags != 0 ) {
         textures[i] = ~textures[i];
       }
     }

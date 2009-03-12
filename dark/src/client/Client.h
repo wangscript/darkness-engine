@@ -49,7 +49,7 @@ namespace Client
 
     public:
 
-      void init();
+      bool init();
       void start();
 
       bool update( int time );

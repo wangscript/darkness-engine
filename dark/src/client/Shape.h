@@ -27,7 +27,7 @@ namespace Client
     uint genBox( uint list, const AABB &bb, uint texture );
     void drawBox( const AABB &bb );
 
-    void init( int contextId );
+    void init();
     void free();
   };
 

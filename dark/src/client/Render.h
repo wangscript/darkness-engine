@@ -29,9 +29,6 @@ namespace Client
   {
     private:
 
-      static const int MODEL_HT_SIZE = 4096;
-      static const int SPARKGENRENDER_HT_SIZE = 4096;
-
       static const float RELEASED_CULL_FACTOR;
       static const float INCH;
 
@@ -43,27 +40,23 @@ namespace Client
       static const float NIGHT_FOG_COEFF;
       static const float NIGHT_FOG_DIST;
 
-      int           envContext;
+      Font         font;
+      Terrain      terra;
 
-      Font          font;
-      Terrain       terra;
+      Vector<BSP*> bsps;
+      Bitset       drawnStructures;
 
-      Vector<BSP*>  bsps;
-      Bitset        drawnStructures;
+      Vector<uint> lists;
 
-      Vector<uint>  lists;
+      Vector<MD2*> md2s;
 
-      Vector<MD2*>  md2s;
-
-      DList<Model, 0> models;
-      HashIndex<SparkGenRender, SPARKGENRENDER_HT_SIZE> sparkGenRenders;
+      HashIndex<Model*, 1024> models;
 
       Vector<Structure*> structures;
       Vector<Object*>    objects;
       Vector<Object*>    blendedObjects;
       Vector<Object*>    waterObjects;
       Vector<Particle*>  particles;
-      Vector<SparkGen*>  sparkGens;
 
       float perspectiveAngle;
       float perspectiveAspect;

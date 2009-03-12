@@ -18,19 +18,8 @@
 
 #include "src/base/base.h"
 
-// include SDL, OpenGL and OpenAL since they are commonly used
-#ifdef WIN32
-
-# include <SDL.h>
-# include <SDL_image.h>
-# include <SDL_opengl.h>
-# include <AL/alut.h>
-
-#else
-
-# include <SDL/SDL.h>
-# include <SDL/SDL_image.h>
-# include <SDL/SDL_opengl.h>
-# include <AL/alut.h>
-
-#endif
+// include SDL, OpenGL and OpenAL as those are commonly used
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_opengl.h>
+#include <AL/alut.h>

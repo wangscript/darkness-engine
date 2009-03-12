@@ -39,8 +39,6 @@ namespace oz
   {
     semaphore = SDL_CreateSemaphore( 0 );
 
-    translator.init();
-
     physics.init( G_ACCEL );
 
     world.sky.init( 70.0f, 600.0f );
@@ -164,7 +162,6 @@ namespace oz
     world.free();
     PoolAlloc<Effect, 0>::pool.free();
     PoolAlloc<Event, 0>::pool.free();
-    translator.free();
 
     SDL_DestroySemaphore( semaphore );
   }

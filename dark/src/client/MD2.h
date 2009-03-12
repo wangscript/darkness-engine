@@ -11,7 +11,6 @@
 #pragma once
 
 #include "matrix/Timer.h"
-#include "Context.h"
 
 namespace oz
 {
@@ -74,8 +73,6 @@ namespace Client
 
       static float anorms[][3];
 
-      int contextId;
-
       int   nFrames;
       int   nVerts;
       int   nGlCmds;
@@ -99,7 +96,7 @@ namespace Client
       MD2();
       ~MD2();
 
-      bool load( int contextId, const char *path );
+      bool load( const char *path );
 
       void drawFrame( int frame );
       void draw( AnimState *anim );
@@ -108,8 +105,7 @@ namespace Client
       void translate( const Vec3 &t );
       void translate( int animType, const Vec3 &t );
 
-      static uint genList( int contextId, const char *path, float scale = 1.0f,
-                           const Vec3 &t = Vec3::zero() );
+      static uint genList( const char *path, float scale = 1.0f, const Vec3 &t = Vec3::zero() );
 
       void free();
   };

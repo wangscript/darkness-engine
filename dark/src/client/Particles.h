@@ -21,7 +21,7 @@ namespace Client
   {
     uint spark;
 
-    void init( int contextId );
+    void init();
     void free();
   };
 

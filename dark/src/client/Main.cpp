@@ -111,6 +111,7 @@ namespace Client
       logFile.printRaw( " OK\n" );
     }
     logFile.printlnETD( "%s finished on", OZ_APP_NAME );
+    config.clear();
   }
 
   void Main::main()
@@ -291,7 +292,10 @@ namespace Client
 
     logFile.println( "Initializing Game {" );
     logFile.indent();
-    client.init();
+    if( !client.init() ) {
+      shutdown();
+      return;
+    }
     logFile.unindent();
     logFile.println( "}" );
     initFlags |= INIT_CLIENT_INIT;
@@ -352,20 +356,20 @@ namespace Client
           case SDL_KEYDOWN: {
             input.keys[event.key.keysym.sym] |= SDL_PRESSED;
 
-      if( event.key.keysym.sym == SDLK_F12 ) {
-        SDL_WM_IconifyWindow();
-        isActive = false;
-      }
+            if( event.key.keysym.sym == SDLK_F12 ) {
+              SDL_WM_IconifyWindow();
+              isActive = false;
+            }
             break;
           }
           case SDL_MOUSEBUTTONDOWN: {
             input.mouse.b |= event.button.button;
             break;
           }
-    case SDL_ACTIVEEVENT: {
-      isActive |= event.active.gain && event.active.state == SDL_APPACTIVE;
-      break;
-    }
+          case SDL_ACTIVEEVENT: {
+            isActive |= event.active.gain && event.active.state == SDL_APPACTIVE;
+            break;
+          }
           case SDL_QUIT: {
             isAlive = false;
             break;
@@ -375,16 +379,16 @@ namespace Client
 
       // waste time when iconified
       if( !isActive ) {
-  time = SDL_GetTicks() - timeLast;
+        time = SDL_GetTicks() - timeLast;
 
-  if( time < tick ) {
-    SDL_Delay( max( tick - time, 1u ) );
-  }
-  else if( time > 10 * tick ) {
-    timeLast += time - tick;
-  }
-  timeLast += tick;
-  continue;
+        if( time < tick ) {
+          SDL_Delay( max( tick - time, 1u ) );
+        }
+        else if( time > 10 * tick ) {
+          timeLast += time - tick;
+        }
+        timeLast += tick;
+        continue;
       }
 
       // update world

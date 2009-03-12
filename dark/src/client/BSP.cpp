@@ -12,6 +12,7 @@
 
 #include "BSP.h"
 
+#include "Context.h"
 #include "Frustum.h"
 
 #ifdef __WIN32__
@@ -27,12 +28,12 @@ namespace Client
   BSP::BSP()
   {}
 
-  BSP::BSP( oz::BSP *bsp, Context *context )
+  BSP::BSP( oz::BSP *bsp )
   {
     textures = null;
     lightMaps = null;
 
-    init( bsp, context );
+    init( bsp );
   }
 
   BSP::~BSP()
@@ -85,7 +86,7 @@ namespace Client
     glDrawElements( GL_TRIANGLES, face.nIndices, GL_UNSIGNED_INT, &bsp->indices[face.firstIndex] );
   }
 
-  void BSP::init( oz::BSP *bsp_, Context *context )
+  void BSP::init( oz::BSP *bsp_ )
   {
     bsp = bsp_;
 
@@ -103,7 +104,7 @@ namespace Client
     textures = new uint[bsp->nTextures];
     for( int i = 0; i < bsp->nTextures; i++ ) {
       if( bsp->textures[i] != null ) {
-        textures[i] = context->loadTexture( bsp->textures[i], true );
+        textures[i] = context.loadTexture( bsp->textures[i], true );
       }
     }
 
@@ -115,11 +116,11 @@ namespace Client
         bits[j] += (ubyte) ( ( 255 - bits[j] ) * BSP_GAMMA_CORR );
       }
 
-      lightMaps[i] = context->createTexture( bits,
-                                             oz::BSP::LIGHTMAP_DIM,
-                                             oz::BSP::LIGHTMAP_DIM,
-                                             oz::BSP::LIGHTMAP_BPP,
-                                             true );
+      lightMaps[i] = context.createTexture( bits,
+                                                    oz::BSP::LIGHTMAP_DIM,
+                                                    oz::BSP::LIGHTMAP_DIM,
+                                                    oz::BSP::LIGHTMAP_BPP,
+                                                    true );
     }
 
     hiddenFaces.setSize( bsp->nFaces );
@@ -175,7 +176,7 @@ namespace Client
 
   uint BSP::genList()
   {
-    uint list = context.genList( contextId );
+    uint list = context.genList();
 
     glNewList( list, GL_COMPILE );
 

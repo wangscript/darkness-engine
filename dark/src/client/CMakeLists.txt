@@ -8,8 +8,8 @@ ADD_EXECUTABLE( dark
   Camera.h
   Client.cpp
   Client.h
-  Context.cpp
   Context.h
+  Context.cpp
   Font.cpp
   Font.h
   Frustum.cpp
@@ -27,8 +27,6 @@ ADD_EXECUTABLE( dark
   Particles.h
   Render.cpp
   Render.h
-  ResourceManager.h
-  ResourceManager.cpp
   Shape.cpp
   Shape.h
   SimpleObject.cpp

@@ -82,8 +82,6 @@ namespace Client
   {
     context.init();
 
-    envContext = context.createContext();
-
     glDepthFunc( GL_LEQUAL );
     glEnable( GL_CULL_FACE );
 
@@ -111,36 +109,35 @@ namespace Client
     sky.init();
     water.init();
 
-    terra.init( context.loadTexture( envContext, "terra/map.png", false ),
-                context.loadTexture( envContext, "terra/detail.jpg", true ) );
+    terra.init();
 
     for( int i = 0; i < world.bsps.length(); i++ ) {
       bsps << new BSP( world.bsps[i] );
     }
 
-    lists << shape.genBox( context.genList( envContext ), AABB( Vec3::zero(), Vec3( 0.01f, 0.01f, 0.01f ) ), 0 );
-    lists << shape.genBox( context.genList( envContext ), AABB( Vec3::zero(), Vec3( 10, 10, 10 ) ), 0 );
-    lists << shape.genRandomTetrahedicParticle( context.genList( envContext ), 0.5f );
-    shape.genBox( context.genList( envContext ), AABB( Vec3::zero(), Vec3( 0.3f, 0.3f, 0.3f ) ),
-                  context.loadTexture( envContext, "tex/crate1.jpg", false ) );
-    lists << shape.genBox( context.genList( envContext ), AABB( Vec3::zero(), Vec3( 0.6f, 0.6f, 0.6f ) ),
-                           context.loadTexture( envContext, "tex/crate2.jpg", false ) );
-    lists << MD2::genList( envContext, "md2/woodBarrel", INCH, Vec3( 0.0f, 0.0f, -0.482f ) );
-    lists << MD2::genList( envContext, "md2/metalBarrel", INCH, Vec3( 0.0f, 0.0f, -0.5922f ) );
+    lists << shape.genBox( context.genList(), AABB( Vec3::zero(), Vec3( 0.01f, 0.01f, 0.01f ) ), 0 );
+    lists << shape.genBox( context.genList(), AABB( Vec3::zero(), Vec3( 10, 10, 10 ) ), 0 );
+    lists << shape.genRandomTetrahedicParticle( context.genList(), 0.5f );
+    shape.genBox( context.genList(), AABB( Vec3::zero(), Vec3( 0.3f, 0.3f, 0.3f ) ),
+                  context.loadTexture( "crate1.jpg", false ) );
+    lists << shape.genBox( context.genList(), AABB( Vec3::zero(), Vec3( 0.6f, 0.6f, 0.6f ) ),
+                           context.loadTexture( "crate2.jpg", false ) );
+    lists << MD2::genList( "woodBarrel.md2", INCH, Vec3( 0.0f, 0.0f, -0.482f ) );
+    lists << MD2::genList( "metalBarrel.md2", INCH, Vec3( 0.0f, 0.0f, -0.5922f ) );
 
     md2s << new MD2();
-    md2s.last()->load( envContext, "md2/goblin" );
+    md2s.last()->load( "goblin.md2" );
     md2s.last()->scale( 0.03f );
     md2s.last()->translate( Vec3( 0.0f, 0.0f, 0.1f ) );
     md2s.last()->translate( MD2::ANIM_CROUCH_STAND, Vec3( 0.0f, 0.0f, 0.15f ) );
     md2s.last()->translate( MD2::ANIM_CROUCH_WALK, Vec3( 0.0f, 0.0f, 0.15f ) );
 
     md2s << new MD2();
-    md2s.last()->load( envContext, "md2/knight" );
+    md2s.last()->load( "knight.md2" );
     md2s.last()->scale( 0.04f );
 
-    lists << OBJ::genList( envContext, "obj/monkey" );
-    lists << OBJ::genList( envContext, "obj/monkey" );
+//     lists << OBJ::genList( "monkey.obj" );
+//     lists << OBJ::genList( "monkey.obj" );
 
     // prepare for first frame
     glEnable( GL_DEPTH_TEST );
@@ -167,12 +164,12 @@ namespace Client
       blendedObjects << obj;
     }
     else {
-      if( obj->model == null ) {
-        obj->createModel();
-      }
-      // draw model
-      obj->model->draw();
-      obj->model->state = Model::UPDATED;
+//       if( obj->model == null ) {
+//         obj->createModel();
+//       }
+//       // draw model
+//       models[ (uint) obj ]->draw();
+//       obj->model->state = Model::UPDATED;
     }
     if( drawAABBs ) {
       glRotatef( -obj->rotZ, 0.0f, 0.0f, 1.0f );
@@ -190,28 +187,6 @@ namespace Client
       glEnable( GL_LIGHTING );
     }
     glPopMatrix();
-  }
-
-  void Render::drawSparkGen( SparkGen *sparkGen )
-  {
-    if( sparkGenRenders.contains( (uint) sparkGen ) ) {
-      // spark generator is registered
-      SparkGenRender &sparkGenRender = sparkGenRenders.cachedValue();
-
-      sparkGenRender.state = SparkGenRender::UPDATED;
-      // draw spars
-      sparkGenRender.draw();
-    }
-    else {
-      // spark generator is not registered, we need to create a new renderer for it
-      sparkGenRenders.add( (uint) sparkGen, SparkGenRender( sparkGen ) );
-
-      SparkGenRender &sparkGenRender = sparkGenRenders.cachedValue();
-
-      sparkGenRender.state = SparkGenRender::UPDATED;
-      // draw spars
-      sparkGenRender.draw();
-    }
   }
 
   void Render::scheduleSector( int sectorX, int sectorY )
@@ -367,11 +342,6 @@ namespace Client
     }
     blendedObjects.clear();
 
-    for( int i = 0; i < sparkGens.length(); i++ ) {
-      drawSparkGen( sparkGens[i] );
-    }
-    sparkGens.clear();
-
     // draw water
     for( int i = 0; i < waterObjects.length(); i++ ) {
       water.draw( waterObjects[i], isUnderWater );
@@ -434,42 +404,21 @@ namespace Client
 
     // remove droped models
     foreach( model, models.iterator() ) {
-      if( model->state == Model::NOT_UPDATED ) {
-        models.remove( model );
+      if( ( *model )->state == Model::NOT_UPDATED ) {
+        models.remove( (uint) &*model );
       }
       else {
-        model->state = Model::NOT_UPDATED;
-      }
-    }
-
-    // remove droped spark renderers
-    for( HashIndex<SparkGenRender, SPARKGENRENDER_HT_SIZE>::Iterator i( sparkGenRenders );
-         !i.isPassed(); )
-    {
-      SparkGenRender &sparkGenRender = *i;
-      uint key = i.key();
-
-      // we should advance now, so that we don't remove the element the iterator is pointing at
-      i++;
-
-      if( sparkGenRender.state == SparkGenRender::NOT_UPDATED ) {
-        sparkGenRenders.remove( key );
-      }
-      else {
-        sparkGenRender.state = SparkGenRender::NOT_UPDATED;
+        ( *model )->state = Model::NOT_UPDATED;
       }
     }
   }
 
   void Render::free()
   {
-    sparkGenRenders.clear();
     models.clear();
     md2s.free();
     bsps.free();
     context.free();
-
-    sparkGenRenders.deallocate();
   }
 
 }

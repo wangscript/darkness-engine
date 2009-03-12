@@ -42,8 +42,6 @@ namespace Client
         {}
       };
 
-      int      contextId;
-
       uint     textureId;
 
       int      nVertices;
@@ -73,12 +71,11 @@ namespace Client
       OBJ();
       ~OBJ();
 
-      bool load( int contextId, const char *path );
+      bool load( const char *path );
       void free();
 
       void draw() const;
-      static uint genList( int contextId, const char *file, float scale = 1.0f,
-                           const Vec3 &t = Vec3::zero() );
+      static uint genList( const char *file, float scale = 1.0f, const Vec3 &t = Vec3::zero() );
 
       void scale( float scale );
       void translate( const Vec3 &t );
