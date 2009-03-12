@@ -50,7 +50,7 @@ namespace Client
 
       ~Terrain();
 
-      void init( uint terraMap, uint terraDetail );
+      void init();
       void free();
 
       void draw();

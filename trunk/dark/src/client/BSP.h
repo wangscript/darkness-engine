@@ -11,7 +11,6 @@
 #pragma once
 
 #include "matrix/BSP.h"
-#include "Context.h"
 
 #define BSP_GAMMA_CORR        0.5
 
@@ -25,8 +24,6 @@ namespace Client
     private:
 
       oz::BSP  *bsp;
-
-      int  contextId;
 
       uint baseList;
       uint *textures;
@@ -46,9 +43,9 @@ namespace Client
       BSP();
       ~BSP();
 
-      explicit BSP( oz::BSP *bsp, Context *context );
+      explicit BSP( oz::BSP *bsp );
 
-      void init( oz::BSP *bsp, Context *context );
+      void init( oz::BSP *bsp );
       void draw( const Vec3 &p );
       uint genList();
 

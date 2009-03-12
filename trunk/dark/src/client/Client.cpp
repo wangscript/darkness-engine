@@ -27,7 +27,7 @@ namespace Client
   Input input;
   Client client;
 
-  void Client::init()
+  bool Client::init()
   {
     logFile.println( "Setting game variables" );
     sscanf( config["input.mouse.xSens"], "%f", &settings.mouseXSens );
@@ -35,21 +35,17 @@ namespace Client
     sscanf( config["input.keys.xSens"], "%f", &settings.keyXSens );
     sscanf( config["input.keys.ySens"], "%f", &settings.keyYSens );
 
-    logFile.println( "Loading Matrix {" );
-    logFile.indent();
+    if( !translator.init() ) {
+      logFile.unindent();
+      logFile.println( "}" );
+      return false;
+    }
 
     matrix.load();
 
-    logFile.unindent();
-    logFile.println( "}" );
-
-    logFile.println( "Loading Nirvana {" );
-    logFile.indent();
-
     nirvana.load();
 
-    logFile.unindent();
-    logFile.println( "}" );
+    return true;
   }
 
   void Client::start()

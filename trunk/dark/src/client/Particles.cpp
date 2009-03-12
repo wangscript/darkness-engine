@@ -21,9 +21,9 @@ namespace Client
 
   Particles particles;
 
-  void Particles::init( int contextId )
+  void Particles::init()
   {
-    uint first = context.genList( contextId );
+    uint first = context.genList();
   }
 
   void Particles::free()

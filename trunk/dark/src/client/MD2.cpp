@@ -12,6 +12,8 @@
 
 #include "MD2.h"
 
+#include "Context.h"
+
 #define MD2_ID                  ( ( '2' << 24 ) | ( 'P' << 16 ) | ( 'D' << 8 ) | 'I' )
 #define MD2_VERSION             8
 
@@ -275,7 +277,7 @@ namespace Client
     free();
   }
 
-  bool MD2::load( int contextId_, const char *path )
+  bool MD2::load( const char *path )
   {
     FILE      *file;
     MD2Header header;
@@ -283,8 +285,6 @@ namespace Client
     MD2Frame  *pFrame;
     Vec3      *pVerts;
     int       *pNormals;
-
-    contextId = contextId_;
 
     String modelFile = String( path ) + "/tris.md2";
     String skinFile = String( path ) + "/skin.jpg";
@@ -294,6 +294,8 @@ namespace Client
     file = fopen( modelFile.cstr(), "rb" );
     if( file == null ) {
       logFile.printRaw( "No such file\n" );
+
+      assert( false );
       return false;
     }
 
@@ -301,6 +303,8 @@ namespace Client
     if( header.id != MD2_ID || header.version != MD2_VERSION ) {
       fclose( file );
       logFile.printRaw( "Invalid file\n" );
+
+      assert( false );
       return false;
     }
 
@@ -338,7 +342,7 @@ namespace Client
 
     logFile.printRaw( "OK\n" );
 
-    texId = context.loadTexture( contextId, skinFile.cstr(), true );
+    texId = context.loadTexture( skinFile.cstr(), true );
 
     if( texId == 0 ) {
       return false;
@@ -463,15 +467,15 @@ namespace Client
     glFrontFace( GL_CCW );
   }
 
-  uint MD2::genList( int contextId, const char *path, float scale, const Vec3 &t )
+  uint MD2::genList( const char *path, float scale, const Vec3 &t )
   {
     MD2 md2;
 
-    md2.load( contextId, path );
+    md2.load( path );
     md2.scale( scale );
     md2.translate( t );
 
-    uint list = context.genList( contextId );
+    uint list = context.genList();
 
     glNewList( list, GL_COMPILE );
       md2.drawFrame( 0 );

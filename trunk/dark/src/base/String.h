@@ -17,7 +17,7 @@ namespace oz
   {
     private:
 
-      static const int BUFFER_SIZE = 32;
+      static const int BUFFER_SIZE = 64;
 
       char *buffer;
       int  count;

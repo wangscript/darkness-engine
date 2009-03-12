@@ -122,11 +122,27 @@ namespace oz
            */
           const Type *value() const
           {
-            return value();
+            return &B::elem->value;
           }
 
           /**
-           * @return reference to current element's value
+           * @return pointer to current element
+           */
+          operator Type* ()
+          {
+            return &B::elem->value;
+          }
+
+          /**
+           * @return constant pointer to current element
+           */
+          operator const Type* () const
+          {
+            return &B::elem->value;
+          }
+
+          /**
+           * @return reference to current element
            */
           Type &operator * ()
           {
@@ -134,11 +150,27 @@ namespace oz
           }
 
           /**
-           * @return constant reference to current element's value
+           * @return constant reference to current element
            */
           const Type &operator * () const
           {
             return B::elem->value;
+          }
+
+          /**
+           * @return non-constant access to member
+           */
+          Type *operator -> ()
+          {
+            return &B::elem->value;
+          }
+
+          /**
+           * @return constant access to member
+           */
+          const Type *operator -> () const
+          {
+            return &B::elem->value;
           }
 
       };

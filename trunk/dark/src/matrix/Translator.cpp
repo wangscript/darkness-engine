@@ -22,12 +22,19 @@ namespace oz
 
   bool Translator::init()
   {
+    logFile.println( "Translator mapping resources {" );
+    logFile.indent();
+
     DIR *dir;
     struct dirent *file;
 
     dir = opendir( "tex" );
     if( dir == null ) {
-      logFile.print( "Cannot open tex/" );
+      free();
+
+      logFile.println( "Cannot open tex/" );
+      logFile.unindent();
+      logFile.println( "}" );
       return false;
     }
     while( ( file = readdir( dir ) ) != null ) {
@@ -38,7 +45,11 @@ namespace oz
 
     dir = opendir( "snd" );
     if( dir == null ) {
-      logFile.print( "Cannot open snd/" );
+      free();
+
+      logFile.println( "Cannot open snd/" );
+      logFile.unindent();
+      logFile.println( "}" );
       return false;
     }
     while( ( file = readdir( dir ) ) != null ) {
@@ -49,7 +60,10 @@ namespace oz
 
     dir = opendir( "mdl" );
     if( dir == null ) {
-      logFile.print( "Cannot open mdl/" );
+      free();
+      logFile.println( "Cannot open mdl/" );
+      logFile.unindent();
+      logFile.println( "}" );
       return false;
     }
     while( ( file = readdir( dir ) ) != null ) {
@@ -57,6 +71,9 @@ namespace oz
       models << file->d_name;
     }
     closedir( dir );
+
+    logFile.unindent();
+    logFile.println( "}" );
 
     return true;
   }
@@ -101,6 +118,7 @@ namespace oz
   {
     textureIndices.clear();
     soundIndices.clear();
+    modelIndices.clear();
   }
 
 }

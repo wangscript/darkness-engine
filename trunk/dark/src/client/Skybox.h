@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "Context.h"
-
 #define SKY_DIST   1.0f
 
 namespace oz
@@ -29,9 +27,8 @@ namespace Client
 
     public:
 
-      void init( int contextId, uint top, uint front, uint left, uint back, uint right );
-      void init( int contextId, uint top, uint front, uint left, uint back, uint right,
-                 uint bottom );
+      void init( uint top, uint front, uint left, uint back, uint right );
+      void init( uint top, uint front, uint left, uint back, uint right, uint bottom );
       void draw();
 
   };
