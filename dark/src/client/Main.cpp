@@ -3,18 +3,16 @@
  *
  *  Game initialization and main loop
  *
- *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
- *
- *  $Id$
+ *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  */
 
-#include "precompiled.h"
+#include "precompiled.hpp"
 
-#include "Main.h"
+#include "Main.hpp"
 
-#include "Client.h"
-#include "SoundManager.h"
-#include "Render.h"
+#include "Client.hpp"
+#include "SoundManager.hpp"
+#include "Render.hpp"
 
 #ifdef WIN32
 #  include <direct.h>

@@ -3,17 +3,15 @@
  *
  *  [description]
  *
- *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
- *
- *  $Id$
+ *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  */
 
-#include "precompiled.h"
+#include "precompiled.hpp"
 
-#include "Sky.h"
+#include "Sky.hpp"
 
-#include "matrix/Timer.h"
-#include "matrix/World.h"
+#include "matrix/Timer.hpp"
+#include "matrix/World.hpp"
 
 namespace oz
 {

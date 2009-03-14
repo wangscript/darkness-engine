@@ -3,16 +3,14 @@
  *
  *  [description]
  *
- *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
- *
- *  $Id$
+ *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  */
 
-#include "precompiled.h"
+#include "precompiled.hpp"
 
-#include "B_Spirit.h"
+#include "B_Spirit.hpp"
 
-#include "Collider.h"
+#include "Collider.hpp"
 
 namespace oz
 {

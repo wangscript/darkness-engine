@@ -4,13 +4,11 @@
  *  [description]
  *
  *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
- *
- *  $Id$
  */
 
-#include "precompiled.h"
+#include "precompiled.hpp"
 
-#include "SimpleObject.h"
+#include "SimpleObject.hpp"
 
 namespace oz
 {

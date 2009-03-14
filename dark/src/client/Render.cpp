@@ -3,26 +3,24 @@
  *
  *  Graphics render engine
  *
- *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
- *
- *  $Id$
+ *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  */
 
-#include "precompiled.h"
+#include "precompiled.hpp"
 
-#include "Render.h"
+#include "Render.hpp"
 
-#include "matrix/Matrix.h"
-#include "matrix/Physics.h"
-#include "matrix/B_Goblin.h"
+#include "matrix/Matrix.hpp"
+#include "matrix/Physics.hpp"
+#include "matrix/B_Goblin.hpp"
 
-#include "Frustum.h"
-#include "Shape.h"
+#include "Frustum.hpp"
+#include "Shape.hpp"
 
-#include "Sky.h"
-#include "Water.h"
-#include "Terrain.h"
-#include "BSP.h"
+#include "Sky.hpp"
+#include "Water.hpp"
+#include "Terrain.hpp"
+#include "BSP.hpp"
 
 namespace oz
 {

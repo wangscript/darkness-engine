@@ -3,12 +3,10 @@
  *
  *  Math constants
  *
- *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
- *
- *  $Id$
+ *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  */
 
-#include "base.h"
+#include "base.hpp"
 
 #include <math.h>
 #include <stdlib.h>

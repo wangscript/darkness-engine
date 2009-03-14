@@ -3,17 +3,15 @@
  *
  *  [description]
  *
- *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
- *
- *  $Id$
+ *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  */
 
-#include "precompiled.h"
+#include "precompiled.hpp"
 
-#include "Water.h"
+#include "Water.hpp"
 
-#include "matrix/Water.h"
-#include "Context.h"
+#include "matrix/Water.hpp"
+#include "Context.hpp"
 
 namespace oz
 {

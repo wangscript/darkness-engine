@@ -3,21 +3,19 @@
  *
  *  [description]
  *
- *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
- *
- *  $Id$
+ *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  */
 
-#include "precompiled.h"
+#include "precompiled.hpp"
 
-#include "Client.h"
+#include "Client.hpp"
 
-#include "matrix/Timer.h"
-#include "matrix/Bot.h"
-#include "matrix/Matrix.h"
-#include "nirvana/Nirvana.h"
+#include "matrix/Timer.hpp"
+#include "matrix/Bot.hpp"
+#include "matrix/Matrix.hpp"
+#include "nirvana/Nirvana.hpp"
 
-#include "Camera.h"
+#include "Camera.hpp"
 
 namespace oz
 {

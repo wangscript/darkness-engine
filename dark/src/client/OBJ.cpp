@@ -4,15 +4,13 @@
  *  [description]
  *
  *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
- *
- *  $Id$
  */
 
-#include "precompiled.h"
+#include "precompiled.hpp"
 
-#include "OBJ.h"
+#include "OBJ.hpp"
 
-#include "Context.h"
+#include "Context.hpp"
 
 namespace oz
 {

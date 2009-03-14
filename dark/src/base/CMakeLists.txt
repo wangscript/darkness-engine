@@ -1,24 +1,24 @@
 add_library( base STATIC
-  Bitset.h
+  Bitset.hpp
   Config.cpp
-  Config.h
-  DList.h
-  HashIndex.h
-  HashString.h
-  List.h
+  Config.hpp
+  DList.hpp
+  HashIndex.hpp
+  HashString.hpp
+  List.hpp
   LogFile.cpp
-  LogFile.h
-  Mat33.h
-  Mat44.h
+  LogFile.hpp
+  Mat33.hpp
+  Mat44.hpp
   Math.cpp
-  Math.h
-  PoolAlloc.h
-  Quat.h
-  ReuseAlloc.h
-  SVector.h
-  Sparse.h
-  String.h
-  Vec3.h
-  Vector.h
-  base.h
-  common.h )
+  Math.hpp
+  PoolAlloc.hpp
+  Quat.hpp
+  ReuseAlloc.hpp
+  SVector.hpp
+  Sparse.hpp
+  String.hpp
+  Vec3.hpp
+  Vector.hpp
+  base.hpp
+  common.hpp )

@@ -13,5 +13,5 @@ echo 'rm -rf src/CMakeFiles src/cmake_install.cmake src/Makefile'
 rm -rf src/CMakeFiles src/cmake_install.cmake src/Makefile
 echo 'rm -rf src/*/CMakeFiles src/*/cmake_install.cmake src/*/Makefile'
 rm -rf src/*/CMakeFiles src/*/cmake_install.cmake src/*/Makefile
-echo 'rm -f dark.kdevelop.pcs dark.kdevses'
-rm -f dark.kdevelop.pcs dark.kdevses
+echo 'rm -f *.kdevelop.pcs *.kdevses'
+rm -f *.kdevelop.pcs *.kdevses

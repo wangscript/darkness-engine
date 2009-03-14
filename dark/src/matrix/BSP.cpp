@@ -3,16 +3,14 @@
  *
  *  Data structure for Quake3 BSP level
  *
- *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
- *
- *  $Id$
+ *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  */
 
-#include "precompiled.h"
+#include "precompiled.hpp"
 
-#include "BSP.h"
+#include "BSP.hpp"
 
-#include "Translator.h"
+#include "Translator.hpp"
 
 #define fourC( a, b, c, d ) \
   ( ( a ) | ( ( b ) << 8 ) | ( ( c ) <<16 ) | ( ( d ) << 24 ) )

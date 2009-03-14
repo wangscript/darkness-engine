@@ -3,12 +3,10 @@
  *
  *  List that reads configuration file
  *
- *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
- *
- *  $Id$
+ *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  */
 
-#include "base.h"
+#include "base.hpp"
 
 #include <libxml/xmlreader.h>
 #include <libxml/xmlwriter.h>
@@ -85,11 +83,11 @@ namespace oz
 
         // FIXME VC++ has problems with this WTF???
 #ifndef WIN32
-        ::free( pKey );
-        ::free( pValue );
+          ::free( pKey );
+          ::free( pValue );
 #endif
 
-        add( key, value );
+          add( key, value );
       }
       error = xmlTextReaderRead( reader );
     }
