@@ -3,16 +3,14 @@
  *
  *  MD2 model class
  *
- *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
- *
- *  $Id$
+ *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  */
 
-#include "precompiled.h"
+#include "precompiled.hpp"
 
-#include "MD2.h"
+#include "MD2.hpp"
 
-#include "Context.h"
+#include "Context.hpp"
 
 #define MD2_ID                  ( ( '2' << 24 ) | ( 'P' << 16 ) | ( 'D' << 8 ) | 'I' )
 #define MD2_VERSION             8

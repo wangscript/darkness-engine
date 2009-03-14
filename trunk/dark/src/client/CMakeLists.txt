@@ -1,47 +1,47 @@
-LINK_DIRECTORIES( ../base ../matrix ../nirvana )
-LINK_LIBRARIES( base matrix nirvana )
+link_directories( ../base ../matrix ../nirvana )
+link_libraries( base matrix nirvana )
 
-ADD_EXECUTABLE( dark
+add_executable( openzone
   BSP.cpp
-  BSP.h
+  BSP.hpp
   Camera.cpp
-  Camera.h
+  Camera.hpp
   Client.cpp
-  Client.h
-  Context.h
+  Client.hpp
+  Context.hpp
   Context.cpp
   Font.cpp
-  Font.h
+  Font.hpp
   Frustum.cpp
-  Frustum.h
+  Frustum.hpp
   MD2.cpp
-  MD2.h
+  MD2.hpp
   MD3.cpp
-  MD3.h
+  MD3.hpp
   Main.cpp
-  Main.h
-  Model.h
+  Main.hpp
+  Model.hpp
   OBJ.cpp
-  OBJ.h
+  OBJ.hpp
   Particles.cpp
-  Particles.h
+  Particles.hpp
   Render.cpp
-  Render.h
+  Render.hpp
   Shape.cpp
-  Shape.h
+  Shape.hpp
   SimpleObject.cpp
-  SimpleObject.h
+  SimpleObject.hpp
   Sky.cpp
-  Sky.h
+  Sky.hpp
   Skybox.cpp
-  Skybox.h
+  Skybox.hpp
   SoundManager.cpp
-  SoundManager.h
+  SoundManager.hpp
   SparkGenRender.cpp
-  SparkGenRender.h
+  SparkGenRender.hpp
   Terrain.cpp
-  Terrain.h
+  Terrain.hpp
   Water.cpp
-  Water.h )
+  Water.hpp )
 
-ADD_DEPENDENCIES( dark precompile )
+add_dependencies( openzone precompile )

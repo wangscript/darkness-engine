@@ -4,15 +4,13 @@
  *  [description]
  *
  *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
- *
- *  $Id$
  */
 
-#include "precompiled.h"
+#include "precompiled.hpp"
 
-#include "Context.h"
+#include "Context.hpp"
 
-#include "matrix/Translator.h"
+#include "matrix/Translator.hpp"
 
 namespace oz
 {

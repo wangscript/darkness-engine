@@ -3,14 +3,12 @@
  *
  *  [description]
  *
- *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
- *
- *  $Id: Translator.cpp 78 2009-03-03 14:16:07Z Davorin.Ucakar $
+ *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  */
 
-#include "precompiled.h"
+#include "precompiled.hpp"
 
-#include "Translator.h"
+#include "Translator.hpp"
 
 #include <dirent.h>
 #include <sys/types.h>

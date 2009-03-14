@@ -3,30 +3,28 @@
  *
  *  World model
  *
- *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
- *
- *  $Id$
+ *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  */
 
-#include "precompiled.h"
+#include "precompiled.hpp"
 
-#include "Matrix.h"
+#include "Matrix.hpp"
 
-#include "Physics.h"
+#include "Physics.hpp"
 
-#include "Water.h"
+#include "Water.hpp"
 
-#include "O_Tree1.h"
-#include "O_Tree2.h"
+#include "O_Tree1.hpp"
+#include "O_Tree2.hpp"
 
-#include "D_SmallCrate.h"
-#include "D_BigCrate.h"
-#include "D_WoodBarrel.h"
-#include "D_MetalBarrel.h"
+#include "D_SmallCrate.hpp"
+#include "D_BigCrate.hpp"
+#include "D_WoodBarrel.hpp"
+#include "D_MetalBarrel.hpp"
 
-#include "B_Spirit.h"
-#include "B_Human.h"
-#include "B_Goblin.h"
+#include "B_Spirit.hpp"
+#include "B_Human.hpp"
+#include "B_Goblin.hpp"
 
 namespace oz
 {

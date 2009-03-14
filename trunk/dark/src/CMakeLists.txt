@@ -1,4 +1,4 @@
-INCLUDE_DIRECTORIES( . )
+include_directories( . )
 
-SUBDIRS( base matrix nirvana server client test )
-# SUBDIRS( base test )
+subdirs( base matrix nirvana server client test )
+# subdirs( base test )

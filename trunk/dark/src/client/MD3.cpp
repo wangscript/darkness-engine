@@ -3,16 +3,14 @@
  *
  *  [description]
  *
- *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
- *
- *  $Id$
+ *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  */
 
-#include "precompiled.h"
+#include "precompiled.hpp"
 
-#include "MD3.h"
+#include "MD3.hpp"
 
-#include "matrix/bv.h"
+#include "matrix/bv.hpp"
 
 namespace oz
 {

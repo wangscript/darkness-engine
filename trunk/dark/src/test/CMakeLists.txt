@@ -1,8 +1,7 @@
-INCLUDE_DIRECTORIES( .. )
-LINK_DIRECTORIES( ../base ../matrix ../nirvana )
-LINK_LIBRARIES( base )
+link_directories( ../base ../matrix ../nirvana )
+link_libraries( base )
 
-ADD_EXECUTABLE( test
+add_executable( test
   test.cpp )
 
-ADD_DEPENDENCIES( test precompile )
+add_dependencies( test precompile )

@@ -1,67 +1,67 @@
-ADD_LIBRARY( matrix STATIC
+add_library( matrix STATIC
   AABB.cpp
-  AABB.h
+  AABB.hpp
   BSP.cpp
-  BSP.h
+  BSP.hpp
   B_Goblin.cpp
-  B_Goblin.h
+  B_Goblin.hpp
   B_Human.cpp
-  B_Human.h
+  B_Human.hpp
   B_Spirit.cpp
-  B_Spirit.h
-  Bot.h
-  Bounds.h
+  B_Spirit.hpp
+  Bot.hpp
+  Bounds.hpp
   Collider.cpp
-  Collider.h
+  Collider.hpp
   D_BigCrate.cpp
-  D_BigCrate.h
+  D_BigCrate.hpp
   D_MetalBarrel.cpp
-  D_MetalBarrel.h
+  D_MetalBarrel.hpp
   D_SmallCrate.cpp
-  D_SmallCrate.h
+  D_SmallCrate.hpp
   D_WoodBarrel.cpp
-  D_WoodBarrel.h
+  D_WoodBarrel.hpp
   DynObject.cpp
-  DynObject.h
-  Effect.h
-  Hit.h
+  DynObject.hpp
+  Effect.hpp
+  Hit.hpp
   Item.cpp
-  Item.h
+  Item.hpp
   Ladder.cpp
-  Ladder.h
+  Ladder.hpp
   Matrix.cpp
-  Matrix.h
+  Matrix.hpp
   O_Tree1.cpp
-  O_Tree1.h
+  O_Tree1.hpp
   O_Tree2.cpp
-  O_Tree2.h
+  O_Tree2.hpp
   Object.cpp
-  Object.h
+  Object.hpp
   Particle.cpp
-  Particle.h
+  Particle.hpp
   Physics.cpp
-  Physics.h
+  Physics.hpp
   Sky.cpp
-  Sky.h
+  Sky.hpp
   SparkGen.cpp
-  SparkGen.h
-  Sphere.h
+  SparkGen.hpp
+  Sphere.hpp
   Structure.cpp
-  Structure.h
+  Structure.hpp
   Terrain.cpp
-  Terrain.h
+  Terrain.hpp
   Timer.cpp
-  Timer.h
-  Translator.h
+  Timer.hpp
+  Translator.hpp
   Translator.cpp
   Vehicle.cpp
-  Vehicle.h
+  Vehicle.hpp
   Water.cpp
-  Water.h
+  Water.hpp
   Weapon.cpp
-  Weapon.h
+  Weapon.hpp
   World.cpp
-  World.h
-  bv.h )
+  World.hpp
+  bv.hpp )
 
-ADD_DEPENDENCIES( matrix precompile )
+add_dependencies( matrix precompile )

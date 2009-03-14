@@ -3,16 +3,14 @@
  *
  *  [description]
  *
- *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
- *
- *  $Id$
+ *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  */
 
-#include "precompiled.h"
+#include "precompiled.hpp"
 
-#include "SoundManager.h"
+#include "SoundManager.hpp"
 
-#include "Camera.h"
+#include "Camera.hpp"
 
 namespace oz
 {

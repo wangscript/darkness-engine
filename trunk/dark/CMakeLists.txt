@@ -1,10 +1,10 @@
 cmake_minimum_required( VERSION 2.6 )
 
-PROJECT( openzone C CXX )
+project( openzone C CXX )
 
-IF( WIN32 )
+if( WIN32 )
 
-  INCLUDE_DIRECTORIES(
+  include_directories(
       ../iconv/include
       ../libxml2/include
       ../SDL/include
@@ -14,7 +14,7 @@ IF( WIN32 )
       ../OpenAL/include
       ../freealut/include )
 
-  LINK_DIRECTORIES(
+  link_directories(
       ../../../iconv/lib
       ../../../libxml2/lib
       ../../../SDL/lib
@@ -25,7 +25,7 @@ IF( WIN32 )
       ../../../OpenAL/libs/Win32
       ../../../freealut/lib )
 
-  LINK_LIBRARIES(
+  link_libraries(
       iconv.lib
       libxml2.lib
       SDLmain.lib
@@ -38,12 +38,12 @@ IF( WIN32 )
       alut.lib
       vorbisfile.lib )
 
-  ADD_DEFINITIONS( /W4 )
+  add_definitions( /W4 )
 
   # TODO: precompiled headers for VC++
-  ADD_CUSTOM_TARGET( precompile ALL )
+  add_custom_target( precompile ALL )
 
-ELSE( WIN32 )
+else( WIN32 )
 
   # required libraries
   find_package( LibXml2 REQUIRED )
@@ -61,29 +61,29 @@ ELSE( WIN32 )
   find_file( VORBIS_INCLUDE_DIR vorbis )
   find_library( VORBIS_LIBRARY vorbisfile )
 
-  SET( CXX_FLAGS -g3 -Wall -Wextra -Winvalid-pch -pipe -I/usr/include/libxml2 -I/usr/include/SDL )
-  ADD_DEFINITIONS( ${CXX_FLAGS} )
-  LINK_LIBRARIES( xml2 SDL SDL_image GL GLU openal alut vorbisfile )
+  set( CXX_FLAGS -g3 -Wall -Wextra -Winvalid-pch -pipe -I/usr/include/libxml2 )
+  add_definitions( ${CXX_FLAGS} )
+  link_libraries( xml2 SDL SDL_image GL GLU openal alut vorbisfile )
 
-  INSTALL( FILES src/client/dark
+  install( FILES src/client/dark
            DESTINATION bin/dark
            PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
                        GROUP_READ GROUP_EXECUTE
                        WORLD_READ WORLD_EXECUTE )
 
   # precompiled header
-  INCLUDE_DIRECTORIES( . )
+  include_directories( . )
 
-  ADD_CUSTOM_TARGET( precompile ALL
-    DEPENDS precompiled.h.gch )
+  add_custom_target( precompile ALL
+    DEPENDS precompiled.hpp.gch )
 
-  ADD_CUSTOM_COMMAND(
-    OUTPUT precompiled.h.gch
-    DEPENDS base precompiled.h
+  add_custom_command(
+    OUTPUT precompiled.hpp.gch
+    DEPENDS base precompiled.hpp
     COMMAND
-      rm -f precompiled.h.gch &&
-      ${CMAKE_CXX_COMPILER} ${CXX_FLAGS} precompiled.h )
+      rm -f precompiled.hpp.gch &&
+      ${CMAKE_CXX_COMPILER} ${CXX_FLAGS} precompiled.hpp )
 
-ENDIF( WIN32 )
+endif( WIN32 )
 
-SUBDIRS( src )
+subdirs( src )

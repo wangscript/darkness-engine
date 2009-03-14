@@ -3,17 +3,15 @@
  *
  *  BSP level rendering class
  *
- *  Copyright (C) 2002-2008, Davorin Učakar <davorin.ucakar@gmail.com>
- *
- *  $Id$
+ *  Copyright (C) 2002-2009, Davorin Učakar <davorin.ucakar@gmail.com>
  */
 
-#include "precompiled.h"
+#include "precompiled.hpp"
 
-#include "BSP.h"
+#include "BSP.hpp"
 
-#include "Context.h"
-#include "Frustum.h"
+#include "Context.hpp"
+#include "Frustum.hpp"
 
 #ifdef __WIN32__
 static PFNGLACTIVETEXTUREPROC glActiveTexture = null;
